@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="empMapper">
+	<resultMap type="com.study.test.emp.vo.EmpVO" id="emp">
+		<result column="EMP_NO"	  property="empNo"/>
+		<result column="EMP_TYPE" property="empType"/>
+		<result column="MEM_NO"   property="memNo"/>
+		<result column="DEPT_NO"  property="deptNo"/>
+		<result column="COLL_NO"  property="collNo"/>
+	</resultMap>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

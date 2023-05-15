@@ -18,7 +18,15 @@
 			<result column="MEM_IMAGE" 					 	property="memImage"/>
 		</resultMap>
 	
-	
+		
+		<!-- 회원등록시 번호 중복 체크 -->
+		<select id="isDuplicateMemNo" resultType="int">
+			SELECT COUNT(MEM_NO)
+			FROM MEMBER
+			WHERE MEM_NO = #{memNo}
+		</select>
+		
+		
 		<!-- 회원가입  -->
 		<insert id="join">
 		INSERT INTO MEMBER (

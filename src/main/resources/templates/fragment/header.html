@@ -23,6 +23,8 @@
 				LOGIN
 			</span>
 			
+			<a th:href="@{/member/loginForm}">Login</a>
+			
 		</div>
 	</th:block>
 </div>
@@ -46,6 +48,9 @@
 						<span> 메뉴 2</span>
 						<span> 메뉴 3</span>
 						<span> 메뉴 4</span>
+						<span> 
+							
+						</span>
 				</div>
 			</nav>
 		</div>
@@ -100,17 +105,16 @@
  						
  						<div class="col-9">
  							<label for="memId" class="form-label">학번 및 교번</label>
- 							<input type="text" class="form-control" id="memNo" name="memNo" placeholder="등록할 학번 및 교번을 입력하세요." onkeyup="setDisabled();">
+ 							<input type="text" class="form-control" id="memNo" name="memNo" placeholder="등록할 학번 및 교번을 숫자로 입력하세요." onkeyup="setDisabled();">
  						</div>
  						
  						<div class="col-3">
  							<label for="check_id" class="form-label">&nbsp;</label>
- 							<input type="button" class="btn" id="check_id" value="중복 확인" onclick="isDuplicateMemId();">
+ 							<input type="button" class="btn" id="check_id" value="중복 확인" onclick="isDuplicateMemNo();">
  						</div>
  						
  						<div class="col-12">
 							<label for="memPw" class="form-label">비 밀 번 호</label> 
-							<label for="memPw" class="form-label">* 비밀번호는 영문 및 숫자 조합 8자리 이상 15자리 이하</label> 
 							<input type="password" class="form-control" id="memPw" name="memPw" placeholder="비밀번호를 입력하세요.">
 						</div>
 						
@@ -159,21 +163,21 @@
 							<input type="text" class="form-control" id="tell_3" name="memTells">
 						</div>
 						<div class="col-5">
-							<label for="tell_3" class="form-label">&nbsp;</label> 
-							<input type="button" class="form-control" id="" name="" value="인증번호받기">
+						    <label for="btn-auth" class="form-label">&nbsp;</label> 
+						    <input type="button" class="form-control" id="btn-auth" name="" value="인증번호받기">
 						</div>
 						
 						<div class="col-6">
-							<label for="memAddr" class="form-label">&nbsp;</label> 
-							<input type="text" class="form-control" id="" name="">
+						    <label for="memAddr" class="form-label">&nbsp;</label> 
+						    <input type="text" class="form-control" id="timer" name="">
 						</div>
 						<div class="col-3">
-							<label for="memAddr" class="form-label">&nbsp;</label> 
-							<input type="text" class="form-control" id="" name="" value="시간">
+						    <label for="memAddr" class="form-label">&nbsp;</label> 
+						    <input type="text" class="form-control" id="time-remaining" name="" value="시간">
 						</div>
 						<div class="col-3">
-							<label for="memAddr" class="form-label">&nbsp;</label> 
-							<input type="text" class="form-control" id="" name="" value="확인">
+						    <label for="memAddr" class="form-label">&nbsp;</label> 
+						    <input type="button" class="form-control" id="confirmation" name="" value="확인">
 						</div>
 						
 						<div class="col-12">
@@ -190,7 +194,7 @@
 						
 						<div class="col-3 d-grid">
 							<label for="search_btn" class="form-label">&nbsp;</label> <!-- &nbsp; 하면 space처리 됨 -->
-							<input type="button" class="btn" id="search_btn" value="Search" onclick="searchAddr();" placeholder="주소는 필수 입력 입니다.">
+							<input type="button" class="btn btn-primary" id="search_btn" value="Search" onclick="searchAddr();" placeholder="주소는 필수 입력 입니다.">
 						</div>
 						
 						<div class="col-12">

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="memberMapper">
+	
+	<resultMap type="com.study.test.member.vo.MemberVO" id="member">
+			<id		column="MEM_NO" 					 	property="memNo"/>
+			<result column="MEM_PW"						 	property="memPw"/>
+			<result column="MEM_NAME"						 property="memName"/>
+			<result column="MEM_GENDER" 					 property="memGender"/>
+			<result column="MEM_TELL" 						 property="memTell"/>
+			<result column="MEM_ADDR" 						 property="memAddr"/>
+			<result column="MEM_ADDR_DETAIL" 				 property="memAddrDetail"/>
+			<result column="MEM_ROLE" 						 property="memRole"/>
+			<result column="MEM_BIRTHDAY" 					 property="memBirthday"/>
+			<result column="MEM_EMAIL" 						 property="memEmail"/>
+			<result column="MEM_IMAGE" 					 	property="memImage"/>
+		</resultMap>
+	
+	
+		<!-- 회원가입  -->
+		<insert id="join">
+		INSERT INTO MEMBER (
+		    MEM_NO,
+		    MEM_PW,
+		    MEM_NAME,
+		    MEM_GENDER,
+		    MEM_TELL,
+		    MEM_ADDR,
+		    MEM_ADDR_DETAIL,
+		    MEM_ROLE,
+		    MEM_BIRTHDAY,
+		    MEM_EMAIL,
+		    MEM_IMAGE
+		) VALUES (
+		    #{memNo},
+		    #{memPw},
+		    #{memName},
+		    #{memGender},
+		    REPLACE(
+		        <foreach collection="memTells" item="tell" separator="-">
+		            '${tell}'
+		        </foreach>,
+		        ' ', ''
+		    ),
+		    #{memAddr},
+		    #{memAddrDetail},
+		    #{memRole},
+		    #{memBirthday},
+		    #{memEmail},
+		    #{memImage}
+		)
+		</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

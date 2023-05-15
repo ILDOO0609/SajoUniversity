@@ -1,9 +1,273 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="headerFragment">
-헤더
+ 
+<div>
+	<th:block th:if="${session.loginInfo != null}">
+		<div class="col text-end">
+			<span data-bs-toggle="modal" data-bs-target="#joinModal" style="cursor:pointer;"></span>
+			<span th:text="${session.loginInfo.memId}"></span>님.
+			<a th:href="@{/member/logout}" class="list-group-item list-group-item-action">로그아웃</a>
+		</div>
+	</th:block>
+	<th:block th:if="${session.loginInfo == null}">
+		<div class="col text-end">
+			
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-bitcoin" viewBox="0 0 16 16">
+			  <path d="M5.5 13v1.25c0 .138.112.25.25.25h1a.25.25 0 0 0 .25-.25V13h.5v1.25c0 .138.112.25.25.25h1a.25.25 0 0 0 .25-.25V13h.084c1.992 0 3.416-1.033 3.416-2.82 0-1.502-1.007-2.323-2.186-2.44v-.088c.97-.242 1.683-.974 1.683-2.19C11.997 3.93 10.847 3 9.092 3H9V1.75a.25.25 0 0 0-.25-.25h-1a.25.25 0 0 0-.25.25V3h-.573V1.75a.25.25 0 0 0-.25-.25H5.75a.25.25 0 0 0-.25.25V3l-1.998.011a.25.25 0 0 0-.25.25v.989c0 .137.11.25.248.25l.755-.005a.75.75 0 0 1 .745.75v5.505a.75.75 0 0 1-.75.75l-.748.011a.25.25 0 0 0-.25.25v1c0 .138.112.25.25.25L5.5 13zm1.427-8.513h1.719c.906 0 1.438.498 1.438 1.312 0 .871-.575 1.362-1.877 1.362h-1.28V4.487zm0 4.051h1.84c1.137 0 1.756.58 1.756 1.524 0 .953-.626 1.45-2.158 1.45H6.927V8.539z"/>
+			</svg>
 
+			<span>로그인이 필요합니다.</span>
+			<span data-bs-toggle="modal" data-bs-target="#loginModal" style="cursor: pointer;">
+				LOGIN
+			</span>
+			
+		</div>
+	</th:block>
+</div>
+ 
+ <div class="row" id="aaaa">
+ 	<div class="col text-center">
+ 		<span class="header-title">사조대학</span>
+ 	</div>
+ </div>
+ 
+ <div class="row">
+		<div class="col">
+			<nav class="navbar navbar-expand-lg bg-body-tertiary">
+				<div class="container-fluid">
+						
+						<span data-bs-toggle="modal" data-bs-target="#joinModal" style="cursor: pointer;">
+							회원등록
+						</span>
+						
+						<span> 메뉴 1</span>
+						<span> 메뉴 2</span>
+						<span> 메뉴 3</span>
+						<span> 메뉴 4</span>
+				</div>
+			</nav>
+		</div>
+	</div>
+ 
+ 
+ 
+ <!--LOGIN Modal -->
+	<div class="modal fade" id="loginModal" 
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			
+			
+				<div class="modal-body">
+					<form id="loginForm" method="post">
+						<div class="row mb-3">
+						
+							<div class="col-12">
+								<input type="text" class="form-control" placeholder="회원번호를 입력하세요." name="memNo" id="memNo">
+							</div>
+							<div class="col-12">
+								<input type="password" class="form-control" placeholder="비밀번호 입력해주세요." name="memPw" id="memPw">
+							</div>
+							
+							<div class="row mb-3">
+								<div class="col-12 d-grid">
+									<input type="button" class="btn" value="로그인" onclick="login();">
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+ 
+ 
+			</div>
+		</div>
+	</div>
+ 
+ 
+ 
+ <!-- JOIN Modal -->
+	<div class="modal fade" id="joinModal" 
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+ 
+ 				<div class="modal-body">
+ 					<form class="row g-3" id="joinForm" th:action="@{/member/join}" method="post">
+ 						
+ 						<div class="col-9">
+ 							<label for="memId" class="form-label">학번 및 교번</label>
+ 							<input type="text" class="form-control" id="memNo" name="memNo" placeholder="등록할 학번 및 교번을 입력하세요." onkeyup="setDisabled();">
+ 						</div>
+ 						
+ 						<div class="col-3">
+ 							<label for="check_id" class="form-label">&nbsp;</label>
+ 							<input type="button" class="btn" id="check_id" value="중복 확인" onclick="isDuplicateMemId();">
+ 						</div>
+ 						
+ 						<div class="col-12">
+							<label for="memPw" class="form-label">비 밀 번 호</label> 
+							<label for="memPw" class="form-label">* 비밀번호는 영문 및 숫자 조합 8자리 이상 15자리 이하</label> 
+							<input type="password" class="form-control" id="memPw" name="memPw" placeholder="비밀번호를 입력하세요.">
+						</div>
+						
+						<div class="col-12">
+							<label for="memName" class="form-label">이름</label> 
+							<input type="text" class="form-control" id="memName" name="memName" placeholder="이름 입력은 필수입니다.">
+						</div>
+						
+						<div class="col-3">
+							<div class="form-check">
+								<input class="form-check-input" value="M" type="radio" id="gender_male" name="memGender" checked>
+								<label class="form-check-label" for="gender_male">Male</label>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="form-check">
+								<input class="form-check-input" value="F" type="radio" id="gender_female" name="memGender">
+								<label class="form-check-label" for="gender_female">FeMale</label>
+							</div>
+						</div>
+						
+						<div class="col-6"></div>
+						
+						<div class="col-12 d-grid">
+							<label class="form-date-label" for="mem_birthday">생년월일</label>
+							<input type="date" class="form-control" id="memBirthday" name="memBirthday">
+						</div>
+						
+						<div class="col-3">
+							<label for="tell_1" class="form-label">연락처</label> 
+								<select id="tell_1" name="memTells"class="form-select">
+									<option value="010">010</option>
+									<option value="011">011</option>
+									<option value="012">012</option>
+								</select>
+						</div>
+						
+						<div class="col-2">
+							<label for="tell_2" class="form-label">&nbsp;</label> 
+							<input
+								type="text" class="form-control" id="tell_2" name="memTells">
+						</div>
+						
+						<div class="col-2">
+							<label for="tell_3" class="form-label">&nbsp;</label> 
+							<input type="text" class="form-control" id="tell_3" name="memTells">
+						</div>
+						<div class="col-5">
+							<label for="tell_3" class="form-label">&nbsp;</label> 
+							<input type="button" class="form-control" id="" name="" value="인증번호받기">
+						</div>
+						
+						<div class="col-6">
+							<label for="memAddr" class="form-label">&nbsp;</label> 
+							<input type="text" class="form-control" id="" name="">
+						</div>
+						<div class="col-3">
+							<label for="memAddr" class="form-label">&nbsp;</label> 
+							<input type="text" class="form-control" id="" name="" value="시간">
+						</div>
+						<div class="col-3">
+							<label for="memAddr" class="form-label">&nbsp;</label> 
+							<input type="text" class="form-control" id="" name="" value="확인">
+						</div>
+						
+						<div class="col-12">
+							<label for="mem_email" class="form-label">&nbsp; 이메일</label> 
+						</div>
+						<div class="col-12">
+							<input type="text" class="form-control" id="memEmail" name="memEmail" placeholder="이메일 필수사항.">
+						</div>
+						
+						<div class="col-9">
+							<label for="memAddr" class="form-label">주소</label> 
+							<input type="text" class="form-control" id="memAddr" name="memAddr" onclick="searchAddr();">
+						</div>
+						
+						<div class="col-3 d-grid">
+							<label for="search_btn" class="form-label">&nbsp;</label> <!-- &nbsp; 하면 space처리 됨 -->
+							<input type="button" class="btn" id="search_btn" value="Search" onclick="searchAddr();" placeholder="주소는 필수 입력 입니다.">
+						</div>
+						
+						<div class="col-12">
+							<input type="text" class="form-control" id="memAddrDetail" name="memAddrDetail" placeholder="상세 주소는 필수사항.">
+						</div>
+						
+						<div class="col-12">
+							<label for="" class="form-label">이미지 등록</label> 
+							<input type="file" class="form-control" id="memImage" name="memImage">
+						</div>
+						
+						
+						<div class="col-12 d-grid">
+							<div>
+								<strong>권한설정(필수)</strong>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="form-check">
+								<input class="form-check-input" value="stu" type="radio" id="role_stu" name="memRole">
+								<label class="form-check-label" for="role_stu">학생</label>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="form-check">
+								<input class="form-check-input" value="pro" type="radio" id="role_professor" name="memRole">
+								<label class="form-check-label" for="role_professor">교수</label>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="form-check">
+								<input class="form-check-input" value="stf" type="radio" id="role_staff" name="memRole">
+								<label class="form-check-label" for="role_staff">교직원</label>
+							</div>
+						</div>
+					
+						<div class="col-12 d-grid">
+							<button id="joinBtn" onclick="join();" type="button" class="btn">회 원 등 록</button>
+						</div>
+ 						
+ 					</form>
+ 				</div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 			</div>
+		</div>
+	</div>
+ 
+ 
 </th:block>
+
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

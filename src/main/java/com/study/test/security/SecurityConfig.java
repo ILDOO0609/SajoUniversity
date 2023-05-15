@@ -23,6 +23,7 @@ public class SecurityConfig {
 				.requestMatchers("/"
 								, "/main"
 								, "/member/login"
+								, "/member/join"
 								)
 				.permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")

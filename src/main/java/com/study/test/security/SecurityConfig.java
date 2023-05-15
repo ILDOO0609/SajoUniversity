@@ -24,6 +24,7 @@ public class SecurityConfig {
 								, "/main"
 								, "/member/login"
 								, "/member/join"
+								, "/school/main"
 								)
 				.permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")

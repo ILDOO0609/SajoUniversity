@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/school/school_layout}">
+
+
+<th:block layout:fragment="content">
+<link rel="stylesheet" href="/css/school.css">
+ <div class="row">
+	<div class="col">
+		<nav class="navbar navbar-expand-lg bg-body-tertiary">
+			<div class="container-fluid mainMenuList">
+				<div data-bs-toggle="modal" data-bs-target="#joinModal" style="cursor: pointer;">회원등록</div>
+				<div class="mainMenu">
+					<a href="/content/school/school_infor">학사 안내</a>
+					<ul class="subMenu">
+						<li><a href="/content/school/school_schedule">학사 일정</a></li>
+					</ul>
+				</div>
+				<div class="mainMenu">
+					<a>학적 변동</a>
+					<ul class="subMenu">
+						<li><a>휴학</a></li>
+						<li><a>복학</a></li>
+						<li><a>재입학</a></li>
+						<li><a>자퇴</a></li>
+					</ul>
+				</div>
+				<div class="mainMenu">
+					<a>수업</a>
+					<ul class="subMenu">
+						<li><a>수강신청</a></li>
+						<li><a>수강취소</a></li>
+						<li><a>재이수</a></li>
+						<li><a>계절학기</a></li>
+						<li><a>인터넷강의</a></li>
+					</ul>
+				</div>
+				<div class="mainMenu">
+					<a>성적</a>
+					<ul class="subMenu">
+						<li><a>성적관리</a></li>
+						<li><a>학사경고</a></li>
+						<li><a>시험성적평가</a></li>
+					</ul>
+				</div>
+				<div class="mainMenu">
+					<a>전공.전부(과)</a>
+					<ul class="subMenu">
+						<li><a>복수전공</a></li>
+						<li><a>부전공</a></li>
+						<li><a>전공배정</a></li>
+						<li><a>전부(과)</a></li>
+					</ul>
+				</div>
+				<div class="mainMenu">
+					<a>등록금납부</a>
+					<ul class="subMenu">
+						<li><a>등록금납부안내</a></li>
+						<li><a>분할납부</a></li>
+						<li><a>등록금반환기준</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+</div>
+
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+	<!-- <script type="text/javascript" src="/js/content/admin/cate_manage.js"></script> -->
+</th:block>
+
+</html>

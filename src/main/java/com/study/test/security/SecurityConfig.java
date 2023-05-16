@@ -24,7 +24,14 @@ public class SecurityConfig {
 								, "/main"
 								, "/member/login"
 								, "/member/join"
+<<<<<<< HEAD
 								, "/school/main"
+=======
+								, "/emp/**"
+								, "/stu/**"
+								, "/member/isDuplicateMemNoAjax"
+								, "/member/findPwAjax"
+>>>>>>> 4ffb79bd7154cea681da237b62041861fe572eb1
 								)
 				.permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")
@@ -32,9 +39,9 @@ public class SecurityConfig {
 			.and()
 				.formLogin()
 				.loginPage("/member/loginForm")
-				.usernameParameter("memId")
+				.usernameParameter("memNo")
 				.passwordParameter("memPw")
-				.loginProcessingUrl("/main")
+				.loginProcessingUrl("/member/login")
 				.successHandler(getSuccessHandler())
 				.failureHandler(getFailureHandler())
 				.permitAll()

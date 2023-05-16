@@ -47,11 +47,10 @@
 		    #{memName},
 		    #{memGender},
 		    REPLACE(
-		        <foreach collection="memTells" item="tell" separator="-">
-		            '${tell}'
-		        </foreach>,
-		        ' ', ''
-		    ),
+				<foreach collection="memTells" item="tell" open="'" separator="-" close="'">
+					${tell}
+				</foreach>, ' ', ''),
+		    
 		    #{memAddr},
 		    #{memAddrDetail},
 		    #{memRole},

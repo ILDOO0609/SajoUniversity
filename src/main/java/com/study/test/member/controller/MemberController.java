@@ -1,5 +1,7 @@
 package com.study.test.member.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.test.member.service.memberService;
 import com.study.test.member.vo.MemberVO;
+import com.study.test.util.MailService;
 
 import jakarta.annotation.Resource;
 
@@ -18,6 +21,11 @@ public class MemberController {
 	@Resource(name = "memberService")
 	private memberService memberService;
 	
+	@Resource(name = "mailService")
+	private MailService mailService;
+	
+	@Autowired 
+	private PasswordEncoder encoder;
 	
 
 	@PostMapping("/logout")
@@ -44,6 +52,9 @@ public class MemberController {
 	@PostMapping("/join")
 	public String join(MemberVO memberVO) {
 		
+		String encodedPw = encoder.encode(memberVO.getMemPw());
+		
+		memberVO.setMemPw(encodedPw);
 		
 		memberService.join(memberVO);
 		

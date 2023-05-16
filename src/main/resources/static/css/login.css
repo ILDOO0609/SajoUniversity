@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+
+body {
+    background: #f7f7f7;
+    display: block;
+}
+
+body, h1, h2, h3, h4, input, button {
+    margin: 0;
+    padding: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+#wrapper {
+    font-size: 1em;
+    width: 900px;
+    margin: 0 auto;
+}
+
+#container {
+    border: 1px solid #e6e6e6;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+#container:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+#contain {
+    margin: 0 69px;
+}
+
+#login {
+    margin-bottom: 30px;
+    min-height: 380px;
+    overflow: hidden;
+}
+
+#login:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.btn_help_box {
+    border-top: #d9d9d9 1px solid;
+    padding: 22px 0 30px 0;
+    overflow: hidden;
+}
+
+#footer {
+    color: #333;
+    font-size: 0.85em;
+    padding: 20px 0;
+    text-align: center;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

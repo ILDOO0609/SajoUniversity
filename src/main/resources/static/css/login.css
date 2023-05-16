@@ -67,7 +67,11 @@ body, h1, h2, h3, h4, input, button {
 }
 
 
-
+.row.mb-3 {
+    text-align: center;
+    width: 300px;
+    float: right;
+}
 
 
 

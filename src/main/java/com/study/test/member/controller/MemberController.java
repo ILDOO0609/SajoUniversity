@@ -17,6 +17,7 @@ import com.study.test.util.MailService;
 import com.study.test.util.MailVO;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/member")
@@ -43,6 +44,7 @@ public class MemberController {
 	public String loginForm() {
 		return "content//member/login_form";
 	}
+	
 	
 	// 교번 중복 체크
 	@ResponseBody

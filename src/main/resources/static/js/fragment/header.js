@@ -1,5 +1,66 @@
 init();
 
+// login 함수
+function login() {
+	const memNo = document.querySelector('#loginModal #memNo').value;
+	const memPw = document.querySelector('#loginModal #memPw').value;
+
+
+
+	//ajax start
+	$.ajax({
+		url: '/member/login', //요청경로
+		type: 'post',
+		data: { 'memNo': memNo, 'memPw': memPw }, //필요한 데이터
+		success: function(result) {
+
+			// 로그인 성공 시
+			if (result == 'success') {
+
+
+				location.href = '/';
+			}
+			// 로그인 실패 시
+			else {
+				
+				const error_div = document.querySelector('#errorDiv');
+				if(error_div != null){
+					error_div.remove();			
+				}
+				
+				let str = '';
+				str += '<div id="errorDiv" style="color: red; font-size: 0.95rem; text-align: center; margin-top: 20px;">';
+				str += '로그인 정보를 확인하세요';
+				str += '</div>';
+					
+				const login_error_div = document.querySelector('#loginErrorDiv');
+				
+				login_error_div.insertAdjacentHTML('beforeend',str)
+				
+				// id, pw input태그 초기화
+				document.querySelectorAll('#loginModal input:not([type="button"])').forEach(function(t, index) {
+					// console.log(`t = ${t.value} / index = ${index}`)
+					t.value = '';
+
+				});
+
+
+				// const tags = document.querySelectorAll('#loginModal input:not([type="button"])');
+				//for(const t of tags){
+				//	t.value = '';
+				//}
+
+			}
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+								
+}
+
+
 // 회원가입 함수
 function join() {
 	// 유효성 검사 진행
@@ -122,7 +183,7 @@ function deleteErrorDiv() {
 }
 
 
-// 회원 가입 진행 시 데이터 유효성 검사 (ID)
+// 회원 가입 진행 시 데이터 유효성 검사
 function joinValidate() {
 
 
@@ -186,10 +247,60 @@ function joinValidate() {
 	}
 	
 	return result_memNo && result_memPw;
+	
+	
 }
 
 
+// findPassword 함수
+function findPw(btn) {
+	
+	btn.disabled = true;
+	btn.querySelector('span').textContent = 'Loading...';
+	
+	const spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+	btn.insertAdjacentHTML('afterbegin', spinner);
+	
+	
+	
+//ajax start
+	$.ajax({
+		url: '/member/findPwAjax',
+		type: 'post',
+		async: true, // 동기 true, 비동기 false
+		// contentType: 'application/json; charset=UTF-8',
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		data: $('#findPwForm').serialize(), // form 태그 안의 모든 데이터
+		success: function(result) {
+			
+		   if(result) {
+			   alert('이메일로 임시 비밀번호를 발급했습니다. \n 반드시 비밀번호 변경 후 사용하세요.');
+		   }
+		   else {
+			   let str = '';
+			   str += '<div class="col-12 error-findPw">';
+			   str += '<span>';
+			   str += 'ID와 이름을 확인해주세요.';
+			   str += '</span>';
+			   str += '</div>';
+			   
+			   document.querySelector('#findPwErrorDiv').insertAdjacentHTML('afterend', str);
+			   
+		   }
+			   btn.disabled = false;
+			   btn.querySelector('span:first-child').remove();
+			   btn.querySelector('span').textContent = '비밀번호 찾기';
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+//ajax end
 
+
+	
+								
+}
 
 
 
@@ -241,6 +352,26 @@ function init() {
 		deleteErrorDiv()
 	});
 
-	
+	// find 모달창이 닫힐 때 실행
+	findPwModal.addEventListener('hidden.bs.modal', function(event){
+		document.querySelector('#findPwForm').reset();
+		const error_tag = document.querySelector('.error-findPw');
+		
+		if(error_tag != null){
+			error_tag.remove();
+		}
+		
+		const find_pw_modal_div = event.target; 
+		const find_pw_btn = find_pw_modal_div.querySelector('button');
+		
+		find_pw_btn.disabled = false;
+		
+		find_pw_btn.querySelector('span:last-child').textContent = '비밀번호 찾기';
+		
+		if(find_pw_btn.children.length > 1){
+			find_pw_btn.firstElementChild.remove();
+		}
+		
+	});
 
 }

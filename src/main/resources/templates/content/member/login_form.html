@@ -71,9 +71,11 @@
 					<p>통합 로그인 비밀번호가 기억나지 않으세요?
 						<br>비밀번호를 이메일로 재발급 받고 이용해주세요.
 					</p>
-					<ul>
-						<li><a href="">비밀번호 재발급</a></li>
-					</ul>
+					<div class="col">
+						<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer;" class="btn d-grid mt-3 btn btn-primary">
+									비밀번호 찾기
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -87,6 +89,55 @@
 		
 	</div>
 </div>
+
+
+
+<!--비밀번호 찾기 Modal -->
+		<div class="modal fade" id="findPwModal" 
+			data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+	
+	
+					<div class="modal-body">
+						<form id="findPwForm"  method="post">
+							<div class="row mb-3">
+								<div class="col-12">
+									<input type="text" class="form-control" placeholder="Input Your No" name="memNo" id="findPwMemNo">
+								</div>
+							</div>
+	
+							<div class="row mb-3">
+								<div class="col-12" id="findPwErrorDiv">
+									<input type="text" class="form-control" placeholder="Input Your Name" name="memName" id="findPwMemName">
+								</div>
+							</div>
+							
+	
+							<div class="row mb-3">
+								<div class="col-12 d-grid">
+									
+									<button onclick="findPw(this);" class="btn btn-primary" type="button">
+										<span>비밀번호 찾기</span>
+									</button>
+
+								</div>
+								<div class="col" style="font-size: 0.8rem; color: red;">
+									가입 시 작성 한 이메일로 임시 비밀번호가 발송 됩니다.
+								</div>
+							</div>
+
+							
+								
+							
+
+						</form>
+					</div>
+	
+				</div>
+			</div>
+		</div>
 
 
 

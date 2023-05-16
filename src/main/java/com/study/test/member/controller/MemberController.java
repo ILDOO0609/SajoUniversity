@@ -1,12 +1,16 @@
 package com.study.test.member.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.test.member.service.memberService;
 import com.study.test.member.vo.MemberVO;
+import com.study.test.util.MailService;
 
 import jakarta.annotation.Resource;
 
@@ -17,11 +21,12 @@ public class MemberController {
 	@Resource(name = "memberService")
 	private memberService memberService;
 	
-	@GetMapping("/loginForm")
-	public String login() {
-		
-		return "main";
-	}
+	@Resource(name = "mailService")
+	private MailService mailService;
+	
+	@Autowired 
+	private PasswordEncoder encoder;
+	
 
 	@PostMapping("/logout")
 	public String logout() {
@@ -29,10 +34,27 @@ public class MemberController {
 		return "main";
 	}
 	
+	// 로그인 페이지 이동
+	@GetMapping("/loginForm")
+	public String loginForm() {
+		return "content//member/login_form";
+	}
+	
+	// 교번 중복 체크
+	@ResponseBody
+	@PostMapping("/isDuplicateMemNoAjax")
+	public boolean isDuplicateMemNo(int memNo) {
+		return memberService.isDuplicateMemNo(memNo);
+	}
+	
+	
 	// 회원 가입
 	@PostMapping("/join")
 	public String join(MemberVO memberVO) {
 		
+		String encodedPw = encoder.encode(memberVO.getMemPw());
+		
+		memberVO.setMemPw(encodedPw);
 		
 		memberService.join(memberVO);
 		

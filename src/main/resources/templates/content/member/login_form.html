@@ -6,11 +6,90 @@
 
 <!-- 연결해야 할 외부 css파일 -->
 <th:block layout:fragment="content_css">
-   <!-- <link rel="stylesheet" href="첨부될 css 파일 경로"> -->
+	<link rel="stylesheet" href="/css/login.css">
 </th:block>
 
 <th:block layout:fragment="content">
-로그인
+
+<div id="wrapper">
+	<!-- HEADER -->
+	<div id="header">	
+		<h1 class="hidden" style="display: none;">사조대학 포털시스템</h1>
+	</div>
+	
+	<!-- CONTENTS -->
+	<div id="container">
+		<div id="contain">
+			<!-- 로그인 -->
+			<div id="login" style="background: none !important;">
+				<!-- 언어 선택 -->
+				<div class="logintype_sel">
+					<h2 class="hidden" style="display: none;">언어선택</h2>
+					<ul>
+						<li class="on" style="width: 249px"><a href="" title="아이디 로그인 선택됨">아이디 로그인</a></li>
+						<li style="width: 251px"><a href="" title="ID LOGIN">ID LOGIN</a></li>
+					</ul>
+				</div>
+				
+				<!-- 로그인 정보 입력 -->
+				<span style="float: left; position: relative; left: 60px; padding: 30px 0 0">
+					<img src="" alt="사조대학 SAJO University">
+				</span>
+				<div id="logintype_idpw" style="left:0; float: right;">
+					<h2 class="hidden">아이디 로그인 정보 입력</h2>
+					<form id="LoginForm" name="LoginForm" method="post" action="">
+						<fieldset class="field_wrap">
+							<p class="mem_no">
+								<label for="userId" class="form_hidden">학번 or 교번</label>
+								<input type="text" name="memNo" id="memNo" value maxlength="8" title="학번 or 교번">
+							</p>
+							<p class="mem_pw">
+								<label for="userPw" class="form_hidden">비밀번호</label>
+								<input type="password" name="memPw" id="memPw" value maxlength="12" title="비밀번호 입력">
+							</p>
+							<div class="check_box">
+								<span class="chk_saveLoginID">
+									<label for="saveLoginID">아이디저장</label>
+									<input type="checkbox" name="saveLoginID" id="saveLoginId">
+								</span>
+							</div>
+							<p class="btn">
+								<input type="submit" name="btn_login" id="btn_login" title="통합로그인" value="통합로그인">
+							</p>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div id="help_btn" class="btn_help_box">
+				<div class="btn_help_type1">
+					<p>통합 로그인 아이디를 모를 경우,<br>학번or교번 찾기를 사용하세요.</p>
+					<ul>
+						<li><a href="">학번 또는 교번 찾기</a></li>
+					</ul>
+				</div>
+				<div class="btn_help_type1_r">
+					<p>통합 로그인 비밀번호가 기억나지 않으세요?
+						<br>비밀번호를 이메일로 재발급 받고 이용해주세요.
+					</p>
+					<ul>
+						<li><a href="">비밀번호 재발급</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<p class="mb10">
+			<a href="https://www.yu.ac.kr/main/intro/privacy.do" target="_blank"><strong style="color:#294798">개인정보처리방침</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a onclick="window.open(this.href,'','left=100,top=100,width=710,height=480,scrollbars=yes');" title="이메일무단수집거부 새창열림" href="http://www.yu.ac.kr/_korean/_popup/emailrefusal.html" target="_blank">이메일무단수집거부</a>
+			</p>
+			<p>COPYRIGHT© SAJO UNIVERSITY ALL RIGHTS RESERVED.</p>
+		</div>
+		
+	</div>
+</div>
+
+
+
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->

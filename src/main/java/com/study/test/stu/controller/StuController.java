@@ -2,12 +2,20 @@ package com.study.test.stu.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.study.test.board.vo.BoardVO;
+import com.study.test.stu.service.StuService;
+
+import jakarta.annotation.Resource;
 
 @Controller
 @RequestMapping("/stu")
 public class StuController {
-
+	@Resource(name="stuService")
+	private StuService stuService;
+	
 	// 학생 커뮤니티
 	@GetMapping("/stuBoard")
 	public String stuBoard() {
@@ -60,11 +68,17 @@ public class StuController {
 	}
 	
 	
-	// 학생 커뮤니티 글쓰기
+	// 학생 커뮤니티 글쓰기페이지로 이동
 	@GetMapping("/stuBoardWriteForm")
 	public String stuBoardWriteForm() {
 		
 		return "content/stu/stu_board_write_form";
+	}
+	
+	@PostMapping("/stuBoardWrite")
+	public String stuBoardWrite(BoardVO boardVO) {
+		
+		return "content/stu/stu_board";
 	}
 	
 }

@@ -13,11 +13,20 @@ public class memberServiceImpl implements memberService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	// 중복 번호 체크
+	@Override
+	public boolean isDuplicateMemNo(int memNo) {
+		int result = sqlSession.selectOne("memberMapper.isDuplicateMemNo", memNo);
+		return result != 0 ? true : false;
+	}
+	
 	// 회원가입
 	@Override
 	public void join(MemberVO memberVO) {
 		sqlSession.insert("memberMapper.join" , memberVO);
 	}
+
+	
 
 	
 

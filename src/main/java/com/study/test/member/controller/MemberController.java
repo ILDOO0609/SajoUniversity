@@ -67,8 +67,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-<<<<<<< HEAD
-=======
+
 	// 비밀번호 찾기
 	@ResponseBody
 	@PostMapping("/findPwAjax")
@@ -96,13 +95,11 @@ public class MemberController {
 		
 		return memEmail != null ? true : false;
 	}
-	
-	
-	
-	
->>>>>>> 4ffb79bd7154cea681da237b62041861fe572eb1
-}
 
+}
+	
+	
+	
 
 
 

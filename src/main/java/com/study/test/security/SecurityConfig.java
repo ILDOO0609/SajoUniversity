@@ -24,14 +24,14 @@ public class SecurityConfig {
 								, "/main"
 								, "/member/login"
 								, "/member/join"
-<<<<<<< HEAD
-								, "/school/main"
-=======
+
 								, "/emp/**"
 								, "/stu/**"
 								, "/member/isDuplicateMemNoAjax"
 								, "/member/findPwAjax"
->>>>>>> 4ffb79bd7154cea681da237b62041861fe572eb1
+
+								, "/school/**"
+
 								)
 				.permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")

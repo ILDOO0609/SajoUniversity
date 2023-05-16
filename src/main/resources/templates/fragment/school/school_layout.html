@@ -16,7 +16,9 @@
 <link rel="stylesheet" href="/css/fragment/header.css">
 
 <!-- content 페이지가 열릴때 같이 열리는 css -->
-<th:block layout:fragment="content_css"></th:block>
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/school.css">
+</th:block>
 </head>
 <body>
 <div class="container">
@@ -27,7 +29,79 @@
 	</div>
 	<div class="row">
 		<div class="col">
-			<th:block layout:fragment="content"></th:block>
+			
+			 <div class="row">
+				<div class="col">
+					<nav class="navbar navbar-expand-lg bg-body-tertiary">
+						<div class="container-fluid mainMenuList">
+							<div data-bs-toggle="modal" data-bs-target="#joinModal" style="cursor: pointer;">회원등록</div>
+							<div class="mainMenu">
+								<a href="/school/main">학사 메뉴</a>
+								<ul class="subMenu">
+									<li><a href="/school/info">학사 안내</a></li>
+									<li><a href="/school/scheList">학사 일정</a></li>
+								</ul>
+							</div>
+							<div class="mainMenu">
+								<a href="/school/acamain">학적 변동</a>
+								<ul class="subMenu">
+									<li><a href="/school/acaLeave">휴학</a></li>
+									<li><a href="/school/acaReturn">복학</a></li>
+									<li><a href="/school/acaReadmi">재입학</a></li>
+									<li><a href="/school/acaDropOut">자퇴</a></li>
+								</ul>
+							</div>
+							<div class="mainMenu">
+								<a href="/school/lessonMain">수업</a>
+								<ul class="subMenu">
+									<li><a href="/school/lessonEnrolment">수강신청</a></li>
+									<li><a href="/school/lessonCancel">수강취소</a></li>
+									<li><a href="/school/lessonRetake">재이수</a></li>
+									<li><a href="/school/lessonSeason">계절학기</a></li>
+									<li><a href="/school/lessonIngang">인터넷강의</a></li>
+								</ul>
+							</div>
+							<div class="mainMenu">
+								<a href="/school/achieveMain">성적</a>
+								<ul class="subMenu">
+									<li><a href="/school/achieveWarning">성적관리</a></li>
+									<li><a href="/school/achieveManage">학사경고</a></li>
+									<li><a href="/school/achieveRating">시험성적평가</a></li>
+								</ul>
+							</div>
+							<div class="mainMenu">
+								<a href="/school/majorMain">전공.전과(부)</a>
+								<ul class="subMenu">
+									<li><a href="/school/majorDouble">복수전공</a></li>
+									<li><a href="/school/majorMinor">부전공</a></li>
+									<li><a href="/school/majorChange">전과(부)</a></li>
+								</ul>
+							</div>
+							<div class="mainMenu">
+								<a href="/school/tuitionMain">등록금납부</a>
+								<ul class="subMenu">
+									<li><a href="/school/tuitionInfo">등록금납부</a></li>
+									<li><a href="/school/tuitionSplit">분할납부</a></li>
+									<li><a href="/school/tuitionReturn">등록금반환기준</a></li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+				</div>
+			</div>
+						
+			
+			
+			<th:block layout:fragment="content">
+			
+			
+			
+			
+			
+			
+			
+			
+			</th:block>
 		</div>
 	</div>
 </div>

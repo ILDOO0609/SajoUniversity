@@ -101,8 +101,9 @@ public class MemberController {
 	}
 	
 	
-	// 인증번호 발송 -- postmapping, responsebody 걸어야함
-	@GetMapping("/sendSMSAjax")
+	// 인증번호 발송
+	@ResponseBody
+	@PostMapping("/sendSMSAjax")
 	public void sendSMS() {
 		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCS7NPK8BJXHRZTS", "5SCHDJCK3NVOLXM1ZVYMSIQVQZGRBVRJ", "https://api.coolsms.co.kr");
 		

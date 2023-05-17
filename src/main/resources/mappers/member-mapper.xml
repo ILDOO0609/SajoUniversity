@@ -56,7 +56,7 @@
 		    #{memName},
 		    #{memGender},
 		    REPLACE(
-				<foreach collection="memTells" item="tell" open="'" separator="-" close="'">
+				<foreach collection="memTells" item="tell" open="'"  close="'">
 					${tell}
 				</foreach>, ' ', ''),
 		    

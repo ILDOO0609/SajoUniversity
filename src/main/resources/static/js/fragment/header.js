@@ -168,9 +168,36 @@ function setDisabled() {
 }
 
 
+// 인증번호 발송
+function sendSMS() {
+	//ajax start
+	$.ajax({
+		url: '/member/sendSMSAjax', //요청경로
+		type: 'post',
+		async: false, // 동기방식 진행
+		data: { 'memTell': memTell }, //필요한 데이터
+		success: function(result) {
+			if (result) {
+				alert('입력하신 연락처로 인증번호를 발급하였습니다. \n 제한 시간 내 인증번호를 입력 해 주세요.');
+			}
+			else {
+				alert('사용가능');
 
+				// join 버튼 disabled 속성 제거
+				document.querySelector('#joinBtn').disabled = false;
 
-// dd
+				tag.value;
+			}
+
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+
+}
+
 
 // validation 오류 메세지 div 전체 제거
 function deleteErrorDiv() {

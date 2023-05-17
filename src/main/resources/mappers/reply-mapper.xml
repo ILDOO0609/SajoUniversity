@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="replyMapper">
+	
+<resultMap type="com.study.test.reply.vo.ReplyVO" id="reply">
+	<id		column="REPLY_NO" 			property="boardNo"/>
+	<result column="REPLY_CONTENT"		property="boardTitle"/>
+	<result column="REPLY_WRITER"		property="boardContent"/>
+	<result column="IS_PRIVATE" 		property="boardWriter"/>
+	<result column="REPLY_CREATE_DATE" 	property="boardCreateDate"/>
+	<result column="BOARD_NO" 	property="boardNo"/>
+</resultMap>
+
+
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

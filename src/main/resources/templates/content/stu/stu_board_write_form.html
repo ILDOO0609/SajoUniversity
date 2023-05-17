@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/layout}">
+
+<th:block layout:fragment="content_css">
+</th:block>
+
+<th:block layout:fragment="content">
+<style type="text/css">
+.hide{
+	display: none;
+}
+</style>
+글쓰기페이지
+<div class="row">
+	<div class="col">
+		<form th:action="@{/stu/stu}" method="post">
+			<table>
+				<tr>
+					<td>제목</td>
+					<td><input type="text" name="boardTitle" class="form-control"> </td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td><textarea rows="5" cols="50" style="resize: none;" name="boardContent" class="form-control"></textarea></td>
+				</tr>
+				<tr>
+					<td>이미지 파일 첨부</td>
+					<td><input type="file" class="form-control"></td>
+				</tr>
+				<tr>
+					<td>공개 여부</td>
+					<td>
+						<input type="checkbox" id="isSecret" name="isSecret" onclick="togglePw();" class="form-check-input"> Y
+					</td>
+				</tr>
+			</table>
+			<div class="hide" id="toggleDiv">
+				비밀번호<input type="text" id="boardPw" class="form-control">
+			</div>
+		<input type="submit" value="글 등록" class="btn btn-primary">
+		</form>
+	</div>
+</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/stu/stu_board_write_form.js"></script>
+</th:block>
+
+</html>

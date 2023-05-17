@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-   layout:decorate="~{fragment/layout}">
+   layout:decorate="~{fragment/emp_layout}">
    
 <!-- 연결해야 할 외부 css 파일 -->
 <th:block layout:fragment="content_css">
@@ -12,6 +12,7 @@
 <th:block layout:fragment="content">
 <div class="row" style="width: 80%; margin: 0 auto;">
 	<div class="col text-center">
+	<form action="/emp/regLecture" method="post">
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 등록 ROW ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 		<div class="row mb-5">
 			<div class="col text-start">
@@ -25,7 +26,7 @@
 						교과목명 
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control" name="">
+						<input type="text" class="form-control" name="lecName">
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -33,7 +34,7 @@
 						강의학점 
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control" name="lect">
+						<input type="text" class="form-control" name="lecScore">
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -41,8 +42,8 @@
 						강의학기 
 					</div>
 					<div class="col-4">
-						<select class="form-select">
-							<option>1학기</option>
+						<select class="form-select" name="semNo">
+							<option th:each="sem : ${semesterList}" th:value="${sem.semNo}">[[${sem.semYear+' '+sem.semester+'학기'}]]</option>
 						</select>
 					</div>
 				</div>
@@ -51,8 +52,8 @@
 						단과대학 
 					</div>
 					<div class="col-4">
-						<select class="form-select">
-							<option>공과대학</option>
+						<select class="form-select" name="collNo">
+							<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
 						</select>
 					</div>
 				</div>
@@ -61,8 +62,8 @@
 						소속학과 
 					</div>
 					<div class="col-4">
-						<select class="form-select">
-							<option>컴퓨터공학과</option>
+						<select class="form-select" name="deptNo">
+							<option th:each="dept : ${deptList}" th:value="${dept.deptNo}">[[${dept.deptName}]]</option>
 						</select>
 					</div>
 				</div>
@@ -71,7 +72,7 @@
 						담당교수 
 					</div>
 					<div class="col-4">
-						<select class="form-select">
+						<select class="form-select" name="empNo">
 							<option>저교수</option>
 						</select>
 					</div>
@@ -81,7 +82,7 @@
 						최대 수강신청 인원
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control">
+						<input type="text" class="form-control" name="maxNum" max="50" min="0">
 					</div>
 				</div>
 			</div>
@@ -107,7 +108,7 @@
 						강의 날짜 
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control">
+						<input type="date" class="form-control" name="lecDay" required>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -115,7 +116,7 @@
 						강의 시작 시간 
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control">
+						<input type="text" class="form-control" name="firstTime" required>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -123,7 +124,7 @@
 						강의 마치는 시간 
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control">
+						<input type="text" class="form-control" name="lastTime" required>
 					</div>
 				</div>
 			</div>
@@ -133,23 +134,24 @@
 			<div class="col">
 				<div class="row mb-3">
 					<div class="col-4 d-grid" style="margin: 0 auto;">
-						<input type="button" class="btn btn-primary" value="시간 체크">
+						<input type="button" class="btn btn-primary" value="시간 체크" onclick="checkTime();">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-4 d-grid" style="margin: 0 auto;">
-						<input type="button" class="btn btn-success" value="등록">
+						<input type="submit" class="btn btn-success" value="등록">
 					</div> 
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
 </div>
 </th:block>
 
 <!-- 연결해야 할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src=""></script>-->
+	<script type="text/javascript" src="/js/content/emp/reg_lecture.js"></script>
 </th:block>
 
 </html>

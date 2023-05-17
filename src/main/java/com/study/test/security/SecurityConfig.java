@@ -31,7 +31,9 @@ public class SecurityConfig {
 								, "/member/findPwAjax"
 
 								, "/school/**"
+								, "/member/sendSMSAjax"
 
+								
 								)
 				.permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")

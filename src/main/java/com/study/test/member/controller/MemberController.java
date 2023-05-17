@@ -18,6 +18,10 @@ import com.study.test.util.MailVO;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
+import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Controller
 @RequestMapping("/member")
@@ -95,7 +99,32 @@ public class MemberController {
 		
 		return memEmail != null ? true : false;
 	}
+	
+	
+	// 인증번호 발송 -- postmapping, responsebody 걸어야함
+	@GetMapping("/sendSMSAjax")
+	public void sendSMS() {
+		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCS7NPK8BJXHRZTS", "5SCHDJCK3NVOLXM1ZVYMSIQVQZGRBVRJ", "https://api.coolsms.co.kr");
+		
+		Message message = new Message();
+		message.setFrom("01044440519"); // 보내는 사람 번호
+		message.setTo("01044440519"); //  받는 사람 번호
+		message.setText("사조 대학 테스트중."); // 텍스트 내용
 
+		try {
+		  // send 메소드로 ArrayList<Message> 객체를 넣어도 동작합니다!
+		  messageService.send(message);
+		} catch (NurigoMessageNotReceivedException exception) {
+		  // 발송에 실패한 메시지 목록을 확인할 수 있습니다!
+		  System.out.println(exception.getFailedMessageList());
+		  System.out.println(exception.getMessage());
+		} catch (Exception exception) {
+		  System.out.println(exception.getMessage());
+		}
+		
+	}
+	
+	
 }
 	
 	

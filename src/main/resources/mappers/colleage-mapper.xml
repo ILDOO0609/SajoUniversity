@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 공통으로 쓰이는 mapper 모아둔곳  -->
+<mapper namespace="colleageMapper">
+			<!-- COLLEAGE 테이블 RESULTMAP -->
+	<resultMap type="com.study.test.colleage.vo.ColleageVO" id="colleage">
+		<id 	column="COLL_NO"   property="collNo"/>
+		<result column="COLL_NAME" property="collName"/>
+	</resultMap>
+	
+	
+		    <!-- DEPT 테이블 RESULTMAP -->
+	<resultMap type="com.study.test.colleage.vo.DeptVO" id="dept">
+		<id 	column="DEPT_NO"   property="deptNo"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="COLL_NO"   property="collNo"/>
+	</resultMap>
+	
+	
+			<!-- SEMESTER 테이블 RESULTMAP -->
+	<resultMap type="com.study.test.colleage.vo.SemesterVO" id="semester">
+		<id 	column="SEM_NO"   property="semNo"/>
+		<result column="SEM_YEAR" property="semYear"/>
+		<result column="SEMESTER"  property="semester"/>
+	</resultMap>
+	
+	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ쿼리문 작성ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	
+	<!-- 학기 테이블 조회 (SEMESTER)-->
+	<select id="getSemesterList" resultMap="semester">
+		SELECT SEM_NO
+			, SEM_YEAR
+			, SEMESTER
+		FROM SEMESTER
+	</select>
+	
+	<!-- COLLEAGE 테이블 조회 -->
+	<select id="getColleageList" resultMap="colleage">
+		SELECT COLL_NO
+			, COLL_NAME
+		FROM COLLEAGE
+	</select>
+	
+	<!-- DEPT 테이블 조회 -->
+	<select id="getDeptList" resultMap="dept">
+		SELECT DEPT_NO
+			, DEPT_NAME
+			, COLL_NO
+		FROM DEPT
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.study.test.colleage.service.ColleageService;
 import com.study.test.emp.service.EmpService;
 import com.study.test.emp.vo.LectureVO;
 
@@ -23,18 +23,29 @@ public class EmpController {
 	
 	@Resource(name = "empService")
 	private EmpService empService;
+	@Resource(name = "colleageService")
+	private ColleageService colleageService;
 	
 	//강의 리스트로 이동
 	@GetMapping("/lectureList")
 	public String lectureList(Model model) {
 		List<Map<String, String>> mapList = empService.getLectureList();
+		System.out.println("@@@@@@@@@@@@@@@@@@ "+mapList);
 		model.addAttribute("mapList", mapList);
 		return "content/emp/lecture_list";
 	}
 	
 	//강의 등록페이지로 이동
 	@GetMapping("/regLecture")
-	public String regLectureForm() {
+	public String regLectureForm(Model model) {
+		//강의정보 조회 담기
+		model.addAttribute("semesterList", colleageService.getSemesterList());
+		
+		//전공대학 정보 조회
+		model.addAttribute("colleageList", colleageService.getColleageList());
+		
+		//전공학과 정보 조회
+		model.addAttribute("deptList", colleageService.getDeptList());
 		return "content/emp/reg_lecture";
 	}
 	
@@ -43,11 +54,11 @@ public class EmpController {
 	public String regLecture(LectureVO lectureVO) {
 		System.out.println("@@@@@@@@@@@@@@@@@@@ "+lectureVO);
 		
-		/*
+		
 		//강의 등록
 		empService.insertLecture(lectureVO);
 		
-		*/
+		
 		
 		return "redirect:/emp/lectureList";
 	}

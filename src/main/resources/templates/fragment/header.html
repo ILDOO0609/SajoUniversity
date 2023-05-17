@@ -46,7 +46,6 @@
 						<span> 메뉴 2</span>
 						<span> 메뉴 3</span>
 						<span> 
-							
 						</span>
 				</div>
 			</nav>
@@ -120,8 +119,13 @@
 							</div>
 							
 							<div class="row mb-3">
-								<div class="col-12 d-grid">
-									<input type="button" class="btn" value="로그인" onclick="login();">
+								<div class="col-6 d-grid">
+									<input type="button" class="btn d-grid mt-3 btn-primary" value="로그인" onclick="login();">
+								</div>
+								<div class="col-6 d-grid">
+									<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer;" class="btn d-grid mt-3 btn-primary">
+									비밀번호 찾기
+									</span>
 								</div>
 							</div>
 						</div>
@@ -183,6 +187,13 @@
 						<div class="col-12 d-grid">
 							<label class="form-date-label" for="mem_birthday">생년월일</label>
 							<input type="date" class="form-control" id="memBirthday" name="memBirthday">
+							<!-- 현재 날짜 이하만 고를수 있도록 설정 -->
+							<script>
+							  const memBirthdayInput = document.getElementById('memBirthday');
+							  memBirthdayInput.min = '0000-01-01';
+							  const currentDate = new Date().toISOString().split('T')[0];
+							  memBirthdayInput.max = currentDate;
+							</script>
 						</div>
 						
 						<div class="col-3">
@@ -276,6 +287,8 @@
 						<div class="col-12 d-grid">
 							<button id="joinBtn" onclick="join();" type="button" class="btn">회 원 등 록</button>
 						</div>
+ 						
+ 						
  						
  					</form>
  				</div>

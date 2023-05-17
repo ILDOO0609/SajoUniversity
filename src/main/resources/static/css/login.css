@@ -31,9 +31,7 @@ body, h1, h2, h3, h4, input, button {
     clear: both;
 }
 
-#contain {
-    margin: 0 69px;
-}
+
 
 #login {
     margin-bottom: 30px;
@@ -64,10 +62,13 @@ body, h1, h2, h3, h4, input, button {
 
 .mb10 {
     margin-bottom: 10px;
+    text-align: center;
 }
 
 
-
+span.logoImsi {
+    margin: 20px 250px;
+}
 
 
 

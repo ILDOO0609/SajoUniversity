@@ -25,11 +25,18 @@
 		<result column="DEPT_NO" 	 property="deptNo"/>
 	</resultMap>
 	
+	<!-- 강의 등록하기 위한 학기 이름 컬럼 조회 -->
+	<select id="getSemesterNameForRegLecture">
+		SELECT SEM_YEAR
+			, SEM_NO
+			, SEMESTER
+		FROM SEMSTER
+	</select>
 	
 	<!-- 강의 등록 -->
 	<insert id="insertLecture">
 		INSERT INTO LECTURE (
-			(SELECT 'LEC_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LEC_NO, 5))), 0) +1,3,0) FROM LECTURE)
+			LEC_NO
 			, LEC_NAME
 			, LEC_SCORE
 			, MAX_NUM
@@ -39,7 +46,7 @@
 			, COLL_NO
 			, DEPT_NO
 		) VALUES (
-			#{lecNo}
+			(SELECT 'LEC_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LEC_NO, 5))), 0) +1,3,0) FROM LECTURE)
 			, #{lecName}
 			, #{lecScore}
 			, #{maxNum}

@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+	implementation 'net.nurigo:sdk:4.2.7' // SMS 인증번호 발송
 	implementation 'org.springframework.boot:spring-boot-starter-mail' // mail 사용
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' // fragment 사용을 위해 추가
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16' //쿼리 로그 라이브러리 추가

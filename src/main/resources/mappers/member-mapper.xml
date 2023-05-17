@@ -18,12 +18,12 @@
 			<result column="MEM_IMAGE" 					 	property="memImage"/>
 		</resultMap>
 	
-			<select id="login" resultMap="member">
-			SELECT MEM_ID
+		<select id="login" resultMap="member">
+			SELECT MEM_NO
 				,	MEM_PW
 				,	MEM_ROLE
-			FROM SHOP_MEMBER
-			WHERE MEM_ID = #{memId}
+			FROM MEMBER
+			WHERE MEM_NO = #{memNo}
 		</select>
 		
 		

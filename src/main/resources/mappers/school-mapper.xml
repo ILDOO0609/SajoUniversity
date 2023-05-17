@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="schoolMapper">
+	<resultMap type="com.study.test.school.vo.SchoolInfoVO" id="school">
+		<id 	column="SCH_INFO_CODE"	 	property="schInfoCode"/>
+		<result column="SCH_INFO_TITLE" 	property="schInfoTitle"/>
+		<result column="SCH_INFO_CONTENT" 	property="schInfoContent"/>
+		<result column="SCH_INFO_WRITER" 	property="schInfoWriter"/>
+		<result column="SCH_INFO_DATE" 		property="schInfoDate"/>
+		<result column="SCH_INFO_STARTDATE" property="schInfoStartDate"/>
+		<result column="SCH_INFO_ENDDATE" 	property="schInfoEndDate"/>
+		<result column="SCH_INFO_READ_CNT" 	property="schInfoReadCnt"/>
+		<result column="REGDATE" 			property="regDate"/>
+		<result column="STARTDATE" 			property="startDate"/>
+		<result column="ENDTDATE" 			property="endDate"/>
+	</resultMap>
+
+	
+	<insert id="insertSchoolInfo">
+		INSERT INTO SCHOOL_INFORMATION (
+			SCH_INFO_CODE
+			, SCH_INFO_TITLE
+			, SCH_INFO_CONTENT
+			, SCH_INFO_STARTDATE
+			, SCH_INFO_ENDDATE
+		) VALUES (
+			(SELECT 'SCH_CODE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(SCH_INFO_CODE, 10))), 0) + 1, 3, '0') 
+         	FROM SCHOOL_INFORMATION)
+			, #{schInfoTitle}
+			, #{schInfoContent}
+			, #{schInfoStartDate}
+			, #{schInfoEndDate}
+		)
+	</insert>
+	
+	<select id="getSchoolInfo" resultMap="school">
+		SELECT SCH_INFO_CODE
+			, SCH_INFO_TITLE
+			, SCH_INFO_WRITER
+			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') REGDATE
+			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') STARTDATE
+			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') ENDTDATE
+		FROM SCHOOL_INFORMATION
+		ORDER BY SCH_INFO_DATE DESC
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

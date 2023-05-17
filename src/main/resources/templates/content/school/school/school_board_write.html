@@ -5,52 +5,54 @@
 	layout:decorate="~{fragment/school/school_layout}">
 
 <th:block layout:fragment="content">
-	<div class="row">
-		<div class="col">
-	 		<table class="table align-middle">
-	 			<tbody>
-	 				<tr>
-	 					<td>제목</td>
-	 					<td>
-	 						<input type="text">
-	 					</td>
-	 				</tr>
-					<tr>
-						<td>시작일</td>
-						<td>
-							<input type="date">
-						</td>
-					</tr>
-					<tr>
-						<td>종료일</td>
-						<td>
-							<input type="date">
-						</td>
-					</tr>
-	 				<tr>
-	 					<td>내용</td>
-	 					<td>
-	 						<textarea rows="20" cols="100"></textarea>
-	 					</td>
-	 				</tr>
-	 				
-	 				<tr>
-	 					<td>첨부파일</td>
-	 					<td>
-	 						<input type="file">
-	 					</td>
-	 				</tr>
-	 			</tbody>
-				<tfoot>
-					<tr>
-	 					<td colspan="4">
-	 						<input type="button" value="글등록" th:onclick="|location.href='@{/school/info}';|">
-	 					</td>
-	 				</tr>
-				</tfoot> 			
-	 		</table>
-	 	</div>
-	 </div>
+	<form th:action="@{/school/insertSchoolInfo}" method="post">
+		<div class="row">
+			<div class="col">
+		 		<table class="table align-middle">
+		 			<tbody>
+		 				<tr>
+		 					<td>제목</td>
+		 					<td>
+		 						<input type="text" name="schInfoTitle">
+		 					</td>
+		 				</tr>
+						<tr>
+							<td>시작일</td>
+							<td>
+								<input type="date" name="schInfoStartDate">
+							</td>
+						</tr>
+						<tr>
+							<td>종료일</td>
+							<td>
+								<input type="date" name="schInfoEndDate">
+							</td>
+						</tr>
+		 				<tr>
+		 					<td>내용</td>
+		 					<td>
+		 						<textarea rows="20" cols="100" name="schInfoContent"></textarea>
+		 					</td>
+		 				</tr>
+		 				
+		 				<tr>
+		 					<td>첨부파일</td>
+		 					<td>
+		 						<input type="file">
+		 					</td>
+		 				</tr>
+		 			</tbody>
+					<tfoot>
+						<tr>
+		 					<td colspan="4">
+		 						<input type="submit" value="글등록">
+		 					</td>
+		 				</tr>
+					</tfoot> 			
+		 		</table>
+		 	</div>
+		 </div>
+	 </form>
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->

@@ -20,7 +20,8 @@ public class EmpServiceImpl implements EmpService{
 	public void insertLecture(LectureVO lectureVO) {
 		sqlSession.insert("empMapper.insertLecture", lectureVO);
 	}
-
+	
+	//강의 목록 조회
 	@Override
 	public List<Map<String, String>> getLectureList() {
 		return sqlSession.selectList("empMapper.getLectureList");

@@ -10,12 +10,12 @@
 </th:block>
 
 <th:block layout:fragment="content">
-학생커뮤니티
+학생커뮤니티 
 <div class="row">
 	<div class="col">
 		<div class="row">
 			<div class="col">
-				<table>
+				<table class="table">
 					<thead>
 						<tr>
 							<td>No.</td>
@@ -25,11 +25,19 @@
 							<td>조회수</td>
 						</tr>
 					</thead>
-				
+					<tbody>
+						<tr th:each="board, state : ${boardList}">
+							<td>[[${boardList.size()-state.index}]]</td>
+							<td> <a th:href="@{/board/boardDetail(boardNo=${board.boardNo})}"> [[${board.boardTitle}]] </a> </td>
+							<td>[[${board.boardWriter}]]</td>
+							<td>[[${board.boardCreateDate}]]</td>
+							<td>[[${board.boardReadCnt}]]</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
-		<input type="button" value="글쓰기" th:onclick="|location.href='@{/stu/stuBoardWriteForm}'|">
+		<input type="button" value="글쓰기" class="btn btn-primary" th:onclick="|location.href='@{/stu/stuBoardWriteForm}'|">
 	</div>
 </div>
 </th:block>

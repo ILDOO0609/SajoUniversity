@@ -1,14 +1,24 @@
 package com.study.test.school.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.study.test.school.service.SchoolService;
+import com.study.test.school.vo.SchoolInfoVO;
+
+import jakarta.annotation.Resource;
 
 
 @Controller
 @RequestMapping("/school")
 public class SchoolController {
-
+	@Resource(name = "schoolService")
+	private SchoolService schoolService;
+	
+	
 	//학사메뉴 클릭시 페이지
 	@GetMapping("/main")
 	public String schoolMain() {
@@ -18,8 +28,8 @@ public class SchoolController {
 	
 	//학사메뉴 -> 학사안내 페이지
 	@GetMapping("/info")
-	public String schoolInfo() {
-		
+	public String schoolInfo(Model model) {
+		model.addAttribute("infoList", schoolService.getSchoolInfoList());
 		return "content/school/school/school_info";
 	}
 	
@@ -28,6 +38,16 @@ public class SchoolController {
 	public String regSchoolBoard() {
 		return "content/school/school/school_board_write";
 	}
+	
+	//학사메뉴 -> 학사안내 글등록
+	@PostMapping("/insertSchoolInfo")
+	public String insertSchoolInfo(SchoolInfoVO schoolInfoVO) {
+		schoolService.insertSchoolInfo(schoolInfoVO);
+		return "redirect:/school/info";
+	}
+	
+	
+	
 	
 	//학사메뉴 -> 학사일정 게시판 리스트 페이지
 	@GetMapping("/scheList")

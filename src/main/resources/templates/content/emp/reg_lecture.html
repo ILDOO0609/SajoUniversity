@@ -12,7 +12,7 @@
 <th:block layout:fragment="content">
 <div class="row" style="width: 80%; margin: 0 auto;">
 	<div class="col text-center">
-	<form action="/reglecture" method="post">
+	<form action="/emp/regLecture" method="post">
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 등록 ROW ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 		<div class="row mb-5">
 			<div class="col text-start">
@@ -43,7 +43,7 @@
 					</div>
 					<div class="col-4">
 						<select class="form-select" name="semNo">
-							<option>1학기</option>
+							<option th:each="sem : ${semesterList}" th:value="${sem.semNo}">[[${sem.semYear+' '+sem.semester+'학기'}]]</option>
 						</select>
 					</div>
 				</div>
@@ -53,7 +53,7 @@
 					</div>
 					<div class="col-4">
 						<select class="form-select" name="collNo">
-							<option>공과대학</option>
+							<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
 						</select>
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 					</div>
 					<div class="col-4">
 						<select class="form-select" name="deptNo">
-							<option>컴퓨터공학과</option>
+							<option th:each="dept : ${deptList}" th:value="${dept.deptNo}">[[${dept.deptName}]]</option>
 						</select>
 					</div>
 				</div>
@@ -82,7 +82,7 @@
 						최대 수강신청 인원
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control" name="maxNum">
+						<input type="text" class="form-control" name="maxNum" max="50" min="0">
 					</div>
 				</div>
 			</div>

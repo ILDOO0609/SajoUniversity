@@ -15,6 +15,7 @@
 	<!-- HEADER -->
 	<div id="header">	
 		<h1 class="hidden" style="display: none;">사조대학 포털시스템</h1>
+		
 	</div>
 	
 	<!-- CONTENTS -->
@@ -22,39 +23,22 @@
 		<div id="contain">
 			<!-- 로그인 -->
 			<div id="login" style="background: none !important;">
-				<!-- 언어 선택 -->
-				<div class="logintype_sel">
-					<h2 class="hidden" style="display: none;">언어선택</h2>
-					<ul>
-						<li class="on" style="width: 249px"><a href="" title="아이디 로그인 선택됨">아이디 로그인</a></li>
-						<li style="width: 251px"><a href="" title="ID LOGIN">ID LOGIN</a></li>
-					</ul>
-				</div>
+				
+				<p class="mb10">
+					<a href="https://www.yu.ac.kr/main/intro/privacy.do" target="_blank"><strong style="color:#294798">개인정보처리방침</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a onclick="window.open(this.href,'','left=100,top=100,width=710,height=480,scrollbars=yes');" title="이메일무단수집거부 새창열림" href="http://www.yu.ac.kr/_korean/_popup/emailrefusal.html" target="_blank">이메일무단수집거부</a>
+				</p>
+				
+				<p class="mb10">COPYRIGHT© SAJO UNIVERSITY ALL RIGHTS RESERVED.</p>
 				
 				<!-- 로그인 정보 입력 -->
-				<span style="float: left; position: relative; left: 60px; padding: 30px 0 0">
-					<img src="" alt="사조대학 SAJO University">
+				<span class="logoImsi">
+					<img src="/upload/mark.PNG" alt="사조대학 SAJO University">
 				</span>
 				
-				<div>
-					<form id="loginForm" method="post">
-						<div class="row mb-3">
-						
-							<div class="col-11">
-								<input type="text" class="form-control" placeholder="회원번호를 입력하세요." name="memNo" id="memNo">
-							</div>
-							<div class="col-11">
-								<input type="password" class="form-control" placeholder="비밀번호 입력해주세요." name="memPw" id="memPw">
-							</div>
-							
-							<div class="row mb-3">
-								<div class="col-12 d-grid">
-									<input type="button" class="btn btn-primary" value="로그인" onclick="login();">
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
+					<div class="btn btn-primary d-grid">
+						<span data-bs-toggle="modal" data-bs-target="#loginModal" style="cursor: pointer;">LOGIN</span> 
+					</div>
 				
 				
 			</div>
@@ -77,13 +61,13 @@
 				</div>
 			</div>
 		</div>
-		<div id="footer">
+		<!-- <div id="footer">
 			<p class="mb10">
 			<a href="https://www.yu.ac.kr/main/intro/privacy.do" target="_blank"><strong style="color:#294798">개인정보처리방침</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
 			<a onclick="window.open(this.href,'','left=100,top=100,width=710,height=480,scrollbars=yes');" title="이메일무단수집거부 새창열림" href="http://www.yu.ac.kr/_korean/_popup/emailrefusal.html" target="_blank">이메일무단수집거부</a>
 			</p>
 			<p>COPYRIGHT© SAJO UNIVERSITY ALL RIGHTS RESERVED.</p>
-		</div>
+		</div> -->
 		
 	</div>
 </div>

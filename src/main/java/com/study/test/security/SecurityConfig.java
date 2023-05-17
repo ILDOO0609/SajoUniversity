@@ -26,9 +26,16 @@ public class SecurityConfig {
 								, "/member/join"
 								, "/emp/**"
 								, "/stu/**"
+								, "/board/**"
 								, "/member/isDuplicateMemNoAjax"
 								, "/member/findPwAjax"
 								, "/school/**"
+<<<<<<< HEAD
+=======
+								, "/member/sendSMSAjax"
+
+								
+>>>>>>> dev
 								)
 				.permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")

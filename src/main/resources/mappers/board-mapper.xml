@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="boardMapper">
+	
+<resultMap type="com.study.test.board.vo.BoardVO" id="board">
+	<id		column="BOARD_NO" 			property="boardNo"/>
+	<result column="BOARD_TITLE"		property="boardTitle"/>
+	<result column="BOARD_CONTENT"		property="boardContent"/>
+	<result column="BOARD_WRITER" 		property="boardWriter"/>
+	<result column="BOARD_CREATE_DATE" 	property="boardCreateDate"/>
+	<result column="BOARD_READ_CNT" 	property="boardReadCnt"/>
+	<result column="REPLY_CNT" 			property="replyCnt"/>
+	<result column="IS_SECRET" 			property="isSecret"/>
+	<result column="IS_NOTICE" 			property="isNotice"/>
+	<result column="CATE_NO" 			property="cateNo"/>
+	<collection property="replyList" resultMap="replyMapper.reply"></collection>
+</resultMap>
+
+<select id="getBoard" resultMap="board">
+SELECT BOARD_NO
+	, BOARD_TITLE
+	, BOARD_WRITER
+	, TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
+	, BOARD_READ_CNT
+	, REPLY_CNT
+	, IS_SECRET
+	, IS_NOTICE
+FROM BOARD
+ORDER BY BOARD_NO
+</select>
+
+<select id="getBoardDetail" resultMap="board">
+
+</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

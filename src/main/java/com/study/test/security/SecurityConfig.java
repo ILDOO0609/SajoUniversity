@@ -25,6 +25,7 @@ public class SecurityConfig {
 								, "/member/login"
 								, "/member/join"
 								, "/stu/**"
+								, "/board/**"
 								, "/member/isDuplicateMemNoAjax"
 								, "/member/findPwAjax"
 								)

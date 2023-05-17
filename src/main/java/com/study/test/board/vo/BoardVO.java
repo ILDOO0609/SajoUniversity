@@ -1,5 +1,9 @@
 package com.study.test.board.vo;
 
+import java.util.List;
+
+import com.study.test.reply.vo.ReplyVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,4 +22,6 @@ public class BoardVO {
 	private String isSecret;
 	private String isNotice;
 	private String cateNo;
+	
+	private List<ReplyVO> replyList;
 }

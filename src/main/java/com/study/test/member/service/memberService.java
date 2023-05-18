@@ -13,8 +13,14 @@ public interface memberService {
 	// 회원 등록
 	void join(MemberVO memberVO);
 	
+	// 로그인 정보
+	MemberVO loginInfo(MemberVO memberVO);
+	
 	// 비밀번호 찾기
 	String getMemEmail(MemberVO memberVO);
+	
+	// 아이디 찾기
+	String getMemEmail2(MemberVO memberVO);
 	
 	// 비밀번호 변경
 	void updateMemPw(MemberVO memberVO);

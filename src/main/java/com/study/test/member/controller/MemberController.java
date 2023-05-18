@@ -46,6 +46,7 @@ public class MemberController {
 	// 로그인 페이지 이동
 	@GetMapping("/loginForm")
 	public String loginForm() {
+		
 		return "content//member/login_form";
 	}
 	
@@ -68,7 +69,10 @@ public class MemberController {
 		
 		memberService.join(memberVO);
 		
+		
 		return "redirect:/";
+		
+		
 	}
 	
 
@@ -77,28 +81,72 @@ public class MemberController {
 	@PostMapping("/findPwAjax")
 	public boolean findPw(MemberVO memberVO) {
 		
-		String imsiPw = mailService.createRandomPw();
+			String memEmail = memberService.getMemEmail(memberVO);
+			if(memEmail != null) {
+				String imsiPw = mailService.createRandomPw();
+				
+				String encodedPw = encoder.encode(imsiPw);
+				memberVO.setMemPw(encodedPw);
+				memberService.updateMemPw(memberVO);
+				
+				MailVO mailVO = new MailVO();
+				mailVO.setTitle("임시 비밀번호 8자리 발송");
+				
+				List<String> emailList = new ArrayList<>();
+				emailList.add(memEmail);
+				
+				mailVO.setRecipientList(emailList);
+				mailVO.setContent("발급 된 임시 비밀번호는 : " + imsiPw + "입니다. \n 발급 후 반드시 비밀번호를 변경 해 주세요 !!" );
+				
+				mailService.sendSimpleEmail(mailVO);
+			}
+			
+			return memEmail != null ? true : false;
+		}
+	
+	
+	// 아이디 찾기
+	@ResponseBody
+	@PostMapping("/findNoAjax")
+	public boolean findNo(MemberVO memberVO) {
 		
-		String encodedPw = encoder.encode(imsiPw);
-		memberVO.setMemPw(encodedPw);
-		memberService.updateMemPw(memberVO);
 		
-		String memEmail = memberService.getMemEmail(memberVO);
+		String memEmail = memberService.getMemEmail2(memberVO);
+		MemberVO loginInfo = memberService.loginInfo(memberVO);
+		String finded_no = loginInfo.getMemNo();
+		
 		if(memEmail != null) {
+			
 			MailVO mailVO = new MailVO();
-			mailVO.setTitle("임시 비밀번호 8자리 발송");
+			mailVO.setTitle("사조대학 아이디(교번) 정보 발송");
 			
 			List<String> emailList = new ArrayList<>();
 			emailList.add(memEmail);
 			
 			mailVO.setRecipientList(emailList);
-			mailVO.setContent("발급 된 임시 비밀번호는 : " + imsiPw + "입니다. \n 발급 후 반드시 비밀번호를 변경 해 주세요 !!" );
+			mailVO.setContent("발급 된 회원님의 아이디는 : " + finded_no +  "입니다.");
 			
 			mailService.sendSimpleEmail(mailVO);
 		}
 		
+		
 		return memEmail != null ? true : false;
+		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
 	
 	
 	// 인증번호 발송
@@ -123,6 +171,18 @@ public class MemberController {
 		  System.out.println(exception.getMessage());
 		}
 		
+	}
+	
+	// 팝업창1번
+	@GetMapping("/pop1")
+	public String pop1() {
+		
+		return "content/member/privacy_policy"; 
+	}
+	// 팝업창2번
+	@GetMapping("/pop2")
+	public String pop2() {
+		return "content/member/email_collect_deny"; 
 	}
 	
 	

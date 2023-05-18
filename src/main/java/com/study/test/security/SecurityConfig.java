@@ -30,6 +30,9 @@ public class SecurityConfig {
 								, "/board/**"
 								, "/member/isDuplicateMemNoAjax"
 								, "/member/findPwAjax"
+								, "/member/findNoAjax"
+								, "/member/pop1"
+								, "/member/pop2"
 
 								, "/school/**"
 								, "/member/sendSMSAjax"

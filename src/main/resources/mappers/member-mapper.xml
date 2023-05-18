@@ -17,13 +17,32 @@
 			<result column="MEM_EMAIL" 						 property="memEmail"/>
 			<result column="MEM_IMAGE" 					 	property="memImage"/>
 		</resultMap>
-	
+		
+		<!-- security 로그인 -->
 		<select id="login" resultMap="member">
 			SELECT MEM_NO
 				,	MEM_PW
 				,	MEM_ROLE
 			FROM MEMBER
 			WHERE MEM_NO = #{memNo}
+		</select>
+		
+		<!-- 회원정보 -->
+		<select id="loginInfo" resultMap="member">
+			SELECT MEM_NO
+				,	MEM_PW
+				,	MEM_NAME
+				,	MEM_GENDER
+				,	MEM_TELL
+				,	MEM_ADDR
+				,	MEM_ADDR_DETAIL
+				,	MEM_ROLE
+				,	MEM_BIRTHDAY
+				,	MEM_EMAIL
+				,	MEM_IMAGE
+			FROM MEMBER
+			WHERE MEM_NAME = #{memName}
+			AND MEM_EMAIL = #{memEmail}
 		</select>
 		
 		
@@ -69,7 +88,7 @@
 		)
 		</insert>
 	
-		<!-- 이메일 전송 -->
+		<!-- 이메일 전송 - 비밀번호 -->
 		<select id="getMemEmail" resultType="String">
 			SELECT MEM_EMAIL
 			FROM MEMBER
@@ -83,9 +102,16 @@
 			SET
 				MEM_PW = #{memPw}
 			WHERE MEM_NO = #{memNo}
+			AND MEM_NAME = #{memName}
 		</update>
 		
-	
+		<!-- 이메일 전송 - 아이디 -->
+		<select id="getMemEmail2" resultType="String">
+			SELECT MEM_EMAIL
+			FROM MEMBER
+			WHERE MEM_NAME = #{memName}
+			AND MEM_EMAIL = #{memEmail}
+		</select>
 	
 	
 </mapper>

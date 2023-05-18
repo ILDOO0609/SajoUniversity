@@ -1,63 +1,55 @@
 init();
 
-// login 함수
+
+
+				
+// 로그인
 function login() {
-	const memNo = document.querySelector('#loginModal #memNo').value;
-	const memPw = document.querySelector('#loginModal #memPw').value;
+    const memNo = document.querySelector('#loginModal #memNo').value;
+    const memPw = document.querySelector('#loginModal #memPw').value;
 
+    // Ajax request
+    $.ajax({
+        url: '/member/login',
+        type: 'post',
+        data: { 'memNo': memNo, 'memPw': memPw },
+        success: function(result) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'center-center',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                }
+            });
 
+            if (result == 'success') {
+                Toast.fire({
+                    icon: 'success',
+                    title: '환영합니다.',
+                }).then(() => {
+                    location.href = '/'; // Redirect to the desired page after the toast notification is closed
+                });
+            } else {
+                // If login fails
+                Toast.fire({
+                    icon: 'error',
+                    title: '로그인 정보를 확인해주세요.',
+                });
 
-	//ajax start
-	$.ajax({
-		url: '/member/login', //요청경로
-		type: 'post',
-		data: { 'memNo': memNo, 'memPw': memPw }, //필요한 데이터
-		success: function(result) {
-
-			// 로그인 성공 시
-			if (result == 'success') {
-
-
-				location.href = '/';
-			}
-			// 로그인 실패 시
-			else {
-				
-				const error_div = document.querySelector('#errorDiv');
-				if(error_div != null){
-					error_div.remove();			
-				}
-				
-				let str = '';
-				str += '<div id="errorDiv" style="color: red; font-size: 0.95rem; text-align: center; margin-top: 20px;">';
-				str += '로그인 정보를 확인하세요';
-				str += '</div>';
-					
-				const login_error_div = document.querySelector('#loginErrorDiv');
-				
-				login_error_div.insertAdjacentHTML('beforeend',str)
-				
-				// id, pw input태그 초기화
-				document.querySelectorAll('#loginModal input:not([type="button"])').forEach(function(t, index) {
-					// console.log(`t = ${t.value} / index = ${index}`)
-					t.value = '';
-
-				});
-
-
-				// const tags = document.querySelectorAll('#loginModal input:not([type="button"])');
-				//for(const t of tags){
-				//	t.value = '';
-				//}
-
-			}
-		},
-		error: function() {
-			alert('실패');
-		}
-	});
-	//ajax end
-								
+                // Clear input fields
+                document.querySelectorAll('#loginModal input:not([type="button"])').forEach(function(t, index) {
+                    t.value = '';
+                });
+            }
+        },
+        error: function() {
+            alert('Login failed');
+        }
+    });
 }
 
 
@@ -278,60 +270,143 @@ function joinValidate() {
 	
 }
 
-
-// findPassword 함수
+// 비밀번호 찾기 -- 이메일
 function findPw(btn) {
-	
-	btn.disabled = true;
-	btn.querySelector('span').textContent = 'Loading...';
-	
-	const spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
-	btn.insertAdjacentHTML('afterbegin', spinner);
-	
-	
-	
-//ajax start
-	$.ajax({
-		url: '/member/findPwAjax',
-		type: 'post',
-		async: true, // 동기 true, 비동기 false
-		// contentType: 'application/json; charset=UTF-8',
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		data: $('#findPwForm').serialize(), // form 태그 안의 모든 데이터
-		success: function(result) {
-			
-		   if(result) {
-			   alert('이메일로 임시 비밀번호를 발급했습니다. \n 반드시 비밀번호 변경 후 사용하세요.');
-		   }
-		   else {
-			   let str = '';
-			   str += '<div class="col-12 error-findPw">';
-			   str += '<span>';
-			   str += 'ID와 이름을 확인해주세요.';
-			   str += '</span>';
-			   str += '</div>';
-			   
-			   document.querySelector('#findPwErrorDiv').insertAdjacentHTML('afterend', str);
-			   
-		   }
-			   btn.disabled = false;
-			   btn.querySelector('span:first-child').remove();
-			   btn.querySelector('span').textContent = '비밀번호 찾기';
-		},
-		error: function() {
-			alert('실패');
-		}
-	});
-//ajax end
+    btn.disabled = true;
+    btn.querySelector('span').textContent = 'Loading...';
 
+    const spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+    btn.insertAdjacentHTML('afterbegin', spinner);
 
-	
-								
+    // Ajax request
+    $.ajax({
+        url: '/member/findPwAjax',
+        type: 'post',
+        async: true,
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: $('#findPwForm').serialize(),
+        success: function(result) {
+            if (result) {
+                
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'center-center',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    }
+                });
+
+                Toast.fire({
+                    icon: 'success',
+                    title: '임시 비밀번호가 발송되었습니다. \n 발급 받으신 비밀번호는 반드시 변경해주세요.',
+                });
+            } else {
+                // If ID and name check fails
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'center-center',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    }
+                });
+
+                Toast.fire({
+                    icon: 'error',
+                    title: '교번, 또는 이름 정보를 다시한번 확인 해주세요.',
+                });
+            }
+
+            btn.disabled = false;
+            btn.querySelector('span:first-child').remove();
+            btn.querySelector('span').textContent = '비밀번호 찾기';
+        },
+        error: function() {
+            alert('Failed');
+        }
+    });
 }
 
 
 
 
+
+
+// 아이디 찾기 -- 이메일
+function findNo(btn) {
+    btn.disabled = true;
+    btn.querySelector('span').textContent = 'Loading...';
+
+    const spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+    btn.insertAdjacentHTML('afterbegin', spinner);
+
+    // Ajax request
+    $.ajax({
+        url: '/member/findNoAjax',
+        type: 'post',
+        async: true,
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: $('#findNoForm').serialize(),
+        success: function(result) {
+            if (result) {
+                
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'center-center',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    }
+                });
+
+                Toast.fire({
+					icon: 'success',
+                    title: '가입시 기입한 이메일로 아이디 정보가 발송되었습니다.',
+                });
+                
+            } else {
+                // If ID and name check fails
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'center-center',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    }
+                });
+				
+				
+				Toast.fire({
+                    icon: 'error',
+                    title: '이름, 또는 이메일 정보를 다시한번 확인 해주세요.',
+                });
+				
+                
+            }
+
+            btn.disabled = false;
+            btn.querySelector('span:first-child').remove();
+            btn.querySelector('span').textContent = '아이디 찾기';
+        },
+        
+        error: function() {
+            alert('Failed');
+        }
+    });
+}
 
 
 
@@ -350,6 +425,8 @@ function findPw(btn) {
 // js 실행시 바로 실행되는 함수
 
 function init() {
+	
+	
 	// LOGIN 모달(태그) 선택
 	const loginModal = document.querySelector('#loginModal');
 

@@ -51,6 +51,7 @@ public class EmpController {
 		
 		//전공학과 정보 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
+		
 		return "content/emp/reg_lecture";
 	}
 	
@@ -75,27 +76,21 @@ public class EmpController {
 	//전공대학 변경시 실행되는 함수
 	@ResponseBody
 	@PostMapping("/changeCollAjax")
-	public List<String> changeCollAjax(String collNo) {
+	public List<DeptVO> changeCollAjax(String collNo) {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@"+collNo);
-		System.out.println("@@@@@@@@@@@@@@@@"+empService.getDeptName(collNo));
-		List<DeptVO> deptList = empService.getDeptName(collNo);
+		System.out.println("@@@@@@@@@@@@@@@@"+empService.getDeptNameAjax(collNo));
 		
-		List<String>deptNameList = new ArrayList<>();
+		//전공대학에 속하는 전공학과 리스트 담기
+		List<DeptVO> deptList = empService.getDeptNameAjax(collNo);
 		
-		for(DeptVO dept : deptList) {
-			deptNameList.add(dept.getDeptName());
-		}
-		System.out.println("!!!!!!!!!!!!!!!! "+deptNameList);
-		
-		return deptNameList;
+		return deptList;
 	}
-	
 	
 	//강의 시간 중복 체크
 	@ResponseBody
-	@PostMapping("/timeCheckAjax")
-	public String timeCheck() {
-		return "";
+	@PostMapping("/timeDuplicationCheckAjax")
+	public boolean timeCheck(LectureTimeVO lectureTimeVO) {
+		return empService.timeDuplicationCheckAjax(lectureTimeVO);
 	}
 	
 	//강의 시간표

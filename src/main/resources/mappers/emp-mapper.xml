@@ -110,14 +110,21 @@
 		AND LEC.COLL_NO = COLL.COLL_NO
 	</select>
 	
-	<!-- 강의등록시 전공대학 선택시 해당하는 전공학과 이름 조회 -->
-	<select id="getDeptName" resultMap="colleageMapper.dept">
+	<!-- 강의등록시 전공대학 선택시 해당하는 전공학과 이름 조회 Ajax-->
+	<select id="getDeptNameAjax" resultMap="colleageMapper.dept">
 		SELECT DEPT_NAME
+			, DEPT_NO
 		FROM COLLEAGE COLL, DEPT
 		WHERE #{collNo} = DEPT.COLL_NO
         AND COLL.COLL_NO = DEPT.COLL_NO
 	</select>
 	
+	<!-- 강의 등록시 시간중복 체크 (Ajax) -->
+	<select id="timeDuplicationCheckAjax" resultType="int">
+		SELECT COUNT(TIME_NO)
+		FROM LECTURE_TIME
+		WHERE LEC_DAY = #{lecDay} AND FIRST_TIME = #{firstTime}
+	</select>
 </mapper>
 
 

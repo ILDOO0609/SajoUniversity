@@ -22,5 +22,8 @@ public interface EmpService {
 	List<Map<String, String>> getLectureListForSchedule();
 	
 	//강의등록시 전공대학 선택시 해당하는 전공학과 이름 조회
-	List<DeptVO> getDeptName(String collNo);
+	List<DeptVO> getDeptNameAjax(String collNo);
+	
+	//강의등록시 강의시간 중복체크 Ajax
+	boolean timeDuplicationCheckAjax(LectureTimeVO lectureTimeVO);
 }

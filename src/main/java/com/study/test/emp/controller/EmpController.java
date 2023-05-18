@@ -1,8 +1,10 @@
 package com.study.test.emp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.test.colleage.service.ColleageService;
+import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.service.EmpService;
+import com.study.test.emp.vo.LectureTimeVO;
 import com.study.test.emp.vo.LectureVO;
 
 import jakarta.annotation.Resource;
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Public;
 
 
 @Controller
@@ -51,17 +56,40 @@ public class EmpController {
 	
 	//강의 등록
 	@PostMapping("/regLecture")
-	public String regLecture(LectureVO lectureVO) {
+	public String regLecture(LectureVO lectureVO, LectureTimeVO lectureTimeVO) {
 		System.out.println("@@@@@@@@@@@@@@@@@@@ "+lectureVO);
 		
+		//다음에 등록될 LEC_NO 
+		String getNextLectNo = empService.getNextLecNo();
+		
+		//LEC_NO 세팅
+		lectureVO.setLecNo(getNextLectNo);
+		lectureTimeVO.setLecNo(getNextLectNo);
 		
 		//강의 등록
-		empService.insertLecture(lectureVO);
-		
-		
+		empService.insertLecture(lectureVO, lectureTimeVO);
 		
 		return "redirect:/emp/lectureList";
 	}
+	
+	//전공대학 변경시 실행되는 함수
+	@ResponseBody
+	@PostMapping("/changeCollAjax")
+	public List<String> changeCollAjax(String collNo) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@"+collNo);
+		System.out.println("@@@@@@@@@@@@@@@@"+empService.getDeptName(collNo));
+		List<DeptVO> deptList = empService.getDeptName(collNo);
+		
+		List<String>deptNameList = new ArrayList<>();
+		
+		for(DeptVO dept : deptList) {
+			deptNameList.add(dept.getDeptName());
+		}
+		System.out.println("!!!!!!!!!!!!!!!! "+deptNameList);
+		
+		return deptNameList;
+	}
+	
 	
 	//강의 시간 중복 체크
 	@ResponseBody
@@ -72,7 +100,10 @@ public class EmpController {
 	
 	//강의 시간표
 	@GetMapping("/lecSchedule")
-	public String regSchedule() {
+	public String regSchedule(Model model) {
+		
+		//시간표 작성위한 강의 및 시간정보 담기
+		model.addAttribute("lectureList", empService.getLectureListForSchedule());
 		
 		return "content/emp/lec_schedule";
 	}

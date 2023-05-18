@@ -25,5 +25,9 @@ public class BoardController {
 		return "content/stu/stu_board_detail";
 	}
 	
-	
+	//전체 게시글 페이지
+	@GetMapping("/board")
+	public String board() {
+		return "content/board";
+	}
 }

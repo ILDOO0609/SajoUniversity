@@ -52,7 +52,7 @@
 						단과대학 
 					</div>
 					<div class="col-4">
-						<select class="form-select" name="collNo">
+						<select class="form-select" name="collNo" onchange="changeColl(this);">
 							<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
 						</select>
 					</div>
@@ -105,10 +105,16 @@
 				</div>
 				<div class="row mb-3">
 					<div class="offset-2 col-2">
-						강의 날짜 
+						강의 요일
 					</div>
 					<div class="col-4">
-						<input type="date" class="form-control" name="lecDay" required>
+						<select name="lecDay" class="form-select">
+							<option value="월">월</option>
+							<option value="화">화</option>
+							<option value="수">수</option>
+							<option value="목">목</option>
+							<option value="금">금</option>
+						</select>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -116,7 +122,9 @@
 						강의 시작 시간 
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control" name="firstTime" required>
+						<select name="firstTime" class="form-select">
+							<option th:value="${firstTime}" th:each="firstTime : ${#numbers.sequence(9,17)}">[[${firstTime+':00'}]]</option>
+						</select>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -124,7 +132,9 @@
 						강의 마치는 시간 
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control" name="lastTime" required>
+						<select name="lastTime" class="form-select">
+							<option th:value="${lastTime}" th:each="lastTime : ${#numbers.sequence(10,18)}">[[${lastTime+':00'}]]</option> 
+						</select>
 					</div>
 				</div>
 			</div>

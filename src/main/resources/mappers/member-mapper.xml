@@ -113,7 +113,11 @@
 			AND MEM_EMAIL = #{memEmail}
 		</select>
 	
-	
+		<!-- SMS 전송 - 연락처 정보 -->
+		<select id="getSMS" resultType="String">
+			SELECT MEM_TELL
+			FROM MEMBER
+		</select>
 </mapper>
 
 

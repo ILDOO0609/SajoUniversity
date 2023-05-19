@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.test.member.service.memberService;
@@ -155,6 +156,8 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/sendSMSAjax")
 	public void sendSMS() {
+		
+       
 		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCS7NPK8BJXHRZTS", "5SCHDJCK3NVOLXM1ZVYMSIQVQZGRBVRJ", "https://api.coolsms.co.kr");
 		
 		Message message = new Message();
@@ -174,6 +177,16 @@ public class MemberController {
 		}
 		
 	}
+	
+	
+	@PostMapping("/your-endpoint")
+    public String processForm(@RequestParam("memTells") String[] memTells) {
+        for (String memTell : memTells) {
+            System.out.println(memTell);
+        }
+        return "your-view";
+    }
+	
 	
 	// 팝업창1번
 	@GetMapping("/pop1")

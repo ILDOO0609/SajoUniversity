@@ -167,13 +167,13 @@ function sendSMS() {
 		url: '/member/sendSMSAjax', //요청경로
 		type: 'post',
 		async: false, // 동기방식 진행
-		data: { 'memTell': memTell }, //필요한 데이터
+        data: $('#findPwForm').serialize(),
 		success: function(result) {
 			if (result) {
-				alert('입력하신 연락처로 인증번호를 발급하였습니다. \n 제한 시간 내 인증번호를 입력 해 주세요.');
+				alert('성공');
 			}
 			else {
-				alert('사용가능');
+				alert('연락처 안맞음');
 
 				// join 버튼 disabled 속성 제거
 				document.querySelector('#joinBtn').disabled = false;
@@ -284,7 +284,7 @@ function findPw(btn) {
         type: 'post',
         async: true,
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        data: $('#findPwForm').serialize(),
+        data: $('#joinForm').serialize(),
         success: function(result) {
             if (result) {
                 

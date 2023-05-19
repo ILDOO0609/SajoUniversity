@@ -115,6 +115,9 @@ public class MemberController {
 		MemberVO loginInfo = memberService.loginInfo(memberVO);
 		String finded_no = loginInfo.getMemNo();
 		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@" + loginInfo);
+		
+		
 		if(memEmail != null) {
 			
 			MailVO mailVO = new MailVO();
@@ -131,7 +134,6 @@ public class MemberController {
 		
 		
 		return memEmail != null ? true : false;
-		
 	}
 	
 	

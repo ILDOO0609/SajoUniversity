@@ -16,6 +16,7 @@
 			<result column="MEM_BIRTHDAY" 					 property="memBirthday"/>
 			<result column="MEM_EMAIL" 						 property="memEmail"/>
 			<result column="MEM_IMAGE" 					 	property="memImage"/>
+			<result column="MEM_QUEST" 					 	property="memQuest"/>
 		</resultMap>
 		
 		<!-- security 로그인 -->
@@ -68,7 +69,8 @@
 		    MEM_ROLE,
 		    MEM_BIRTHDAY,
 		    MEM_EMAIL,
-		    MEM_IMAGE
+		    MEM_IMAGE,
+		    MEM_QUEST
 		) VALUES (
 		    #{memNo},
 		    #{memPw},
@@ -84,7 +86,8 @@
 		    #{memRole},
 		    #{memBirthday},
 		    #{memEmail},
-		    #{memImage}
+		    #{memImage},
+		    #{memQuest}
 		)
 		</insert>
 	
@@ -94,6 +97,7 @@
 			FROM MEMBER
 			WHERE MEM_NO = #{memNo}
 			AND MEM_NAME = #{memName}
+			AND MEM_QUEST = #{memQuest}
 		</select>
 		
 		<!-- 비밀번호 변경 -->
@@ -103,6 +107,7 @@
 				MEM_PW = #{memPw}
 			WHERE MEM_NO = #{memNo}
 			AND MEM_NAME = #{memName}
+			
 		</update>
 		
 		<!-- 이메일 전송 - 아이디 -->

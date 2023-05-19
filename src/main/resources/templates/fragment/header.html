@@ -47,13 +47,6 @@
 						<span> 메뉴 1</span>
 						<span> 메뉴 2</span>
 						<span> 메뉴 3</span>
-						<span> 
-							<a href="/member/sendSMSAjax">인증번호 테스트</a>
-						</span>
-						
-						<span> 
-							
-						</span>
 				</div>
 			</nav>
 		</div>
@@ -153,8 +146,12 @@
 				<div class="modal-body">
 					<form id="loginForm" method="post">
 						<div class="row mb-3">
-						
-							<div class="col-12">
+							
+							<div class="col-12" style="text-align: center; font-size: 24px;">
+								<strong>사조대학</strong>
+							</div>
+							
+							<div class="col-12 mb-3">
 								<input type="text" class="form-control" placeholder="회원번호를 입력하세요." name="memNo" id="memNo">
 							</div>
 							<div class="col-12">
@@ -192,6 +189,10 @@
  				<div class="modal-body">
  					<form class="row g-3" id="joinForm" th:action="@{/member/join}" method="post">
  						
+ 							<div class="col-12" style="text-align: center; font-size: 24px;">
+								<strong>사조대학</strong>
+							</div>
+ 						
  						<div class="col-9">
  							<label for="memId" class="form-label">학번 및 교번</label>
  							<input type="text" class="form-control" id="memNo" name="memNo" placeholder="등록할 학번 및 교번을 숫자로 입력하세요." onkeyup="setDisabled();">
@@ -204,7 +205,12 @@
  						
  						<div class="col-12">
 							<label for="memPw" class="form-label">비 밀 번 호</label> 
-							<input type="password" class="form-control" id="memPw" name="memPw" placeholder="비밀번호를 입력하세요.">
+							<input type="password" class="form-control" id="memPw" name="memPw" placeholder="숫자와 문자 포함 형태의 6~12자리 이내의 암호이여야 합니다.">
+						</div>
+						
+ 						<div class="col-12">
+							<label for="memQuest" class="form-label">좋아하는 숫자</label> 
+							<input type="password" class="form-control" id="memQuest" name="memQuest" placeholder="비밀번호찾기시 사용됩니다.">
 						</div>
 						
 						<div class="col-12">
@@ -239,7 +245,7 @@
 							</script>
 						</div>
 						
-						<div class="col-3">
+						<div class="col-4">
 							<label for="tell_1" class="form-label">연락처</label> 
 								<select id="tell_1" name="memTells"class="form-select">
 									<option value="010">010</option>
@@ -248,40 +254,43 @@
 								</select>
 						</div>
 						
-						<div class="col-2">
+						<div class="col-4">
 							<label for="tell_2" class="form-label">&nbsp;</label> 
 							<input
 								type="text" class="form-control" id="tell_2" name="memTells">
 						</div>
 						
-						<div class="col-2">
+						<div class="col-4">
 							<label for="tell_3" class="form-label">&nbsp;</label> 
 							<input type="text" class="form-control" id="tell_3" name="memTells">
-						</div>
-						<div class="col-5">
-						    <label for="btn-auth" class="form-label">&nbsp;</label> 
-						    <input type="button" class="form-control" id="btn-auth" name="" value="인증번호받기" onclick="sendSMS();">
-						</div>
-						
-						<div class="col-6">
-						    <label for="memAddr" class="form-label">&nbsp;</label> 
-						    <input type="text" class="form-control" id="timer" name="">
-						</div>
-						<div class="col-3">
-						    <label for="memAddr" class="form-label">&nbsp;</label> 
-						    <input type="text" class="form-control" id="time-remaining" name="" value="시간">
-						</div>
-						<div class="col-3">
-						    <label for="memAddr" class="form-label">&nbsp;</label> 
-						    <input type="button" class="form-control" id="confirmation" name="" value="확인">
 						</div>
 						
 						<div class="col-12">
 							<label for="mem_email" class="form-label">&nbsp; 이메일</label> 
 						</div>
+						
 						<div class="col-12">
 							<input type="text" class="form-control" id="memEmail" name="memEmail" placeholder="이메일 필수사항.">
 						</div>
+						
+						<div class="col-12">
+						    <label for="btn-auth" class="form-label">&nbsp;</label> 
+						    <input type="button" class="form-control" id="btn-auth" name="btn-auth" value="인증번호받기" onclick="authenMail();">
+						</div>
+						
+						<div class="col-12">
+						    <label for="auth_mail" class="form-label">&nbsp;</label> 
+						    <input type="text" class="form-control" id="auth_mail" name="auth_mail">
+						</div>
+						<div class="col-12">
+						    <label for="time-remaining" class="form-label">&nbsp;</label> 
+						    <input type="text" class="form-control" id="time-remaining" name="time-remaining" value="남은시간">
+						</div>
+						<div class="col-12">
+						    <label for="confirmation" class="form-label">&nbsp;</label> 
+						    <input type="button" class="form-control" id="confirmation" name="confirmation" value="확인">
+						</div>
+						
 						
 						<div class="col-9">
 							<label for="memAddr" class="form-label">주소</label> 

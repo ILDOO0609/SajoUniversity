@@ -167,13 +167,13 @@ function sendSMS() {
 		url: '/member/sendSMSAjax', //요청경로
 		type: 'post',
 		async: false, // 동기방식 진행
-        data: $('#findPwForm').serialize(),
+		data: { 'memTell': memTell }, //필요한 데이터
 		success: function(result) {
 			if (result) {
-				alert('성공');
+				alert('입력하신 연락처로 인증번호를 발급하였습니다. \n 제한 시간 내 인증번호를 입력 해 주세요.');
 			}
 			else {
-				alert('연락처 안맞음');
+				alert('사용가능');
 
 				// join 버튼 disabled 속성 제거
 				document.querySelector('#joinBtn').disabled = false;
@@ -284,7 +284,7 @@ function findPw(btn) {
         type: 'post',
         async: true,
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        data: $('#joinForm').serialize(),
+        data: $('#findPwForm').serialize(),
         success: function(result) {
             if (result) {
                 
@@ -305,7 +305,7 @@ function findPw(btn) {
                     title: '임시 비밀번호가 발송되었습니다. \n 발급 받으신 비밀번호는 반드시 변경해주세요.',
                 });
             } else {
-                // If ID and name check fails
+                
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'center-center',
@@ -339,7 +339,6 @@ function findPw(btn) {
 
 
 
-// 아이디 찾기 -- 이메일
 function findNo(btn) {
     btn.disabled = true;
     btn.querySelector('span').textContent = 'Loading...';
@@ -354,56 +353,49 @@ function findNo(btn) {
         async: true,
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         data: $('#findNoForm').serialize(),
-        success: function(result) {
-            if (result) {
-                
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'center-center',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer);
-                        toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    }
-                });
+        success: function(response) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'center-center',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                }
+            });
 
-                Toast.fire({
-					icon: 'success',
-                    title: '가입시 기입한 이메일로 아이디 정보가 발송되었습니다.',
-                });
-                
-            } else {
-                // If ID and name check fails
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'center-center',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer);
-                        toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    }
-                });
-				
-				
-				Toast.fire({
-                    icon: 'error',
-                    title: '이름, 또는 이메일 정보를 다시한번 확인 해주세요.',
-                });
-				
-                
-            }
+            Toast.fire({
+                icon: 'success',
+                title: response
+            });
 
             btn.disabled = false;
             btn.querySelector('span:first-child').remove();
             btn.querySelector('span').textContent = '아이디 찾기';
         },
-        
-        error: function() {
-            alert('Failed');
+        error: function(xhr) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'center-center',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                }
+            });
+
+            Toast.fire({
+                icon: 'error',
+                title: xhr.responseText
+            });
+
+            btn.disabled = false;
+            btn.querySelector('span:first-child').remove();
+            btn.querySelector('span').textContent = '아이디 찾기';
         }
     });
 }

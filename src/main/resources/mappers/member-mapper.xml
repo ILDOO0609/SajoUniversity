@@ -113,8 +113,9 @@
 			AND MEM_EMAIL = #{memEmail}
 		</select>
 	
-		
+	
 </mapper>
+
 
 
 

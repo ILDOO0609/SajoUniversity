@@ -6,33 +6,41 @@
 
 <th:block layout:fragment="content">
 	<h1 style="text-align: center;">학사안내</h1>
-	<div class="row">
-	 	<div class="col-3">
-			<select class="form-select">
-				<option>전체</option>
-				<option>2022</option>
-				<option>2023</option>
-				<option>2024</option>
-				<option></option>
-			</select>
-	 	</div>
-	 	<div class="col-3">
-	 		<select class="form-select">
-				<option>전체</option>
-				<option>1</option>
-				<option>2</option>
-				<option>3</option>
-				<option>4</option>
-			</select>
-	 	</div>
-	 	<div class="col-4">
-	 		<input type="text" class="form-control" placeholder="검색어를 입력해 주세요.">
-	 	</div>
-	 	<div class="col-2 d-grid">
-	 		<input type="button" class="btn btn-primary" value="검색">
-	 	</div>
-	 	
-	 </div>
+	<form id="searchForm" th:action="@{/school/info}" method="post">
+		<div class="row">
+		 	<div class="col-3">
+				<select class="form-select" id="yearSelect" name="searchYear" onchange="getYearSelect();">
+					<th:block th:each="num : ${#numbers.sequence(thisYear-4, thisYear)}">
+						<option th:selected="${year == num}" th:value="${num}">[[${num}]]년</option>
+					</th:block>
+				</select>
+		 	</div>
+		 	<div class="col-3">
+		 		<select class="form-select">
+					<option>전체(월)</option>
+					<option>1월</option>
+					<option>2월</option>
+					<option>3월</option>
+					<option>4월</option>
+					<option>5월</option>
+					<option>6월</option>
+					<option>7월</option>
+					<option>8월</option>
+					<option>9월</option>
+					<option>10월</option>
+					<option>11월</option>
+					<option>12월</option>
+				</select>
+		 	</div>
+		 	<div class="col-4">
+		 		<input type="text" class="form-control" name="searchValue"  placeholder="검색어를 입력해 주세요.">
+		 	</div>
+		 	<div class="col-2 d-grid">
+		 		<input type="button" class="btn btn-primary" value="검색" onclick="infoSearchList();">
+		 	</div>
+		 </div>
+ 	</form>
+	 
 	 <div class="row">
 	 	<div class="col">
 	 		<table class="table table-hover text-center align-middle">
@@ -59,21 +67,23 @@
 	 				<th:block th:unless="${#lists.size(infoList) == 0}">
 	 					<tr th:each="info, state : ${infoList}">
 		 					<td>[[${#lists.size(infoList) - state.index}]]</td>
-		 					<td>[[${info.schInfoTitle}]]</td>
+		 					<td>
+		 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">
+		 							[[${info.schInfoTitle}]]
+		 						</a>
+		 					</td>
 		 					<td>[[${info.regDate}]]</td>
 		 					<td>[[${info.startDate}]] ~ [[${info.endDate}]]</td>
 		 				</tr>
 	 				
 	 				</th:block>
 	 			</tbody>
-				<tfoot>
-					<tr>
-	 					<td colspan="4">
-	 						<input type="button" value="글등록" th:onclick="|location.href='@{/school/regSchoolBoard}';|">
-	 					</td>
-	 				</tr>
-				</tfoot> 			
 	 		</table>
+			<div sec:authorize="isAuthenticated()">
+				<div th:if="${#authorization.expression('hasRole(''ROLE_stf'')')}">
+					<input type="button" value="글등록" th:onclick="|location.href='@{/school/regSchoolBoard}';|">
+				</div>
+			</div>
 	 	</div>
 	 </div>
 
@@ -83,7 +93,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/content/admin/cate_manage.js"></script> -->
+	<script type="text/javascript" src="/js/content/school/school.js"></script>
 </th:block>
 
 </html>

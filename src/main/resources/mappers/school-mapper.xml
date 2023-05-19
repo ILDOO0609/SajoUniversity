@@ -15,8 +15,19 @@
 		<result column="REGDATE" 			property="regDate"/>
 		<result column="STARTDATE" 			property="startDate"/>
 		<result column="ENDTDATE" 			property="endDate"/>
+		<result column="SEARCHVALUE"		property="searchValue"/>
 	</resultMap>
+	
 
+	<resultMap type="com.study.test.school.vo.PrenextPageVO" id="prenext">
+		<result	column="SCH_INFO_CODE"	 	property="schInfoCode"/>
+		<result column="SCH_INFO_TITLE" 	property="schInfoTitle"/>
+		<result column="PREVNO"			property="prevNo"/>
+		<result column="PRE_TITLE"		property="prevTitle"/>	
+		<result column="NEXTNO"			property="nextNo"/>	
+		<result column="NEXT_TITLE"		property="nextTitle"/>
+	</resultMap>
+	
 	
 	<insert id="insertSchoolInfo">
 		INSERT INTO SCHOOL_INFORMATION (
@@ -25,6 +36,7 @@
 			, SCH_INFO_CONTENT
 			, SCH_INFO_STARTDATE
 			, SCH_INFO_ENDDATE
+			, SCH_INFO_WRITER
 		) VALUES (
 			(SELECT 'SCH_CODE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(SCH_INFO_CODE, 10))), 0) + 1, 3, '0') 
          	FROM SCHOOL_INFORMATION)
@@ -32,6 +44,7 @@
 			, #{schInfoContent}
 			, #{schInfoStartDate}
 			, #{schInfoEndDate}
+			, #{schInfoWriter}
 		)
 	</insert>
 	
@@ -43,8 +56,61 @@
 			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') STARTDATE
 			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') ENDTDATE
 		FROM SCHOOL_INFORMATION
+		WHERE 1=1
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND '%'||UPPER(#{searchValue})||'%'
+		</if>
 		ORDER BY SCH_INFO_DATE DESC
 	</select>
+	
+	<!-- 상세조회 -->
+	<select id="schoolBoardDetail" resultMap="school">
+		SELECT SCH_INFO_CODE
+			, SCH_INFO_TITLE
+			, SCH_INFO_WRITER
+			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') REGDATE
+			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') STARTDATE
+			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') ENDTDATE
+			, SCH_INFO_READ_CNT
+			, SCH_INFO_CONTENT
+		FROM SCHOOL_INFORMATION
+		WHERE SCH_INFO_CODE = #{schInfoCode}
+	</select>
+	
+	<!-- 조회수 증가쿼리 -->
+	<update id="updateSchoolBoardReadCnt">
+		UPDATE SCHOOL_INFORMATION
+		SET
+			SCH_INFO_READ_CNT = SCH_INFO_READ_CNT + 1
+		WHERE SCH_INFO_CODE = #{schInfoCode}
+	</update>
+	
+	<!-- 이전글 다음글 조회 -->
+	<select id="detailPreNext" resultMap="prenext">
+		SELECT SCH_INFO_CODE
+	        , SCH_INFO_TITLE
+	        , LAG(SCH_INFO_CODE, 1, 0) OVER(ORDER BY SCH_INFO_CODE ASC) PREBNO
+	        , LAG(SCH_INFO_TITLE, 1, '이전글이 없습니다.') OVER(ORDER BY SCH_INFO_CODE) PRE_TITLE
+	        , LEAD(SCH_INFO_CODE, 1, 0) OVER(ORDER BY SCH_INFO_CODE ASC) NEXTBNO
+	        , LEAD(SCH_INFO_TITLE, 1, '다음글이 없습니다.') OVER(ORDER BY SCH_INFO_CODE) NEXT_TITLE
+	    FROM SCHOOL_INFORMATION
+	    ORDER BY SCH_INFO_CODE
+	</select>
+	
+	<!-- 학사안내 게시글 -> 상세 -> 수정 -->	
+	<update id="updateSchoolInfo">
+		UPDATE SCHOOL_INFORMATION
+		SET 
+			SCH_INFO_CONTENT = #{schInfoContent}
+			, SCH_INFO_TITLE = #{schInfoTitle}
+		WHERE SCH_INFO_CODE = #{schInfoCode}	
+	</update>
+	<!-- 학사안내 -> 글 상세 -> 삭제 -->
+	<delete id="deleteSchoolInfo">
+		DELETE SCHOOL_INFORMATION
+		WHERE SCH_INFO_CODE = #{schInfoCode} 
+	</delete>	
+	
 </mapper>
 
 

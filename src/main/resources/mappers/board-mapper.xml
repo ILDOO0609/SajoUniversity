@@ -17,6 +17,13 @@
 	<result column="CATE_NO" 			property="cateNo"/>
 	<collection property="replyList" resultMap="replyMapper.reply"></collection>
 </resultMap>
+<resultMap type="com.study.test.board.vo.BoardImgVO" id="boardImg">
+	<id 	column="IMG_CODE" 	   property="imgCode"/>
+	<result column="ORIGIN_NAME"   property="originName"/>
+	<result column="ATTACHED_NAME" property="attachedName"/>
+	<result column="IS_MAIN" 	   property="isMain"/>
+	<result column="BOARD_NO" 	   property="boardNo"/>
+</resultMap>
 
 <select id="getBoard" resultMap="board">
 SELECT BOARD_NO

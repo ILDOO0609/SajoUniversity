@@ -26,11 +26,19 @@ public class memberServiceImpl implements memberService{
 		sqlSession.insert("memberMapper.join" , memberVO);
 	}
 	
-	// 이메일 정보 받기
+	// 이메일 정보 받기 - 비밀번호
 	@Override
 	public String getMemEmail(MemberVO memberVO) {
 		return sqlSession.selectOne("memberMapper.getMemEmail", memberVO);
 	}
+	
+	// 이메일 정보 받기 - 아이디
+	@Override
+	public String getMemEmail2(MemberVO memberVO) {
+		return sqlSession.selectOne("memberMapper.getMemEmail2", memberVO);
+	}
+	
+	
 	
 	// 비밀번호 발급
 	@Override
@@ -44,9 +52,20 @@ public class memberServiceImpl implements memberService{
 	public MemberVO login(String memNo) {
 		return sqlSession.selectOne("memberMapper.login", memNo);
 	}
-
 	
-
+	// 로그인정보
+	@Override
+	public MemberVO loginInfo(MemberVO memberVO) {
+		
+		return sqlSession.selectOne("memberMapper.loginInfo", memberVO);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 
 

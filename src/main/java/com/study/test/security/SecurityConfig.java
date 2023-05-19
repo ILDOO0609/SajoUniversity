@@ -24,7 +24,7 @@ public class SecurityConfig {
 								, "/main"
 								, "/member/login"
 								, "/member/join"
-
+								, "/emp/changeCollAjax"
 								, "/emp/**"
 								, "/stu/**"
 								, "/board/**"

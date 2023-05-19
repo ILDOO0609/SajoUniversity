@@ -54,7 +54,7 @@
 								</td>
 								<td th:each="num : ${#numbers.sequence(1,5)}">
 									<th:block th:each="i : ${#numbers.sequence(0,#lists.size(lectureList)-1)}">
-										<th:block th:if="${lectureList[i]['LEC_DAY']==num and lectureList[i]['FIRST_TIME']==''+time}">
+										<th:block th:if="${lectureList[i]['LEC_DAY']==num and lectureList[i]['FIRST_TIME']==time+':00'}">
 											[[${lectureList[i]['LEC_NAME']}]]
 											<br>
 											([[${lectureList[i]['DEPT_NAME']}]])

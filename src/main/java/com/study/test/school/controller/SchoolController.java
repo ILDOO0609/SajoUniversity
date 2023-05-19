@@ -1,13 +1,21 @@
 package com.study.test.school.controller;
 
+import java.time.Year;
+
+import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.study.test.school.service.SchoolService;
+import com.study.test.school.vo.PrenextPageVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.util.DateUtill;
 
 import jakarta.annotation.Resource;
 
@@ -27,9 +35,19 @@ public class SchoolController {
 	}
 	
 	//학사메뉴 -> 학사안내 페이지
-	@GetMapping("/info")
-	public String schoolInfo(Model model) {
+	@RequestMapping("/info")
+	public String schoolInfo(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
 		model.addAttribute("infoList", schoolService.getSchoolInfoList());
+		
+		
+		//검색 년도
+		if(year == 0) {
+			year = DateUtill.getYear();
+		}
+		
+		model.addAttribute("year", year);
+		model.addAttribute("thisYear", DateUtill.getYear());
+		
 		return "content/school/school/school_info";
 	}
 	
@@ -39,9 +57,47 @@ public class SchoolController {
 		return "content/school/school/school_board_write";
 	}
 	
+	//학사메뉴 -> 학사안내 글 상세페이지
+	@GetMapping("/schoolBoardDetail")
+	public String schoolBoardDetail(String schInfoCode, Model model, PrenextPageVO prenextPageVO) {
+		//상세조회
+		model.addAttribute("detailList", schoolService.schoolBoardDetail(schInfoCode));
+		//조회수
+		schoolService.updateSchoolBoardReadCnt(schInfoCode);
+		//이전글다음글
+		model.addAttribute("prenextList", schoolService.detailPreNext()); 
+		
+		return "content/school/school/school_board_detail";
+	}
+	//학사메뉴 -> 글 상세 -> 수정페이지이동
+	@GetMapping("/schoolBoardUpdateForm")
+	public String schoolBoardUpdateForm(String schInfoCode, Model model) {
+		model.addAttribute("detailList", schoolService.schoolBoardDetail(schInfoCode));
+		return "content/school/school/school_board_update";
+	}
+	//학사메뉴 -> 글 상세 -> 수정
+	@PostMapping("/updateSchoolInfo")
+	public String updateSchoolInfo(SchoolInfoVO schoolInfoVO) {
+		schoolService.updateSchoolInfo(schoolInfoVO);
+		return "redirect:/school/schoolBoardDetail";
+	}
+	//학사메뉴 -> 글 상세 -> 삭제
+	@GetMapping("/deleteSchoolInfo")
+	public String deleteSchoolInfo(String schInfoCode) {
+		schoolService.deleteSchoolInfo(schInfoCode);
+		return "redirect:/school/info";
+	}
+
+	
+	
+	
 	//학사메뉴 -> 학사안내 글등록
 	@PostMapping("/insertSchoolInfo")
-	public String insertSchoolInfo(SchoolInfoVO schoolInfoVO) {
+	public String insertSchoolInfo(SchoolInfoVO schoolInfoVO, Authentication authentication) {
+		//로그인 정보 security에서 가져오기. 리턴타입이 오브젝트이기때문에 형변환이 필요한다.
+		User user = (User)authentication.getPrincipal();
+		schoolInfoVO.setSchInfoWriter(user.getUsername());
+		
 		schoolService.insertSchoolInfo(schoolInfoVO);
 		return "redirect:/school/info";
 	}

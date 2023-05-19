@@ -24,12 +24,15 @@ public class SecurityConfig {
 								, "/main"
 								, "/member/login"
 								, "/member/join"
-
+								, "/emp/changeCollAjax"
 								, "/emp/**"
 								, "/stu/**"
 								, "/board/**"
 								, "/member/isDuplicateMemNoAjax"
 								, "/member/findPwAjax"
+								, "/member/findNoAjax"
+								, "/member/pop1"
+								, "/member/pop2"
 
 								, "/school/**"
 								, "/member/sendSMSAjax"

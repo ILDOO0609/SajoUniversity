@@ -140,6 +140,50 @@
 			</nav>
 		</div>
 	</div>
+
+<!-- <div sec:authorize="hasRole('ROLE_stf')"> -->
+	<div class="row">
+		<div class="col">
+			<div class="dropdown">
+				<button class="btn" type="button" data-bs-toggle="dropdown" style="border: 1px solid white;">
+					학사 메뉴
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="/school/info"><button class="dropdown-item" type="button">학사 안내</button></a></li>
+					<li><a href="/school/scheList"><button class="dropdown-item" type="button">학사 일정</button></a></li>
+				</ul>
+					
+				<button class="btn" type="button" data-bs-toggle="dropdown" style="border: 1px solid white;">
+					학사 조회
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="/school/checkStu"><button class="dropdown-item" type="button">학생 조회</button></a></li>
+					<li><a href="/school/checkPro"><button class="dropdown-item" type="button">교수 조회</button></a></li>
+					<li><a href="/school/checkLec"><button class="dropdown-item" type="button">강의/학점 조회</button></a></li>
+				</ul>	
+					
+				<button class="btn" type="button" data-bs-toggle="dropdown" style="border: 1px solid white;">
+					학적 변동
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="/school/acaLeave"><button class="dropdown-item" type="button">휴학 관리</button></a></li>
+					<li><a href="/school/acaReturn"><button class="dropdown-item" type="button">복학 관리</button></a></li>
+				</ul>
+				
+				<button class="btn" type="button" data-bs-toggle="dropdown" style="border: 1px solid white;">
+					수업 메뉴
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="/school/lessonEnrolment"><button class="dropdown-item" type="button">수강 관리</button></a></li>
+					<li><a href="/school/lessonMajorDouble"><button class="dropdown-item" type="button">복수전공 관리</button></a></li>
+					<li><a href="/school/lessonWarning"><button class="dropdown-item" type="button">학사경고 관리</button></a></li>
+				</ul>
+			</div>
+		</div>	
+	</div>
+
+
+	
 <!--  </div> -->
  
  <!--LOGIN Modal -->

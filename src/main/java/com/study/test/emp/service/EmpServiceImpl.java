@@ -1,5 +1,6 @@
 package com.study.test.emp.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,12 @@ public class EmpServiceImpl implements EmpService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	//접속해 있는 교수의 EMP_NO조회
+	@Override
+	public String getNowEmpNo(String memNo) {
+		return sqlSession.selectOne("empMapper.getNowEmpNo", memNo);
+	}
+	
 	//강의 및 강의시간 등록 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -28,8 +35,8 @@ public class EmpServiceImpl implements EmpService{
 	
 	//강의 목록 조회
 	@Override
-	public List<Map<String, String>> getLectureList() {
-		return sqlSession.selectList("empMapper.getLectureList");
+	public List<Map<String, String>> getLectureList(String empNo) {
+		return sqlSession.selectList("empMapper.getLectureList", empNo);
 	}
 	
 	//다음에 등록될 LEC_NO 조회
@@ -40,8 +47,8 @@ public class EmpServiceImpl implements EmpService{
 	
 	//강의 시간표 작성 위한 강의 및 강의시간 조회
 	@Override
-	public List<Map<String, String>> getLectureListForSchedule() {
-		return sqlSession.selectList("empMapper.getLectureListForSchedule");
+	public List<Map<String, String>> getLectureListForSchedule(String memNo) {
+		return sqlSession.selectList("empMapper.getLectureListForSchedule", memNo);
 	}
 	
 	//강의등록시 전공대학 선택시 해당하는 전공학과 이름 조회
@@ -52,8 +59,9 @@ public class EmpServiceImpl implements EmpService{
 	
 	//강의등록시 강의시간 중복체크Ajax
 	@Override
-	public boolean timeDuplicationCheckAjax(LectureTimeVO lectureTimeVO) {
-		int result = sqlSession.selectOne("empMapper.timeDuplicationCheckAjax", lectureTimeVO);
+	public boolean timeDuplicationCheckAjax(HashMap<String, String>map) {
+		int result = sqlSession.selectOne("empMapper.timeDuplicationCheckAjax", map);
 		return result == 1 ? true : false ;
 	}
+
 }

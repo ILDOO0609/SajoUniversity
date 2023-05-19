@@ -19,6 +19,7 @@ public class MemberVO {
 	private String memBirthday;
 	private String memEmail;
 	private String memImage;
+	private String memQuest;
 
 	private String[] memTells;
 }

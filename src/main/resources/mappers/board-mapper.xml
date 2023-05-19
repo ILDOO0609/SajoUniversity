@@ -27,21 +27,71 @@
 
 <select id="getBoard" resultMap="board">
 SELECT BOARD_NO
-	, BOARD_TITLE
-	, BOARD_WRITER
-	, TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
-	, BOARD_READ_CNT
-	, REPLY_CNT
-	, IS_SECRET
-	, IS_NOTICE
+    , BOARD_TITLE
+    , BOARD_WRITER
+    , TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
+    , BOARD_READ_CNT
+    , REPLY_CNT
+    , IS_SECRET
+    , IS_NOTICE
 FROM BOARD
-ORDER BY BOARD_NO
+ORDER BY BOARD_NO DESC
+OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 </select>
+
+
 
 <select id="getBoardDetail" resultMap="board">
-
+SELECT BOARD_NO
+	, BOARD_TITLE
+	, BOARD_CONTENT
+	, BOARD_WRITER
+	, BOARD_CREATE_DATE
+	, BOARD_READ_CNT
+	, REPLY_CNT
+FROM BOARD
+WHERE BOARD_NO = #{boardNo}
 </select>
-	
+
+<insert id="regBoard">
+INSERT INTO BOARD (
+	BOARD_NO
+	, BOARD_TITLE
+	, BOARD_CONTENT
+	, IS_SECRET
+	, CATE_NO
+) VALUES (
+	(SELECT 'BOARD_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOARD_NO, 7))), 0) + 1, 3, '0') 
+         FROM BOARD)
+	, #{boardTitle}
+	, #{boardContent}
+	, #{isSecret}
+	, #{cateNo}
+)
+</insert>
+
+<select id="getBoardReadCnt" resultType="int">
+SELECT BOARD_READ_CNT
+FROM BOARD
+WHERE BOARD_NO = #{boardNo}
+</select>
+
+<update id="updateReadCnt">
+UPDATE BOARD
+SET BOARD_READ_CNT = #{boardReadCnt} + 1
+WHERE BOARD_NO = #{boardNo}
+</update>
+
+<delete id="deleteBoard">
+DELETE BOARD
+WHERE BOARD_NO = #{boardNo}
+</delete>
+
+<select id="getBoardListCnt" resultType="int">
+SELECT COUNT(BOARD_NO)
+FROM BOARD
+</select>
+
 </mapper>
 
 

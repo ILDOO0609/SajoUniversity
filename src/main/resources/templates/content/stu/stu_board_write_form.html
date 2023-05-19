@@ -16,7 +16,7 @@
 글쓰기페이지
 <div class="row">
 	<div class="col">
-		<form th:action="@{/stu/stu}" method="post">
+		<form th:action="@{/board/boardWrite}" method="post">
 			<table>
 				<tr>
 					<td>제목</td>
@@ -31,7 +31,7 @@
 					<td><input type="file" class="form-control"></td>
 				</tr>
 				<tr>
-					<td>공개 여부</td>
+					<td>비밀글 여부</td>
 					<td>
 						<input type="checkbox" id="isSecret" name="isSecret" onclick="togglePw();" class="form-check-input"> Y
 					</td>

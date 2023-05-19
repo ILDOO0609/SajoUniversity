@@ -37,7 +37,49 @@
 				</table>
 			</div>
 		</div>
-		<input type="button" value="글쓰기" class="btn btn-primary" th:onclick="|location.href='@{/stu/stuBoardWriteForm}'|">
+		
+<div class="row justify-content-center">
+	<div class="col-3">
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination" >
+		    <li class="page-item">
+		      <a class="page-link" th:href="@{/board/stuBoard(nowPage=${pageVO.beginPage-1})}" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
+		    <li class="page-item"><a class="page-link" th:href="@{/board/stuBoard(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
+		</th:block>
+		  
+		    <li class="page-item">
+		      <a class="page-link" th:href="@{/board/stuBoard(nowPage=${pageVO.endPage+1})}" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
+	</div>
+</div>
+		
+		
+		
+<div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+		<th:block th:if="${pageVO.prev}"><a th:href="@{/board/stuBoard(nowPage=${pageVO.beginPage-1})}">이전</a></th:block>
+		<!-- <span th:if="${pageVO.prev}" th:text="이전"></span> -->
+	<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
+	 	<a th:href="@{/board/stuBoard(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a>
+	</th:block>
+		<th:block th:if="${pageVO.next}"><a th:href="@{/board/stuBoard(nowPage=${pageVO.endPage+1})}">다음</a></th:block>
+</div>		
+		
+		
+		
+		
+		<div class="row text-center mt-5 mb-5">
+			<div class="col">
+				<input type="button" value="글쓰기" class="btn btn-primary" th:onclick="|location.href='@{/board/stuBoardWriteForm}'|">
+			</div>
+		</div>
 	</div>
 </div>
 </th:block>

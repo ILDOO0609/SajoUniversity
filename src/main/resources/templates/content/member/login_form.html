@@ -23,13 +23,28 @@
 		<div id="contain">
 			<!-- 로그인 -->
 			<div id="login" style="background: none !important;">
-				
-				<p class="mb10">
-					<a href="https://www.yu.ac.kr/main/intro/privacy.do" target="_blank"><strong style="color:#294798">개인정보처리방침</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a onclick="window.open(this.href,'','left=100,top=100,width=710,height=480,scrollbars=yes');" title="이메일무단수집거부 새창열림" href="http://www.yu.ac.kr/_korean/_popup/emailrefusal.html" target="_blank">이메일무단수집거부</a>
-				</p>
-				
-				<p class="mb10">COPYRIGHT© SAJO UNIVERSITY ALL RIGHTS RESERVED.</p>
+
+
+					<p class="mb10">
+						<a href="/member/pop1" target="_blank" rel="noopener noreferrer"><strong
+							style="color: #294798">개인정보 처리방침</strong></a> <a
+							onclick="openPopupWindow(event, this.href);"
+							title="Rejection of unauthorized e-mail collection opens in a new window"
+							href="/member/pop2">이메일무단수집거부</a>
+					</p>
+					
+					<!-- 이메일무단수집거부 클릭시 팝업창 띄우기 -->
+					<script>
+						function openPopupWindow(event, url) {
+							event.preventDefault();
+							window
+								.open(url, '', 'left=100,top=100,width=710,height=480,scrollbars=yes');
+						}
+					</script>
+
+
+
+					<p class="mb10">COPYRIGHT© SAJO UNIVERSITY ALL RIGHTS RESERVED.</p>
 				
 				<!-- 로그인 정보 입력 -->
 				<span class="logoImsi">
@@ -44,10 +59,10 @@
 			</div>
 			<div id="help_btn" class="btn_help_box">
 				<div class="btn_help_type1">
-					<p>통합 로그인 아이디를 모를 경우,<br>학번or교번 찾기를 사용하세요.</p>
-					<ul>
-						<li><a href="">학번 또는 교번 찾기</a></li>
-					</ul>
+					<p>통합 로그인 아이디를 모를 경우,<br>아이디 찾기를 사용하세요.</p>
+					<span data-bs-toggle="modal" data-bs-target="#findNoModal" style="cursor: pointer;" class="btn d-grid mt-3 btn btn-primary">
+									아이디찾기
+					</span>
 				</div>
 				<div class="btn_help_type1_r">
 					<p>통합 로그인 비밀번호가 기억나지 않으세요?
@@ -61,13 +76,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div id="footer">
-			<p class="mb10">
-			<a href="https://www.yu.ac.kr/main/intro/privacy.do" target="_blank"><strong style="color:#294798">개인정보처리방침</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<a onclick="window.open(this.href,'','left=100,top=100,width=710,height=480,scrollbars=yes');" title="이메일무단수집거부 새창열림" href="http://www.yu.ac.kr/_korean/_popup/emailrefusal.html" target="_blank">이메일무단수집거부</a>
-			</p>
-			<p>COPYRIGHT© SAJO UNIVERSITY ALL RIGHTS RESERVED.</p>
-		</div> -->
+		
 		
 	</div>
 </div>
@@ -103,6 +112,9 @@
 									<button onclick="findPw(this);" class="btn btn-primary" type="button">
 										<span>비밀번호 찾기</span>
 									</button>
+									<div class="btn btn-primary d-grid mt-3" >
+										<span data-bs-toggle="modal" data-bs-target="#loginModal" style="cursor: pointer;">로그인</span> 
+									</div>
 
 								</div>
 								<div class="col" style="font-size: 0.8rem; color: red;">
@@ -115,6 +127,53 @@
 			</div>
 		</div>
 
+
+
+
+
+<!--아이디(No) 찾기 Modal -->
+		<div class="modal fade" id="findNoModal" 
+			data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+	
+	
+					<div class="modal-body">
+						<form id="findNoForm"  method="post">
+							<div class="row mb-3">
+								<div class="col-12">
+									<input type="text" class="form-control" placeholder="Input Your Name" name="memName" id="findNoMemName">
+								</div>
+							</div>
+	
+							<div class="row mb-3">
+								<div class="col-12" id="findPwErrorDiv">
+									<input type="text" class="form-control" placeholder="Input Your Email" name="memEmail" id="findNoEmail">
+								</div>
+							</div>
+								<div class="col" style="font-size: 0.8rem; color: red;">
+									가입 시 작성 한 이메일로 아이디가 발송 됩니다.
+								</div>
+	
+							<div class="row mb-3">
+								<div class="col-12 d-grid">
+									
+									<button onclick="findNo(this);" class="btn btn-primary" type="button">
+										<span>아이디 찾기</span>
+									</button>
+									<div class="btn btn-primary d-grid mt-3" >
+										<span data-bs-toggle="modal" data-bs-target="#loginModal" style="cursor: pointer;">로그인</span> 
+									</div>
+
+								</div>
+								
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 </th:block>

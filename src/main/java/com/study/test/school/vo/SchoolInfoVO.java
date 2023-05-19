@@ -21,4 +21,7 @@ public class SchoolInfoVO {
 	private String startDate;
 	private String endDate;
 	
+	private String searchValue;
+	
+	
 }

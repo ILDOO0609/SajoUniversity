@@ -5,7 +5,7 @@
 	layout:decorate="~{fragment/school/school_layout}">
 
 <th:block layout:fragment="content">
-	<h1 style="text-align: center;">학사안내</h1>
+	<h1 style="text-align: center;">학사 안내</h1>
 	<form id="searchForm" th:action="@{/school/info}" method="post">
 		<div class="row">
 		 	<div class="col-3">
@@ -75,7 +75,6 @@
 		 					<td>[[${info.regDate}]]</td>
 		 					<td>[[${info.startDate}]] ~ [[${info.endDate}]]</td>
 		 				</tr>
-	 				
 	 				</th:block>
 	 			</tbody>
 	 		</table>

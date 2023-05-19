@@ -1,6 +1,7 @@
 package com.study.test.school.controller;
 
 import java.time.Year;
+import java.util.List;
 
 import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.security.core.Authentication;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.test.colleage.vo.DeptVO;
+import com.study.test.emp.service.EmpService;
 import com.study.test.school.service.SchoolService;
 import com.study.test.school.vo.PrenextPageVO;
 import com.study.test.school.vo.SchoolInfoVO;
@@ -25,6 +29,9 @@ import jakarta.annotation.Resource;
 public class SchoolController {
 	@Resource(name = "schoolService")
 	private SchoolService schoolService;
+	
+	@Resource(name = "empService")
+	private EmpService empService;
 	
 	
 	//학사메뉴 클릭시 페이지
@@ -102,13 +109,42 @@ public class SchoolController {
 		return "redirect:/school/info";
 	}
 	
-	
-	
-	
-	//학사메뉴 -> 학사일정 게시판 리스트 페이지
+	//학사메뉴 -> 학사일정 페이지
 	@GetMapping("/scheList")
 	public String schoolBoardList() {
 		return "content/school/school/school_sche_list";
+	}
+	
+	
+	
+//-------------------------------학사조회--------------------------------------------
+	
+	
+	
+	
+	
+	//학사조회 -> 메인페이지
+	@GetMapping("/checkMain")
+	public String checkMain() {
+		return "content/school/check/check_main";
+	}
+	
+	//학사조회 -> 학생조회 페이지
+	@GetMapping("/checkStu")
+	public String checkStu() {
+		return "content/school/check/check_stu";
+	}
+	
+	//학사조회 -> 교수조회 페이지
+	@GetMapping("/checkPro")
+	public String checkPro() {
+		return "content/school/check/check_pro";
+	}
+	
+	//학사조회 -> 강의및학점 페이지
+	@GetMapping("/checkLec")
+	public String checkLec() {
+		return "content/school/check/check_lec";
 	}
 	
 	
@@ -130,17 +166,6 @@ public class SchoolController {
 	public String acaLeave() {
 		return "content/school/academic/aca_leave";
 	}
-	//학적변동 -> 자퇴페이지  
-	@GetMapping("/acaDropOut")
-	public String acaDropOut() {
-		return "content/school/academic/aca_dropout";
-	}
-	
-	//학적변동 -> 재입학페이지 
-	@GetMapping("/acaReadmi")
-	public String acaReadmi() {
-		return "content/school/academic/aca_readmi";
-	}
 	
 	//학적변동 -> 복학페이지 
 	@GetMapping("/acaReturn")
@@ -160,129 +185,34 @@ public class SchoolController {
 		return "content/school/lesson/lesson_main";
 	}
 		
-	//수업 -> 수강신청 페이지
+	//수업 -> 수강관리 페이지
 	@GetMapping("/lessonEnrolment")
 	public String lesonEnrolment() {
 		return "content/school/lesson/lesson_enrolment";
 	}
 	
-	//수업 -> 수강취소 페이지
-	@GetMapping("/lessonCancel")
-	public String lessonCancel() {
-		return "content/school/lesson/lesson_cancel";
+	//수업 -> 복수전공관리 페이지
+	@GetMapping("/lessonMajorDouble")
+	public String lessonMajorDouble() {
+		return "content/school/lesson/lesson_major_double";
 	}
-	
-	//수업 -> 계절학기 페이지
-	@GetMapping("/lessonSeason")
-	public String lessonSeason() {
-		return "content/school/lesson/lesson_season";
+	//수업 -> 학사경고관리 페이지
+	@GetMapping("/lessonWarning")
+	public String lessonWarning() {
+		return "content/school/lesson/lesson_warning";
 	}
-	
-	//수업 -> 재이수 페이지
-	@GetMapping("/lessonRetake")
-	public String lessonRetake() {
-		return "content/school/lesson/lesson_retake";
-	}
-	
-	//수업 -> 인터넷강의 페이지
-	@GetMapping("/lessonIngang")
-	public String lessonIngang() {
-		return "content/school/lesson/lesson_ingang";
-	}
+
 	
 	
 	
 	
 	
-	
-	
-	//성적 -> 메인페이지
-	@GetMapping("/achieveMain")
-	public String achieveMain() {
-		return "content/school/achieve/achieve_main";
-	}
-	
-	//성적 -> 학사경고
-	@GetMapping("/achieveWarning")
-	public String achieveWarning() {
-		return "content/school/achieve/achieve_warning";
-	}
-	
-	//성적 -> 성적관리
-	@GetMapping("/achieveManage")
-	public String achieveManage() {
-		return "content/school/achieve/achieve_manage";
-	}
-	
-	//성적 -> 시험성적평가
-	@GetMapping("/achieveRating")
-	public String achieveRating() {
-		return "content/school/achieve/achieve_rating";
-	}
+
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	//전공.전과(부) -> 메인 페이지
-	@GetMapping("/majorMain")
-	public String majorMain() {
-		return "content/school/major/major_main";
-	}
-	
-	//전공.전과(부) -> 복수전공 페이지
-	@GetMapping("/majorDouble")
-	public String majorDouble() {
-		return "content/school/major/major_double";
-	}
-	
-	//전공.전과(부) -> 부전공 페이지
-	@GetMapping("/majorMinor")
-	public String majorMinor() {
-		return "content/school/major/major_minor";
-	}
-	
-	//전공.전과(부) -> 전과(부) 페이지
-	@GetMapping("/majorChange")
-	public String majorChange() {
-		return "content/school/major/major_change";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	//등록금납부 -> 메인페이지
-	@GetMapping("/tuitionMain")
-	public String tuitionMain() {
-		return "content/school/tuition/tuition_main";
-	}
-	
-	//등록금납부 -> 등록금납부 페이지
-	@GetMapping("/tuitionInfo")
-	public String tuitionInfo() {
-		return "content/school/tuition/tuition_info";
-	}
-	
-	//등록금납부 -> 분할납부 페이지
-	@GetMapping("/tuitionSplit")
-	public String tuitionSplit() {
-		return "content/school/tuition/tuition_split";
-	}
-	
-	//등록금납부 -> 등록금반환기준 페이지
-	@GetMapping("/tuitionReturn")
-	public String tuitionReturn() {
-		return "content/school/tuition/tuition_return";
-	}
-	
+
 
 	
 	

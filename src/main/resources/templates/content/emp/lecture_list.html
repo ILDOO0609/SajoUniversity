@@ -12,88 +12,58 @@
 <th:block layout:fragment="content">
 <div class="row">
 	<div class="col">
-	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+		<div class="row">
+			<div class="col">강의 리스트</div>
+		</div>
 		<div class="row">
 			<div class="col">
-				<div class="row">
-					<div class="col">
-						강의 조회
-					</div>
-				</div>
-				<div class="row mb-3">
-					<div class="col">
-						<input type="text" placeholder="등록한 교과목명">
-						<input type="button" value="Search">
-					</div>
-				</div>
-			</div>
-		</div>
-	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 목록ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-		<div class="row mb-3">
-			<div class="col">
-				<div class="row">
-					<div class="col">
-						강의 목록
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<table class="table">
-							<thead>
-								<tr>
-									<td>No</td>
-									<td>교과목명</td>
-									<td>강의 학점</td>
-									<td>단과대학</td>
-									<td>학과</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="map, state : ${mapList}">
-									<td>[[${#lists.size(mapList)-state.index}]]</td>
-									<td>[[${map['LEC_NAME']}]]</td>
-									<td>[[${map['LEC_SCORE']}]]</td>
-									<td>[[${map['COLL_NAME']}]]</td>
-									<td>[[${map['DEPT_NAME']}]]</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ수강 학생ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-		<div class="row">
-			<div class="col">
-				<div class="row">
-					<div class="col">
-						수강 학생
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<table class="table">
-							<thead>
-								<tr>
-									<td>학번</td>
-									<td>이름</td>
-									<td>성적</td>
-									<td>등록</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
-										<input type="button" value="확인">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
+				<table class="table">
+					<colgroup>
+						<col width="8%">
+						<col width="8%">
+						<col width="8%">
+						<col width="8%">
+						<col width="8%">
+						<col width="8%">
+						<col width="8%">
+						<col width="8%">
+						<col width="8%">
+						<col width="8%">
+						<col width="8%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td>#</td>
+							<td>강의명</td>
+							<td>학점</td>
+							<td>단대명</td>
+							<td>학과명</td>
+							<td>담당교수</td>
+							<td>최대인원</td>
+							<td>현재인원</td>
+							<td>날짜</td>
+							<td>강의상태</td>
+							<td>폐강</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="11">등록된 강의가 없습니다.</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

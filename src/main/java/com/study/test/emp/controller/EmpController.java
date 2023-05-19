@@ -1,10 +1,11 @@
 package com.study.test.emp.controller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ import com.study.test.emp.vo.LectureTimeVO;
 import com.study.test.emp.vo.LectureVO;
 
 import jakarta.annotation.Resource;
-import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Public;
+import oracle.jdbc.proxy.annotation.GetProxy;
 
 
 @Controller
@@ -31,12 +32,9 @@ public class EmpController {
 	@Resource(name = "colleageService")
 	private ColleageService colleageService;
 	
-	//강의 리스트로 이동
+	//강의리스트 페이지로 이동
 	@GetMapping("/lectureList")
-	public String lectureList(Model model) {
-		List<Map<String, String>> mapList = empService.getLectureList();
-		System.out.println("@@@@@@@@@@@@@@@@@@ "+mapList);
-		model.addAttribute("mapList", mapList);
+	public String lectureList() {
 		return "content/emp/lecture_list";
 	}
 	
@@ -57,7 +55,7 @@ public class EmpController {
 	
 	//강의 등록
 	@PostMapping("/regLecture")
-	public String regLecture(LectureVO lectureVO, LectureTimeVO lectureTimeVO) {
+	public String regLecture(LectureVO lectureVO, LectureTimeVO lectureTimeVO, Authentication authentication) {
 		System.out.println("@@@@@@@@@@@@@@@@@@@ "+lectureVO);
 		
 		//다음에 등록될 LEC_NO 
@@ -66,6 +64,7 @@ public class EmpController {
 		//LEC_NO 세팅
 		lectureVO.setLecNo(getNextLectNo);
 		lectureTimeVO.setLecNo(getNextLectNo);
+		lectureVO.setEmpNo(getNowEmpNo(authentication));
 		
 		//강의 등록
 		empService.insertLecture(lectureVO, lectureTimeVO);
@@ -89,24 +88,32 @@ public class EmpController {
 	//강의 시간 중복 체크
 	@ResponseBody
 	@PostMapping("/timeDuplicationCheckAjax")
-	public boolean timeCheck(LectureTimeVO lectureTimeVO) {
-		return empService.timeDuplicationCheckAjax(lectureTimeVO);
+	public boolean timeCheck(LectureTimeVO lectureTimeVO, Authentication authentication) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		
+		map.put("empNo", getNowEmpNo(authentication));
+		map.put("lecDay", lectureTimeVO.getLecDay());
+		map.put("firstTime", lectureTimeVO.getFirstTime());
+		
+		return empService.timeDuplicationCheckAjax(map);
 	}
 	
 	//강의 시간표
 	@GetMapping("/lecSchedule")
-	public String regSchedule(Model model) {
-		
+	public String regSchedule(Model model, Authentication authentication) {
 		//시간표 작성위한 강의 및 시간정보 담기
-		model.addAttribute("lectureList", empService.getLectureListForSchedule());
+		model.addAttribute("lectureList", empService.getLectureListForSchedule(getNowEmpNo(authentication)));
 		
 		return "content/emp/lec_schedule";
 	}
 	
-	//강의 시간표
+	//학생성적등록 페이지로 이동
 	@GetMapping("/regScore")
-	public String regScore() {
-		
+	public String lectureList(Model model, Authentication authentication) {
+		List<Map<String, String>> mapList = empService.getLectureList(getNowEmpNo(authentication));
+		System.out.println("@@@@@@@@@@@@@@@@@@ "+mapList);
+		model.addAttribute("mapList", mapList);
 		return "content/emp/reg_score";
 	}
 	
@@ -144,6 +151,13 @@ public class EmpController {
 	@GetMapping("/empCalender")
 	public String empCalender() {
 		return "content/emp/emp_calender";
+	}
+	
+	//현재 교수의 EMP_NO 조회
+	public String getNowEmpNo(Authentication authentication) {
+		User user = (User)authentication.getPrincipal(); 
+		String empNo = empService.getNowEmpNo(user.getUsername());
+		return empNo;
 	}
 	
 }

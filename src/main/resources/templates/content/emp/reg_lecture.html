@@ -12,7 +12,8 @@
 <th:block layout:fragment="content">
 <div class="row" style="width: 80%; margin: 0 auto;">
 	<div class="col text-center">
-	<form action="/emp/regLecture" method="post">
+	<form action="/emp/regLecture" method="post" id="regForm">
+	<input type="hidden" name="semNo" value="SEM_0101">
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 등록 ROW ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 		<div class="row mb-5">
 			<div class="col text-start">
@@ -23,7 +24,7 @@
 			<div class="col">
 				<div class="row mb-3">
 					<div class="offset-2 col-2">
-						교과목명 
+						강의명
 					</div>
 					<div class="col-4">
 						<input type="text" class="form-control" name="lecName">
@@ -34,7 +35,13 @@
 						강의학점 
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control" name="lecScore">
+						<select name="lecScore" class="form-select">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -42,9 +49,7 @@
 						강의학기 
 					</div>
 					<div class="col-4">
-						<select class="form-select" name="semNo">
-							<option th:each="sem : ${semesterList}" th:value="${sem.semNo}">[[${sem.semYear+' '+sem.semester+'학기'}]]</option>
-						</select>
+						2023년 1학기
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -71,20 +76,10 @@
 				</div>
 				<div class="row mb-3">
 					<div class="offset-2 col-2">
-						담당교수 
-					</div>
-					<div class="col-4">
-						<select class="form-select" name="empNo">
-							<option>저교수</option>
-						</select>
-					</div>
-				</div>
-				<div class="row mb-3">
-					<div class="offset-2 col-2">
 						최대 수강신청 인원
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control" name="maxNum" max="50" min="0">
+						<input type="number" class="form-control" name="maxNum" max="50" min="0" value="0">
 					</div>
 				</div>
 			</div>
@@ -110,7 +105,7 @@
 						강의 요일
 					</div>
 					<div class="col-4">
-						<select name="lecDay" class="form-select">
+						<select name="lecDay" class="form-select" onchange="change();">
 							<option value="월">월</option>
 							<option value="화">화</option>
 							<option value="수">수</option>
@@ -121,7 +116,7 @@
 				</div>
 				<div class="row mb-3">
 					<div class="offset-2 col-2">
-						강의 시작 시간 
+						강의 시간 
 					</div>
 					<div class="col-4">
 						<select name="firstTime" class="form-select" onchange="setLastTime(this);">
@@ -131,6 +126,7 @@
 						</select>
 					</div>
 				</div>
+				
 				<div class="row mb-3">
 					<div class="offset-2 col-2">
 						강의 마치는 시간 
@@ -139,6 +135,7 @@
 						<input type="text" class="form-control" id="lastTime" value="10:00" name="lastTime" readonly>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 버튼 ROW ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ ㅡㅡㅡㅡㅡㅡㅡㅡ-->
@@ -151,7 +148,7 @@
 				</div>
 				<div class="row">
 					<div class="col-4 d-grid" style="margin: 0 auto;">
-						<input type="submit" class="btn btn-success" value="등록" disabled>
+						<input type="button" id="regBtn" class="btn btn-success" value="등록" onclick="regLecture();" disabled>
 					</div> 
 				</div>
 			</div>

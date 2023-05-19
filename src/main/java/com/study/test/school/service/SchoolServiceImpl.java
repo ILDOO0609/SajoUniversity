@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.study.test.colleage.vo.DeptVO;
 import com.study.test.school.vo.PrenextPageVO;
 import com.study.test.school.vo.SchoolInfoVO;
 
@@ -62,5 +63,12 @@ public class SchoolServiceImpl implements SchoolService{
 		sqlSession.delete("schoolMapper.deleteSchoolInfo", schInfoCode);
 	}
 	
+//-------------------학사조회-----------------------------------------------------------
+	
+	//강의등록시 전공대학 선택시 해당하는 전공학과 이름 조회
+	@Override
+	public List<DeptVO> getDeptNameAjax(String collNo) {
+		return sqlSession.selectList("schoolMapper.getDeptNameAjax", collNo);
+	}
 	
 }

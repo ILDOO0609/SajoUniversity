@@ -47,7 +47,7 @@ public class EmpServiceImpl implements EmpService{
 	//강의등록시 전공대학 선택시 해당하는 전공학과 이름 조회
 	@Override
 	public List<DeptVO> getDeptNameAjax(String collNo) {
-		return sqlSession.selectList("empMapper.getDeptName", collNo);
+		return sqlSession.selectList("empMapper.getDeptNameAjax", collNo);
 	}
 	
 	//강의등록시 강의시간 중복체크Ajax

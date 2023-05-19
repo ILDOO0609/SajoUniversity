@@ -149,7 +149,7 @@ public class MemberController {
 	
 	
 	
-	// 인증번호 발송
+	// 인증번호 발송d
 	@ResponseBody
 	@PostMapping("/sendSMSAjax")
 	public void sendSMS() {

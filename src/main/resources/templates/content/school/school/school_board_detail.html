@@ -38,12 +38,13 @@
 		<div class="col-3">이전글</div>
 		<div class="col-9">
 			<a>
+				[[${prenextList[0].nextTitle}]]
 			</a>
 		</div>
 	</div>	
 	<div class="row">
 		<div class="col-3">다음글</div>
-		<div class="col-9">[조선대학교] 2023학년도 여름 계절학기 학점교류 신청 안내</div>
+		<div class="col-9">[[${#lists.size(prenextList) - 1}]]</div>
 	</div>	
 
 	<div class="row">

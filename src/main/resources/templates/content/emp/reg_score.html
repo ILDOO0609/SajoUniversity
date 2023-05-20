@@ -10,7 +10,94 @@
 </th:block>
 
 <th:block layout:fragment="content">
-성적 등록 화면
+<div class="row">
+	<div class="col">
+	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+		<div class="row">
+			<div class="col">
+				<div class="row">
+					<div class="col">
+						강의 조회
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col">
+						<input type="text" placeholder="등록한 교과목명">
+						<input type="button" value="Search">
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 목록ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+		<div class="row mb-3">
+			<div class="col">
+				<div class="row">
+					<div class="col">
+						강의 목록
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<table class="table">
+							<thead>
+								<tr>
+									<td>No</td>
+									<td>교과목명</td>
+									<td>강의 학점</td>
+									<td>단과대학</td>
+									<td>학과</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="map, state : ${mapList}">
+									<td>[[${#lists.size(mapList)-state.index}]]</td>
+									<td>[[${map['LEC_NAME']}]]</td>
+									<td>[[${map['LEC_SCORE']}]]</td>
+									<td>[[${map['COLL_NAME']}]]</td>
+									<td>[[${map['DEPT_NAME']}]]</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ수강 학생ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+		<div class="row">
+			<div class="col">
+				<div class="row">
+					<div class="col">
+						수강 학생
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<table class="table">
+							<thead>
+								<tr>
+									<td>학번</td>
+									<td>이름</td>
+									<td>성적</td>
+									<td>등록</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>
+										<input type="button" value="확인">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </th:block>
 
 <!-- 연결해야 할 외부 js 파일 -->

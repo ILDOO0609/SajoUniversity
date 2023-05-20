@@ -1,30 +1,10 @@
-//학사인포 년도 셀렉트 변경시 실행
-function getYearSelect(){
-	const year = document.querySelector('#yearSelect').value;
-	location.href = `/school/info?year=${year}`;
-}
-
-
-//검색버튼 클릭시 실행
-function infoSearchList(){
-	const search_form = document.querySelector('#searchForm');
-	
-	
-	search_form.submit();	
-	
-}
-
-
-//--------------학사조회-----------------------------------------------
-
-
-//전공대학 변경시 실행되는 함수
+// 단과대학 셀렉트박스 변경 시 실행
 function changeColl(coll){
 	const coll_no = coll.value;
 	
 		//ajax start
 		$.ajax({
-			url: '/emp/changeCollAjax', //요청경로
+			url: '/stu/changeCollAjax', //요청경로
 			type: 'post',
 			async: true,
 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -40,7 +20,7 @@ function changeColl(coll){
 	//ajax end
 }
 
-//전공학과 셀렉트박스 그리기
+// 단과대학 변경 시 소속학과 변경
 function drawDeptSelectbox(deptList){
 	const dept_div = document.querySelector('#deptDiv');
 	
@@ -48,7 +28,7 @@ function drawDeptSelectbox(deptList){
 		
 	let str = '';
 	
-	str += `<select class="form-select" name="deptNo">`;
+	str += `<select class="form-select text-center" name="deptNo">`;
 	for(const dept of deptList){
 		str += `<option value="${dept.deptNo}">${dept.deptName}</option>`;
 	}

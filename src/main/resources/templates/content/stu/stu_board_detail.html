@@ -17,21 +17,21 @@
 			<thead>
 				<tr>
 					<td>작성자</td>
-					<td>11111111111</td>
+					<td></td>
 					<td>작성일</td>
-					<td>1111111111111</td>
+					<td>[[${boardDetailList.boardCreateDate}]]</td>
 				</tr>
 				<tr>
 					<td>제목</td>
-					<td>dddddddddddddd</td>
+					<td>[[${boardDetailList.boardTitle}]]</td>
 					<td>조회수</td>
-					<td>22222222222222</td>
+					<td>[[${boardDetailList.boardReadCnt}]]</td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td colspan="3">
-						내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
+						[[${boardDetailList.boardContent}]]
 					</td>
 				</tr>
 			</tbody>
@@ -41,9 +41,9 @@
 	
 	<div class="row">
 		<div class="col">
-			<input type="button" class="btn btn-primary" value="수정">
-			<input type="button" class="btn btn-danger" value="삭제">
-			<input type="button" class="btn btn-primary" value="목록">
+			<input type="button" class="btn btn-primary" value="수정" th:onclick="|location.href='@{/board/updateBoard(boardNo=${boardDetailList.boardNo})}'|">
+			<input type="button" class="btn btn-danger" value="삭제" th:onclick="|location.href='@{/board/deleteBoard(boardNo=${boardDetailList.boardNo})}'|">
+			<input type="button" class="btn btn-primary" value="목록" onclick="location.href='/board/stuBoard'">
 		</div>
 	</div>
 	

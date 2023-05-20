@@ -22,8 +22,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests()
 				.requestMatchers("/"
 								, "/main"
-								, "/member/login"
-								, "/member/join"
+								, "/member/**"
 								, "/emp/changeCollAjax"
 								, "/emp/**"
 								, "/stu/**"
@@ -35,6 +34,10 @@ public class SecurityConfig {
 								, "/member/pop2"
 								, "/school/**"
 								, "/member/sendSMSAjax"
+
+								, "/school/**"
+
+								
 								)
 				.permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")

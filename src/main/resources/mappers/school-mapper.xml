@@ -23,7 +23,7 @@
 		<result	column="SCH_INFO_CODE"	 	property="schInfoCode"/>
 		<result column="SCH_INFO_TITLE" 	property="schInfoTitle"/>
 		<result column="PREVNO"			property="prevNo"/>
-		<result column="PRE_TITLE"		property="prevTitle"/>	
+		<result column="PREV_TITLE"		property="prevTitle"/>	
 		<result column="NEXTNO"			property="nextNo"/>	
 		<result column="NEXT_TITLE"		property="nextTitle"/>
 	</resultMap>
@@ -89,9 +89,9 @@
 	<select id="detailPreNext" resultMap="prenext">
 		SELECT SCH_INFO_CODE
 	        , SCH_INFO_TITLE
-	        , LAG(SCH_INFO_CODE, 1, 0) OVER(ORDER BY SCH_INFO_CODE ASC) PREBNO
-	        , LAG(SCH_INFO_TITLE, 1, '이전글이 없습니다.') OVER(ORDER BY SCH_INFO_CODE) PRE_TITLE
-	        , LEAD(SCH_INFO_CODE, 1, 0) OVER(ORDER BY SCH_INFO_CODE ASC) NEXTBNO
+	        , LAG(SCH_INFO_CODE, 1, 0) OVER(ORDER BY SCH_INFO_CODE ASC) PREVNO
+	        , LAG(SCH_INFO_TITLE, 1, '이전글이 없습니다.') OVER(ORDER BY SCH_INFO_CODE) PREV_TITLE
+	        , LEAD(SCH_INFO_CODE, 1, 0) OVER(ORDER BY SCH_INFO_CODE ASC) NEXTNO
 	        , LEAD(SCH_INFO_TITLE, 1, '다음글이 없습니다.') OVER(ORDER BY SCH_INFO_CODE) NEXT_TITLE
 	    FROM SCHOOL_INFORMATION
 	    ORDER BY SCH_INFO_CODE
@@ -110,6 +110,12 @@
 		DELETE SCHOOL_INFORMATION
 		WHERE SCH_INFO_CODE = #{schInfoCode} 
 	</delete>	
+	
+	
+	
+	
+	
+	
 	
 </mapper>
 

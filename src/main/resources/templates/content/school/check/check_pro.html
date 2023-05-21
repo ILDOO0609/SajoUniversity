@@ -46,18 +46,18 @@
 								<div class="row text-center">
 									<div class="col-2">단과대학</div>
 									<div class="col-2">
-										<select class="form-select" name="searchKeyword">
-											<option>전체</option>
-											<option>인문대학</option>
-											<option>개그대학</option>
-										</select>
+										<div class="col-2">
+											<select class="form-select" name="collNo" onchange="changeColl(this);">
+												<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
+											</select>
+										</div>
 									</div>
 									<div class="col-2">전공학과</div>
-									<div class="col-2">
-										<select class="form-select" name="searchKeyword">
-											<option>전체</option>
-											<option>학생학번</option>
-											<option>학생학과</option>
+									<div class="col-2" id="deptDiv">
+										<select class="form-select" name="deptNo">
+											<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
+												[[${dept.deptName}]]
+											</option>
 										</select>
 									</div>
 									<div class="col-4 d-grid">
@@ -106,7 +106,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/content/admin/cate_manage.js"></script> -->
+	<script type="text/javascript" src="/js/content/school/school.js"></script>
 </th:block>
 
 </html>

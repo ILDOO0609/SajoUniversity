@@ -13,7 +13,7 @@ public interface EmpService {
 	String getNowEmpNo(String memNo);
 		
 	//강의 등록
-	void insertLecture(LectureVO lectureVO, LectureTimeVO lectureTimeVO);
+	void insertLecture(HashMap<String, Object>map);
 	
 	//강의 목록 조회
 	List<Map<String, String>> getLectureList(String empNo);
@@ -28,7 +28,7 @@ public interface EmpService {
 	List<DeptVO> getDeptNameAjax(String collNo);
 	
 	//강의등록시 강의시간 중복체크 Ajax
-	boolean timeDuplicationCheckAjax(HashMap<String, String>map);
+	boolean timeDuplicationCheckAjax(HashMap<String, Object>lecTimeMap);
 	
 	
 }

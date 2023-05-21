@@ -1,6 +1,8 @@
 package com.study.test.emp.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -56,18 +59,45 @@ public class EmpController {
 	//강의 등록
 	@PostMapping("/regLecture")
 	public String regLecture(LectureVO lectureVO, LectureTimeVO lectureTimeVO, Authentication authentication) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@ "+lectureVO);
 		
+		//LectureTimeVO를 여러개 담는 lecTimeList통 생성
+		List<LectureTimeVO> lecTimeList = new ArrayList<>();
+		
+		//lectureTimeVO의 lecDay,fistTime,lastTime 값들을 배열로 ',' 제거후 배열로저장
+		String[] lecDayArr = lectureTimeVO.getLecDay().split(",");
+	    String[] firstTimeArr = lectureTimeVO.getFirstTime().split(",");
+	    String[] lastTimeArr = lectureTimeVO.getLastTime().split(",");
+
+	    //LectureTimeVO의 새로운 객체 timeVO 생성후 lecDayArr,firstTimeArr,lastTimeArr의 0번째,1번째... 값들을 저장후 lecTimeList에 저장
+	    for (int i = 0; i < lecDayArr.length; i++) {
+	        LectureTimeVO timeVo = new LectureTimeVO();
+	        timeVo.setLecDay(lecDayArr[i]);
+	        timeVo.setFirstTime(firstTimeArr[i]);
+	        timeVo.setLastTime(lastTimeArr[i]);
+	        lecTimeList.add(timeVo);
+	    }
+	    
 		//다음에 등록될 LEC_NO 
 		String getNextLectNo = empService.getNextLecNo();
 		
 		//LEC_NO 세팅
 		lectureVO.setLecNo(getNextLectNo);
-		lectureTimeVO.setLecNo(getNextLectNo);
+		
+		//lecTimeList에 하나씩 뺀 lecTime객체 하나하나에 LEC_NO세팅
+		for(LectureTimeVO lecTime : lecTimeList) {
+			lecTime.setLecNo(getNextLectNo);
+		}
+		
+		//EMP_NO세팅
 		lectureVO.setEmpNo(getNowEmpNo(authentication));
 		
+		//lectureVO랑 lecTimeList를 데이터로 갖는 map 생성
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("lectureVO", lectureVO);
+		map.put("lecTimeList", lecTimeList);
+		
 		//강의 등록
-		empService.insertLecture(lectureVO, lectureTimeVO);
+		empService.insertLecture(map);
 		
 		return "redirect:/emp/lectureList";
 	}
@@ -88,20 +118,40 @@ public class EmpController {
 	//강의 시간 중복 체크
 	@ResponseBody
 	@PostMapping("/timeDuplicationCheckAjax")
-	public boolean timeCheck(LectureTimeVO lectureTimeVO, Authentication authentication) {
+	public boolean timeCheck(Authentication authentication, @RequestBody HashMap<String, Object>map) {
 		
-		HashMap<String, String> map = new HashMap<>();
+		System.out.println("@@@@@@@@@@@@@@@@@@@@"+map);
 		
-		map.put("empNo", getNowEmpNo(authentication));
-		map.put("lecDay", lectureTimeVO.getLecDay());
-		map.put("firstTime", lectureTimeVO.getFirstTime());
+		//LectureTimeVO를 여러개 담는 lecTimeList통 생성
+		List<LectureTimeVO> lecTimeList = new ArrayList<>();
 		
-		return empService.timeDuplicationCheckAjax(map);
+		// map에서 각 배열을 가져옴
+		//map.get("firstTimeArr")은 Object타입이라 (List<String>)형식으로 변환
+		
+		List<String> firstTimeArr = (List<String>) map.get("firstTimeArr");
+	    List<String> lastTimeArr = (List<String>) map.get("lastTimeArr");
+	    List<String> lecDayArr = (List<String>) map.get("lecDayArr");
+	    
+	    // 배열의 길이만큼 반복하여 LectureTimeVO 객체를 생성하고 lecTimeList에 추가
+	    for (int i = 0; i < firstTimeArr.size(); i++) {
+	        LectureTimeVO lectureTimeVO = new LectureTimeVO();
+	        lectureTimeVO.setFirstTime(firstTimeArr.get(i));
+	        lectureTimeVO.setLastTime(lastTimeArr.get(i));
+	        lectureTimeVO.setLecDay(lecDayArr.get(i));
+	        lecTimeList.add(lectureTimeVO);
+	    }
+		
+		HashMap<String, Object>lecTimeMap = new HashMap<>();
+		lecTimeMap.put("lecTimeList", lecTimeList);
+		lecTimeMap.put("empNo", getNowEmpNo(authentication));
+		
+		return empService.timeDuplicationCheckAjax(lecTimeMap);
 	}
 	
 	//강의 시간표
 	@GetMapping("/lecSchedule")
 	public String regSchedule(Model model, Authentication authentication) {
+		
 		//시간표 작성위한 강의 및 시간정보 담기
 		model.addAttribute("lectureList", empService.getLectureListForSchedule(getNowEmpNo(authentication)));
 		

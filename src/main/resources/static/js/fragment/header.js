@@ -462,7 +462,6 @@ function startTimer() {
 function checkVerificationCode() {
 	alert(1111111);
   var authMail = document.querySelector('#auth_mail').value;
-
   if (authMail === verificationCode) {
     clearInterval(countdownTimer);
     alert('Verification code matched.');

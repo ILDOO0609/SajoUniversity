@@ -1,8 +1,43 @@
 //학사인포 년도 셀렉트 변경시 실행
-function getYearSelect(){
-	const year = document.querySelector('#yearSelect').value;
+function schInfoYear(){
+	const year = document.querySelector('#schInfoYear').value;
 	location.href = `/school/info?year=${year}`;
 }
+//학사안내 월 셀렉트 변경시 실행
+function schInfoMonth(){
+	const schInfoMonth = document.querySelector('#schInfohMonth').value;
+	
+	//ajax start
+	$.ajax({
+	   url: '/school/schInfoMonthAjax', //요청경로
+	   type: 'post',
+	   data: {'schInfoMonth': schInfoMonth}, //필요한 데이터
+	   success: function(result) {
+			const tbodyTag = document.querySelector('#schInfoTable > tbody');
+			tbodyTag.replaceChildren();
+			
+			let str = '';
+			
+			for(const info of result){
+				str += '<tr>';
+				str += `<td>${info.schInfoNum}</td>`;
+				str += `<td><a th:href="@{/school/schoolBoardDeatil?schInfoCode=${info.schInfoCode}}"></a>${info.schInfoTitle}</td>`;
+				str += `<td>${info.regDate}</td>`
+				str += `<td>${info.startDate} ~ ${info.endDate}</td>`
+				str += '</tr>';
+			}
+				
+			tbodyTag.insertAdjacentHTML('afterbegin', str);
+
+	   },
+	   error: function() {
+	      alert('실패');
+	   }
+	});
+	//ajax end
+	
+}
+
 
 
 //검색버튼 클릭시 실행
@@ -39,6 +74,9 @@ function schInfoUpdate(){
 	confirm('해당글을 수정할까요?');
 	document.querySelector('#schInfoUpdateForm').submit();
 }
+
+
+
 
 
 //--------------학사조회-----------------------------------------------
@@ -88,7 +126,7 @@ function drawDeptSelectbox(deptList){
 
 //윤년계산
 function checkLeapYear(year){
-	if(year%400 == 0){
+	if(year % 400 == 0){
 		return true;
 	}else if(year % 100 == 0){
 		return false;
@@ -125,7 +163,7 @@ function changeYearMonth(year, month){
 		arr_calendar.push(String(i));
 	}
 
-	let remain_day = 7 - (arr_calendar.length%7);
+	let remain_day = 7 - (arr_calendar.length % 7);
 	if(remain_day < 7){
 		for(let i = 0 ; i < remain_day ; i++){
 			arr_calendar.push("");
@@ -199,5 +237,46 @@ changeYearMonth(current_year, current_month);
 
 	
 	
+
+//--------------회원메뉴--------------------------------------------------------------
+function position(memNo, memRole) {
+	memNo_tag = document.querySelector('#memNo').value;
+	memRole_tag = document.querySelector('#memRole').value;
+	
+	if(memNo == null){
+		if(memRole = stu){
+			
+		}
+	}
+	
+	
+	//ajax start
+	$.ajax({
+   		url: '/test2/test2', //요청경로
+		type: 'post',
+		async: true,
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	   	data: {}, //필요한 데이터
+	   	success: function(result) {
+	      alert('ajax 통신 성공');
+	      alert(result);
+	   	},
+	   	error: function() {
+	      alert('실패');
+		}
+	});
+	//ajax end
+
+	
+}
+	
+
+
+
+
+
+
+
+
 
 

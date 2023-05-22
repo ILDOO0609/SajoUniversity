@@ -85,6 +85,17 @@
 		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	
+	<select id="schInfoMonthAjax" resultMap="school">
+		SELECT SCH_INFO_CODE
+			, SCH_INFO_TITLE
+			, SCH_INFO_WRITER
+			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') REGDATE
+			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') STARTDATE
+			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') ENDTDATE
+			, SCH_INFO_NUM
+		FROM SCHOOL_INFORMATION
+	</select>
+	
 	<!-- 상세조회 -->
 	<select id="schoolBoardDetail" resultMap="school">
 		SELECT SCH_INFO_CODE
@@ -141,6 +152,31 @@
 		FROM SCHOOL_INFORMATION
 	</select>
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="selectMember" resultMap="memberMapper.member">
+		SELECT MEM_NO
+			, MEM_NAME
+			, MEM_EMAIL
+			, MEM_ADDR
+			, MEM_TELL
+			, MEM_GENDER
+			, MEM_BIRTHDAY
+			, MEM_ROLE
+		FROM MEMBER	
+	</select>
+	
+	
 	
 	
 </mapper>

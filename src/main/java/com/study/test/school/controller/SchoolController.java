@@ -18,8 +18,6 @@ import com.study.test.colleage.service.ColleageService;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.service.EmpService;
 import com.study.test.school.service.SchoolService;
-import com.study.test.school.vo.PrenextPageVO;
-import com.study.test.school.vo.SchSearchVO;
 import com.study.test.school.vo.SchoolInfoVO;
 import com.study.test.util.DateUtill;
 import com.study.test.util.PageVO;
@@ -66,8 +64,6 @@ public class SchoolController {
 		
 		return "content/school/school/school_info";
 	}
-
-	
 	
 	//학사메뉴 -> 학사안내 게시글 작성페이지
 	@GetMapping("/regSchoolBoard")
@@ -249,8 +245,12 @@ public class SchoolController {
 	
 	
 
-	
-	
+	//회원 -> 회원관리 페이지
+	@GetMapping("/memberList")
+	public String memberList(Model model) {
+		model.addAttribute("memberList", schoolService.selectMember()); 
+		return "content/school/member/member_list";
+	}
 	
 	
 

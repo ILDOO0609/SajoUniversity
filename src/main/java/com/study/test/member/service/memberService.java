@@ -24,4 +24,7 @@ public interface memberService {
 	
 	// 비밀번호 변경
 	void updateMemPw(MemberVO memberVO);
+	
+	// 비밀번호 변경 유무
+	String checkMemPw(MemberVO memberVO);
 }

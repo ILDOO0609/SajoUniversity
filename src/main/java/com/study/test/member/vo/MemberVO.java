@@ -10,6 +10,7 @@ import lombok.ToString;
 public class MemberVO {
 	private String memNo;
 	private String memPw;
+	private String memPwUpdate;
 	private String memName;
 	private String memGender;
 	private String memTell;

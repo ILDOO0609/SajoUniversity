@@ -59,6 +59,12 @@ public class memberServiceImpl implements memberService{
 		
 		return sqlSession.selectOne("memberMapper.loginInfo", memberVO);
 	}
+
+	@Override
+	public String checkMemPw(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.checkMemPw", memberVO);
+	}
 	
 	
 	

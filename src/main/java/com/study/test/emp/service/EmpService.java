@@ -13,22 +13,22 @@ public interface EmpService {
 	String getNowEmpNo(String memNo);
 		
 	//강의 등록
-	void insertLecture(LectureVO lectureVO, LectureTimeVO lectureTimeVO);
+	void insertLecture(HashMap<String, Object>map);
 	
 	//강의 목록 조회
-	List<Map<String, String>> getLectureList(String empNo);
+	List<Map<String, String>> getLectureListForRegScore(String empNo);
 	
 	//다음에 등록될 LEC_NO 조회
 	String getNextLecNo();
 	
 	//강의 시간표 작성 위한 강의 및 강의시간 조회
-	List<Map<String, String>> getLectureListForSchedule(String memNo);
+	List<Map<String, Object>> getLectureListForSchedule(String memNo);
 	
 	//강의등록시 전공대학 선택시 해당하는 전공학과 이름 조회
 	List<DeptVO> getDeptNameAjax(String collNo);
 	
 	//강의등록시 강의시간 중복체크 Ajax
-	boolean timeDuplicationCheckAjax(HashMap<String, String>map);
+	boolean timeDuplicationCheckAjax(HashMap<String, Object>lecTimeMap);
 	
 	
 }

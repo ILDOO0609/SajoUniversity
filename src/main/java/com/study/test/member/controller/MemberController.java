@@ -79,6 +79,42 @@ public class MemberController {
 	}
 	
 
+	
+
+	 
+	
+	
+	@GetMapping("/game")
+	public String game() {
+		return "content//member/game";
+	}
+	
+	// 회원가입 이메일인증
+	@ResponseBody
+	@PostMapping("/authenMailAjax")
+	public boolean authenMail(String memEmail) {
+		
+		
+		
+		if(memEmail != null) {
+			String imsiPw = mailService.createRandomPw();
+			
+			
+			MailVO mailVO = new MailVO();
+			mailVO.setTitle("인증번호 8자리 발송");
+			
+			List<String> emailList = new ArrayList<>();
+			emailList.add(memEmail);
+			
+			mailVO.setRecipientList(emailList);
+			mailVO.setContent("발급 된 인증번호는 : " + imsiPw + "입니다. \n 복사해서 사용해주세요 !!" );
+			
+			mailService.sendSimpleEmail(mailVO);
+		}
+		
+		return memEmail != null ? true : false;
+	}
+	
 	// 비밀번호 찾기
 	@ResponseBody
 	@PostMapping("/findPwAjax")

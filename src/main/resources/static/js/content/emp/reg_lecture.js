@@ -37,24 +37,122 @@ function drawDeptSelectbox(deptList){
 	dept_div.insertAdjacentHTML('afterbegin',str);
 }
 
-//강의마치는시간 자동 설정
-function setLastTime(timeTag){
-	document.querySelector('#lastTime').value = parseInt(timeTag.value)+1+':00';
-	document.querySelector('#regBtn').disabled=true;
+// 함수: firstTime 값에 따라 lastTime select box 갱신
+function setLastTime(firstTimeSelect) {
+    let firstTime = firstTimeSelect.value;
+    let lastTimeSelect = firstTimeSelect.nextElementSibling;
+
+    // lastTime select box 내용을 비움
+    lastTimeSelect.innerHTML = '';
+
+    // firstTime 이후의 시간들로 lastTime select box 채움
+    for (let i = 1; i <= 8; i++) {
+        if (i >= firstTime) {
+            let option = document.createElement('option');
+            option.value = option.text = i;
+            lastTimeSelect.appendChild(option);
+        }
+    }
+}
+
+// 추가버튼 클릭시 실행되는 함수
+function add() {
+	
+    if(document.querySelectorAll('#container #day').length < 5) {
+		
+        let originDiv = document.querySelector('#container #day');
+        let newDiv = originDiv.cloneNode(true); // 'day' div 복사
+
+        // 새로운 div에서 'firstTime' select box에 setLastTime 함수 연결
+        newDiv.querySelector('select[name="firstTime"]').onchange = function() { setLastTime(this); };
+        
+        // lastTime 초기화
+        let lastTimeSelect = newDiv.querySelector('select[name="lastTime"]');
+        lastTimeSelect.innerHTML = '';
+        for (let i = 1; i <= 8; i++) {
+            let option = document.createElement('option');
+            option.value = option.text = i;
+            lastTimeSelect.appendChild(option);
+        }
+
+        // 새로운 div를 'container' div 바로 아래에 추가
+        document.querySelector('#container').appendChild(newDiv);
+
+        // 새로운 div에서 'addBtn'과 'deleteBtn' 삭제
+        let buttons = newDiv.querySelectorAll('input[type="button"]');
+        
+		for(const button of buttons){
+			button.remove();
+		}
+		
+        // 삭제버튼 보이게하기
+        document.querySelector('#deleteBtn').style.display = "inline";
+    } 
+    else {
+        alert("최대 4개까지만 추가할 수 있습니다.");
+    }
+}
+
+// 삭제버튼 클릭시 실행되는 함수
+function deleteDay() {
+	
+	//day div 모두 가져오기
+    const days = document.querySelectorAll('#container #day');
+    
+    //day div하나씩 제거
+    if(days.length > 1) {
+        days[days.length-1].remove();
+    }
+    
+    // day div가 1개가 되면 삭제버튼 display속성 none
+    if(document.querySelectorAll('#container #day').length == 1) {
+        document.querySelector('#deleteBtn').style.display = 'none';
+    }
 }
 
 //강의시간 중복체크
 function timeDuplicationCheckAjax(){
-	const lec_day = document.querySelector('select[name="lecDay"]').value;
-	const first_time = document.querySelector('select[name="firstTime"]').value;
 	
-		//ajax start
+	const result = checkDayDuplicate(); // 요일 중복체크 함수 호출
+	
+	if(!result){
+		return;
+	}
+	
+	const lec_days = document.querySelectorAll('select[name="lecDay"]');
+	const first_times = document.querySelectorAll('select[name="firstTime"]');
+	const last_times = document.querySelectorAll('select[name="lastTime"]');
+	
+	let lec_day_arr = [];
+	let first_time_arr = [];
+	let last_time_arr = [];
+	
+	for(const lec_day of lec_days){
+		lec_day_arr.push(lec_day.value);
+	}
+	for(const first_time of first_times){
+		first_time_arr.push(first_time.value);
+	}
+	for(const last_time of last_times){
+		last_time_arr.push(last_time.value);
+	}
+	
+	
+	time_info = {
+		'lecDayArr':lec_day_arr
+		, 'firstTimeArr':first_time_arr
+		, 'lastTimeArr':last_time_arr
+	};
+	
+	
+	   //ajax start
 	   $.ajax({
 	      url: '/emp/timeDuplicationCheckAjax', //요청경로
 	      type: 'post',
 	      async: true,
-	      contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-	      data: {'lecDay':lec_day, 'firstTime':first_time}, //필요한 데이터
+	      contentType : 'application/json; charset=UTF-8',
+	      //contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+	      data: JSON.stringify(time_info), //필요한 데이터
 	      success: function(result) {
 	         if(result){
 				Swal.fire({
@@ -80,9 +178,34 @@ function timeDuplicationCheckAjax(){
 	//ajax end
 }
 
+//요일 중복체크
+function checkDayDuplicate() {
+	
+	const lec_days = document.querySelectorAll('select[name="lecDay"]');
+	
+	// lec_days 값들을 배열에 저장
+	let lec_day_arr = [];
+	
+	// lec_day_arr에 데이터 푸쉬
+	for(const lec_day of lec_days){
+		lec_day_arr.push(lec_day.value);
+	}
+	
+	//lec_day_arr에 중복데이터 체크
+    for (let i = 0; i < lec_day_arr.length; i++) {
+        for (let j = i + 1; j < lec_day_arr.length; j++) {
+            if (lec_day_arr[i] == lec_day_arr[j]) {
+                alert("요일이 중복됩니다.");
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 //요일이나 시간 변경시 다시 등록버튼 비활성화
 function change(){
-	document.querySelector('#regBtn').disabled=true;
+	//document.querySelector('#regBtn').disabled=true;
 }
 
 //강의 등록
@@ -115,34 +238,24 @@ function regValidate(){
 	deleteErrorDiv();
 	
 	const lec_name = document.querySelector('input[name="lecName"]');
-	const lec_score = document.querySelector('select[name="lecScore"]');
 	console.log(lec_name.value);
 	//함수의 리턴 결과를 저장하는 변수
 	let result_name = true;
-	let result_score = true;
 	
 	//오류 메세지 
 	let str_name = '';
-	let str_score = '';
 	
 	if(lec_name.value == ''){
 		str_name = '<div style="color:red; font-size:14px;" class="my-invalid">교과목명은 필수입니다.</div>';
 		result_name = false;
 	}
-	if(lec_score.value == ''){
-		str_score = '<div style="color:red; font-size:14px;" class="my-invalid">강의학점은 필수입니다.</div>'
-		result_score = false;
-	}
 	
 	if(!result_name){
 		lec_name.parentElement.insertAdjacentHTML('afterend', str_name);
 	}
-	if(!result_score){
-		lec_score.parentElement.insertAdjacentHTML('afterend', str_score);
-	}
 	
-	return result_name && result_score;
-	
+	return result_name;
 }
- 
+
+
 

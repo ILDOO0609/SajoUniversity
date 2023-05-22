@@ -16,4 +16,6 @@ public interface ColleageService {
 	
 	//전공학기 정보 조회
 	List<SemesterVO> getSemesterList();
+	
+
 }

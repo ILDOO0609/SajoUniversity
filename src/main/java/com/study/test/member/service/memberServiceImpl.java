@@ -59,6 +59,17 @@ public class memberServiceImpl implements memberService{
 		
 		return sqlSession.selectOne("memberMapper.loginInfo", memberVO);
 	}
+
+	@Override
+	public MemberVO getMemInfoForStu(String memNo) {
+		return sqlSession.selectOne("memberMapper.getMemInfoForStu", memNo);
+	}
+
+	@Override
+	public void updateStuInfo(MemberVO memberVO) {
+		sqlSession.update("memberMapper.updateStuInfo", memberVO);
+		
+	}
 	
 	
 	

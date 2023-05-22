@@ -24,4 +24,10 @@ public interface memberService {
 	
 	// 비밀번호 변경
 	void updateMemPw(MemberVO memberVO);
+	
+	// 학생 정보조회용 
+	MemberVO getMemInfoForStu(String memNo);
+	
+	// 학생 정보 수정
+	void updateStuInfo(MemberVO memberVO);
 }

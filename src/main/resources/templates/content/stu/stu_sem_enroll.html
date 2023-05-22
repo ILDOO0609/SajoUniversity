@@ -10,7 +10,7 @@
 </th:block>
 
 <th:block layout:fragment="content">
-수강신청
+수강 신청
 <div class="row">
 	<div class="col">
 		<div class="row">
@@ -19,6 +19,7 @@
 			</div>
 			<div class="col-2">
 				<select class="form-select text-center" name="collNo" onchange="changeColl(this)">
+					<option>전체</option>
 					<option th:each = "coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
 				</select>
 			</div>
@@ -27,20 +28,54 @@
 			</div>
 			<div class="col-2" id="deptDiv">
 				<select class="form-select text-center" name="deptNo">
+					<option>전체</option>
 					<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo == dept.collNo}">
 						[[${dept.deptName}]]
 					</option>
 				</select>
 			</div>
 			<div class="col-4">
-				<input type="text" class="form-control">
+				<input type="text" class="form-control" name="searchValue" placeholder="강의명을 입력해주세요">
 			</div>
 			<div class="col-2">
-				<input type="button" class="btn btn-primary" value="search">
+				<input type="button" class="btn btn-primary" value="search" onclick="searchLecture();">
 			</div>
 		</div>
 	</div>
 </div>
+<div class="row mt-5">
+	<div class="col">
+		<table class="table table-striped">
+		<thead class="thead">
+			<tr>
+				<td>No.</td>
+				<td>강의명</td>
+				<td>학점</td>
+				<td>단과대학</td>
+				<td>학과</td>
+				<td>교수</td>
+				<td>강의요일/시간</td>
+				<td>신청인원</td>
+				<td>최대인원</td>
+				<td>수강신청</td>
+			</tr>
+		</thead>
+			<tr class="align-middle" th:each="lec, state : ${lecList}">
+				<td>[[${state.count}]]</td>
+				<td>[[${lec.lecName}]]</td>
+				<td>[[${lec.lecScore}]]</td>
+				<td>[[${lec.colleageVO.collName}]]</td>
+				<td>[[${lec.deptVO.deptName}]]</td>
+				<td>교수</td>
+				<td>[[${lec.lectureTimeList[0].lecDay}]]/[[${lec.lectureTimeList[0].firstTime}]]~[[${lec.lectureTimeList[0].lastTime}]]</td>
+				<td>[[${lec.nowNum}]]</td>
+				<td>[[${lec.maxNum}]]</td>
+				<td><input type="button" class="btn btn-primary" value="수강신청"> </td>
+			</tr>
+		</table>
+	</div>
+</div>
+
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->

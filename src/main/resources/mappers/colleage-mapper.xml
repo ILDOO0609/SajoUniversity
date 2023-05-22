@@ -49,6 +49,27 @@
 			, COLL_NO
 		FROM DEPT
 	</select>
+	
+	
+	<!-- 학생 개인정보 조회용 -->
+	<select id="getCollName" resultMap="colleage">
+		SELECT COLL.COLL_NO
+		    , COLL_NAME
+		FROM COLLEAGE COLL, STU
+		WHERE COLL.COLL_NO = STU.COLL_NO
+		AND STU.MEM_NO = #{memNo}
+	</select>
+	
+	<!-- 학생 개인정보 조회용 -->
+	<select id="getDeptName" resultMap="dept">
+		SELECT DEPT.DEPT_NO
+		    , DEPT_NAME
+		FROM DEPT, STU
+		WHERE DEPT.DEPT_NO = STU.DEPT_NO
+		AND MEM_NO = #{memNo}
+	</select>
+	
+	
 </mapper>
 
 

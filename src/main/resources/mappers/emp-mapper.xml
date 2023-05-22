@@ -23,6 +23,10 @@
 		<result column="SEM_NO" 	 property="semNo"/>
 		<result column="COLL_NO" 	 property="collNo"/>
 		<result column="DEPT_NO" 	 property="deptNo"/>
+		<result column="SEARCH_VALUE" 	 property="searchValue"/>
+		<association property="deptVO" resultMap="colleageMapper.dept"></association>
+		<association property="colleageVO" resultMap="colleageMapper.colleage"></association>
+		<collection property="lectureTimeList" resultMap="lectureTime"></collection>
 	</resultMap>
 	
 	<resultMap type="com.study.test.emp.vo.LectureTimeVO" id="lectureTime">
@@ -135,6 +139,39 @@
 		WHERE LEC_DAY = #{lecDay} AND FIRST_TIME = #{firstTime}
         AND TIME.LEC_NO = LEC.LEC_NO
         AND LEC.EMP_NO = #{empNo}
+	</select>
+	
+	<!-- 수강신청용 강의 조회 -->
+	<select id="getLectureForStu" resultMap="lecture">
+		SELECT LECTURE.LEC_NO
+			, LEC_NAME
+			, LEC_SCORE
+			, CREATE_DATE
+			, MAX_NUM
+			, NOW_NUM
+			, LEC_STATUS
+			, EMP_NO
+			, SEM_NO
+			, LECTURE.COLL_NO
+            , COLL_NAME
+			, LECTURE.DEPT_NO
+			, DEPT_NAME
+			, LEC_DAY
+			, FIRST_TIME
+			, LAST_TIME
+		FROM LECTURE, LECTURE_TIME, COLLEAGE COLL, DEPT
+		WHERE LECTURE.LEC_NO = LECTURE_TIME.LEC_NO
+		AND LECTURE.COLL_NO = COLL.COLL_NO
+		AND LECTURE.DEPT_NO = DEPT.DEPT_NO
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(LEC_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		<if test="collNo != null and collNo != ''">
+		AND COLL_NO = #{collNo}
+		</if>
+		<if test="deptNo != null and deptNo != ''">
+		AND DEPT_NO = #{deptNo}
+		</if>
 	</select>
 </mapper>
 

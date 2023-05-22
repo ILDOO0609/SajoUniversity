@@ -88,13 +88,14 @@
 					<div class="dropdown-content">
 						<a href="#">학적 기본 조회</a>
 						<a href="/stu/stuInfo">개인 정보 조회</a>
-						<a href="#">개인 정보 수정</a>
+						<a href="/stu/updateStuInfoForm">개인 정보 수정</a>
 					</div>
 				</div>
 				<div class="dropdown">
 					<span>교과과정</span>
 					<div class="dropdown-content">
 						<a href="/stu/stuSemEnroll">수강 신청</a>
+						<a href="/stu/stuSemEnrollNow">수강 신청 내역</a>
 						<a href="/stu/stuMultimajor">복수 전공 신청</a>
 						<a href="/stu/stuStatus">휴학 신청</a>
 						<a href="/stu/stuStatus">복학 신청</a>
@@ -193,6 +194,12 @@
 					<li><a href="/school/lessonEnrolment"><button class="dropdown-item" type="button">수강 관리</button></a></li>
 					<li><a href="/school/lessonMajorDouble"><button class="dropdown-item" type="button">복수전공 관리</button></a></li>
 					<li><a href="/school/lessonWarning"><button class="dropdown-item" type="button">학사경고 관리</button></a></li>
+				</ul>
+				<button class="btn" type="button" data-bs-toggle="dropdown" style="border: 1px solid white;">
+					회원 메뉴
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="/school/memberList"><button class="dropdown-item" type="button">회원 관리</button></a></li>
 				</ul>
 			</div>
 		</div>	

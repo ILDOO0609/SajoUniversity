@@ -6,7 +6,7 @@
    
 <!-- 연결해야 할 외부 css 파일 -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href="">-->
+	<link rel="stylesheet" href="/css/emp.css">
 </th:block>
 
 <th:block layout:fragment="content">
@@ -25,45 +25,27 @@
 		<div class="row">
 			<div class="col">
 				<table class="table text-center align-middle" border="1">
-					<colgroup>
-						<col width="5%">
-						<col width="19%">
-						<col width="19%">
-						<col width="19%">
-						<col width="19%">
-						<col width="19%">
-					</colgroup>
-					<thead>
-						<tr>
-							<td></td>
-							<td>월</td>
-							<td>화</td>
-							<td>수</td>
-							<td>목</td>	 
-							<td>금</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:if="${#lists.size(lectureList)==0}">
-							<td colspan="6">등록된 강의가 없습니다.</td>
-						</tr>
-						<th:block th:unless="${#lists.size(lectureList)==0}">
-							<tr th:each="time, state : ${#numbers.sequence(9,17)}" style="height: 40px;">
-								<td class="text-start">
-									[[${time+':00'}]]
-								</td>
-								<td th:each="num : ${#numbers.sequence(1,5)}">
-									<th:block th:each="i : ${#numbers.sequence(0,#lists.size(lectureList)-1)}">
-										<th:block th:if="${lectureList[i]['LEC_DAY']==num and lectureList[i]['FIRST_TIME']==time+':00'}">
-											[[${lectureList[i]['LEC_NAME']}]]
-											<br>
-											([[${lectureList[i]['DEPT_NAME']}]])
-										</th:block>
-									</th:block>
-								</td>
-							</tr>
-						</th:block>
-					</tbody>
+				    <colgroup>
+				        <col width="5%">
+				        <col width="19%">
+				        <col width="19%">
+				        <col width="19%">
+				        <col width="19%">
+				        <col width="19%">
+				    </colgroup>
+				    <thead>
+				        <tr>
+				            <td>비고</td>
+				            <td>월</td>
+				            <td>화</td>
+				            <td>수</td>
+				            <td>목</td> 
+				            <td>금</td>
+				        </tr>
+				    </thead>
+				    <tbody id="tbodyTag">
+				    
+				    </tbody>
 				</table>
 			</div>
 		</div>
@@ -73,7 +55,7 @@
 
 <!-- 연결해야 할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src=""></script>-->
+	<script type="text/javascript" src="/js/content/emp/lec_schedule.js"></script>
 </th:block>
 
 </html>

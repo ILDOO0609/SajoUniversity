@@ -65,7 +65,7 @@ public class MemberController {
 	// 회원 가입
 	@PostMapping("/join")
 	public String join(MemberVO memberVO) {
-		
+				
 		String encodedPw = encoder.encode(memberVO.getMemPw());
 		
 		memberVO.setMemPw(encodedPw);

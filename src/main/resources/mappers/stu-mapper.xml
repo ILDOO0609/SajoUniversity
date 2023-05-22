@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="stuMapper">
+
+<resultMap type="com.study.test.stu.vo.StuVO" id="stu">
+	<id 	column="STU_NO" 		property="stuNo"/>
+	<result column="STU_YEAR" 		property="stuYear"/>
+	<result column="STU_SEM" 		property="stuSem"/>
+	<result column="STU_STATUS" 	property="stuStatus"/>
+	<result column="MEM_NO" 		property="memNo"/>
+	<result column="COLL_NO" 		property="collNo"/>
+	<result column="DEPT_NO" 		property="deptNo"/>
+	<association property="memberVO" resultMap="memberMapper.member"></association>
+	<association property="colleageVO" resultMap="colleageMapper.colleage"></association>
+</resultMap>
+
+<select id="getStuInfo" resultMap="stu">
+SELECT STU_NO
+	, STU_YEAR
+	, STU_SEM
+	, STU_STATUS
+	, MEM_NO
+	, COLL_NO
+	, DEPT_NO
+FROM STU
+WHERE MEM_NO = #{memNo}
+</select>
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

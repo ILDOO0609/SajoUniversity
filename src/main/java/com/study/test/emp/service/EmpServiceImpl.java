@@ -1,6 +1,7 @@
 package com.study.test.emp.service;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,15 +29,15 @@ public class EmpServiceImpl implements EmpService{
 	//강의 및 강의시간 등록 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void insertLecture(LectureVO lectureVO, LectureTimeVO lectureTimeVO) {
-		sqlSession.insert("empMapper.insertLecture", lectureVO);
-		sqlSession.insert("empMapper.regLectureTime", lectureTimeVO);
+	public void insertLecture(HashMap<String, Object> map) {
+		sqlSession.insert("empMapper.insertLecture", map.get("lectureVO"));
+		sqlSession.insert("empMapper.regLectureTime", map);
 	}
 	
 	//강의 목록 조회
 	@Override
-	public List<Map<String, String>> getLectureList(String empNo) {
-		return sqlSession.selectList("empMapper.getLectureList", empNo);
+	public List<Map<String, String>> getLectureListForRegScore(String empNo) {
+		return sqlSession.selectList("empMapper.getLectureListForRegScore", empNo);
 	}
 	
 	//다음에 등록될 LEC_NO 조회
@@ -47,7 +48,7 @@ public class EmpServiceImpl implements EmpService{
 	
 	//강의 시간표 작성 위한 강의 및 강의시간 조회
 	@Override
-	public List<Map<String, String>> getLectureListForSchedule(String memNo) {
+	public List<Map<String, Object>> getLectureListForSchedule(String memNo) {
 		return sqlSession.selectList("empMapper.getLectureListForSchedule", memNo);
 	}
 	
@@ -59,9 +60,9 @@ public class EmpServiceImpl implements EmpService{
 	
 	//강의등록시 강의시간 중복체크Ajax
 	@Override
-	public boolean timeDuplicationCheckAjax(HashMap<String, String>map) {
-		int result = sqlSession.selectOne("empMapper.timeDuplicationCheckAjax", map);
-		return result == 1 ? true : false ;
+	public boolean timeDuplicationCheckAjax(HashMap<String, Object>lecTimeMap) {
+		int result = sqlSession.selectOne("empMapper.timeDuplicationCheckAjax", lecTimeMap);
+		return result >= 1 ? true : false ;
 	}
 
 }

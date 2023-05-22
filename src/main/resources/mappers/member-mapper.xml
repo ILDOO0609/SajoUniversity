@@ -64,39 +64,39 @@
 		
 		
 		<!-- 회원가입  -->
-		<insert id="join">
-		INSERT INTO MEMBER (
-		    MEM_NO,
-		    MEM_PW,
-		    MEM_NAME,
-		    MEM_GENDER,
-		    MEM_TELL,
-		    MEM_ADDR,
-		    MEM_ADDR_DETAIL,
-		    MEM_ROLE,
-		    MEM_BIRTHDAY,
-		    MEM_EMAIL,
-		    MEM_IMAGE,
-		    MEM_QUEST
-		) VALUES (
-		    #{memNo},
-		    #{memPw},
-		    #{memName},
-		    #{memGender},
-		    REPLACE(
-				<foreach collection="memTells" item="tell" open="'"  close="'">
-					${tell}
-				</foreach>, ' ', ''),
-		    
-		    #{memAddr},
-		    #{memAddrDetail},
-		    #{memRole},
-		    #{memBirthday},
-		    #{memEmail},
-		    #{memImage},
-		    #{memQuest}
-		)
-		</insert>
+      <insert id="join">
+      INSERT INTO MEMBER (
+          MEM_NO,
+          MEM_PW,
+          MEM_NAME,
+          MEM_GENDER,
+          MEM_TELL,
+          MEM_ADDR,
+          MEM_ADDR_DETAIL,
+          MEM_ROLE,
+          MEM_BIRTHDAY,
+          MEM_EMAIL,
+          MEM_IMAGE,
+          MEM_QUEST
+      ) VALUES (
+          #{memNo},
+          #{memPw},
+          #{memName},
+          #{memGender},
+          REPLACE(
+            <foreach collection="memTells" item="tell" open="'"  close="'">
+               ${tell}
+            </foreach>, ' ', ''),
+          
+          #{memAddr},
+          #{memAddrDetail},
+          #{memRole},
+          #{memBirthday},
+          #{memEmail},
+          #{memImage},
+          #{memQuest}
+      )
+      </insert>
 	
 		<!-- 이메일 전송 - 비밀번호 -->
 		<select id="getMemEmail" resultType="String">
@@ -126,6 +126,35 @@
 			AND MEM_EMAIL = #{memEmail}
 		</select>
 	
+	
+	    <!-- 학생 정보 조회용 -->
+		<select id="getMemInfoForStu" resultMap="member">
+			SELECT MEM_NO
+				, MEM_PW
+				, MEM_NAME
+				, MEM_EMAIL
+				, MEM_ADDR
+				, MEM_ADDR_DETAIL
+				, MEM_TELL
+				, MEM_IMAGE
+				, MEM_GENDER
+				, MEM_BIRTHDAY
+				, MEM_ROLE
+				, MEM_QUEST
+			FROM MEMBER
+			WHERE MEM_NO = #{memNo}
+		</select>
+		
+		<!-- 학생 정보 조회용 -->
+		<update id="updateStuInfo">
+			UPDATE MEMBER
+			SET MEM_NAME = #{memName}
+			    , MEM_EMAIL = #{memEmail}
+			    , MEM_TELL = #{memTell}
+			    , MEM_ADDR = #{memAddr}
+			    , MEM_ADDR_DETAIL = #{memAddrDetail}
+			WHERE MEM_NO = #{memNo}
+		</update>
 	
 </mapper>
 

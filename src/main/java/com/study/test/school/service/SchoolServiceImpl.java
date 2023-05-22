@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.study.test.colleage.vo.DeptVO;
+import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.PrenextPageVO;
 import com.study.test.school.vo.SchSearchVO;
 import com.study.test.school.vo.SchoolInfoVO;
@@ -80,6 +81,14 @@ public class SchoolServiceImpl implements SchoolService{
 	@Override
 	public List<DeptVO> getDeptNameAjax(String collNo) {
 		return sqlSession.selectList("schoolMapper.getDeptNameAjax", collNo);
+	}
+	
+	
+	
+// -------회원메뉴 회원조회------------------------------------------------------
+	@Override
+	public List<MemberVO> selectMember() {
+		return sqlSession.selectList("schoolMapper.selectMember");
 	}
 
 

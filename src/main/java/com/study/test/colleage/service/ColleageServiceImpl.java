@@ -31,4 +31,6 @@ public class ColleageServiceImpl implements ColleageService{
 	public List<SemesterVO> getSemesterList() {
 		return sqlSession.selectList("colleageMapper.getSemesterList");
 	}
+
+
 }

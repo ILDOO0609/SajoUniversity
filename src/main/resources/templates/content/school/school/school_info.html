@@ -9,27 +9,27 @@
 	<form id="schInfoSearchForm" th:action="@{/school/info}" method="post">
 		<div class="row">
 		 	<div class="col-3">
-				<select class="form-select" id="yearSelect" name="searchYear" onchange="getYearSelect();">
+				<select class="form-select" id="schInfoYear" name="schInfoYear" onchange="schInfoYear">
 					<th:block th:each="num : ${#numbers.sequence(thisYear-4, thisYear)}">
 						<option th:selected="${year == num}" th:value="${num}">[[${num}]]년</option>
 					</th:block>
 				</select>
 		 	</div>
 		 	<div class="col-3">
-		 		<select class="form-select" name="schInfoSearchMonth">
+		 		<select class="form-select" id="schInfohMonth" name="schInfohMonth" onchange="">
 					<option>전체(월)</option>
-					<option>1월</option>
-					<option>2월</option>
-					<option>3월</option>
-					<option>4월</option>
-					<option>5월</option>
-					<option>6월</option>
-					<option>7월</option>
-					<option>8월</option>
-					<option>9월</option>
-					<option>10월</option>
-					<option>11월</option>
-					<option>12월</option>
+					<option value="1">1월</option>
+					<option value="2">2월</option>
+					<option value="3">3월</option>
+					<option value="4">4월</option>
+					<option value="5">5월</option>
+					<option value="6">6월</option>
+					<option value="7">7월</option>
+					<option value="8">8월</option>
+					<option value="9">9월</option>
+					<option value="10">10월</option>
+					<option value="11">11월</option>
+					<option value="12">12월</option>
 				</select>
 		 	</div>
 		 	<div class="col-4">
@@ -116,6 +116,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="/js/content/school/school.js"></script>
 </th:block>
 

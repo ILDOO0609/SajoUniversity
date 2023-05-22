@@ -61,6 +61,15 @@ public class memberServiceImpl implements memberService{
 	}
 
 	@Override
+	public MemberVO getMemInfoForStu(String memNo) {
+		return sqlSession.selectOne("memberMapper.getMemInfoForStu", memNo);
+	}
+
+	@Override
+	public void updateStuInfo(MemberVO memberVO) {
+		sqlSession.update("memberMapper.updateStuInfo", memberVO);
+	}
+		
 	public String checkMemPw(MemberVO memberVO) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.checkMemPw", memberVO);

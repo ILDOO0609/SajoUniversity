@@ -34,10 +34,7 @@ public class SecurityConfig {
 								, "/member/pop2"
 								, "/school/**"
 								, "/member/sendSMSAjax"
-
 								, "/school/**"
-
-								
 								)
 				.permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")

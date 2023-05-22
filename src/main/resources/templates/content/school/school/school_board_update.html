@@ -6,33 +6,34 @@
 
 <th:block layout:fragment="content">
 <h1 style="text-align: center;">학사안내</h1>
-<form th:action="@{/school/updateSchoolInfo}" method="post">
+<form id="schInfoUpdateForm" th:action="@{/school/updateSchoolInfo}" method="post">
 	<div th:each="detail : ${detailList}">
+		<input type="hidden" id="schInfoCode" name="schInfoCode" th:value="${detail.schInfoCode}">
 		<div class="row" style="background-color: #f1f4f7;">
 			<div class="col-10">
-				<input type="text" style="width: 100%;" th:value="${detail.schInfoTitle}">
+				<input style="width: 100%;" name="schInfoTitle" th:value="${detail.schInfoTitle}">
 			</div>
 			<div class="col-2">
-				NO.21313
+				<span th:text="${detail.schInfoNum}"></span>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-2">
-				<span>작성자 : </span>[[${detail.schInfoWriter}]]
+				<span>작성자 : </span><span th:text="${detail.schInfoWriter}"></span>
 			</div>
 			<div class="col-2">
-				<span>등록일 : </span>[[${detail.regDate}]]
+				<span>등록일 : </span><span th:text="${detail.regDate}"></span> 
 			</div>
 			<div class="col-2">
-				<span>조회수 : </span>[[${detail.schInfoReadCnt}]]
+				<span>조회수 : </span><span th:text="${detail.schInfoReadCnt}"></span>
 			</div>
 			<div class="col-6">
-				<span>기간 : </span>[[${detail.startDate}]] ~ [[${detail.endDate}]]
+				<span>기간 : </span><span th:text="${detail.startDate}"></span>~<span th:text="${detail.endDate}"></span>
 			</div>
 		</div>	
 		<div class="row">
 			<div class="col">
-				<textarea rows="20" cols="100" th:text="${detail.schInfoContent}"></textarea>
+				<textarea rows="20" cols="100" name="schInfoContent" th:text="${detail.schInfoContent}"></textarea>
 			</div>
 		</div>	
 		<div class="row">
@@ -50,7 +51,8 @@
 		<div class="row">
 			<div class="col">
 				<input type="button" value="목록으로 가기" th:onclick="|location.href='@{/school/info}';|">
-				<input type="submit" value="수정" th:onclick="|location.href='@{/school/info(schInfoCode=${detail.schInfoCode})}'|">
+				<input type="button" value="수정" onclick="schInfoUpdate();">
+				<!-- <input type="submit" value="수정" th:onclick="|location.href='@{/school/info(schInfoCode=${detail.schInfoCode})}'|"> -->
 			</div>
 		</div>	
 	</div>

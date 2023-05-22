@@ -1,5 +1,7 @@
 package com.study.test.school.vo;
 
+import com.study.test.util.PageVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,13 +17,19 @@ public class SchoolInfoVO {
 	private String schInfoDate;
 	private String schInfoStartDate;
 	private String schInfoEndDate;
-	private int schInfoReadCnt;
-	
 	private String regDate;
 	private String startDate;
 	private String endDate;
+	private int schInfoReadCnt;
+	private String schInfoNum;
 	
-	private String searchValue;
+	private String schInfoSearchKeword;
+	private String schInfoSearchMonth;
 	
+	private String prevNum;
+	private String prevTitle;
+	private String nextNum;
+	private String nextTitle;
 	
+	private PageVO pageVO;
 }

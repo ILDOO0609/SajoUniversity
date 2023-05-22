@@ -2,6 +2,10 @@ init();
 
 
 
+
+
+
+
 				
 // 로그인
 function login() {
@@ -209,8 +213,6 @@ function joinValidate() {
 	deleteErrorDiv();
 
 
-
-
 	// 함수의 리턴 결과를 저장하는 변수
 	let result_memNo = true;
 	let result_memPw = true;
@@ -399,6 +401,86 @@ function findNo(btn) {
         }
     });
 }
+
+
+
+
+// 회원가입시 인증번호 이메일 인증
+function authenMail() {
+  var memEmail = document.querySelector('#memEmail').value;
+
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(memEmail)) {
+    alert('이메일 형식을 확인해주세요.');
+    return;
+  }
+
+  var btnAuth = document.querySelector('#btn-auth');
+  btnAuth.disabled = true;
+
+  $.ajax({
+    url: '/member/authenMailAjax',
+    type: 'post',
+    async: true,
+    contentType: 'application/json; charset=UTF-8',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: { 'memEmail': memEmail },
+    success: function(result) {
+      startTimer();
+      alert('이메일이 정상적으로 전송되었습니다.');
+    },
+    error: function() {
+      alert('메일전송에 실패하였습니다..');
+    },
+    complete: function() {
+      // Re-enable the button after AJAX request is complete
+      btnAuth.disabled = false;
+    }
+  });
+}
+
+var timeRemaining = 180;
+var countdownTimer;
+
+function startTimer() {
+  var timeRemainingInput = document.querySelector('#time-remaining');
+  countdownTimer = setInterval(function() {
+    var minutes = Math.floor(timeRemaining / 60);
+    var seconds = timeRemaining % 60;
+    timeRemainingInput.value = minutes + 'm ' + seconds + 's';
+
+    if (timeRemaining <= 0) {
+      clearInterval(countdownTimer);
+      timeRemainingInput.value = 'Time expired';
+    }
+
+    timeRemaining--;
+  }, 1000);
+}
+
+
+function checkVerificationCode() {
+	alert(1111111);
+  var authMail = document.querySelector('#auth_mail').value;
+
+  if (authMail === verificationCode) {
+    clearInterval(countdownTimer);
+    alert('Verification code matched.');
+  } else {
+    alert('Verification code does not match.');
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.test.colleage.service.ColleageService;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.service.EmpService;
 import com.study.test.school.service.SchoolService;
-import com.study.test.school.vo.PrenextPageVO;
 import com.study.test.school.vo.SchoolInfoVO;
 import com.study.test.util.DateUtill;
+import com.study.test.util.PageVO;
 
 import jakarta.annotation.Resource;
 
@@ -32,6 +33,8 @@ public class SchoolController {
 	
 	@Resource(name = "empService")
 	private EmpService empService;
+	@Resource(name = "colleageService")
+	private ColleageService colleageService;
 	
 	
 	//학사메뉴 클릭시 페이지
@@ -43,10 +46,7 @@ public class SchoolController {
 	
 	//학사메뉴 -> 학사안내 페이지
 	@RequestMapping("/info")
-	public String schoolInfo(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
-		model.addAttribute("infoList", schoolService.getSchoolInfoList());
-		
-		
+	public String schoolInfo(Model model, PageVO pageVO, @RequestParam(required = false, defaultValue = "0") int year) {
 		//검색 년도
 		if(year == 0) {
 			year = DateUtill.getYear();
@@ -54,6 +54,13 @@ public class SchoolController {
 		
 		model.addAttribute("year", year);
 		model.addAttribute("thisYear", DateUtill.getYear());
+		
+		//전체 데이터 수 조회
+		pageVO.setTotalDataCnt(schoolService.schInfoListCnt());
+		pageVO.setPageInfo();
+		
+		//게시글 조회
+		model.addAttribute("infoList", schoolService.getSchoolInfoList(pageVO));
 		
 		return "content/school/school/school_info";
 	}
@@ -63,40 +70,6 @@ public class SchoolController {
 	public String regSchoolBoard() {
 		return "content/school/school/school_board_write";
 	}
-	
-	//학사메뉴 -> 학사안내 글 상세페이지
-	@GetMapping("/schoolBoardDetail")
-	public String schoolBoardDetail(String schInfoCode, Model model, PrenextPageVO prenextPageVO) {
-		//상세조회
-		model.addAttribute("detailList", schoolService.schoolBoardDetail(schInfoCode));
-		//조회수
-		schoolService.updateSchoolBoardReadCnt(schInfoCode);
-		//이전글다음글
-		model.addAttribute("prenextList", schoolService.detailPreNext()); 
-		
-		return "content/school/school/school_board_detail";
-	}
-	//학사메뉴 -> 글 상세 -> 수정페이지이동
-	@GetMapping("/schoolBoardUpdateForm")
-	public String schoolBoardUpdateForm(String schInfoCode, Model model) {
-		model.addAttribute("detailList", schoolService.schoolBoardDetail(schInfoCode));
-		return "content/school/school/school_board_update";
-	}
-	//학사메뉴 -> 글 상세 -> 수정
-	@PostMapping("/updateSchoolInfo")
-	public String updateSchoolInfo(SchoolInfoVO schoolInfoVO) {
-		schoolService.updateSchoolInfo(schoolInfoVO);
-		return "redirect:/school/schoolBoardDetail";
-	}
-	//학사메뉴 -> 글 상세 -> 삭제
-	@GetMapping("/deleteSchoolInfo")
-	public String deleteSchoolInfo(String schInfoCode) {
-		schoolService.deleteSchoolInfo(schInfoCode);
-		return "redirect:/school/info";
-	}
-
-	
-	
 	
 	//학사메뉴 -> 학사안내 글등록
 	@PostMapping("/insertSchoolInfo")
@@ -108,6 +81,48 @@ public class SchoolController {
 		schoolService.insertSchoolInfo(schoolInfoVO);
 		return "redirect:/school/info";
 	}
+	
+	
+	//학사메뉴 -> 학사안내 글 상세페이지
+	@GetMapping("/schoolBoardDetail")
+	public String schoolBoardDetail(String schInfoCode, Model model, SchoolInfoVO schoolInfoVO) {
+		System.out.println("@#@#@#@#@#@#@#@#@#@#@#@#" + schoolInfoVO);
+		
+		//상세조회
+		model.addAttribute("detailList", schoolService.schoolBoardDetail(schInfoCode));
+		//조회수
+		schoolService.updateSchoolBoardReadCnt(schInfoCode);
+		//이전글다음글
+		model.addAttribute("move", schoolService.movePage(schoolInfoVO.getSchInfoCode())); 
+		
+		
+		return "content/school/school/school_board_detail";
+	}
+
+	//학사메뉴 -> 글 상세 -> 수정페이지이동
+	@GetMapping("/schoolBoardUpdateForm")
+	public String schoolBoardUpdateForm(String schInfoCode, Model model) {
+		model.addAttribute("detailList", schoolService.schoolBoardDetail(schInfoCode));
+		return "content/school/school/school_board_update";
+	}
+	//학사메뉴 -> 글 상세 -> 수정
+	@PostMapping("/updateSchoolInfo")
+	public String updateSchoolInfo(SchoolInfoVO schoolInfoVO) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+schoolInfoVO);
+		schoolService.updateSchoolInfo(schoolInfoVO);
+		return "redirect:/school/info";
+	}
+	//학사메뉴 -> 글 상세 -> 삭제
+	@GetMapping("/deleteSchoolInfo")
+	public String deleteSchoolInfo(String schInfoCode) {
+		schoolService.deleteSchoolInfo(schInfoCode);
+		return "redirect:/school/info";
+	}
+
+	
+	
+	
+	
 	
 	//학사메뉴 -> 학사일정 페이지
 	@GetMapping("/scheList")
@@ -131,13 +146,35 @@ public class SchoolController {
 	
 	//학사조회 -> 학생조회 페이지
 	@GetMapping("/checkStu")
-	public String checkStu() {
+	public String checkStu(Model model) {
+		//단과대학 정보 조회
+		model.addAttribute("colleageList", colleageService.getColleageList());
+		
+		//전공학과 정보 조회
+		model.addAttribute("deptList", colleageService.getDeptList());
+		
+		
 		return "content/school/check/check_stu";
 	}
 	
+	//전공대학 변경시 실행되는 함수
+	@ResponseBody
+	@PostMapping("/changeCollAjax")
+	public List<DeptVO> changeCollAjax(String collNo) {
+		List<DeptVO> deptList = empService.getDeptNameAjax(collNo);
+		
+		return deptList;
+	}
+	
+	
 	//학사조회 -> 교수조회 페이지
 	@GetMapping("/checkPro")
-	public String checkPro() {
+	public String checkPro(Model model) {
+		//단과대학 정보 조회
+		model.addAttribute("colleageList", colleageService.getColleageList());
+		//전공학과 정보 조회
+		model.addAttribute("deptList", colleageService.getDeptList());
+				
 		return "content/school/check/check_pro";
 	}
 	
@@ -208,8 +245,12 @@ public class SchoolController {
 	
 	
 
-	
-	
+	//회원 -> 회원관리 페이지
+	@GetMapping("/memberList")
+	public String memberList(Model model) {
+		model.addAttribute("memberList", schoolService.selectMember()); 
+		return "content/school/member/member_list";
+	}
 	
 	
 

@@ -7,6 +7,7 @@
 	<resultMap type="com.study.test.member.vo.MemberVO" id="member">
 			<id		column="MEM_NO" 					 	property="memNo"/>
 			<result column="MEM_PW"						 	property="memPw"/>
+			<result column="MEM_PW_UPDATE"					property="memPwUpdate"/>
 			<result column="MEM_NAME"						 property="memName"/>
 			<result column="MEM_GENDER" 					 property="memGender"/>
 			<result column="MEM_TELL" 						 property="memTell"/>
@@ -26,6 +27,12 @@
 				,	MEM_ROLE
 			FROM MEMBER
 			WHERE MEM_NO = #{memNo}
+		</select>
+		
+		<!-- 비밀번호변경 유무 확인 -->
+		<select id="checkMemPw">
+			SELECT MEM_PW_UPDATE
+			FROM MEMBER
 		</select>
 		
 		<!-- 회원정보 -->
@@ -104,7 +111,8 @@
 		<update id="updateMemPw">
 			UPDATE MEMBER
 			SET
-				MEM_PW = #{memPw}
+				MEM_PW = #{memPw},
+				MEM_PW_UPDATE = 'Y'
 			WHERE MEM_NO = #{memNo}
 			AND MEM_NAME = #{memName}
 			

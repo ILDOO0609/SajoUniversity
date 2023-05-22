@@ -68,7 +68,11 @@ public class memberServiceImpl implements memberService{
 	@Override
 	public void updateStuInfo(MemberVO memberVO) {
 		sqlSession.update("memberMapper.updateStuInfo", memberVO);
+	}
 		
+	public String checkMemPw(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.checkMemPw", memberVO);
 	}
 	
 	

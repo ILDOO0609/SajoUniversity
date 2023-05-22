@@ -30,4 +30,6 @@ public interface memberService {
 	
 	// 학생 정보 수정
 	void updateStuInfo(MemberVO memberVO);
+	// 비밀번호 변경 유무
+	String checkMemPw(MemberVO memberVO);
 }

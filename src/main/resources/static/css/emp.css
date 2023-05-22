@@ -1,9 +1,4 @@
-.monday {
+ .lecture {
         background-color: red;
+        text-align: center;
     }
-.thursday {
-    background-color: green;
-}
-.friday {
-    background-color: blue;
-}

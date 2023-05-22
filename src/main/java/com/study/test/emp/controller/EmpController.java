@@ -150,18 +150,20 @@ public class EmpController {
 	
 	//강의 시간표
 	@GetMapping("/lecSchedule")
-	public String regSchedule(Model model, Authentication authentication) {
-		
-		//시간표 작성위한 강의 및 시간정보 담기
-		model.addAttribute("lectureList", empService.getLectureListForSchedule(getNowEmpNo(authentication)));
-		
+	public String lecSchedule() {
 		return "content/emp/lec_schedule";
+	}
+	//강의 시간표
+	@ResponseBody
+	@PostMapping("/lecScheduleAjax")
+	public List<Map<String, Object>> lecSchedule(Authentication authentication) {
+		return empService.getLectureListForSchedule(getNowEmpNo(authentication));
 	}
 	
 	//학생성적등록 페이지로 이동
 	@GetMapping("/regScore")
 	public String lectureList(Model model, Authentication authentication) {
-		List<Map<String, String>> mapList = empService.getLectureList(getNowEmpNo(authentication));
+		List<Map<String, String>> mapList = empService.getLectureListForRegScore(getNowEmpNo(authentication));
 		System.out.println("@@@@@@@@@@@@@@@@@@ "+mapList);
 		model.addAttribute("mapList", mapList);
 		return "content/emp/reg_score";

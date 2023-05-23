@@ -24,6 +24,8 @@
 		<result column="COLL_NO" 	 property="collNo"/>
 		<result column="DEPT_NO" 	 property="deptNo"/>
 		<result column="SEARCH_VALUE" 	 property="searchValue"/>
+		<association property="memberVO" resultMap="memberMapper.member"></association>
+		<association property="empVO" resultMap="emp"></association>
 		<association property="deptVO" resultMap="colleageMapper.dept"></association>
 		<association property="colleageVO" resultMap="colleageMapper.colleage"></association>
 		<collection property="lectureTimeList" resultMap="lectureTime"></collection>
@@ -165,7 +167,7 @@
 			, MAX_NUM
 			, NOW_NUM
 			, LEC_STATUS
-			, EMP_NO
+			, LECTURE.EMP_NO
 			, SEM_NO
 			, LECTURE.COLL_NO
             , COLL_NAME
@@ -174,18 +176,22 @@
 			, LEC_DAY
 			, FIRST_TIME
 			, LAST_TIME
-		FROM LECTURE, LECTURE_TIME, COLLEAGE COLL, DEPT
+            , EMP.MEM_NO
+            , MEM_NAME
+		FROM LECTURE, LECTURE_TIME, COLLEAGE COLL, DEPT, MEMBER, EMP
 		WHERE LECTURE.LEC_NO = LECTURE_TIME.LEC_NO
 		AND LECTURE.COLL_NO = COLL.COLL_NO
 		AND LECTURE.DEPT_NO = DEPT.DEPT_NO
+        AND EMP.COLL_NO = LECTURE.COLL_NO
+        AND MEMBER.MEM_NO = EMP.MEM_NO
 		<if test='searchValue != null and !searchValue.equals("")'>
 		AND UPPER(LEC_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
 		<if test="collNo != null and collNo != ''">
-		AND COLL_NO = #{collNo}
+		AND COLL.COLL_NO = #{collNo}
 		</if>
 		<if test="deptNo != null and deptNo != ''">
-		AND DEPT_NO = #{deptNo}
+		AND DEPT.DEPT_NO = #{deptNo}
 		</if>
 	</select>
 

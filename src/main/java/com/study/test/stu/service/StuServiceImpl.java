@@ -32,8 +32,8 @@ public class StuServiceImpl implements StuService{
 	}
 
 	@Override
-	public List<LectureVO> getLectureForStu(String searchValue) {
-		return sqlSession.selectList("empMapper.getLectureForStu", searchValue);
+	public List<LectureVO> getLectureForStu(LectureVO lectureVO) {
+		return sqlSession.selectList("empMapper.getLectureForStu", lectureVO);
 	}
 	
 }

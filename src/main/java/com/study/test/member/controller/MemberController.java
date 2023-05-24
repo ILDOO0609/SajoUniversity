@@ -1,13 +1,16 @@
 package com.study.test.member.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,12 +95,12 @@ public class MemberController {
 	// 회원가입 이메일인증
 	@ResponseBody
 	@PostMapping("/authenMailAjax")
-	public boolean authenMail(String memEmail) {
+	public Map<String, Object> authenMail(String memEmail) {
 		
-		
+		Map<String, Object> response = new HashMap<>();
 		
 		if(memEmail != null) {
-			String imsiPw = mailService.createRandomPw();
+			String authoMail = mailService.createRandomPw();
 			
 			
 			MailVO mailVO = new MailVO();
@@ -107,12 +110,16 @@ public class MemberController {
 			emailList.add(memEmail);
 			
 			mailVO.setRecipientList(emailList);
-			mailVO.setContent("발급 된 인증번호는 : " + imsiPw + "입니다. \n 복사해서 사용해주세요 !!" );
+			mailVO.setContent("발급 된 인증번호는 : " + authoMail + "입니다. \n 복사해서 사용해주세요 !!" );
 			
 			mailService.sendSimpleEmail(mailVO);
+			System.out.println(authoMail);
+			
+			 response.put("authoMail", authoMail);
 		}
 		
-		return memEmail != null ? true : false;
+		response.put("result", memEmail != null);
+	    return response;
 	}
 	
 	// 비밀번호 찾기

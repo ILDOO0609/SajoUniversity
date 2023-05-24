@@ -10,12 +10,147 @@
 </th:block>
 
 <th:block layout:fragment="content">
-휴학 복학신청
+휴학 신청
+<form id="stuAbsence" th:action="@{/stu/stuAbsence}" method="post">
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<colgroup>
+				<col width="10%;">
+				<col width="15%;">
+				<col width="15%;">
+				<col width="15%;">
+				<col width="15%;">
+			</colgroup>
+			<tr>
+				<td rowspan="5" ><img th:src="@{'/upload/' + ${memInfo.memImage}}" style="width: 100%; height: 100%"></td>
+				<td>성명</td>
+				<td>[[${memInfo.memName}]]</td>
+				<td>학번</td>
+				<td>[[${memInfo.memNo}]]</td>
+			</tr>
+			<tr>
+				<td>단과대학</td>
+				<td>[[${collInfo.collName}]]</td>
+				<td>소속학과</td>
+				<td>[[${deptInfo.deptName}]]</td>
+			</tr>
+			<tr>
+				<td>학기</td>
+				<td>[[${stuInfo.stuYear}+${stuInfo.stuSem}]]학기</td>
+				<td>학적상태</td>
+				<td>[[${stuInfo.stuStatus}]]</td>
+			</tr>
+			<tr>
+				<td>이메일</td>
+				<td>[[${memInfo.memEmail}]]</td>
+				<td>전화번호</td>
+				<td>[[${memInfo.memTell}]]</td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td colspan="3">[[${memInfo.memAddr  + ' ' +  memInfo.memAddrDetail}]]</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="row">
+	 <div class="col">
+	 	<textarea name="statusContent" class="form-control status_content" rows="5" cols="50" style="resize: none;" placeholder="휴학 사유를 입력해 주세요."></textarea>
+	 </div>
+</div>
+<div class="row mt-5 text-center">
+	<div class="col">
+		<input type="button" class="btn btn-primary btn-lg" value="휴학 신청" onclick="applyAbsence();">
+	</div>
+</div>
+</form>
+
+
+<button id="hiddenBtn" style="display: none;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Scrollable modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">2023학년도 1학기 일반휴학 관련 유의사항 안내</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        1. 금학기 신청기간 중 일반휴학 신청하고 승인을 받은 후 본인의 사정에 의하여 취소를 하고 싶으면, 단과대학행정실을 통하여 서면(오프라인)으로 취소신청하고 허가를 받아야 합니다. 금학기 일반휴학자는 수강신청과 등록금을 납부하더라도 자동으로 복학되지 않습니다.
+        <br>
+        <br>
+		2. 일반휴학 신청기간(마감일시: 2023.09.23. 17:30) 후에는 단과대학행정실을
+		통하여 휴학을 신청하여 주시기 바랍니다.
+		<br>
+		<br>
+		3. 지난 2023년 8월 졸업예정자 중 졸업학점 또는 졸업요건 미취득으로 추가학기 등록이 필요한 학생(재학)은 졸업일 후 일반휴학신청을 할 수 있습니다. - 단, 수료예정자 중 부분수강등록신청자(수료예정자학적처리)는 휴학신청을 할
+		수 없습니다. - 2023-1학기 휴학생은 2023년 2월 졸업대상자가 아닙니다. 따라서, 2023-1학기 휴학생 신분으로는 겨울계절학기를 수강 등을 통해
+		 이수학점 등을 충족하더라도 2023년 2월에 졸업할 수 없습니다.
+		<br>
+		<br>
+		4. 폐지된 학과(전공) 소속의 학생은 학과 및 단과대학행정실에서 졸업에
+		 관련된 상담 및 안내를 받으셔야 합니다.
+		<br>
+		<br>
+		5. 일반휴학기간은 기본 1년 2개 학기(6개월 1개학기 선택가능)이며,
+		 군휴학은 기본 3년입니다.
+		<br>
+		<br>
+		6. 신입생, 재입학생, 편입생은 입대, 4주 이상 입원치료를 요하는 질병 등의
+		 규정에서 정한 사유를 제외하고는 입학 후 첫 번째 학기에 일반휴학을
+		 신청할 수 없습니다.
+		<br>
+		<br>
+		7. 재학생 중 군입대 휴학시기가 수업일수 3/4선 이전이면 납부한 등록금은 제대후 복학학기의 등록금으로 대체됩니다. 단, 입대일이 수업일수 3/4선 후면
+		해당학기 성적이 부여되고 납부한 등록금은 소멸됩니다. (입대일이 수업일수
+		3/4선 후 성적부여를 원하지 않는 학생은 일반휴학신청기간에 미리 일반휴학을 신청하여 허가을 받으시기 바랍니다. 그리고, 입대일 이전에 군입대휴학을
+		신청하여 주시기 바랍니다.)
+		<br>
+		<br>
+		8. 미반납 도서 또는 무선랜카드 대여가 있을 경우 반드시 반납하고 신청하시기
+		바랍니다. (휴학불가)
+		<br>
+		<br>
+		9. 인하포털시스템 아이디와 비밀번호는 수강신청, 휴학신청, 전공배정신청, 전과신청 등에 사용되는 중요한 정보입니다. 따라서 비밀번호 노출로 인해 피해 입는 일이 없도록 비밀번호 관리를 철저히 하기 바라며, 타인에게 비밀번호를 노출하거나, 타인의 비밀번호를 도용해
+		휴학신청 등을 하는 경우 징계처리 되니 유의하시기 바랍니다.
+		<br>
+		<br>
+		10. 병무 관련 안내: 휴학을 해도 본인이 입영신청을 하지 않으면 계속해서 입영
+		연기자로 관리됩니다. 군 입대를 목적으로 휴학하는 학생은 먼저 입영신청을
+		하고, 입영일자가 결정된 후 휴학을 해야 학업공백기간을 줄일 수 있습니다.
+		(병무상담: 병무청 1588-9090)
+      </div>
+      <div class="modal-footer justify-content-center row">
+	      <div class="mt-2 mb-2">
+	      	<label>
+	    	  <input class="form-check-input" type="checkbox" id="isAgree"> 위 내용을 확인하였고 동의합니다
+	    	</label>
+	      </div>
+	      	<div class="col-3 d-grid">
+		        <button id="confirmBtn" type="button" class="btn btn-primary" onclick="forSubmit();" disabled>확인</button>
+	      	</div>
+	      	<div class="col-3 d-grid">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-   <!-- <script type="text/javascript" src="첨부될 js 파일 경로"></script> -->
+	<script type="text/javascript" src="/js/content/stu/stu_status.js"></script>
 </th:block>
 
 </html>

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.study.test.colleage.vo.ColleageVO;
 import com.study.test.colleage.vo.DeptVO;
-
+import com.study.test.member.vo.MemberVO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +27,8 @@ public class LectureVO {
 	private String deptNo;
 	
 	// 학생 수강신청용 추가
+	private MemberVO memberVO;
+	private EmpVO empVO;
 	private DeptVO deptVO;
 	private ColleageVO colleageVO;
 	private List<LectureTimeVO> lectureTimeList;

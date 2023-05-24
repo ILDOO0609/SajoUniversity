@@ -18,6 +18,6 @@ public interface StuService {
 	DeptVO getDeptName(String memNo);
 	
 	// 수강신청용 강의 조회
-	List<LectureVO> getLectureForStu(String searchValue);
+	List<LectureVO> getLectureForStu(LectureVO lectureVO);
 	
 }

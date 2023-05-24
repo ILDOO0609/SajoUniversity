@@ -15,6 +15,7 @@ import com.study.test.board.vo.BoardVO;
 import com.study.test.colleage.service.ColleageService;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.service.EmpService;
+import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.service.memberService;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.stu.service.StuService;
@@ -90,14 +91,14 @@ public class StuController {
 	
 	// 수강신청
 	@GetMapping("/stuSemEnroll")
-	public String stuSemEnroll(Model model, String searchValue) {
+	public String stuSemEnroll(Model model, LectureVO lectureVO) {
 		// 단과대학 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		// 소속학과 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
 		
 		// 강의 조회
-		model.addAttribute("lecList", stuService.getLectureForStu(searchValue));
+		model.addAttribute("lecList", stuService.getLectureForStu(lectureVO));
 		
 		
 		return "content/stu/stu_sem_enroll";
@@ -119,7 +120,13 @@ public class StuController {
 		return "content/stu/stu_sem_enroll_now";
 	}
 	
-	
+	// 수강신청 시 검색 버튼 클릭 시 실행 되는 Ajax
+	@ResponseBody
+	@PostMapping("/searchEnrollAjax")
+	public List<LectureVO> searchEnrollAjax(LectureVO lectureVO) {
+		
+		return stuService.getLectureForStu(lectureVO);
+	}
 	
 	
 	// 휴학신청

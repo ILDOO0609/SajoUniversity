@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="CalendarMapper">
+	<resultMap type="com.study.test.school.vo.CalendarVO" id="calendar">
+		<id		column="CAL_NO" property="calNo"/>
+		<result column="TITLE" property="title"/>
+		<result column="REG_DATE" property="regDate"/>
+		<result column="START_DATE" property="startDate"/>
+		<result column="END_DATE" property="endDate"/>
+		<result column="CAL_COLOR" property="calColor"/>
+		<result column="CAL_WRITER" property="calWriter"/>
+		<result column="CAL_CONTENT" property="calContent"/>
+		<result column="CAL_DAY" property="calDay"/>
+		<result column="CAL_BACK_COLOR" property="calBackColor"/>
+	
+	</resultMap>
+
+
+	<select id="calendarList" resultMap="calendar">
+		SELECT CAL_NO
+			, TITLE
+			, TO_CHAR(REG_DATE, 'YYYY-MM-DD') REG_DATE
+			, TO_CHAR(START_DATE, 'YYYY-MM-DD') START_DATE
+			, TO_CHAR(END_DATE, 'YYYY-MM-DD') END_DATE
+			, CAL_COLOR
+			, CAL_WRITER
+			, CAL_CONTENT
+			, CAL_DAY
+			, CAL_BACK_COLOR
+		FROM CALLENDAR
+	</select>
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

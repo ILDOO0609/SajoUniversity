@@ -1,4 +1,10 @@
 @charset "UTF-8";
+#calendar{
+   width:80%;
+   margin:20px auto;
+}
+
+
 a {
 	text-decoration: none;
 	color: inherit;

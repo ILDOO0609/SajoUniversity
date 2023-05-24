@@ -15,9 +15,12 @@ import com.study.test.board.vo.BoardVO;
 import com.study.test.colleage.service.ColleageService;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.service.EmpService;
+import com.study.test.emp.vo.EnrollmentVO;
+import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.service.memberService;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.stu.service.StuService;
+import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 
 import jakarta.annotation.Resource;
@@ -63,9 +66,6 @@ public class StuController {
 		model.addAttribute("collInfo", stuService.getCollName(memNo));
 		model.addAttribute("deptInfo", stuService.getDeptName(memNo));
 		
-
-		
-		
 		return "content/stu/stu_update_info";
 	}
 	
@@ -81,7 +81,7 @@ public class StuController {
 	
 	// 복수전공 신청
 	@GetMapping("/stuMultimajor")
-	public String stuMultimajor() {
+	public String stuMultimajor() { 
 		
 		return "content/stu/stu_multimajor";
 		
@@ -89,16 +89,14 @@ public class StuController {
 	
 	
 	// 수강신청
-	@GetMapping("/stuSemEnroll")
-	public String stuSemEnroll(Model model, String searchValue) {
+	@RequestMapping("/stuSemEnroll")
+	public String stuSemEnroll(Model model, LectureVO lectureVO, Authentication authentication, MemberVO memberVO, StuVO stuVO, EnrollmentVO enrollmentVO, String stuNo) {
 		// 단과대학 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		// 소속학과 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
-		
 		// 강의 조회
-		model.addAttribute("lecList", stuService.getLectureForStu(searchValue));
-		
+		model.addAttribute("lecList", stuService.getLectureForStu(lectureVO));
 		
 		return "content/stu/stu_sem_enroll";
 		
@@ -113,21 +111,87 @@ public class StuController {
 		return deptList;
 	} 
 	
+	// 수강신청 내역 조회 페이지
 	@GetMapping("/stuSemEnrollNow")
-	public String stuSemEnrollNow() {
+	public String stuSemEnrollNow(Model model, Authentication authentication, String stuNo) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		
+		model.addAttribute("enrList", stuService.getEnrollmentNow(stuNo));
+		
 		
 		return "content/stu/stu_sem_enroll_now";
 	}
 	
+	@PostMapping("/stuSemEnrollNowForDelete")
+	public String stuSemEnrollNowForDelete(EnrollmentVO enrollmentVO, Authentication authentication) {
+		enrollmentVO.setStuNo(stuService.getStuInfo(authentication.getName()).getStuNo());
+		
+		stuService.deleteEnr(enrollmentVO);
+		
+		return "redirect:/stu/stuSemEnrollNow";
+	}
 	
+	// 수강신청 시 검색 버튼 클릭 시 실행 되는 Ajax
+	@ResponseBody
+	@PostMapping("/searchEnrollAjax")
+	public List<LectureVO> searchEnrollAjax(LectureVO lectureVO) {
+		
+		return stuService.getLectureForStu(lectureVO);
+	}
 	
+	// 수강신청 버튼 클릭 시 실행되는 Ajax
+	@ResponseBody
+	@PostMapping("/applyEnrollmentAjax")
+	public boolean applyEnrollmentAjax(String lecNo, String semNo, EnrollmentVO enrollmentVO, Authentication authentication) {
+		enrollmentVO.setLecNo(lecNo);
+		enrollmentVO.setSemNo(semNo);
+		enrollmentVO.setStuNo(stuService.getStuInfo(authentication.getName()).getStuNo());
+		
+		// 수강신청 테이블에 insert쿼리
+		int result = stuService.insertEnrollment(enrollmentVO);
+
+		// 현재신청인원 추가
+		stuService.updateNowNum(enrollmentVO);
+		
+		return result == 1 ? true : false;
+	}
+	
+	// 수강신청 버튼 활성화/비활성화 Ajax
+	@ResponseBody
+	@PostMapping("/checkEnrollmentAjax")
+	public boolean checkEnrollmentAjax(String lecNo, Authentication authentication, EnrollmentVO enrollmentVO, String stuNo) {
+		// stuNo 세팅 -> 중복수강신청 막기위함
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		enrollmentVO.setLecNo(lecNo);
+		enrollmentVO.setStuNo(stuNo);
+		// 중복수강신청 금지를 위한 조회 
+		int result = stuService.getLecForStu(enrollmentVO);
+		
+		return result >= 1 ? true : false;
+		
+	}
 	
 	// 휴학신청
 	@GetMapping("/stuStatus")
-	public String stuStatus() {
+	public String stuStatus(Authentication authentication, Model model, String memNo) {
+		// 학생 정보 조회
+		memNo = authentication.getName();
+		model.addAttribute("memInfo", memberService.getMemInfoForStu(memNo));
+		model.addAttribute("stuInfo", stuService.getStuInfo(memNo));
+		model.addAttribute("collInfo", stuService.getCollName(memNo));
+		model.addAttribute("deptInfo", stuService.getDeptName(memNo));
 		
 		return "content/stu/stu_status";
 		
+	}
+	
+	@PostMapping("/stuAbsence")
+	public String stuAbsence(StatusInfoVO statusInfoVO, Authentication authentication) {
+		statusInfoVO.setStuNo(stuService.getStuInfo(authentication.getName()).getStuNo());
+		
+		stuService.applyAbsence(statusInfoVO);
+		
+		return "redirect:/stu/stuStatus";
 	}
 	
 	
@@ -138,8 +202,4 @@ public class StuController {
 		return "content/stu/stu_timetable";
 	}
 
-	
-	
-	
-	
 }

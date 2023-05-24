@@ -1,13 +1,18 @@
 package com.study.test.member.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.test.member.service.memberService;
 import com.study.test.member.vo.MemberVO;
+import com.study.test.member.vo.StatisticsVO;
+import com.study.test.util.DateUtill;
 import com.study.test.util.MailService;
 import com.study.test.util.MailVO;
 
@@ -92,12 +99,12 @@ public class MemberController {
 	// 회원가입 이메일인증
 	@ResponseBody
 	@PostMapping("/authenMailAjax")
-	public boolean authenMail(String memEmail) {
+	public Map<String, Object> authenMail(String memEmail) {
 		
-		
+		Map<String, Object> response = new HashMap<>();
 		
 		if(memEmail != null) {
-			String imsiPw = mailService.createRandomPw();
+			String authoMail = mailService.createRandomPw();
 			
 			
 			MailVO mailVO = new MailVO();
@@ -107,12 +114,16 @@ public class MemberController {
 			emailList.add(memEmail);
 			
 			mailVO.setRecipientList(emailList);
-			mailVO.setContent("발급 된 인증번호는 : " + imsiPw + "입니다. \n 복사해서 사용해주세요 !!" );
+			mailVO.setContent("발급 된 인증번호는 : " + authoMail + "입니다. \n 복사해서 사용해주세요 !!" );
 			
 			mailService.sendSimpleEmail(mailVO);
+			System.out.println(authoMail);
+			
+			 response.put("authoMail", authoMail);
 		}
 		
-		return memEmail != null ? true : false;
+		response.put("result", memEmail != null);
+	    return response;
 	}
 	
 	// 비밀번호 찾기
@@ -255,6 +266,73 @@ public class MemberController {
 	@GetMapping("/pop2")
 	public String pop2() {
 		return "content/member/email_collect_deny"; 
+	}
+	
+	
+	
+	
+	
+	// 월별 등록 차트
+	@GetMapping("/stuRegPerMonth")
+	public String stuRegPerMonth(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
+		
+		// 올해 날짜
+		if (year == 0) {
+			year = DateUtill.getYear();
+		}
+
+		// 2. map으로 하기
+		List<Map<String, Integer>> mapList = memberService.getMonthlyData2(year);
+
+		List<Map<String, Integer>> resultList = new ArrayList<>();
+
+		for (Map<String, Integer> map : mapList) {
+
+			// 키는 문자열, 값은 숫자
+			Map<String, Integer> map1 = new TreeMap<>(map); // 순번 추가
+			resultList.add(map1);
+
+			// map에 들어잇는 모든 키값
+			Set<String> keySet = map1.keySet();
+
+			for (String key : keySet) {
+				System.out.println("key : " + key + " / value = " + map1.get(key));
+			}
+			System.out.println();
+
+		}
+
+		model.addAttribute("mapList", resultList);
+
+		// year라는 이름으로 맨처음엔 올해년도를 넘기고, ajax를 타고 오면 해당연도를 넘긴다.
+		model.addAttribute("year", year);
+
+		// 올해 연도 넘기기
+		model.addAttribute("sysYear", DateUtill.getYear());
+
+		return "content/member/stu_reg_per_month";
+	}
+	
+	
+	// 월별 통계 - 차트
+	@ResponseBody
+	@PostMapping("/getChartDataAjax")
+	public Map<String, List<Integer>> getChartDataAjax(int year) {
+		
+		
+		List<StatisticsVO> list = memberService.getMonthlyData(year); 
+
+		// 등록 학생 list
+		List<Integer> cntList = list.get(0).getDataToList();
+		System.out.println(cntList);
+		// 추가사항 list
+		// List<Integer> somethingElse = list.get(1).getDataToList();
+		
+		// 두 개의 리스트를 담을 수 있는 Map
+		Map<String, List<Integer>> map = new HashMap<>();
+		map.put("cntList", cntList);
+		
+		return map;
 	}
 	
 	

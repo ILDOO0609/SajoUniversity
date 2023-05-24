@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.study.test.colleage.vo.ColleageVO;
 import com.study.test.colleage.vo.DeptVO;
+import com.study.test.emp.vo.EnrollmentVO;
 import com.study.test.emp.vo.LectureVO;
+import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 
 public interface StuService {
@@ -18,6 +20,23 @@ public interface StuService {
 	DeptVO getDeptName(String memNo);
 	
 	// 수강신청용 강의 조회
-	List<LectureVO> getLectureForStu(String searchValue);
+	List<LectureVO> getLectureForStu(LectureVO lectureVO);
 	
+	// 수강신청
+	int insertEnrollment(EnrollmentVO enrollmentVO);
+	
+	// 수강신청 내역 조회
+	List<LectureVO> getEnrollmentNow(String stuNo);
+	
+	// 수강신청 시 중복 신청 불가
+	int getLecForStu(EnrollmentVO enrollmentVO);
+	
+	// 강의 현재인원 +1
+	void updateNowNum(EnrollmentVO enrollmentVO);
+	
+	// 수강신청 취소
+	void deleteEnr(EnrollmentVO enrollmentVO);
+	
+	// 휴학 신청
+	void applyAbsence(StatusInfoVO statusInfoVO);
 }

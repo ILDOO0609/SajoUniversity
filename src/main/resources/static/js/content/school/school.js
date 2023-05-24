@@ -4,39 +4,7 @@ function schInfoYear(){
 	location.href = `/school/info?year=${year}`;
 }
 //학사안내 월 셀렉트 변경시 실행
-function schInfoMonth(){
-	const schInfoMonth = document.querySelector('#schInfohMonth').value;
-	
-	//ajax start
-	$.ajax({
-	   url: '/school/schInfoMonthAjax', //요청경로
-	   type: 'post',
-	   data: {'schInfoMonth': schInfoMonth}, //필요한 데이터
-	   success: function(result) {
-			const tbodyTag = document.querySelector('#schInfoTable > tbody');
-			tbodyTag.replaceChildren();
-			
-			let str = '';
-			
-			for(const info of result){
-				str += '<tr>';
-				str += `<td>${info.schInfoNum}</td>`;
-				str += `<td><a th:href="@{/school/schoolBoardDeatil?schInfoCode=${info.schInfoCode}}"></a>${info.schInfoTitle}</td>`;
-				str += `<td>${info.regDate}</td>`
-				str += `<td>${info.startDate} ~ ${info.endDate}</td>`
-				str += '</tr>';
-			}
-				
-			tbodyTag.insertAdjacentHTML('afterbegin', str);
 
-	   },
-	   error: function() {
-	      alert('실패');
-	   }
-	});
-	//ajax end
-	
-}
 
 
 

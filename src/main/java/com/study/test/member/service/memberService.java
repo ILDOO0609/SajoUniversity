@@ -1,6 +1,10 @@
 package com.study.test.member.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.study.test.member.vo.MemberVO;
+import com.study.test.member.vo.StatisticsVO;
 
 public interface memberService {
 	
@@ -30,6 +34,13 @@ public interface memberService {
 	
 	// 학생 정보 수정
 	void updateStuInfo(MemberVO memberVO);
+	
 	// 비밀번호 변경 유무
 	String checkMemPw(MemberVO memberVO);
+	
+	// 통계 조회 map
+	List<Map<String, Integer>> getMonthlyData2(int year);
+	
+	// 통계 조회
+	List<StatisticsVO> getMonthlyData(int year);
 }

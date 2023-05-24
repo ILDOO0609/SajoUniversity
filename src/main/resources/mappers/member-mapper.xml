@@ -18,7 +18,26 @@
 			<result column="MEM_EMAIL" 						 property="memEmail"/>
 			<result column="MEM_IMAGE" 					 	property="memImage"/>
 			<result column="MEM_QUEST" 					 	property="memQuest"/>
+			<result column="REG_DATE" 					 	property="regDate"/>
 		</resultMap>
+		
+		
+	<resultMap type="com.study.test.member.vo.StatisticsVO" id="statistics">
+		<result column="MONTH_01" property="month_01"/>
+		<result column="MONTH_02" property="month_02"/>
+		<result column="MONTH_03" property="month_03"/>
+		<result column="MONTH_04" property="month_04"/>
+		<result column="MONTH_05" property="month_05"/>
+		<result column="MONTH_06" property="month_06"/>
+		<result column="MONTH_07" property="month_07"/>
+		<result column="MONTH_08" property="month_08"/>
+		<result column="MONTH_09" property="month_09"/>
+		<result column="MONTH_10" property="month_10"/>
+		<result column="MONTH_11" property="month_11"/>
+		<result column="MONTH_12" property="month_12"/>
+	</resultMap>
+		
+		
 		
 		<!-- security 로그인 -->
 		<select id="login" resultMap="member">
@@ -155,7 +174,45 @@
 			    , MEM_ADDR_DETAIL = #{memAddrDetail}
 			WHERE MEM_NO = #{memNo}
 		</update>
-	
+		
+		<!-- 월별통계 MAP-->
+		<select id="getMonthlyData2" resultType="HashMap">
+			SELECT NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '01', 1, 0)), 0) AS MONTH_01
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '02', 1, 0)), 0) AS MONTH_02
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '03', 1, 0)), 0) AS MONTH_03
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '04', 1, 0)), 0) AS MONTH_04
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '05', 1, 0)), 0) AS MONTH_05
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '06', 1, 0)), 0) AS MONTH_06
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '07', 1, 0)), 0) AS MONTH_07
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '08', 1, 0)), 0) AS MONTH_08
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '09', 1, 0)), 0) AS MONTH_09
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '10', 1, 0)), 0) AS MONTH_10
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '11', 1, 0)), 0) AS MONTH_11
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '12', 1, 0)), 0) AS MONTH_12
+			FROM MEMBER
+			WHERE TO_CHAR(REG_DATE, 'YYYY') = #{year}
+			AND MEM_ROLE = 'stu'
+		</select>
+		
+		<select id="getMonthlyData" resultMap="statistics">
+			SELECT NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '01', 1, 0)), 0) AS MONTH_01
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '02', 1, 0)), 0) AS MONTH_02
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '03', 1, 0)), 0) AS MONTH_03
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '04', 1, 0)), 0) AS MONTH_04
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '05', 1, 0)), 0) AS MONTH_05
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '06', 1, 0)), 0) AS MONTH_06
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '07', 1, 0)), 0) AS MONTH_07
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '08', 1, 0)), 0) AS MONTH_08
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '09', 1, 0)), 0) AS MONTH_09
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '10', 1, 0)), 0) AS MONTH_10
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '11', 1, 0)), 0) AS MONTH_11
+			, NVL(SUM(DECODE(TO_CHAR(REG_DATE, 'MM'), '12', 1, 0)), 0) AS MONTH_12
+			FROM MEMBER
+			WHERE TO_CHAR(REG_DATE, 'YYYY') = #{year}
+			AND MEM_ROLE = 'stu'
+		</select>
+		
+		
 </mapper>
 
 

@@ -1,10 +1,14 @@
 package com.study.test.member.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.study.test.member.vo.MemberVO;
+import com.study.test.member.vo.StatisticsVO;
 
 
 @Service("memberService")
@@ -76,9 +80,19 @@ public class memberServiceImpl implements memberService{
 	}
 	
 	
+	// 통계 조회
+	@Override
+	public List<Map<String, Integer>> getMonthlyData2(int year) {
+
+		return sqlSession.selectList("memberMapper.getMonthlyData2", year);
+	}
 	
-	
-	
+	// 통계 조회 노가다
+	@Override
+	public List<StatisticsVO> getMonthlyData(int year) {
+		
+		return sqlSession.selectList("memberMapper.getMonthlyData", year);
+	}
 	
 	
 	

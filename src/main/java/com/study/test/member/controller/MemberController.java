@@ -272,7 +272,7 @@ public class MemberController {
 	
 	
 	
-	// 월별 등록 차트
+	// 월별 등록 차트d
 	@GetMapping("/stuRegPerMonth")
 	public String stuRegPerMonth(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
 		

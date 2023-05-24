@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.study.test.colleage.vo.DeptVO;
-import com.study.test.emp.vo.LectureTimeVO;
 import com.study.test.emp.vo.LectureVO;
 
 public interface EmpService {
@@ -15,8 +14,14 @@ public interface EmpService {
 	//강의 등록
 	void insertLecture(HashMap<String, Object>map);
 	
-	//강의 목록 조회
-	List<Map<String, String>> getLectureListForRegScore(String empNo);
+	//강의 목록조회
+	List<LectureVO>getLectureList(LectureVO lectureVO);
+	
+	//강의 검색시 목록조회
+	List<LectureVO>getLectureListAfterSearch(LectureVO lectureVO);
+	
+	//강의 폐강시 강의상태 수정
+	boolean updateLecStatusAjax(String lecNo);
 	
 	//다음에 등록될 LEC_NO 조회
 	String getNextLecNo();
@@ -30,5 +35,6 @@ public interface EmpService {
 	//강의등록시 강의시간 중복체크 Ajax
 	boolean timeDuplicationCheckAjax(HashMap<String, Object>lecTimeMap);
 	
-	
+	//성적등록 위한 강의 목록 조회
+	List<Map<String, String>> getLectureListForRegScore(String empNo);
 }

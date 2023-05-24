@@ -1,4 +1,10 @@
  .lecture {
-        background-color: red;
-        text-align: center;
+    background-color: red;
+    text-align: center;
+}
+.hover-blue:hover{
+    color: blue;
+}
+.modalTable tbody tr td:nth-child(odd) {
+        font-weight: bold;
     }

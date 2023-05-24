@@ -19,14 +19,14 @@ function lecScheduleAjax() {
 			
 			for(let t = 1; t<9; t++){
 				str += `<tr style="height: 40px;">`;  
-				str += `	<td class="text-start">`;  
+				str += `	<td>`;  
 				str += `    	${t+'교시'}`;  
 				str += `    </td> `;  
 				for(let num = 1; num<6; num++){
 					str += `<td> `;  
 					for(let i = 0; i<lecTimeList.length; i++){
 						if(lecTimeList[i]['LEC_DAY']==num && lecTimeList[i]['FIRST_TIME']<=t && lecTimeList[i]['LAST_TIME']>=t){
-							str += `${lecTimeList[i]['LEC_NAME']}`;  
+							str += `${lecTimeList[i]['LEC_NAME']}`;
 						}
 					}
 					str += `</td>`;

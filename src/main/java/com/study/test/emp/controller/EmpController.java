@@ -37,8 +37,44 @@ public class EmpController {
 	
 	//강의리스트 페이지로 이동
 	@GetMapping("/lectureList")
-	public String lectureList() {
+	public String lectureList(Model model, Authentication authentication, LectureVO lectureVO) {
+		lectureVO.setEmpNo(getNowEmpNo(authentication));
+		model.addAttribute("lectureList", empService.getLectureList(lectureVO));
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+empService.getLectureList(lectureVO));
 		return "content/emp/lecture_list";
+	}
+	
+	//강의리스트에서 강의폐강
+	@ResponseBody
+	@PostMapping("/regCloseAjax")
+	public boolean regCloseAjax(String lecNo, Model model) {
+	    return empService.updateLecStatusAjax(lecNo);
+	}
+	
+	//강의 폐강시 강의 리스트 목록 조회 Ajax
+	@ResponseBody
+	@PostMapping("/getLectureListAjax")
+	public List<LectureVO> getLectureListAjax(Authentication authentication, LectureVO lectureVO){
+		lectureVO.setEmpNo(getNowEmpNo(authentication));
+		return empService.getLectureList(lectureVO);
+	}
+	
+	//강의 수정
+	@ResponseBody
+	@PostMapping("/getLectureListForUpdateAjax")
+	public List<LectureVO> updateLecAjax(LectureVO lectureVO, Authentication authentication){
+		lectureVO.setEmpNo(getNowEmpNo(authentication));
+		return empService.getLectureList(lectureVO);
+	}
+	
+	//강의 검색
+	@ResponseBody
+	@PostMapping("/searchLectureAjax")
+	public List<LectureVO> searchLectureAjax(Authentication authentication, LectureVO lectureVO){
+		System.out.println("@@@@@@@@@@@@@@@@"+lectureVO);
+		lectureVO.setEmpNo(getNowEmpNo(authentication));
+		
+		return empService.getLectureListAfterSearch(lectureVO);
 	}
 	
 	//강의 등록페이지로 이동
@@ -153,6 +189,7 @@ public class EmpController {
 	public String lecSchedule() {
 		return "content/emp/lec_schedule";
 	}
+	
 	//강의 시간표
 	@ResponseBody
 	@PostMapping("/lecScheduleAjax")
@@ -162,7 +199,7 @@ public class EmpController {
 	
 	//학생성적등록 페이지로 이동
 	@GetMapping("/regScore")
-	public String lectureList(Model model, Authentication authentication) {
+	public String regScore(Model model, Authentication authentication) {
 		List<Map<String, String>> mapList = empService.getLectureListForRegScore(getNowEmpNo(authentication));
 		System.out.println("@@@@@@@@@@@@@@@@@@ "+mapList);
 		model.addAttribute("mapList", mapList);

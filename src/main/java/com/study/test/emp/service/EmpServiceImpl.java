@@ -36,8 +36,20 @@ public class EmpServiceImpl implements EmpService{
 	
 	//강의 목록 조회
 	@Override
-	public List<Map<String, String>> getLectureListForRegScore(String empNo) {
-		return sqlSession.selectList("empMapper.getLectureListForRegScore", empNo);
+	public List<LectureVO> getLectureList(LectureVO lectureVO) {
+		return sqlSession.selectList("empMapper.getLectureList", lectureVO);
+	}
+	
+	//강의 검색시 강의 목록 조회
+	@Override
+	public List<LectureVO> getLectureListAfterSearch(LectureVO lectureVO) {
+		return sqlSession.selectList("empMapper.getLectureList", lectureVO);
+	}
+	
+	//강의 폐강시 강의상태 수정
+	@Override
+	public boolean updateLecStatusAjax(String lecNo) {
+		return sqlSession.update("empMapper.updateLecStatusAjax", lecNo) == 1 ? true : false;
 	}
 	
 	//다음에 등록될 LEC_NO 조회
@@ -64,5 +76,16 @@ public class EmpServiceImpl implements EmpService{
 		int result = sqlSession.selectOne("empMapper.timeDuplicationCheckAjax", lecTimeMap);
 		return result >= 1 ? true : false ;
 	}
+	
+	//성적 등록 위한 강의 목록 조회
+	@Override
+	public List<Map<String, String>> getLectureListForRegScore(String empNo) {
+		return sqlSession.selectList("empMapper.getLectureListForRegScore", empNo);
+	}
 
+	
+	
+	
+
+	
 }

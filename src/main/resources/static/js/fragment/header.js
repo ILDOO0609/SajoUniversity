@@ -115,9 +115,6 @@ function isDuplicateMemNo() {
 				else {
 					alert('사용가능');
 	
-					// join 버튼 disabled 속성 제거
-					document.querySelector('#joinBtn').disabled = false;
-	
 					tag.value;
 				}
 	
@@ -156,12 +153,6 @@ function searchAddr() {
 
 
 
-// 회원가입 버튼 비활성화
-function setDisabled() {
-
-	document.querySelector('#joinBtn').disabled = true;
-
-}
 
 
 // 인증번호 발송
@@ -216,7 +207,14 @@ function joinValidate() {
 	// 함수의 리턴 결과를 저장하는 변수
 	let result_memNo = true;
 	let result_memPw = true;
-
+	let result_memQuest = true;
+	let result_memName = true;
+	let result_memBirthday = true;
+	let result_memAddr = true;
+	let result_memAddrDetail = true;
+	let result_tell_2 = true;
+	let result_tell_3 = true;
+	let result_memImage = true;
 
 	// 오류 메세지
 	let str_memNo = '';
@@ -231,12 +229,13 @@ function joinValidate() {
 		str_memNo = '번호는 필수 입력입니다!!!';
 		result_memNo = false;
 	}
+	
 	else if (memNo.length != 8) {
 		str_memNo = '번호는 8자리여야 합니다.';
 
 		result_memNo = false;
 	}
-
+	
 	// 비밀번호 유효성 검사 ( PW )
 	const memPw = document.querySelector('#joinModal #memPw').value;
 
@@ -264,10 +263,121 @@ function joinValidate() {
 	
 	if (!result_memPw) {
 		const errorHTML = `<div class="my-invalid">${str_memPw}</div>`;
-		divs[2].insertAdjacentHTML('afterend', errorHTML);
+		divs[3].insertAdjacentHTML('afterend', errorHTML);
 	}
 	
-	return result_memNo && result_memPw;
+	
+	// 비밀번호찾기 질문  유효성 검사
+	const memQuest = document.querySelector('#joinModal #memQuest').value;
+	if (memQuest == '') {
+		str_memQuest = '필수 입력입니다!!!';
+		result_memQuest = false;
+	}
+	
+	
+	if (!result_memQuest) {
+		const errorHTML = `<div class="my-invalid">${str_memQuest}</div>`;
+		divs[4].insertAdjacentHTML('afterend', errorHTML);
+	}
+	
+	
+	// 이름  유효성 검사
+	const memName = document.querySelector('#joinModal #memName').value;
+	if (memName == '') {
+		str_memName = '필수 입력입니다!!!';
+		result_memName = false;
+	}
+	
+	if (!result_memName) {
+		const errorHTML = `<div class="my-invalid">${str_memName}</div>`;
+		divs[5].insertAdjacentHTML('afterend', errorHTML);
+	}
+	
+	
+	// 생일  유효성 검사
+	const memBirthday = document.querySelector('#joinModal #memBirthday').value;
+	if (memBirthday == '') {
+		str_memBirthday = '필수 입력입니다!!!';
+		result_memBirthday = false;
+	}
+	
+	if (!result_memBirthday) {
+		const errorHTML = `<div class="my-invalid">${str_memBirthday}</div>`;
+		divs[9].insertAdjacentHTML('afterend', errorHTML);
+	}
+	
+	
+	// 연락처 중간자리  유효성 검사
+	const tell_2 = document.querySelector('#joinModal #tell_2').value;
+	if (tell_2 == '') {
+		str_tell_2 = '필수 입력입니다!!!';
+		result_tell_2 = false;
+	}
+	
+	if (!result_tell_2) {
+		const errorHTML = `<div class="my-invalid">${str_tell_2}</div>`;
+		divs[12].insertAdjacentHTML('afterend', errorHTML);
+	}
+	
+	
+	// 연락처 마지막 자리  유효성 검사
+	const tell_3 = document.querySelector('#joinModal #tell_3').value;
+	if (tell_3 == '') {
+		str_tell_3 = '필수 입력입니다!!!';
+		result_tell_3 = false;
+	}
+	
+	if (!result_tell_3) {
+		const errorHTML = `<div class="my-invalid">${str_tell_3}</div>`;
+		divs[12].insertAdjacentHTML('afterend', errorHTML);
+	}
+	
+	// 주소 유효성 검사
+	const memAddr = document.querySelector('#joinModal #memAddr').value;
+	if (memAddr == '') {
+		str_memAddr = '필수 입력입니다!!!';
+		result_memAddr = false;
+	}
+	
+	if (!result_memAddr) {
+		const errorHTML = `<div class="my-invalid">${str_memAddr}</div>`;
+		divs[13].insertAdjacentHTML('afterend', errorHTML);
+	}
+	
+	// 상세 주소 유효성 검사
+	const memAddrDetail = document.querySelector('#joinModal #memAddrDetail').value;
+	if (memAddrDetail == '') {
+		str_memAddrDetail = '상세주소필수 입력입니다!!!';
+		result_memAddrDetail = false;
+	}
+	
+	if (!result_memAddrDetail) {
+		const errorHTML = `<div class="my-invalid">${str_memAddrDetail}</div>`;
+		divs[14].insertAdjacentHTML('afterend', errorHTML);
+	}
+	
+	
+	
+	// 이미지 유효성 검사
+	const memImage = document.querySelector('#joinModal #memImage');
+	const selectedFile = memImage.files[0];
+
+	if (!selectedFile) {
+		str_memImage = '이미지를 첨부하세요!';
+		result_memImage = false;
+	}
+	
+	if (!result_memImage) {
+    const errorHTML = `<div class="my-invalid">${str_memImage}</div>`;
+    divs[14].insertAdjacentHTML('afterend', errorHTML);
+   }
+	
+	
+	
+	
+	
+	
+	return result_memNo && result_memPw && result_memName && result_memQuest && tell_2 && tell_3 && memBirthday && memAddr && memAddrDetail && memImage;
 	
 	
 }
@@ -403,7 +513,7 @@ function findNo(btn) {
 }
 
 
-
+var authoMail;
 
 // 회원가입시 인증번호 이메일 인증
 function authenMail() {
@@ -416,7 +526,6 @@ function authenMail() {
   }
 
   var btnAuth = document.querySelector('#btn-auth');
-  btnAuth.disabled = true;
 
   $.ajax({
     url: '/member/authenMailAjax',
@@ -426,15 +535,17 @@ function authenMail() {
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
     data: { 'memEmail': memEmail },
     success: function(result) {
-      startTimer();
-      alert('이메일이 정상적으로 전송되었습니다.');
-    },
+	  authoMail = result.authoMail;
+	  startTimer();
+	  alert('이메일이 성공적으로 발송되었습니다.');
+	  btnAuth.disabled = true;
+	  alert(authoMail)
+	},
     error: function() {
       alert('메일전송에 실패하였습니다..');
     },
     complete: function() {
-      // Re-enable the button after AJAX request is complete
-      btnAuth.disabled = false;
+     // btnAuth.disabled = false;
     }
   });
 }
@@ -460,14 +571,17 @@ function startTimer() {
 
 
 function checkVerificationCode() {
-	alert(1111111);
+	alert(authoMail);
   var authMail = document.querySelector('#auth_mail').value;
-
-  if (authMail === verificationCode) {
+  var confirmBtn = document.querySelector('#confirmation');
+  alert(authMail)
+  if (authMail === authoMail) {
     clearInterval(countdownTimer);
-    alert('Verification code matched.');
+    alert('인증번호가 일치합니다. \n 회원가입을 마저 진행 해주세요.');
+    confirmBtn.disabled = true;
+	document.querySelector('#joinBtn').disabled = false;
   } else {
-    alert('Verification code does not match.');
+    alert('인증번호가 일치하지 않습니다. \n 발송된 인증번호를 다시 확인 해주세요.');
   }
 }
 

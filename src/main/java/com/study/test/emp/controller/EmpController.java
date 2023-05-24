@@ -59,12 +59,45 @@ public class EmpController {
 		return empService.getLectureList(lectureVO);
 	}
 	
-	//강의 수정
+	//강의 수정위한 목록 조회
 	@ResponseBody
 	@PostMapping("/getLectureListForUpdateAjax")
-	public List<LectureVO> updateLecAjax(LectureVO lectureVO, Authentication authentication){
+	public List<LectureVO> getLectureListForUpdateAjax(LectureVO lectureVO, Authentication authentication){
+		System.out.println("@@@@@@@@@@@@@@@@@"+lectureVO);
 		lectureVO.setEmpNo(getNowEmpNo(authentication));
 		return empService.getLectureList(lectureVO);
+	}
+	
+	//강의 수정
+	@PostMapping("/lecUpdate")
+	public String lecUpdate(LectureVO lectureVO, LectureTimeVO lectureTimeVO) {
+		System.out.println("@@@@@@@@@@@@@"+lectureVO);
+		System.out.println("@@@@@@@@@@@@@"+lectureTimeVO);
+		
+		String timeNos = lectureTimeVO.getTimeNo();
+		String lecDays = lectureTimeVO.getLecDay();
+		String firstTimes = lectureTimeVO.getFirstTime();
+		String lastTimes = lectureTimeVO.getLastTime();
+
+		String[] timeNoArray = timeNos.split(",");
+		String[] lecDayArray = lecDays.split(",");
+		String[] firstTimeArray = firstTimes.split(",");
+		String[] lastTimeArray = lastTimes.split(",");
+
+		List<LectureTimeVO> lectureTimeList = new ArrayList<>();
+
+		for(int i = 0; i < timeNoArray.length; i++) {
+		    LectureTimeVO lt = new LectureTimeVO();
+		    lt.setTimeNo(timeNoArray[i]);
+		    lt.setLecDay(lecDayArray[i]);
+		    lt.setFirstTime(firstTimeArray[i]);
+		    lt.setLastTime(lastTimeArray[i]);
+		    lectureTimeList.add(lt);
+		}
+
+		lectureVO.setLectureTimeList(lectureTimeList);
+		empService.lecUpdate(lectureVO);
+		return "redirect:/emp/lectureList";
 	}
 	
 	//강의 검색

@@ -100,7 +100,7 @@
 								</th:block>
 							</td>
 							<td>[[${lecture.lecStatus}]]</td>
-							<td><input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="updateLec(this);" class="btn btn-primary"></td>
+							<td><input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary"></td>
 							<td th:if="${lecture.lecStatus == '폐강'}">
 								<input type="button" value="폐강" th:onclick="regClose([[${lecture.lecNo}]]);" disabled>
 							</td>
@@ -116,7 +116,7 @@
 			tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<div class="modal-body">
+					<div class="modal-body" id="modal-body">
 					  
 					</div>
 				</div>
@@ -128,7 +128,9 @@
 
 <!-- 연결해야 할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/emp/reg_lecture.js"></script>
 	<script type="text/javascript" src="/js/content/emp/lecture_list.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </th:block>
 
 </html>

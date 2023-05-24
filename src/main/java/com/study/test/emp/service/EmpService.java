@@ -23,6 +23,9 @@ public interface EmpService {
 	//강의 폐강시 강의상태 수정
 	boolean updateLecStatusAjax(String lecNo);
 	
+	//강의 수정
+	int lecUpdate(LectureVO lectureVO);
+	
 	//다음에 등록될 LEC_NO 조회
 	String getNextLecNo();
 	

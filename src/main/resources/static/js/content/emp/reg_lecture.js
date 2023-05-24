@@ -162,7 +162,6 @@ function timeDuplicationCheckAjax(){
 				});
 			 }
 			 else{
-				document.querySelector('#regBtn').disabled=false;
 				Swal.fire({
 				  icon: 'success',
 				  title: '시간 체크',

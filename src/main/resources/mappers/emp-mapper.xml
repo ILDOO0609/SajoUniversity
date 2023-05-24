@@ -24,11 +24,27 @@
 		<result column="COLL_NO" 	 property="collNo"/>
 		<result column="DEPT_NO" 	 property="deptNo"/>
 		<result column="SEARCH_VALUE" 	 property="searchValue"/>
+		<association property="stuVO" resultMap="stuMapper.stu"></association>
+		<association property="semesterVO" resultMap="semester"></association>
 		<association property="memberVO" resultMap="memberMapper.member"></association>
 		<association property="empVO" resultMap="emp"></association>
 		<association property="deptVO" resultMap="colleageMapper.dept"></association>
 		<association property="colleageVO" resultMap="colleageMapper.colleage"></association>
+		<association property="enrollmentVO" resultMap="enrollment"></association>
 		<collection property="lectureTimeList" resultMap="lectureTime"></collection>
+	</resultMap>
+	
+	<resultMap type="com.study.test.emp.vo.EnrollmentVO" id="enrollment">
+		<id		column="ENROLLMENT_NO"  property="enrollmentNo"/>
+		<result column="STU_NO" 		property="stuNo"/>
+		<result column="LEC_NO" 		property="lecNo"/>
+		<result column="SEM_NO" 		property="semNo"/>
+	</resultMap>
+
+	<resultMap type="com.study.test.colleage.vo.SemesterVO" id="semester">
+		<id		column="SEM_NO"  		property="semNo"/>
+		<result column="SEM_YEAR" 		property="semYear"/>
+		<result column="SEMESTER" 		property="semester"/>
 	</resultMap>
 	
 	<resultMap type="com.study.test.emp.vo.LectureTimeVO" id="lectureTime">
@@ -194,7 +210,86 @@
 		AND DEPT.DEPT_NO = #{deptNo}
 		</if>
 	</select>
-
+	
+	<!-- 수강신청 DB에 INSERT -->
+	<insert id="insertEnrollment">
+		INSERT INTO ENROLLMENT (
+   				 ENROLLMENT_NO
+   				 , STU_NO
+  				 , LEC_NO
+  				 , SEM_NO
+				 ) VALUES (
+				 (SELECT 'ENR_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ENROLLMENT_NO, 5))), 0) +1,3,0) FROM ENROLLMENT)
+   				 , #{stuNo}
+   				 , #{lecNo}
+   				 , #{semNo}
+   				 )
+	</insert>
+	
+	<!-- 수강신청 내역 조회 -->
+	<select id="getEnrollmentNow" resultMap="lecture">
+		SELECT LECTURE.LEC_NO
+			, LEC_NAME
+			, LEC_SCORE
+			, CREATE_DATE
+			, MAX_NUM
+			, NOW_NUM
+			, LEC_STATUS
+			, LECTURE.EMP_NO
+			, LECTURE.SEM_NO
+			, LECTURE.COLL_NO
+            , COLL_NAME
+			, LECTURE.DEPT_NO
+			, DEPT_NAME
+			, LEC_DAY
+			, FIRST_TIME
+			, LAST_TIME
+            , EMP.MEM_NO
+            , MEM_NAME
+            , ENROLLMENT_NO
+            , STU.STU_NO
+            , SEM_YEAR
+            , SEMESTER
+		FROM LECTURE, LECTURE_TIME, COLLEAGE COLL, DEPT, MEMBER, EMP, ENROLLMENT ENR, SEMESTER SEM, STU
+		WHERE LECTURE.LEC_NO = LECTURE_TIME.LEC_NO
+		AND LECTURE.COLL_NO = COLL.COLL_NO
+		AND LECTURE.DEPT_NO = DEPT.DEPT_NO
+		AND EMP.COLL_NO = LECTURE.COLL_NO
+		AND MEMBER.MEM_NO = EMP.MEM_NO
+		AND LECTURE.LEC_NO = ENR.LEC_NO
+		AND SEM.SEM_NO = LECTURE.SEM_NO
+        AND ENR.STU_NO = STU.STU_NO
+		AND STU.STU_NO = #{stuNo}
+	</select>
+	
+	<!-- 수강신청 중복신청 불가 -->
+	<select id="getLecForStu" resultType="int">
+		SELECT COUNT(ENROLLMENT_NO) AS ERN
+		FROM ENROLLMENT
+		WHERE STU_NO = #{stuNo} 
+		AND LEC_NO = #{lecNo}
+	</select>
+	
+	<!-- 현재 신청인원 +1 -->
+	<update id="updateNowNum">
+		UPDATE LECTURE
+		SET NOW_NUM = NOW_NUM + 1
+		WHERE LEC_NO = #{lecNo}
+	</update>
+	
+	<!-- 수강 신청 취소 -->
+	<delete id="deleteEnr">
+		DELETE ENROLLMENT
+		WHERE STU_NO = #{stuNo}
+		AND LEC_NO = #{lecNo}
+	</delete>
+	
+	<!-- 현재 신청인원 -1 -->
+	<update id="updateNowNumForDelete">
+		UPDATE LECTURE
+		SET NOW_NUM = NOW_NUM - 1
+		WHERE LEC_NO = #{lecNo}
+	</update>
 </mapper>
 
 

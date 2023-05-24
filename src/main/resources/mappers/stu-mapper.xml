@@ -16,6 +16,17 @@
 	<association property="colleageVO" resultMap="colleageMapper.colleage"></association>
 </resultMap>
 
+<resultMap type="com.study.test.stu.vo.StatusInfoVO" id="status">
+	<id 	column="STATUS_NO" 			property="statusNo"/>
+	<result column="NOW_STATUS" 		property="nowStatus"/>
+	<result column="AFTER_STATUS" 		property="afterStatus"/>
+	<result column="APPLY_DATE" 		property="applyDate"/>
+	<result column="APPROVAL_DATE" 		property="approvalDate"/>
+	<result column="ING_STATUS" 		property="ingStatus"/>
+	<result column="STU_NO" 			property="stuNo"/>
+	<result column="STATUS_CONTENT" 	property="statusContent"/>
+</resultMap>
+
 <select id="getStuInfo" resultMap="stu">
 SELECT STU_NO
 	, STU_YEAR
@@ -28,7 +39,24 @@ FROM STU
 WHERE MEM_NO = #{memNo}
 </select>
 
+<insert id="applyAbsence">
+INSERT INTO STATUS_INFO (
+	STATUS_NO
+	, STU_NO
+	, STATUS_CONTENT
+) VALUES (
+	(SELECT 'STATUS_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STATUS_NO, 8))), 0) + 1, 3, '0') 
+    FROM STATUS_INFO)
+    , #{stuNo}
+    , #{statusContent}
+)
+</insert>
 
+<update id="updateStuInfoForAbsence">
+UPDATE STU
+SET STU_STATUS = '휴학'
+WHERE STU_NO = #{stuNo}
+</update>
 
 </mapper>
 

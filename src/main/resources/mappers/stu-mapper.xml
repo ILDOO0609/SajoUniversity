@@ -14,6 +14,7 @@
 	<result column="DEPT_NO" 		property="deptNo"/>
 	<association property="memberVO" resultMap="memberMapper.member"></association>
 	<association property="colleageVO" resultMap="colleageMapper.colleage"></association>
+	<association property="deptVO" resultMap="colleageMapper.dept"></association>
 </resultMap>
 
 <resultMap type="com.study.test.stu.vo.StatusInfoVO" id="status">

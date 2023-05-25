@@ -10,15 +10,59 @@ function schInfoYear(){
 
 //검색버튼 클릭시 실행
 function infoSearchList(){
-	const searchForm = document.querySelector('#schInfoSearchForm');
-	const schInfoSearchKeword = document.querySelector('#schInfoSearchKeword').value;
+	const schInfoSearch = document.querySelector('#schInfoSearchInput').value;
 	
-	if(schInfoSearchKeword == ''){
+	if(schInfoSearch == ''){
 		alert('검색할 제목을 입력하세요.');
 		return;
 	}
 	
-	searchForm.submit();
+	//ajax start
+	$.ajax({
+		url: '/school/searchInfoListAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'schInfoSearch':schInfoSearch}, //필요한 데이터
+		success: function(result) {
+			const infoTbodyTag = document.querySelector('#schInfoTable tbody');
+			infoTbodyTag.replaceChildren();	
+			
+			let str = '';
+			
+			
+			if(result.size == 0){
+				str += `<tr>`;
+				str += `<td colspan="4">조회된 안내글이 없습니다.`;
+				str += `</tr>`;
+			}
+			else{
+				for(const info of result){
+					str += `<tr>`;
+					str += `<td>${info.schInfoNum}</td>`;
+					str += `<td>`;
+					str += `<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">${info.schInfoTitle}`;
+					str += `</td>`;
+					str += `<td>${info.regDate}</td>`;
+					str += `<td>${info.startDate} ~ ${info.endDate}</td>`;
+				}
+			}
+			infoTbodyTag.insertAdjacentHTML('afterbegin'. str);
+			
+		},
+		
+		error: function() {
+			alert('실패');
+		}
+		
+		
+	});
+	//ajax end
+	
+	
+	
+	
+	
 }
 
 //학사안내 글등록
@@ -90,7 +134,76 @@ function drawDeptSelectbox(deptList){
 }
 
 
-//학사일정 스케쥴 --------------------------------------------------------------
+// --------학사조회------------------------------------------------------
+//교수 교직원 라디오 버튼 클릭시 실행
+$("input[name='checkPosition']").change(function(){
+	
+	
+	if($("input[name='checkPosition']:checked").val() == '교수'){
+		$('.form-select').show();
+	}
+	else if($("input[name='checkPosition']:checked").val() == '교직원'){
+		$('.form-select').hide();
+	}
+	
+	var name = $("input[name='checkPosition']:checked").val();
+	alert(name + '이(가) 선택되었습니다.');
+				
+});
+//교수/교직원 조회 -> 검색
+function searchProList(){
+	const searchValue = document.querySelector('#searchInput').value;
+	
+	
+	//ajax start
+		$.ajax({
+			url: '/school/searchProListAjax', //요청경로
+			type: 'post',
+			async: true,
+			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+			data: {'searchValue':searchValue}, //필요한 데이터
+			success: function(result) {
+				const tdTag = document.querySelector('#tdTag');
+				tdTag.replaceChildren();	
+				
+				let str = '';
+				
+				str += ``;
+				str += `<div class="row text-center">`;
+				for(const pro of result){
+					str += `<div class="col-2">${pro.empVO.memNO}</div>`; 
+					str += `<div class="col-2">${pro.empVO.empType}</div>`; 
+					str += `<div class="col-2">${pro.memverVO.memName}</div>`; 
+					str += `<div class="col-2">${pro.colleageVo.collName}</div>`; 
+					str += `<div class="col-2">${pro.deptVO.deptName}</div>`; 
+				}
+				
+				tdTag.insertAdjacentHTML('afterbegin'. str);
+			},
+			
+			error: function() {
+				alert('실패');
+			}
+		});
+	//ajax end
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //윤년계산
 function checkLeapYear(year){

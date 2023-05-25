@@ -3,7 +3,6 @@ package com.study.test.school.controller;
 import java.time.Year;
 import java.util.List;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.study.test.colleage.service.ColleageService;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.service.EmpService;
+import com.study.test.emp.vo.LectureVO;
 import com.study.test.school.service.SchoolService;
 import com.study.test.school.vo.SchoolInfoVO;
 import com.study.test.util.DateUtill;
@@ -46,7 +46,7 @@ public class SchoolController {
 	
 	//학사메뉴 -> 학사안내 페이지
 	@RequestMapping("/info")
-	public String schoolInfo(Model model, PageVO pageVO, @RequestParam(required = false, defaultValue = "0") int year) {
+	public String schoolInfo(Model model, SchoolInfoVO schoolInfoVO, @RequestParam(required = false, defaultValue = "0") int year) {
 		//검색 년도
 		if(year == 0) {
 			year = DateUtill.getYear();
@@ -56,13 +56,20 @@ public class SchoolController {
 		model.addAttribute("thisYear", DateUtill.getYear());
 		
 		//전체 데이터 수 조회
-		pageVO.setTotalDataCnt(schoolService.schInfoListCnt());
-		pageVO.setPageInfo();
+		schoolInfoVO.setTotalDataCnt(schoolService.schInfoListCnt());
+		schoolInfoVO.setPageInfo();
 		
 		//게시글 조회
-		model.addAttribute("infoList", schoolService.getSchoolInfoList(pageVO));
+		model.addAttribute("infoList", schoolService.getSchoolInfoList(schoolInfoVO));
 		
 		return "content/school/school/school_info";
+	}
+	
+	//학사메뉴 -> 학사안내 페이지 -> 검색
+	@ResponseBody
+	@PostMapping("/searchInfoListAjax")
+	public List<SchoolInfoVO> searchInfoListAjax(SchoolInfoVO schoolInfoVO){
+		return schoolService.searchInfoListAjax(schoolInfoVO);
 	}
 	
 	//학사메뉴 -> 학사안내 게시글 작성페이지
@@ -74,7 +81,6 @@ public class SchoolController {
 	//학사메뉴 -> 학사안내 글등록
 	@PostMapping("/insertSchoolInfo")
 	public String insertSchoolInfo(SchoolInfoVO schoolInfoVO, Authentication authentication) {
-		//로그인 정보 security에서 가져오기. 리턴타입이 오브젝트이기때문에 형변환이 필요한다.
 		User user = (User)authentication.getPrincipal();
 		schoolInfoVO.setSchInfoWriter(user.getUsername());
 		
@@ -126,7 +132,8 @@ public class SchoolController {
 	
 	//학사메뉴 -> 학사일정 페이지
 	@GetMapping("/scheList")
-	public String schoolBoardList() {
+	public String calendarList(Model model) {
+		model.addAttribute("calendarList", schoolService.calendarList());
 		return "content/school/school/school_sche_list";
 	}
 	
@@ -146,19 +153,6 @@ public class SchoolController {
 		return "content/school/check/check_main";
 	}
 	
-	//학사조회 -> 학생조회 페이지
-	@GetMapping("/checkStu")
-	public String checkStu(Model model) {
-		//단과대학 정보 조회
-		model.addAttribute("colleageList", colleageService.getColleageList());
-		
-		//전공학과 정보 조회
-		model.addAttribute("deptList", colleageService.getDeptList());
-		
-		
-		return "content/school/check/check_stu";
-	}
-	
 	//전공대학 변경시 실행되는 함수
 	@ResponseBody
 	@PostMapping("/changeCollAjax")
@@ -168,17 +162,39 @@ public class SchoolController {
 		return deptList;
 	}
 	
+	//학사조회 -> 학생조회 페이지
+	@GetMapping("/checkStu")
+	public String checkStu(Model model) {
+		//단과대학 정보 조회
+		model.addAttribute("colleageList", colleageService.getColleageList());
+		//전공학과 정보 조회
+		model.addAttribute("deptList", colleageService.getDeptList());
+		//학생조회
+		model.addAttribute("stuList", schoolService.checkStuList());
+		return "content/school/check/check_stu";
+	}
 	
-	//학사조회 -> 교수조회 페이지
+	//학사조회 -> 교수&교직원 조회 페이지
 	@GetMapping("/checkPro")
 	public String checkPro(Model model) {
 		//단과대학 정보 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		//전공학과 정보 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
-				
+		//교수&교직원 조회
+		model.addAttribute("proList", schoolService.checkProList());
+		
 		return "content/school/check/check_pro";
 	}
+	
+	//학사조회 -> 교수&교직원 조회 -> 검색
+	@ResponseBody
+	@PostMapping("/searchProListAjax")
+	public List<LectureVO> searchProListAjax(LectureVO lectureVO){
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + lectureVO);
+		return schoolService.searchProListAjax(lectureVO);
+	}
+	
 	
 	//학사조회 -> 강의및학점 페이지
 	@GetMapping("/checkLec")

@@ -1,6 +1,7 @@
 package com.study.test.stu.vo;
 
 import com.study.test.colleage.vo.ColleageVO;
+import com.study.test.colleage.vo.DeptVO;
 import com.study.test.member.vo.MemberVO;
 
 import lombok.Getter;
@@ -22,4 +23,5 @@ public class StuVO {
 	
 	private MemberVO memberVO;
 	private ColleageVO colleageVO;
+	private DeptVO deptVO;
 }

@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.vo.EmpVO;
+import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.CalendarVO;
-import com.study.test.school.vo.PrenextPageVO;
-import com.study.test.school.vo.SchSearchVO;
 import com.study.test.school.vo.SchoolInfoVO;
 import com.study.test.stu.vo.StuVO;
 import com.study.test.util.PageVO;
@@ -27,10 +26,15 @@ public class SchoolServiceImpl implements SchoolService{
 		sqlSession.insert("schoolMapper.insertSchoolInfo", schoolInfoVO);
 	}
 	
-	//학사안내 게시글 목록
+	//학사안내 게시글 목록조회
 	@Override
-	public List<SchoolInfoVO> getSchoolInfoList(PageVO pageVO) {
-		return sqlSession.selectList("schoolMapper.getSchoolInfo", pageVO);
+	public List<SchoolInfoVO> getSchoolInfoList(SchoolInfoVO schoolInfoVO) {
+		return sqlSession.selectList("schoolMapper.getSchoolInfo", schoolInfoVO);
+	}
+	//학사안내 게시글 목록조회 -> 검색
+	@Override
+	public List<SchoolInfoVO> searchInfoListAjax(SchoolInfoVO schoolInfoVO) {
+		return sqlSession.selectList("schoolMapper.getSchoolInfo", schoolInfoVO);
 	}
 	
 	//학사안내 게시글 -> 상세조회 페이지이동 
@@ -106,7 +110,11 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<EmpVO> checkProList() {
 		return sqlSession.selectList("schoolMapper.checkProList");
 	}
-
+	//교수&교직원 조회->검색
+	@Override
+	public List<LectureVO> searchProListAjax(LectureVO lectureVO) {
+		return sqlSession.selectList("school.checkProList", lectureVO);
+	}
 	
 	
 // -------회원메뉴 회원조회------------------------------------------------------
@@ -114,6 +122,9 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<MemberVO> selectMember() {
 		return sqlSession.selectList("schoolMapper.selectMember");
 	}
+
+
+	
 
 	
 

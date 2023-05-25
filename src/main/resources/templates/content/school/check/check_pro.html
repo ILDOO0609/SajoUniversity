@@ -68,7 +68,7 @@
 					<tbody>
 						<tr>
 							<td>
-								교수/교직원 조회 결과
+								교수&교직원 전체 조회 및 검색 결과
 							</td>
 						</tr>
 						<tr>
@@ -85,11 +85,13 @@
 						<tr>
 							<td>
 								<div class="row text-center">
-									<div class="col-2">20230519</div>
-									<div class="col-2">1학년</div>
-									<div class="col-3">김형진</div>
-									<div class="col-3">인문대학</div>
-									<div class="col-2">국어국문학부</div>
+									<th:block th:each="pro : ${proList}">
+										<div class="col-2">[[${pro.empVO.memNo}]]</div>
+										<div class="col-2">[[${pro.empVO.empType}]]</div>
+										<div class="col-3">[[${pro.memberVO.memName}]]</div>
+										<div class="col-3">[[${pro.colleageVO.collName}]]</div>
+										<div class="col-2">[[${pro.deptVO.deptName}]]</div>
+									</th:block>
 								</div>
 							</td>						
 						</tr>	

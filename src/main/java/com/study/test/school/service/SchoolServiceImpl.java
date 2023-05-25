@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.study.test.colleage.vo.DeptVO;
+import com.study.test.emp.vo.EmpVO;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.PrenextPageVO;
@@ -94,13 +95,18 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectList("schoolMapper.getDeptNameAjax", collNo);
 	}
 	
-	//학생조회
+	//학생 조회
 	@Override
 	public List<StuVO> checkStuList() {
 		return sqlSession.selectList("schoolMapper.checkStuList");
 	}
-		
 	
+	//교수&교직원 조회
+	@Override
+	public List<EmpVO> checkProList() {
+		return sqlSession.selectList("schoolMapper.checkProList");
+	}
+
 	
 	
 // -------회원메뉴 회원조회------------------------------------------------------
@@ -109,6 +115,7 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectList("schoolMapper.selectMember");
 	}
 
+	
 
 
 

@@ -146,20 +146,6 @@ public class SchoolController {
 		return "content/school/check/check_main";
 	}
 	
-	//학사조회 -> 학생조회 페이지
-	@GetMapping("/checkStu")
-	public String checkStu(Model model) {
-		//단과대학 정보 조회
-		model.addAttribute("colleageList", colleageService.getColleageList());
-		
-		//전공학과 정보 조회
-		model.addAttribute("deptList", colleageService.getDeptList());
-		
-		//학생조회
-		model.addAttribute("stuList", schoolService.checkStuList());
-		return "content/school/check/check_stu";
-	}
-	
 	//전공대학 변경시 실행되는 함수
 	@ResponseBody
 	@PostMapping("/changeCollAjax")
@@ -169,15 +155,28 @@ public class SchoolController {
 		return deptList;
 	}
 	
+	//학사조회 -> 학생조회 페이지
+	@GetMapping("/checkStu")
+	public String checkStu(Model model) {
+		//단과대학 정보 조회
+		model.addAttribute("colleageList", colleageService.getColleageList());
+		//전공학과 정보 조회
+		model.addAttribute("deptList", colleageService.getDeptList());
+		//학생조회
+		model.addAttribute("stuList", schoolService.checkStuList());
+		return "content/school/check/check_stu";
+	}
 	
-	//학사조회 -> 교수조회 페이지
+	//학사조회 -> 교수&교직원 조회 페이지
 	@GetMapping("/checkPro")
 	public String checkPro(Model model) {
 		//단과대학 정보 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		//전공학과 정보 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
-				
+		//교수&교직원 조회
+		model.addAttribute("proList", schoolService.checkProList());
+		
 		return "content/school/check/check_pro";
 	}
 	

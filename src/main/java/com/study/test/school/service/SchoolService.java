@@ -3,6 +3,7 @@ package com.study.test.school.service;
 import java.util.List;
 
 import com.study.test.colleage.vo.DeptVO;
+import com.study.test.emp.vo.EmpVO;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.PrenextPageVO;
@@ -54,6 +55,8 @@ public interface SchoolService {
 	//학생 조회
 	List<StuVO> checkStuList();
 	
+	//교수&교직원 조회
+	List<EmpVO> checkProList();
 	
 	
 	

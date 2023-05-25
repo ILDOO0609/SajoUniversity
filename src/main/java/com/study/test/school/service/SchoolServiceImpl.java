@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.member.vo.MemberVO;
+import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.PrenextPageVO;
 import com.study.test.school.vo.SchSearchVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.stu.vo.StuVO;
 import com.study.test.util.PageVO;
 
 @Service("schoolService")
@@ -73,15 +75,31 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	
 	
+	//학사일정 일정 목록
+	@Override
+	public List<CalendarVO> calendarList() {
+		return sqlSession.selectList("calendarMapper.calendarList");
+		}
+	
+	
+	
+	
 	
 	
 //-------------------학사조회-----------------------------------------------------------
 	
-	//강의등록시 전공대학 선택시 해당하는 전공학과 이름 조회
+	//전공대학 선택시 해당하는 전공학과 이름 조회
 	@Override
 	public List<DeptVO> getDeptNameAjax(String collNo) {
 		return sqlSession.selectList("schoolMapper.getDeptNameAjax", collNo);
 	}
+	
+	//학생조회
+	@Override
+	public List<StuVO> checkStuList() {
+		return sqlSession.selectList("schoolMapper.checkStuList");
+	}
+		
 	
 	
 	
@@ -90,6 +108,8 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<MemberVO> selectMember() {
 		return sqlSession.selectList("schoolMapper.selectMember");
 	}
+
+
 
 
 

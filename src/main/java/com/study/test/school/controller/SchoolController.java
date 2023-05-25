@@ -3,7 +3,6 @@ package com.study.test.school.controller;
 import java.time.Year;
 import java.util.List;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -126,7 +125,8 @@ public class SchoolController {
 	
 	//학사메뉴 -> 학사일정 페이지
 	@GetMapping("/scheList")
-	public String schoolBoardList() {
+	public String calendarList(Model model) {
+		model.addAttribute("calendarList", schoolService.calendarList());
 		return "content/school/school/school_sche_list";
 	}
 	
@@ -155,7 +155,8 @@ public class SchoolController {
 		//전공학과 정보 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
 		
-		
+		//학생조회
+		model.addAttribute("stuList", schoolService.checkStuList());
 		return "content/school/check/check_stu";
 	}
 	

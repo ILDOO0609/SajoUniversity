@@ -91,12 +91,14 @@
 						<tr>
 							<td>
 								<div class="row text-center">
-									<div class="col-2">20230519</div>
-									<div class="col-2">1학년</div>
-									<div class="col-2">김형진</div>
-									<div class="col-2">인문대학</div>
-									<div class="col-2">국어국문학부</div>
-									<div class="col-2">휴학</div>
+									<th:block th:each="stu : ${stuList}">
+										<div class="col-2">[[${stu.memNo}]]</div>
+										<div class="col-2">[[${stu.stuYear}]]</div>
+										<div class="col-2">[[${stu.memberVO.memName}]]</div>
+										<div class="col-2">[[${stu.collNo}]]</div>
+										<div class="col-2">[[${stu.deptNo}]]</div>
+										<div class="col-2">[[${stu.stuStatus}]]</div>
+									</th:block>
 								</div>
 							</td>						
 						</tr>	

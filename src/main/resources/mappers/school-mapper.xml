@@ -160,10 +160,7 @@
 	
 	
 	
-	
-	
-	
-	
+	<!--학사일정 캘린더 일정조회 -->
 	<select id="selectMember" resultMap="memberMapper.member">
 		SELECT MEM_NO
 			, MEM_NAME
@@ -175,6 +172,35 @@
 			, MEM_ROLE
 		FROM MEMBER	
 	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 학사조회 -> 학생조회 -->
+	<select id="checkStuList" resultMap="stuMapper.stu">
+		SELECT STU_NO
+			, STU_YEAR
+			, STU_SEM
+			, STU_STATUS
+			, MEM_NO
+			, COLL_NO
+			, DEPT_NO
+		FROM STU
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

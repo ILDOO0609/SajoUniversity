@@ -90,7 +90,38 @@ function drawDeptSelectbox(deptList){
 }
 
 
-//학사일정 스케쥴 --------------------------------------------------------------
+// --------학사조회------------------------------------------------------
+//교수 교직원 라디오 버튼 클릭시 실행
+$("input[name='checkPosition']").change(function(){
+	
+	
+	if($("input[name='checkPosition']:checked").val() == '교수'){
+		$('.form-select').show();
+	}
+	else if($("input[name='checkPosition']:checked").val() == '교직원'){
+		$('.form-select').hide();
+	}
+	
+	var name = $("input[name='checkPosition']:checked").val();
+	alert(name + '이(가) 선택되었습니다.');
+				
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //윤년계산
 function checkLeapYear(year){

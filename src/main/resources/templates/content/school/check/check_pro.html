@@ -24,13 +24,13 @@
 									<div class="col-2">직책</div>
 									<div class="col-2">
 										<div class="form-check text-start">
-											<input class="form-check-input" type="radio" id="gender_male" name="gender" value="M" checked>
+											<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교수" checked>
 											<label class="form-check-label" for="gender_male">교수</label>
 										</div>
 									</div>
 									<div class="col-2">
 										<div class="form-check text-start">
-											<input class="form-check-input" type="radio" id="gender_female" name="gender" value="F">
+											<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교직원">
 											<label class="form-check-label" for="gender_female">교직원</label>
 										</div>
 									</div>
@@ -46,11 +46,9 @@
 								<div class="row text-center">
 									<div class="col-2">단과대학</div>
 									<div class="col-2">
-										<div class="col-2">
-											<select class="form-select" name="collNo" onchange="changeColl(this);">
-												<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
-											</select>
-										</div>
+										<select class="form-select" name="collNo" onchange="changeColl(this);">
+											<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
+										</select>
 									</div>
 									<div class="col-2">전공학과</div>
 									<div class="col-2" id="deptDiv">

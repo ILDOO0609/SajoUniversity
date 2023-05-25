@@ -55,10 +55,9 @@ public class EmpServiceImpl implements EmpService{
 	//강의 수정
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int lecUpdate(LectureVO lectureVO) {
-		int num1 = sqlSession.update("empMapper.lecUpdate", lectureVO);
-		int num2 = sqlSession.update("empMapper.updateLectureTime", lectureVO);
-		return num1+num2;
+	public void lecUpdate(LectureVO lectureVO) {
+		sqlSession.update("empMapper.lecUpdate", lectureVO);
+		sqlSession.update("empMapper.updateLectureTime", lectureVO);
 	}
 	
 	//다음에 등록될 LEC_NO 조회

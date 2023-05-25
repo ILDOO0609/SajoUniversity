@@ -74,7 +74,12 @@ function drawLectureListTable(){
 						}
 						str += `	</td>`;
 						str += `	<td>${lec.lecStatus}</td>`;
+						if(lec.lecStatus == '폐강'){
+						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="updateLec(this);" class="btn btn-primary" disabled> </td>`;
+						}
+						else{
 						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="updateLec(this);" class="btn btn-primary"> </td>`;
+						}
 						str += `	<td>`;
 						if(lec.lecStatus == '폐강'){
 							str += `	<input type="button" value="폐강" onclick="regClose('${lec.lecNo}');" disabled>`;
@@ -121,8 +126,8 @@ function searchLecture(){
 				else{
 					for(const lec of result){
 						str += `<tr>`;
-						str += `	<td>${lec.lecNo}</td>`;
-						str += `	<td>${lec.lecName}</td>`;
+						str += `	<td id="lecNo">${lec.lecNo}</td>`;
+						str += `	<td id="lecName">${lec.lecName}</td>`;
 						str += `	<td>${lec.lecScore}</td>`;
 						str += `	<td>${lec.colleageVO.collName}</td>`;
 						str += `	<td>${lec.deptVO.deptName}</td>`;
@@ -139,8 +144,13 @@ function searchLecture(){
 							}
 						}
 						str += `	</td>`;
-						str += `	<td>${lec.lecStatus}</td>`;
-						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="updateLec(this);" class="btn btn-primary"> </td>`;
+						str += `	<td>${lec.lecStatus}1</td>`;
+						if(lec.lecStatus == '폐강'){
+						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary" disabled> </td>`;
+						}
+						else{
+						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary"> </td>`;
+						}
 						str += `	<td>`;
 						if(lec.lecStatus == '폐강'){
 							str += `	<input type="button" value="폐강" onclick="regClose('${lec.lecNo}', this);" disabled>`;

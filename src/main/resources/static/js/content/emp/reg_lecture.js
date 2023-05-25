@@ -155,6 +155,7 @@ function timeDuplicationCheckAjax(){
 	      data: JSON.stringify(time_info), //필요한 데이터
 	      success: function(result) {
 	         if(result){
+				
 				Swal.fire({
 				  icon: 'error',
 				  title: '등록불가',
@@ -162,6 +163,7 @@ function timeDuplicationCheckAjax(){
 				});
 			 }
 			 else{
+				document.querySelector('#regBtn').disabled=false;
 				Swal.fire({
 				  icon: 'success',
 				  title: '시간 체크',

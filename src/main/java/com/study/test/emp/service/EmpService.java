@@ -24,7 +24,7 @@ public interface EmpService {
 	boolean updateLecStatusAjax(String lecNo);
 	
 	//강의 수정
-	int lecUpdate(LectureVO lectureVO);
+	void lecUpdate(LectureVO lectureVO);
 	
 	//다음에 등록될 LEC_NO 조회
 	String getNextLecNo();

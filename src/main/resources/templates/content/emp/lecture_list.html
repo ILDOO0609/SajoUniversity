@@ -100,7 +100,12 @@
 								</th:block>
 							</td>
 							<td>[[${lecture.lecStatus}]]</td>
-							<td><input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary"></td>
+							<td th:if="${lecture.lecStatus == '폐강'}">
+								<input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary" disabled>
+							</td>
+							<td th:unless="${lecture.lecStatus == '폐강'}">
+								<input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary">
+							</td>
 							<td th:if="${lecture.lecStatus == '폐강'}">
 								<input type="button" value="폐강" th:onclick="regClose([[${lecture.lecNo}]]);" disabled>
 							</td>

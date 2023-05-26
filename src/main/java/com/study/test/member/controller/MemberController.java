@@ -188,7 +188,7 @@ public class MemberController {
 //		return memEmail != null ? true : false;
 //	}
 
-	
+	//010-1234-1234
 	
 	// 아이디 찾기 - SMS
 	@ResponseBody
@@ -272,7 +272,7 @@ public class MemberController {
 	
 	
 	
-	// 월별 등록 차트
+	// 월별 등록 차트d
 	@GetMapping("/stuRegPerMonth")
 	public String stuRegPerMonth(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
 		

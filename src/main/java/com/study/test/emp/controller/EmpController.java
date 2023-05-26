@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.test.colleage.service.ColleageService;
 import com.study.test.colleage.vo.DeptVO;
+import com.study.test.colleage.vo.GradeVO;
 import com.study.test.emp.service.EmpService;
 import com.study.test.emp.vo.LectureTimeVO;
 import com.study.test.emp.vo.LectureVO;
@@ -59,12 +60,44 @@ public class EmpController {
 		return empService.getLectureList(lectureVO);
 	}
 	
-	//강의 수정
+	//강의 수정위한 목록 조회
 	@ResponseBody
 	@PostMapping("/getLectureListForUpdateAjax")
-	public List<LectureVO> updateLecAjax(LectureVO lectureVO, Authentication authentication){
+	public List<LectureVO> getLectureListForUpdateAjax(LectureVO lectureVO, Authentication authentication){
 		lectureVO.setEmpNo(getNowEmpNo(authentication));
 		return empService.getLectureList(lectureVO);
+	}
+	
+	//강의 수정
+	@PostMapping("/lecUpdate")
+	public String lecUpdate(LectureVO lectureVO, LectureTimeVO lectureTimeVO) {
+		System.out.println("@@@@@@@@@@@@@"+lectureVO);
+		System.out.println("@@@@@@@@@@@@@"+lectureTimeVO);
+		
+		String timeNos = lectureTimeVO.getTimeNo();
+		String lecDays = lectureTimeVO.getLecDay();
+		String firstTimes = lectureTimeVO.getFirstTime();
+		String lastTimes = lectureTimeVO.getLastTime();
+
+		String[] timeNoArray = timeNos.split(",");
+		String[] lecDayArray = lecDays.split(",");
+		String[] firstTimeArray = firstTimes.split(",");
+		String[] lastTimeArray = lastTimes.split(",");
+
+		List<LectureTimeVO> lectureTimeList = new ArrayList<>();
+
+		for(int i = 0; i < timeNoArray.length; i++) {
+		    LectureTimeVO lt = new LectureTimeVO();
+		    lt.setTimeNo(timeNoArray[i]);
+		    lt.setLecDay(lecDayArray[i]);
+		    lt.setFirstTime(firstTimeArray[i]);
+		    lt.setLastTime(lastTimeArray[i]);
+		    lectureTimeList.add(lt);
+		}
+
+		lectureVO.setLectureTimeList(lectureTimeList);
+		empService.lecUpdate(lectureVO);
+		return "redirect:/emp/lectureList";
 	}
 	
 	//강의 검색
@@ -163,24 +196,29 @@ public class EmpController {
 		
 		// map에서 각 배열을 가져옴
 		//map.get("firstTimeArr")은 Object타입이라 (List<String>)형식으로 변환
-		
+		System.out.println("1111111111111111111111");
+		List<String> lecNoArr = (List<String>) map.get("lecNoArr");
 		List<String> firstTimeArr = (List<String>) map.get("firstTimeArr");
 	    List<String> lastTimeArr = (List<String>) map.get("lastTimeArr");
 	    List<String> lecDayArr = (List<String>) map.get("lecDayArr");
 	    
 	    // 배열의 길이만큼 반복하여 LectureTimeVO 객체를 생성하고 lecTimeList에 추가
+	    System.out.println("22222222222222222");
 	    for (int i = 0; i < firstTimeArr.size(); i++) {
 	        LectureTimeVO lectureTimeVO = new LectureTimeVO();
 	        lectureTimeVO.setFirstTime(firstTimeArr.get(i));
 	        lectureTimeVO.setLastTime(lastTimeArr.get(i));
 	        lectureTimeVO.setLecDay(lecDayArr.get(i));
+	        if(lecNoArr.size()!=0) {
+	        	lectureTimeVO.setLecNo(lecNoArr.get(i));
+	        }
 	        lecTimeList.add(lectureTimeVO);
 	    }
-		
 		HashMap<String, Object>lecTimeMap = new HashMap<>();
 		lecTimeMap.put("lecTimeList", lecTimeList);
 		lecTimeMap.put("empNo", getNowEmpNo(authentication));
-		
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!"+lecTimeMap);
+		System.out.println("@@@@@@@@@@@@@@@@@@"+empService.timeDuplicationCheckAjax(lecTimeMap));
 		return empService.timeDuplicationCheckAjax(lecTimeMap);
 	}
 	
@@ -200,12 +238,25 @@ public class EmpController {
 	//학생성적등록 페이지로 이동
 	@GetMapping("/regScore")
 	public String regScore(Model model, Authentication authentication) {
-		List<Map<String, String>> mapList = empService.getLectureListForRegScore(getNowEmpNo(authentication));
-		System.out.println("@@@@@@@@@@@@@@@@@@ "+mapList);
-		model.addAttribute("mapList", mapList);
+		List<Map<String, String>> map = empService.getLectureListForRegScore(getNowEmpNo(authentication));
+		model.addAttribute("mapList", map);
 		return "content/emp/reg_score";
 	}
 	
+	//학생성적등록 위한 수강생목록 조회
+	@ResponseBody
+	@PostMapping("/getStuEnrListAjax")
+	public Map<String, Object> getStuEnrListAjax(String lecNo) {
+		List<GradeVO>gradeList = colleageService.getGradeList();
+		List<Map<String, String>>stuList = empService.getStuEnrForRegScore(lecNo);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("gradeList", gradeList);
+		map.put("stuList", stuList);
+		
+		return map;
+	}
 	//게시판
 	@GetMapping("/empBoard")
 	public String empBoard() {

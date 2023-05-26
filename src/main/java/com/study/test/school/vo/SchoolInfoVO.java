@@ -17,13 +17,12 @@ public class SchoolInfoVO extends PageVO{
 	private String schInfoDate;
 	private String schInfoStartDate;
 	private String schInfoEndDate;
-	private String regDate;
-	private String startDate;
-	private String endDate;
 	private int schInfoReadCnt;
 	private String schInfoNum;
 	
 	private String schInfoSearch;
+	private int schInfoMonth;
+	
 	
 	private String prevNum;
 	private String prevTitle;

@@ -16,7 +16,7 @@
 				</select>
 		 	</div>
 		 	<div class="col-3">
-		 		<select class="form-select" id="schInfohMonth" name="schInfohMonth" onchange="">
+		 		<select class="form-select" id="schInfoMonth" name="schInfoMonth" onchange="infoSelectMonth();">
 					<option>전체(월)</option>
 					<option value="1">1월</option>
 					<option value="2">2월</option>
@@ -58,7 +58,7 @@
 	 					<td>기간</td>
 	 				</tr>
 	 			</thead>
-	 			<tbody>
+	 			<tbody id="tbodyTag">
 	 				<th:block th:if="${#lists.size(infoList) == 0}">
 	 					<tr>
 	 						<td colspan="4">조회된 안내글이 없습니다.</td>
@@ -72,8 +72,8 @@
 		 							[[${info.schInfoTitle}]]
 		 						</a>
 		 					</td>
-		 					<td>[[${info.regDate}]]</td>
-		 					<td>[[${info.startDate}]] ~ [[${info.endDate}]]</td>
+		 					<td>[[${info.schInfoDate}]]</td>
+		 					<td>[[${info.schInfoStartDate}]] ~ [[${info.schInfoEndDate}]]</td>
 		 				</tr>
 	 				</th:block>
 	 			</tbody>

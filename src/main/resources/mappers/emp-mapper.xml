@@ -12,26 +12,26 @@
 	</resultMap>
 
 	<resultMap type="com.study.test.emp.vo.LectureVO" id="lecture">
-		<id column="LEC_NO" 	 property="lecNo"/>
-		<result column="LEC_NAME"    property="lecName"/>
-		<result column="LEC_SCORE"   property="lecScore"/>
-		<result column="CREATE_DATE" property="createDate"/>
-		<result column="MAX_NUM" 	 property="maxNum"/>
-		<result column="NOW_NUM" 	 property="nowNum"/>
-		<result column="LEC_STATUS"  property="lecStatus"/>
-		<result column="EMP_NO" 	 property="empNo"/>
-		<result column="SEM_NO" 	 property="semNo"/>
-		<result column="COLL_NO" 	 property="collNo"/>
-		<result column="DEPT_NO" 	 property="deptNo"/>
-		<result column="SEARCH_VALUE" 	 property="searchValue"/>
-		<association property="stuVO" resultMap="stuMapper.stu"></association>
-		<association property="semesterVO" resultMap="semester"></association>
-		<association property="memberVO" resultMap="memberMapper.member"></association>
-		<association property="empVO" resultMap="emp"></association>
-		<association property="deptVO" resultMap="colleageMapper.dept"></association>
-		<association property="colleageVO" resultMap="colleageMapper.colleage"></association>
-		<association property="memberVO" resultMap="memberMapper.member"></association>
-		<association property="enrollmentVO" resultMap="enrollment"></association>
+		<id column="LEC_NO" 	      property="lecNo"/>
+		<result column="LEC_NAME"     property="lecName"/>
+		<result column="LEC_SCORE"    property="lecScore"/>
+		<result column="CREATE_DATE"  property="createDate"/>
+		<result column="MAX_NUM" 	  property="maxNum"/>
+		<result column="NOW_NUM" 	  property="nowNum"/>
+		<result column="LEC_STATUS"   property="lecStatus"/>
+		<result column="EMP_NO" 	  property="empNo"/>
+		<result column="SEM_NO" 	  property="semNo"/>
+		<result column="COLL_NO" 	  property="collNo"/>
+		<result column="DEPT_NO" 	  property="deptNo"/>
+		<result column="SEARCH_VALUE" property="searchValue"/>
+		<association property="stuVO" 	       resultMap="stuMapper.stu"></association>
+		<association property="semesterVO"     resultMap="semester"></association>
+		<association property="memberVO"   	   resultMap="memberMapper.member"></association>
+		<association property="empVO" 	   	   resultMap="emp"></association>
+		<association property="deptVO" 	   	   resultMap="colleageMapper.dept"></association>
+		<association property="colleageVO" 	   resultMap="colleageMapper.colleage"></association>
+		<association property="memberVO"   	   resultMap="memberMapper.member"></association>
+		<association property="enrollmentVO"   resultMap="enrollment"></association>
 		<collection property="lectureTimeList" resultMap="lectureTime"></collection>
 	</resultMap>
 	
@@ -61,14 +61,6 @@
 		SELECT EMP_NO
 		FROM EMP
 		WHERE MEM_NO = #{memNo}
-	</select>
-	
-	<!-- 강의 등록하기 위한 학기 이름 컬럼 조회 -->
-	<select id="getSemesterNameForRegLecture">
-		SELECT SEM_YEAR
-			, SEM_NO
-			, SEMESTER
-		FROM SEMSTER
 	</select>
 	
 	<!-- 다음에 들어갈 LEC_NO 조회 -->
@@ -137,6 +129,7 @@
 	<!-- 전체 강의리스트 조회 -->
 	<select id="getLectureList" resultMap="lecture">
 		SELECT LEC.LEC_NO
+			, TIME_NO
 		    , LEC_NAME
 		    , LEC_SCORE
 		    , FIRST_TIME
@@ -177,9 +170,49 @@
 		WHERE LEC_NO = #{lecNo}
 	</update>
 	
+	<!-- 강의 수정 -->
+	<update id="lecUpdate">
+		UPDATE LECTURE SET 
+		    LEC_NAME = #{lecName}
+		    , LEC_SCORE = #{lecScore}
+		WHERE LEC_NO = #{lecNo}
+	</update>
+	
+	<!-- 강의시간 수정 -->
+	<update id="updateLectureTime">
+        UPDATE LECTURE_TIME
+			SET
+		    LEC_DAY = CASE 
+		    <foreach collection="lectureTimeList" item="lectureTime">
+    			   WHEN TIME_NO = #{lectureTime.timeNo} THEN #{lectureTime.lecDay}
+            </foreach>
+                   ELSE LEC_DAY END,
+                   
+		    FIRST_TIME = CASE 
+		    <foreach collection="lectureTimeList" item="lectureTime">
+    				WHEN TIME_NO = #{lectureTime.timeNo} THEN #{lectureTime.firstTime}
+		    </foreach>
+                    ELSE FIRST_TIME END,
+                    
+		    LAST_TIME = CASE 
+		    <foreach collection="lectureTimeList" item="lectureTime">
+    				WHEN TIME_NO = #{lectureTime.timeNo} THEN #{lectureTime.lastTime}
+		    </foreach>
+                    ELSE LAST_TIME END
+                    
+		WHERE TIME_NO IN (
+			<foreach collection="lectureTimeList" item="lectureTime" separator=",">
+					#{lectureTime.timeNo}
+			</foreach>
+	    )
+	</update>
+
+	
 	<!-- 성적등록위한 강의 목록 조회 -->
 	<select id="getLectureListForRegScore" resultType="HashMap">
-		SELECT LEC_NAME
+		SELECT LEC_NO 
+			, LEC_NAME
+			, LEC_STATUS
 			, LEC_SCORE
 			, COLL_NAME
 			, DEPT_NAME
@@ -210,8 +243,30 @@
 		    OR (FIRST_TIME &lt;= #{lecTime.lastTime} AND LAST_TIME &gt;= #{lecTime.lastTime})) 
 		    AND TIME.LEC_NO = LEC.LEC_NO
 		    AND LEC.EMP_NO = #{empNo}
+		    <if test="lecTime.lecNo!=null">
+		    	AND LEC.LEC_NO != #{lecTime.lecNo}
+		    </if>
 	    </foreach>
 	    )
+	</select>
+	
+	<!-- 성적등록 위한 수강학생 조회 -->
+	<select id="getStuEnrForRegScore" resultType="Map">
+		SELECT 
+		    ENR.STU_NO, 
+		    MEMBER.MEM_NAME, 
+		    MEMBER.MEM_NO, 
+		    COALESCE(STU_GRADE.GRADE, '미등록') AS GRADE
+		FROM 
+		    STU
+		INNER JOIN 
+		    MEMBER ON STU.MEM_NO = MEMBER.MEM_NO
+		INNER JOIN 
+		    ENROLLMENT ENR ON ENR.STU_NO = STU.STU_NO
+		LEFT JOIN 
+		    STU_GRADE ON STU_GRADE.STU_NO = STU.STU_NO AND ENR.LEC_NO = STU_GRADE.LEC_NO
+		WHERE 
+		    ENR.LEC_NO = #{lecNo}
 	</select>
 	
 	<!-- 수강신청용 강의 조회 -->

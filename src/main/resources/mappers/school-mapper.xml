@@ -11,12 +11,10 @@
 		<result column="SCH_INFO_DATE" 		property="schInfoDate"/>
 		<result column="SCH_INFO_STARTDATE" property="schInfoStartDate"/>
 		<result column="SCH_INFO_ENDDATE" 	property="schInfoEndDate"/>
-		<result column="REGDATE" 			property="regDate"/>
-		<result column="STARTDATE" 			property="startDate"/>
-		<result column="ENDTDATE" 			property="endDate"/>
 		<result column="SCH_INFO_READ_CNT" 	property="schInfoReadCnt"/>
 		<result column="SCH_INFO_NUM" 		property="schInfoNum"/>
 		<result column="SCH_INFO_SEARCH" 	property="schInfoSearch"/>
+		<result column="SCH_INFO_Month" 	property="schInfoMonth"/>
 		<result column="PREVNO"				property="prevNum"/>
 		<result column="PREV_TITLE"			property="prevTitle"/>	
 		<result column="NEXTNO"				property="nextNum"/>	
@@ -72,28 +70,30 @@
 		SELECT SCH_INFO_CODE
 			, SCH_INFO_TITLE
 			, SCH_INFO_WRITER
-			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') REGDATE
-			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') STARTDATE
-			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') ENDTDATE
+			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') SCH_INFO_DATE
+			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') SCH_INFO_STARTDATE
+			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') SCH_INFO_ENDDATE
 			, SCH_INFO_NUM
 		FROM SCHOOL_INFORMATION
 		WHERE 1=1
 		<if test='schInfoSearch != null and !schInfoSearch.equals("")'>
 		AND UPPER(SCH_INFO_TITLE) LIKE '%'||UPPER(#{schInfoSearch})||'%'
 		</if>
-		ORDER BY SCH_INFO_DATE DESC
+		ORDER BY SCH_INFO_STARTDATE DESC
 		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	
 	<select id="schInfoMonthAjax" resultMap="school">
-		SELECT SCH_INFO_CODE
-			, SCH_INFO_TITLE
-			, SCH_INFO_WRITER
-			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') REGDATE
-			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') STARTDATE
-			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') ENDTDATE
-			, SCH_INFO_NUM
-		FROM SCHOOL_INFORMATION
+	    SELECT SCH_INFO_CODE
+	        , SCH_INFO_TITLE
+	        , SCH_INFO_WRITER
+	        , TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') SCH_INFO_DATE
+	        , TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') SCH_INFO_STARTDATE
+	        , TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') SCH_INFO_ENDDATE
+	        , SCH_INFO_NUM
+	    FROM SCHOOL_INFORMATION
+	    WHERE TO_CHAR(SCH_INFO_STARTDATE, 'MM') = #{schInfoMonth}
+	    ORDER BY SCH_INFO_STARTDATE
 	</select>
 	
 	<!-- 상세조회 -->
@@ -101,9 +101,9 @@
 		SELECT SCH_INFO_CODE
 			, SCH_INFO_TITLE
 			, SCH_INFO_WRITER
-			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') REGDATE
-			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') STARTDATE
-			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') ENDTDATE
+			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') SCH_INFO_DATE
+			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') SCH_INFO_STARTDATE
+			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') SCH_INFO_ENDDATE
 			, SCH_INFO_READ_CNT
 			, SCH_INFO_CONTENT
 			, SCH_INFO_NUM
@@ -159,28 +159,6 @@
 	
 	
 	
-	
-	<!--학사일정 캘린더 일정조회 -->
-	<select id="selectMember" resultMap="memberMapper.member">
-		SELECT MEM_NO
-			, MEM_NAME
-			, MEM_EMAIL
-			, MEM_ADDR
-			, MEM_TELL
-			, MEM_GENDER
-			, MEM_BIRTHDAY
-			, MEM_ROLE
-		FROM MEMBER	
-	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<!-- 학사조회 -> 학생조회 -->
 	<select id="checkStuList" resultMap="stuMapper.stu">
 		SELECT STU_NO
@@ -197,8 +175,11 @@
 		WHERE ST.COLL_NO = COLL.COLL_NO
 		AND ST.DEPT_NO = DP.DEPT_NO
 		AND ST.MEM_NO = MEM.MEM_NO
-		
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
 	</select>
+	
 	
 	<!-- 학사조회 -> 교수/교직원 조회 -->
 	<select id="checkProList" resultMap="empMapper.lecture">
@@ -223,6 +204,29 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!--수업메뉴 회원조회 -->
+	<select id="selectMember" resultMap="memberMapper.member">
+		SELECT MEM_NO
+			, MEM_NAME
+			, MEM_EMAIL
+			, MEM_ADDR
+			, MEM_TELL
+			, MEM_GENDER
+			, MEM_BIRTHDAY
+			, MEM_ROLE
+		FROM MEMBER	
+	</select>
 	
 	
 	

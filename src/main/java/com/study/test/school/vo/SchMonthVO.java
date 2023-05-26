@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SchMonthVO {
+public class SchMonthVO extends SchoolInfoVO{
 	 private int month_01; 
 	 private int month_02; 
 	 private int month_03; 

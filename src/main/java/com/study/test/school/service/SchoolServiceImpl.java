@@ -36,6 +36,11 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<SchoolInfoVO> searchInfoListAjax(SchoolInfoVO schoolInfoVO) {
 		return sqlSession.selectList("schoolMapper.getSchoolInfo", schoolInfoVO);
 	}
+	//학사안내 게시글 월 셀렉박스 
+	@Override
+	public List<SchoolInfoVO> schInfoMonthAjax(int schInfoMonth) {
+		return sqlSession.selectList("schoolMapper.schInfoMonthAjax", schInfoMonth);
+	}
 	
 	//학사안내 게시글 -> 상세조회 페이지이동 
 	@Override
@@ -104,6 +109,12 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<StuVO> checkStuList() {
 		return sqlSession.selectList("schoolMapper.checkStuList");
 	}
+	//학생 조회 -> 검색
+	@Override
+	public List<StuVO> searchStuListAjax(StuVO stuVO) {
+		return sqlSession.selectList("schoolMapper.checkStuList", stuVO);
+	}
+	
 	
 	//교수&교직원 조회
 	@Override
@@ -117,11 +128,26 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 // -------회원메뉴 회원조회------------------------------------------------------
 	@Override
 	public List<MemberVO> selectMember() {
 		return sqlSession.selectList("schoolMapper.selectMember");
 	}
+
+	
+
 
 
 	

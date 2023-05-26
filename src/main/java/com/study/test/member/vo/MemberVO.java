@@ -22,6 +22,7 @@ public class MemberVO {
 	private String memImage;
 	private String memQuest;
 	private String regDate;
+	private String searchValue;
 
 	private String[] memTells;
 }

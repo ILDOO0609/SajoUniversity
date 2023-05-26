@@ -74,7 +74,12 @@ function drawLectureListTable(){
 						}
 						str += `	</td>`;
 						str += `	<td>${lec.lecStatus}</td>`;
+						if(lec.lecStatus == '폐강'){
+						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="updateLec(this);" class="btn btn-primary" disabled> </td>`;
+						}
+						else{
 						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="updateLec(this);" class="btn btn-primary"> </td>`;
+						}
 						str += `	<td>`;
 						if(lec.lecStatus == '폐강'){
 							str += `	<input type="button" value="폐강" onclick="regClose('${lec.lecNo}');" disabled>`;
@@ -121,8 +126,8 @@ function searchLecture(){
 				else{
 					for(const lec of result){
 						str += `<tr>`;
-						str += `	<td>${lec.lecNo}</td>`;
-						str += `	<td>${lec.lecName}</td>`;
+						str += `	<td id="lecNo">${lec.lecNo}</td>`;
+						str += `	<td id="lecName">${lec.lecName}</td>`;
 						str += `	<td>${lec.lecScore}</td>`;
 						str += `	<td>${lec.colleageVO.collName}</td>`;
 						str += `	<td>${lec.deptVO.deptName}</td>`;
@@ -139,8 +144,13 @@ function searchLecture(){
 							}
 						}
 						str += `	</td>`;
-						str += `	<td>${lec.lecStatus}</td>`;
-						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="updateLec(this);" class="btn btn-primary"> </td>`;
+						str += `	<td>${lec.lecStatus}1</td>`;
+						if(lec.lecStatus == '폐강'){
+						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary" disabled> </td>`;
+						}
+						else{
+						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary"> </td>`;
+						}
 						str += `	<td>`;
 						if(lec.lecStatus == '폐강'){
 							str += `	<input type="button" value="폐강" onclick="regClose('${lec.lecNo}', this);" disabled>`;
@@ -162,29 +172,31 @@ function searchLecture(){
 	//ajax end
 }
 
-//강의 수정
-//edit the lecture
-function updateLec(updateBtn){
+//강의 수정위한 조회
+function getLectureListForUpdateAjax(updateBtn){
 	
-    const lec_name = updateBtn.closest('tr').querySelector('#lecName').innerText;
     const lec_no = updateBtn.closest('tr').querySelector('#lecNo').innerText;
-    document.querySelector('#modalLecName').value = lec_name;
-    
     //ajax start
 	$.ajax({
 		url: '/emp/getLectureListForUpdateAjax', //요청경로
 		type: 'post',
 		async: true,
-		contentType : 'application/json; charset=UTF-8',
+		//contentType : 'application/json; charset=UTF-8',
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: {'lecNo':lec_no}, //필요한 데이터
 		success: function(result) {
-			console.log(result);
-			const modal_body = document.querySelector('#modal body');
+			console.log(result[0].lectureTimeList);
+			
+			const modal_body = document.querySelector('#modal-body');
+			
+			const days = {1: '월', 2: '화', 3: '수', 4: '목', 5: '금'};
+			
 			modal_body.replaceChildren();
+			
 			let str = '';
 			
-	        str += `		<form id="loginForm" method="post">`;
+	        str += `		<form id="loginForm" action="/emp/lecUpdate" method="post">`;
+			str += `		<input type="hidden" value="${result[0].lecNo}" name="lecNo">`;
 			str += `			강의 수정`;
 			str += `			<table border="1" class="table text-center modalTable">`;
 			str += `			<colgroup>`;
@@ -214,7 +226,12 @@ function updateLec(updateBtn){
 			str += `					<td>`;
 			str += `						<select name="lecScore">`;
 			for(let i = 1; i < 6; i++){
-			str += `							<option value=${i}>${i}</option>`;
+			    if(i == result[0].lecScore){
+	        		str += `<option value=${i} selected>${i}</option>`;
+			    }
+			    else{
+	       			 str += `<option value=${i}>${i}</option>`;
+			    }
 			}
 			str += `						</select>`;
 			str += `					</td>`;
@@ -223,35 +240,52 @@ function updateLec(updateBtn){
 			str += `						${result[0].memberVO.memName}`;
 			str += `					</td>`;
 			str += `				</tr>`;
-			for(const lectureTime of result){
-			str += `				<tr>`;
-			str += `					<td>강의 시간</td>`;
-			str += `					<td>`;
-			str += `						<select name="firstTime">`;
-			for(let i= 1; i<9; i++){
-			str += `							<option value=${i}>${i+'교시'}</option>`;
-			}
-			str += `						</select>`;
-			str += `					</td>`;
-			str += `					<td>`;
-			str += `						<select name="lastTime">`;
-			for(let i= 1; i<9; i++){
-			str += `							<option value=${i}>${i+'교시'}</option>`;
-			}
-			str += `						</select>`;
-			str += `					</td>`;
-			str += `					<td>`;
-			str += `						<select name="lecDay">`;
-			str += `							<option value="월">월</option>`;
-			str += `							<option value="화">화</option>`;
-			str += `							<option value="수">수</option>`;
-			str += `							<option value="목">목</option>`;
-			str += `							<option value="금">금</option>`;
-			str += `						</select>`;
-			str += `					</td>`;
-			str += `				</tr>`;
+			for(const lectureTime of result[0].lectureTimeList){
+				str += `				<tr>`;
+				str += `					<td>
+												강의 시간
+												<input type="hidden" value="${lectureTime.lecNo}" id="lecNo">
+												<input type="hidden" value="${lectureTime.timeNo}" name="timeNo">
+											</td>`;
+				str += `					<td colspan="3">`;
+				str += `						<select name="firstTime" onchange="setLastTime(this);">`;
+				for(let i= 1; i<9; i++){
+					if(i == lectureTime.firstTime){
+		        		 str += `					<option value=${i} selected>${i}</option>`;
+				    }
+				    else{
+		       			 str += `					<option value=${i}>${i}</option>`;
+				    }
+				}
+				str += `						</select>`;
+				str += `						교시~`;
+				str += `						<select name="lastTime">`;
+				for(let i= 1; i<9; i++){
+					if(i == lectureTime.lastTime){
+		        		 str += `					<option value=${i} selected>${i}</option>`;
+				    }
+				    else{
+		       			 str += `					<option value=${i}>${i}</option>`;
+				    }
+				}
+				str += `						</select>`;
+				str += `						교시`;
+				str += `						<select name="lecDay">`;
+				for(let i = 1; i < 6; i++){
+					if(days[i] == lectureTime.lecDay){
+				str += `							<option value="${days[i]}" selected>${days[i]}</option>`;
+					}
+					else{							
+				str += `							<option value="${days[i]}">${days[i]}</option>`;
+					}
+				}
+				str += `						</select>`;
+				str += `					</td>`;
+				str += `				</tr>`;
 			}
 			str += `			</table>`;
+			str += `		<input type = "button" value = "시간체크" onclick="timeDuplicationCheckAjax();">`;
+			str += `		<input type = "submit" value = "수정" class="regBtn" disabled>`;
 			str += `		</form>`;
 			
 			modal_body.insertAdjacentHTML('afterbegin', str);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.study.test.colleage.vo.ColleageVO;
 import com.study.test.colleage.vo.DeptVO;
+import com.study.test.colleage.vo.GradeVO;
 import com.study.test.colleage.vo.SemesterVO;
 
 
@@ -30,6 +31,11 @@ public class ColleageServiceImpl implements ColleageService{
 	@Override
 	public List<SemesterVO> getSemesterList() {
 		return sqlSession.selectList("colleageMapper.getSemesterList");
+	}
+
+	@Override
+	public List<GradeVO> getGradeList() {
+		return sqlSession.selectList("colleageMapper.getGradeList");
 	}
 
 

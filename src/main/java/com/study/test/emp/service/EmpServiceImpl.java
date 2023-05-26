@@ -52,6 +52,14 @@ public class EmpServiceImpl implements EmpService{
 		return sqlSession.update("empMapper.updateLecStatusAjax", lecNo) == 1 ? true : false;
 	}
 	
+	//강의 수정
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void lecUpdate(LectureVO lectureVO) {
+		sqlSession.update("empMapper.lecUpdate", lectureVO);
+		sqlSession.update("empMapper.updateLectureTime", lectureVO);
+	}
+	
 	//다음에 등록될 LEC_NO 조회
 	@Override
 	public String getNextLecNo() {
@@ -82,6 +90,14 @@ public class EmpServiceImpl implements EmpService{
 	public List<Map<String, String>> getLectureListForRegScore(String empNo) {
 		return sqlSession.selectList("empMapper.getLectureListForRegScore", empNo);
 	}
+	
+	//성적등록위한 강의 수강학생 조회
+	@Override
+	public List<Map<String, String>> getStuEnrForRegScore(String lecNo) {
+		return sqlSession.selectList("empMapper.getStuEnrForRegScore", lecNo);
+	}
+
+	
 
 	
 	

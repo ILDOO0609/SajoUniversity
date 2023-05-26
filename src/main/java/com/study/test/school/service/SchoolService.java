@@ -18,9 +18,10 @@ public interface SchoolService {
 
 	//학사안내 게시글 목록조회
 	List<SchoolInfoVO> getSchoolInfoList(SchoolInfoVO schoolInfoVO);
-	
 	//학사안내 목록조회 -> 검색
 	List<SchoolInfoVO> searchInfoListAjax(SchoolInfoVO schoolInfoVO);
+	//학사안내 목록조회 -> 월 셀렉박스 변경시 
+	List<SchoolInfoVO> schInfoMonthAjax(int schInfoMonth);
 	
 	//학사안내 게시글 -> 상세조회 
 	SchoolInfoVO schoolBoardDetail(String schInfoCode);
@@ -56,6 +57,9 @@ public interface SchoolService {
 	
 	//학생 조회
 	List<StuVO> checkStuList();
+	//학생 조회 -> 검색
+	List<StuVO> searchStuListAjax(StuVO stuVO);
+	
 	
 	//교수&교직원 조회
 	List<EmpVO> checkProList();

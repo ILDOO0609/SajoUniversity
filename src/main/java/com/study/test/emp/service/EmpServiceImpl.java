@@ -90,6 +90,12 @@ public class EmpServiceImpl implements EmpService{
 	public List<Map<String, String>> getLectureListForRegScore(String empNo) {
 		return sqlSession.selectList("empMapper.getLectureListForRegScore", empNo);
 	}
+	
+	//성적등록위한 강의 수강학생 조회
+	@Override
+	public List<Map<String, String>> getStuEnrForRegScore(String lecNo) {
+		return sqlSession.selectList("empMapper.getStuEnrForRegScore", lecNo);
+	}
 
 	
 

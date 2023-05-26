@@ -40,4 +40,7 @@ public interface EmpService {
 	
 	//성적등록 위한 강의 목록 조회
 	List<Map<String, String>> getLectureListForRegScore(String empNo);
+	
+	//성적등록위한 강의 수강학생 조회
+	List<Map<String, String>> getStuEnrForRegScore(String lecNo);
 }

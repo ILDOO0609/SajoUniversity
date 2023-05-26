@@ -244,6 +244,7 @@ function getLectureListForUpdateAjax(updateBtn){
 				str += `				<tr>`;
 				str += `					<td>
 												강의 시간
+												<input type="hidden" value="${lectureTime.lecNo}" id="lecNo">
 												<input type="hidden" value="${lectureTime.timeNo}" name="timeNo">
 											</td>`;
 				str += `					<td colspan="3">`;
@@ -284,7 +285,7 @@ function getLectureListForUpdateAjax(updateBtn){
 			}
 			str += `			</table>`;
 			str += `		<input type = "button" value = "시간체크" onclick="timeDuplicationCheckAjax();">`;
-			str += `		<input type = "submit" value = "수정">`;
+			str += `		<input type = "submit" value = "수정" class="regBtn" disabled>`;
 			str += `		</form>`;
 			
 			modal_body.insertAdjacentHTML('afterbegin', str);

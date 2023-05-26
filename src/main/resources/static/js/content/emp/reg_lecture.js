@@ -119,14 +119,21 @@ function timeDuplicationCheckAjax(){
 		return;
 	}
 	
+	const lec_nos = document.querySelectorAll('#modal-body #lecNo');
 	const lec_days = document.querySelectorAll('select[name="lecDay"]');
 	const first_times = document.querySelectorAll('select[name="firstTime"]');
 	const last_times = document.querySelectorAll('select[name="lastTime"]');
 	
+	let lec_no_arr= [];
 	let lec_day_arr = [];
 	let first_time_arr = [];
 	let last_time_arr = [];
 	
+	
+	
+	for(const lec_no of lec_nos){
+		lec_no_arr.push(lec_no.value);
+	}
 	for(const lec_day of lec_days){
 		lec_day_arr.push(lec_day.value);
 	}
@@ -139,7 +146,8 @@ function timeDuplicationCheckAjax(){
 	
 	
 	time_info = {
-		'lecDayArr':lec_day_arr
+		'lecNoArr':lec_no_arr
+		, 'lecDayArr':lec_day_arr
 		, 'firstTimeArr':first_time_arr
 		, 'lastTimeArr':last_time_arr
 	};
@@ -163,7 +171,7 @@ function timeDuplicationCheckAjax(){
 				});
 			 }
 			 else{
-				document.querySelector('#regBtn').disabled=false;
+				document.querySelector('.regBtn').disabled=false;
 				Swal.fire({
 				  icon: 'success',
 				  title: '시간 체크',

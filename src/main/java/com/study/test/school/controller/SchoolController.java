@@ -19,8 +19,8 @@ import com.study.test.emp.service.EmpService;
 import com.study.test.emp.vo.LectureVO;
 import com.study.test.school.service.SchoolService;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.stu.vo.StuVO;
 import com.study.test.util.DateUtill;
-import com.study.test.util.PageVO;
 
 import jakarta.annotation.Resource;
 
@@ -65,12 +65,21 @@ public class SchoolController {
 		return "content/school/school/school_info";
 	}
 	
-	//학사메뉴 -> 학사안내 페이지 -> 검색
+	//학사메뉴 -> 학사안내 -> 검색
 	@ResponseBody
 	@PostMapping("/searchInfoListAjax")
 	public List<SchoolInfoVO> searchInfoListAjax(SchoolInfoVO schoolInfoVO){
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+schoolService.searchInfoListAjax(schoolInfoVO));
 		return schoolService.searchInfoListAjax(schoolInfoVO);
 	}
+	//학사메뉴 -> 학사안내 -> 월 셀렉박스 변경시, ajax로 조회
+	@ResponseBody
+	@PostMapping("/schInfoMonthAjax")
+	public List<SchoolInfoVO> schInfoMonthAjax(int schInfoMonth){
+		return schoolService.schInfoMonthAjax(schInfoMonth);
+	}
+	
+	
 	
 	//학사메뉴 -> 학사안내 게시글 작성페이지
 	@GetMapping("/regSchoolBoard")
@@ -146,7 +155,6 @@ public class SchoolController {
 	
 	
 	
-	
 	//학사조회 -> 메인페이지
 	@GetMapping("/checkMain")
 	public String checkMain() {
@@ -173,6 +181,15 @@ public class SchoolController {
 		model.addAttribute("stuList", schoolService.checkStuList());
 		return "content/school/check/check_stu";
 	}
+	//학사조회 -> 검색
+	@ResponseBody
+	@PostMapping("/searchStuListAjax")
+	public List<StuVO> searchStuListAjax(StuVO stuVO){
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2" + stuVO);
+		return schoolService.searchStuListAjax(stuVO);
+	}
+	
+	
 	
 	//학사조회 -> 교수&교직원 조회 페이지
 	@GetMapping("/checkPro")

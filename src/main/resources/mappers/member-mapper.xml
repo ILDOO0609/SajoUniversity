@@ -19,6 +19,7 @@
 			<result column="MEM_IMAGE" 					 	property="memImage"/>
 			<result column="MEM_QUEST" 					 	property="memQuest"/>
 			<result column="REG_DATE" 					 	property="regDate"/>
+			<result column="MEM_SEARCH" 					 property="searchValue;"/>
 		</resultMap>
 		
 		

@@ -188,7 +188,7 @@ public class MemberController {
 //		return memEmail != null ? true : false;
 //	}
 
-	
+	//010-1234-1234
 	
 	// 아이디 찾기 - SMS
 	@ResponseBody

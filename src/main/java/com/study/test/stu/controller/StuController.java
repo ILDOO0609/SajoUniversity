@@ -81,9 +81,29 @@ public class StuController {
 	
 	// 복수전공 신청
 	@GetMapping("/stuMultimajor")
-	public String stuMultimajor() { 
+	public String stuMultimajor(Authentication authentication, Model model, String memNo) { 
+		// 학생 정보 조회
+		memNo = authentication.getName();
+		model.addAttribute("memInfo", memberService.getMemInfoForStu(memNo));
+		model.addAttribute("stuInfo", stuService.getStuInfo(memNo));
+		model.addAttribute("collInfo", stuService.getCollName(memNo));
+		model.addAttribute("deptInfo", stuService.getDeptName(memNo));
+		
+		// 단과대학 조회
+		model.addAttribute("colleageList", colleageService.getColleageList());
+		// 소속학과 조회
+		model.addAttribute("deptList", colleageService.getDeptList());
+		
 		
 		return "content/stu/stu_multimajor";
+		
+	}
+	
+	
+	//  복수전공 신청 처리
+	@PostMapping("/confirmMulti")
+	public void confirmMulti() {
+		
 		
 	}
 	
@@ -117,7 +137,6 @@ public class StuController {
 		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
 		
 		model.addAttribute("enrList", stuService.getEnrollmentNow(stuNo));
-		
 		
 		return "content/stu/stu_sem_enroll_now";
 	}
@@ -185,6 +204,15 @@ public class StuController {
 		
 	}
 	
+	// 휴학신청 진행중인 학생 중복신청 x
+	@ResponseBody
+	@PostMapping("/forStatusSubmitAjax")
+	public int forStatusSubmitAjax(Authentication authentication) {
+		
+		return stuService.getIngStatus(stuService.getStuInfo(authentication.getName()).getStuNo());
+	}
+	
+	// 휴학처리
 	@PostMapping("/stuAbsence")
 	public String stuAbsence(StatusInfoVO statusInfoVO, Authentication authentication) {
 		statusInfoVO.setStuNo(stuService.getStuInfo(authentication.getName()).getStuNo());
@@ -194,6 +222,35 @@ public class StuController {
 		return "redirect:/stu/stuStatus";
 	}
 	
+	// 복학신청 페이지
+	@GetMapping("/stuStatusRe")
+	public String stuStatusRe(Authentication authentication, Model model, String memNo) {
+		// 학생 정보 조회
+		memNo = authentication.getName();
+		model.addAttribute("memInfo", memberService.getMemInfoForStu(memNo));
+		model.addAttribute("stuInfo", stuService.getStuInfo(memNo));
+		model.addAttribute("collInfo", stuService.getCollName(memNo));
+		model.addAttribute("deptInfo", stuService.getDeptName(memNo));
+		
+		
+		
+		return "content/stu/stu_status_re";
+	}
+	
+	@GetMapping("/stu/stuAbsenceRe")
+	public String stuAbsenceRe() {
+		
+		return "redirect:/stu/stuInfo";
+	}
+	
+	// 복학 처리가능한지 검사
+	@ResponseBody
+	@PostMapping("/stuAbsenceReAjax")
+	public boolean stuAbsenceReAjax(Authentication authentication, String stuNo) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		
+		return stuService.getStatusRe(stuNo) >= 1 ? true : false;
+	}
 	
 	// 학생 시간표
 	@GetMapping("/stuTimetable")

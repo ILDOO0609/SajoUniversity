@@ -167,6 +167,7 @@
 		<if test='lecNo != null and lecNo != "" '>
 		AND TIME.LEC_NO = #{lecNo}
 		</if>
+		ORDER BY LEC.NAME
 	</select>
 	
 	<!-- 강의 폐강시 강의상태 수정 -->
@@ -298,6 +299,7 @@
 		AND LECTURE.LEC_NO = ENR.LEC_NO
 		AND SEM.SEM_NO = LECTURE.SEM_NO
         AND ENR.STU_NO = STU.STU_NO
+        AND LECTURE.LEC_STATUS = 'Y'
 		AND STU.STU_NO = #{stuNo}
 	</select>
 	

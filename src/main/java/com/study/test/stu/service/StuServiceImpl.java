@@ -73,6 +73,22 @@ public class StuServiceImpl implements StuService{
 		sqlSession.insert("stuMapper.applyAbsence", statusInfoVO);
 		
 	}
+
+	@Override
+	public int getIngStatus(String stuNo) {
+		return sqlSession.selectOne("stuMapper.getIngStatus", stuNo);
+	}
+
+	@Override
+	public int getStatusRe(String stuNo) {
+		return sqlSession.selectOne("stuMapper.getStatusRe", stuNo);
+	}
+
+	@Override
+	public void updateStatusStuForRe(String stuNo) {
+		sqlSession.update("updateStatusStuForRe", stuNo);
+		
+	}
 	
 	
 	

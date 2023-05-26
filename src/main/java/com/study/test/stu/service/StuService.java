@@ -39,4 +39,13 @@ public interface StuService {
 	
 	// 휴학 신청
 	void applyAbsence(StatusInfoVO statusInfoVO);
+	
+	// 휴학 신청 시 현재 상태 확인
+	int getIngStatus(String stuNo);
+	
+	// 복학 신청 가능여부 파악
+	int getStatusRe(String stuNo);
+	
+	// 복학 신청
+	void updateStatusStuForRe(String stuNo);
 }

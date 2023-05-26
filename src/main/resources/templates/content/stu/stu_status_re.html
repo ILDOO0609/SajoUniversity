@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/layout}">
+
+<!-- 연결해야 할 외부 css파일 -->
+<th:block layout:fragment="content_css">
+   <!-- <link rel="stylesheet" href="첨부될 css 파일 경로"> -->
+</th:block>
+
+<th:block layout:fragment="content">
+복학신청
+<form id="stuAbsence" th:action="@{/stu/stuAbsenceRe}" method="post">
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<colgroup>
+				<col width="10%;">
+				<col width="15%;">
+				<col width="15%;">
+				<col width="15%;">
+				<col width="15%;">
+			</colgroup>
+			<tr>
+				<td rowspan="5" ><img th:src="@{'/upload/' + ${memInfo.memImage}}" style="width: 100%; height: 100%"></td>
+				<td>성명</td>
+				<td>[[${memInfo.memName}]]</td>
+				<td>학번</td>
+				<td>[[${memInfo.memNo}]]</td>
+			</tr>
+			<tr>
+				<td>단과대학</td>
+				<td>[[${collInfo.collName}]]</td>
+				<td>소속학과</td>
+				<td>[[${deptInfo.deptName}]]</td>
+			</tr>
+			<tr>
+				<td>학기</td>
+				<td>[[${stuInfo.stuYear}+${stuInfo.stuSem}]]학기</td>
+				<td>학적상태</td>
+				<td>[[${stuInfo.stuStatus}]]</td>
+			</tr>
+			<tr>
+				<td>이메일</td>
+				<td>[[${memInfo.memEmail}]]</td>
+				<td>전화번호</td>
+				<td>[[${memInfo.memTell}]]</td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td colspan="3">[[${memInfo.memAddr  + ' ' +  memInfo.memAddrDetail}]]</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="row mt-5 text-center">
+	<div class="col">
+		<input type="button" class="btn btn-primary btn-lg" value="복학 신청" th:onclick="applyAbsenceRe();">
+	</div>
+</div>
+</form>
+
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/stu/stu_status_re.js"></script>
+</th:block>
+
+</html>

@@ -73,7 +73,7 @@
 					<tbody>
 						<tr>
 							<td>
-								학생 조회 결과
+								학생 전체 조회 및 검색 결과
 							</td>
 						</tr>
 						<tr>
@@ -91,12 +91,14 @@
 						<tr>
 							<td>
 								<div class="row text-center">
-									<div class="col-2">20230519</div>
-									<div class="col-2">1학년</div>
-									<div class="col-2">김형진</div>
-									<div class="col-2">인문대학</div>
-									<div class="col-2">국어국문학부</div>
-									<div class="col-2">휴학</div>
+									<th:block th:each="stu : ${stuList}">
+										<div class="col-2">[[${stu.memNo}]]</div>
+										<div class="col-2">[[${stu.stuYear}]]</div>
+										<div class="col-2">[[${stu.memberVO.memName}]]</div>
+										<div class="col-2">[[${stu.colleageVO.collName}]]</div>
+										<div class="col-2">[[${stu.deptVO.deptName}]]</div>
+										<div class="col-2">[[${stu.stuStatus}]]</div>
+									</th:block>
 								</div>
 							</td>						
 						</tr>	

@@ -26,6 +26,44 @@ document.addEventListener('DOMContentLoaded', function() {
 	    eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
 	      console.log(obj);
 	    },
+	    customButtons:{
+			addEvenButton:{
+				text : "일정추가",
+				click : function(){
+					$("#calendarModal").modal("show");
+					$("#addCalendar").on("click",function(){
+						var title = $("#calendar_title").val();
+						var content = $("#calendar_content").val();
+						var start_date = $("#calendar_start_date").val();
+						var end_date = $("calendar_end_date").val();
+						
+						if(title == null || title == ''){
+							alert('제목을 입력하세요')
+						}else if(content == null || content == ''){
+							alert('내용을 입력하세요.')		
+						}else if(start_date == '' || end_date == ''){
+							alert('날짜를 입력하세요.')
+						}else if(new Date(end_date) - new Date(start_date) < 0){
+							alert('종료일이 시작일보다 앞섭니다.')
+						}else{
+							var obj = {
+								"title" : title,
+								"content" : content,
+								"start" : start_date,
+								"end" : end_date								
+							}
+							
+							console.log(obj);
+							
+						}
+						
+					});
+				}
+			}
+		
+		},
+	    
+	    
     	select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
         	var title = prompt('일정추가');
         	if (title) {
@@ -57,3 +95,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	calendar.render();
 });
+
+

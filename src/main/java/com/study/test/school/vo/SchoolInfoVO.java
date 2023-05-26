@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SchoolInfoVO {
+public class SchoolInfoVO extends PageVO{
 	private String schInfoCode;
 	private String schInfoTitle;
 	private String schInfoContent;
@@ -23,13 +23,11 @@ public class SchoolInfoVO {
 	private int schInfoReadCnt;
 	private String schInfoNum;
 	
-	private String schInfoSearchKeword;
-	private String schInfoSearchMonth;
+	private String schInfoSearch;
 	
 	private String prevNum;
 	private String prevTitle;
 	private String nextNum;
 	private String nextTitle;
 	
-	private PageVO pageVO;
 }

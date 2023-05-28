@@ -64,36 +64,145 @@ document.addEventListener('DOMContentLoaded', function() {
 		},
 	    
 	    
-    	select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-        	var title = prompt('일정추가');
-        	if (title) {
-          		calendar.addEvent({
-            		title: title,
-		            start: arg.start,
-		            end: arg.end,
-		            allDay: arg.allDay
-         		 })
-        	}
-        	calendar.unselect()
-      	},
+//    	select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+//        	var title = prompt('일정추가');
+//        	if (title) {
+//          		calendar.addEvent({
+//            		title: title,
+//		            start: arg.start,
+//		            end: arg.end,
+//		            allDay: arg.allDay
+//         		 })
+//        	}
+//        	calendar.unselect()
+//      	},
    		// 이벤트 
-   		eventClick : function(arg){
-   			//있는 일정 클릭시
-   			console.log("#등록된 일정 클릭#");
-   			console.log(arg.event);
-   			
-   			if(confirm('해당일정을 삭제 하시겠습니까?')){
-   				arg.event.remove()
-   			}
-   		},
+//   		eventClick : function(arg){
+//   			//있는 일정 클릭시
+//   			console.log("#등록된 일정 클릭#");
+//   			console.log(arg.event);
+//   			
+//   			if(confirm('해당일정을 삭제 하시겠습니까?')){
+//   				arg.event.remove()
+//   			}
+//   		},
    		
-		events: {
+		events: [
 			
-		}
+			{	
+					
+				title : 'test',
+				start : '2023-05-27',
+				end : '2023-05-30',
+				content : 'test'
+			},
+			{	
+					
+				title : 'test',
+				start : '2023-05-04',
+				end : '2023-05-08',
+				content : 'test'
+			},
+		
+			
+		] 
       
 	});
 
 	calendar.render();
 });
+
+
+//일정추가 확인 버튼 클릭시
+function addSchedule(){
+	const title = document.querySelector('#title').value;
+	const calContent = document.querySelector('#calContent').value;
+	const startDate = document.querySelector('#startDate').value;
+	const endDate = document.querySelector('#endDate').value;
+	
+	if(title == ''){
+		alert('제목은 필수 입력입니다.')
+	}else if(calContent == ''){
+		alert('일정내용은 필수 입력입니다.')
+	}else if(startDate == ''){
+		alert('시작일정은 필수 입력입니다.')	
+	}else if(endDate == ''){
+		alert('종료일정은 필수 입력입니다.')
+	}else if(new Date(endDate) - new Date(startDate) < 0){
+		alert('종료일이 시작일보다 앞섭니다.')
+	}
+	
+	document.querySelector('#calendarForm').submit();
+}
+
+
+
+//	for (int i = 0 ; list.size; i++){
+//				CalendarVO calendarVO = (CalendarVO)list.get(i);
+//				{
+//					title : '<%= calendarVO.getSubject() %>',
+//					startDate : '<%= calendarVO.getstartDate() %>',
+//					endDate : '<%= calendarVO.getendDate() %>',
+//				},
+//			}
+
+
+
+
+
+
+
+
+
+function click_ok(){
+	var scheduleDate = JSON.stringify($('form#scheduleDate').serializeObject());
+
+	//ajax start
+	$.ajax({
+	   url: '/school/addSchedule', //요청경로
+	   type: 'post',
+	   data: {'scheduleDate':scheduleDate}, //필요한 데이터
+	   contentType: 'application/json; charset=UTF-8',
+	   success: function(result) {
+			console.log(result)
+			opener.parent.location.reload();
+			window.close();
+
+	   },
+	   error: function() {
+	      alert('실패');
+	   }
+	});
+	//ajax end
+
+}
+
+
+function updateModal(calNo){
+	const update_modal = new bootstrap.Modal('#updateCalendar');
+	
+	update
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

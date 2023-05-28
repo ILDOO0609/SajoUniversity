@@ -8,7 +8,7 @@
 <h2>회원리스트</h2>
 <div class="row">
 	<div class="col">
-		<table class="table">
+		<table class="table" id="memberTable">
 			<thead>
 				<tr>
 					<td>No(ID)</td>
@@ -37,8 +37,8 @@
 						<td>2023-05-23</td>
 						<td id="memRole" th:text="${member.memRole}">[[${member.memRole}]]</td>
 						<td>
-							<button class="appro" th:onclick="position();">승인완료</button>
-							<button class="deni">승인거부</button>
+							<button  class="btn btn-primary" th:onclick="updatePosition([[${member.memNo}]]);" style="cursor: pointer;">승인완료</button>
+							<button  class="btn btn-danger" type="button" style="cursor: pointer;">승인거부</button>
 						</td>
 					</tr>
 				</th:block>
@@ -52,7 +52,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/content/admin/cate_manage.js"></script> -->
+	<script type="text/javascript" src="/js/content/school/member.js"></script> 
 </th:block>
 
 </html>

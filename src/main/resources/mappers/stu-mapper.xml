@@ -26,6 +26,7 @@
 	<result column="ING_STATUS" 		property="ingStatus"/>
 	<result column="STU_NO" 			property="stuNo"/>
 	<result column="STATUS_CONTENT" 	property="statusContent"/>
+	<association property="stuVO" 		resultMap="stu"></association>
 </resultMap>
 
 <resultMap type="com.study.test.stu.vo.MultiMajorVO" id="multiMajor">

@@ -250,38 +250,7 @@ changeYearMonth(current_year, current_month);
 	
 	
 
-//--------------회원메뉴--------------------------------------------------------------
-function position(memNo, memRole) {
-	memNo_tag = document.querySelector('#memNo').value;
-	memRole_tag = document.querySelector('#memRole').value;
-	
-	if(memNo == null){
-		if(memRole = stu){
-			
-		}
-	}
-	
-	
-	//ajax start
-	$.ajax({
-   		url: '/test2/test2', //요청경로
-		type: 'post',
-		async: true,
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	   	data: {}, //필요한 데이터
-	   	success: function(result) {
-	      alert('ajax 통신 성공');
-	      alert(result);
-	   	},
-	   	error: function() {
-	      alert('실패');
-		}
-	});
-	//ajax end
 
-	
-}
-	
 
 
 

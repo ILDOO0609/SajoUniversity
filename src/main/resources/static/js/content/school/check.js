@@ -43,17 +43,14 @@ function drawDeptSelectbox(deptList){
 //학생조회 검색
 function searchStuList(){
 	const searchValue = document.querySelector('#searchStuInput').value;
-	
-	if(searchValue == ''){
-		alert('검색할 이름을 입력하세요.');
-		return;
-	}
-	
+	const collNo = document.querySelector('select[name="collNo"]').value;
+	const deptNo = document.querySelector('select[name="deptNo"]').value;
+
 	//ajax start
 	$.ajax({
 	   url: '/school/searchStuListAjax', //요청경로
 	   type: 'post',
-	   data: {'searchValue':searchValue}, //필요한 데이터
+	   data: {'searchValue':searchValue, 'collNo' : collNo, 'deptNo' : deptNo}, //필요한 데이터
 	   success: function(result) {
 			console.log(result)
 			const tbodyTag = document.querySelector('#tbodyTag');
@@ -92,8 +89,6 @@ function searchStuList(){
 
 
 
-
-// --------학사조회------------------------------------------------------
 //교수 교직원 라디오 버튼 클릭시 실행
 $("input[name='checkPosition']").change(function(){
 	
@@ -112,6 +107,9 @@ $("input[name='checkPosition']").change(function(){
 //교수/교직원 조회 -> 검색
 function searchProList(){
 	const searchValue = document.querySelector('#searchProInput').value;
+	const collNo = document.querySelector('select[name="collNo"]').value;
+	const deptNo = document.querySelector('select[name="deptNo"]').value;
+	
 	
 	//ajax start
 		$.ajax({
@@ -119,7 +117,7 @@ function searchProList(){
 			type: 'post',
 			async: true,
 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-			data: {'searchValue':searchValue}, //필요한 데이터
+			data: {'searchValue':searchValue, 'collNo' : collNo, 'deptNo' : deptNo}, //필요한 데이터
 			success: function(result) {
 				const tdTag = document.querySelector('#proTable > tbody');
 				tdTag.replaceChildren();	

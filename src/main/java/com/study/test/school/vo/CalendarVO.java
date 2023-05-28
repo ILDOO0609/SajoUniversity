@@ -13,9 +13,6 @@ public class CalendarVO {
 	private String regDate;
 	private String startDate;
 	private String endDate;
-	private String calColor;
-	private String calWriter;
 	private String calContent;
-	private boolean calDay;
 	private String calBackColor;
 }

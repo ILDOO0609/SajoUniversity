@@ -45,6 +45,7 @@ function forStatusSubmit (){
 			else{
 				const formTag = document.querySelector('#stuAbsence');
 				formTag.submit();
+				alert('휴학신청이 완료되었습니다.')
 			}
 			
 		},

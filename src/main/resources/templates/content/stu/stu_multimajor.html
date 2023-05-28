@@ -12,6 +12,9 @@
 <th:block layout:fragment="content">
 복수전공신청
 <form id="formTag" action="/stu/confirmMulti" method="post">
+<input type="hidden" name="stuYear" th:value="${stuInfo.stuYear}">
+<input type="hidden" name="stuSem" th:value="${stuInfo.stuSem}">
+<input type="hidden" name="stuNo" th:value="${stuInfo.stuNo}">
 <div class="row">
 	<div class="col">
 		<table class="table">
@@ -67,7 +70,7 @@
 				<td>복수전공 신청 단과대학</td>
 				<td>
 				<div>
-					<select style="width: 200px;" class="form-select" name="collNo" onchange="changeColl(this)">
+					<select style="width: 200px;" class="form-select" name="multiMajorColl" onchange="changeColl(this)">
 						<option value="">전체</option>
 						<option th:each = "coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
 					</select>
@@ -76,7 +79,7 @@
 				<td>복수전공 신청 소속학과</td>
 				<td>
 					<div id="deptDiv">
-						<select style="width: 200px;" class="form-select" name="deptNo">
+						<select style="width: 200px;" class="form-select" name="multiMajorDept">
 							<option value="">전체</option>
 							<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo == dept.collNo}">
 								[[${dept.deptName}]]
@@ -124,14 +127,20 @@
 		가. 신청자격
 		<br>
 		제 1전공(주전공)에서 2학기 이상 이수한 자. 단, 교원자격취득을 목적으로 하는 복수전공자는 성적 평점평균이 3.00이상인 자
+		<br>
 		나. 신청시기 및 절차
+		<br>
 		2학년 1학기 초부터 4학년 2학기 초 공고된 기간 (교원자격증 취득을 위한 복수전공 교직이수자는 3학년 1학기 복수전공 학부(과)에서 선발함)
 		<br>
 		통합정보시스템을 이용하여 신청 → 지원서출력 → 제1전공・제2전공 교수서명 → 지원서 제출(제2전공 신청학부(과))(한 학기에 1개 전공 신청 가능)
+		<br>
 		다.
 		<br> 
 		편입생의 경우에는 제1전공(주전공)에서 1학기이상 이수 후 신청 가능
-		라. 제3전공 신청자격: 제1전공의 전공과목을 18학점이상, 제2전공의 전공학점을 9학점 이상 이수한 자에게 허용함
+		<br>
+		라.
+		<br>
+		제3전공 신청자격: 제1전공의 전공과목을 18학점이상, 제2전공의 전공학점을 9학점 이상 이수한 자에게 허용함
 		제2전공의 이수학점
 		교육과정 참조
 		<br>

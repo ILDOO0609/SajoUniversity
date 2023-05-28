@@ -27,7 +27,7 @@ function drawDeptSelectbox(deptList){
 		
 	let str = '';
 	
-	str += `<select class="form-select text-center" name="deptNo" style="width:200px;">`;
+	str += `<select class="form-select text-center" name="multiMajorDept" style="width:200px;">`;
 	for(const dept of deptList){
 		str += `<option id="deptNo" value="${dept.deptNo}">${dept.deptName}</option>`;
 	}
@@ -42,7 +42,7 @@ init();
 // 복수전공 신청 클릭 시 실행
 function applyMulti(){
 	const statusContent = document.querySelector('.applyReason').value;
-	const selectedCollNo = document.querySelector('select[name="collNo"]').value;
+	const selectedCollNo = document.querySelector('select[name="multiMajorColl"]').value;
 	
 	if (statusContent == "") {
 		alert('복수전공 신청 사유를 입력해 주세요.');
@@ -76,8 +76,8 @@ function init(){
 
 // 복수전공 신청 모달 확인 클릭
 function confirmMulti() {
-	const collNo = document.querySelector('select[name="collNo"]').value;
-	const deptNo = document.querySelector('select[name="deptNo"]').value;
+	const collNo = document.querySelector('select[name="multiMajorColl"]').value;
+	const deptNo = document.querySelector('select[name="multiMajorDept"]').value;
 	
 	const formTagForSubmit = document.querySelector('#formTag');
 	formTagForSubmit.submit();

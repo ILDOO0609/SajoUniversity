@@ -72,7 +72,6 @@ public class MemberController {
 	// 회원 가입
 	@PostMapping("/join")
 	public String join(MemberVO memberVO) {
-				
 		String encodedPw = encoder.encode(memberVO.getMemPw());
 		
 		memberVO.setMemPw(encodedPw);
@@ -200,12 +199,13 @@ public class MemberController {
 	        String trans_tell = loginInfo.getMemTell();
 	        String found_no = loginInfo.getMemNo();
 
-	        String tell = trans_tell.replaceAll("\\s+", "");
+	        String tell = trans_tell.replaceAll("-", "");
+	        String tell2 = tell.replaceAll("//s+","");
 	        DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCSFHN1XY1FX02NP", "B6URLZWJHLKFCHD7USZ9DWCWBMDUTDLV", "https://api.coolsms.co.kr");
 
 	        Message message = new Message();
 	        message.setFrom("01052990199"); // 발송번호 -- COOLSMS 연동 번호
-	        message.setTo(tell); // 수신자 번호 --> 회원 연락처
+	        message.setTo(tell2); // 수신자 번호 --> 회원 연락처
 	        message.setText("[사조대학팀]" + "\n" + "귀하의 아이디(교번)은 " + found_no + " 입니다.");
 
 	        try {

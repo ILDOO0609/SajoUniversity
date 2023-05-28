@@ -19,7 +19,7 @@ public class IndexController {
 		String path = "";
 		
 		if (authentication == null) {
-			path = "redirect:/member/loginForm";
+			path = "redirect:/member/loginForm3";
 		}
 		else {
 			// 로그인한 사람의 권한 정보
@@ -36,17 +36,17 @@ public class IndexController {
 			
 			if (strAuthoList.contains("ROLE_ADMIN")) {
 				
-				path = "redirect:/member/loginForm";
+				path = "redirect:/member/loginForm3";
 			}
 			else {
 				if (previousPage == null) {
 					
-					path = "redirect:/member/loginForm";
+					path = "redirect:/member/loginForm3";
 				}
 				else {
 					path = "redirect:" + previousPage;
 					if (previousPage.contains("/admin")) {
-						path = "redirect:/member/loginForm";
+						path = "redirect:/member/loginForm3";
 					}
 				}
 				

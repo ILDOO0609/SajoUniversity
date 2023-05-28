@@ -35,7 +35,7 @@ function login() {
                     icon: 'success',
                     title: '환영합니다.',
                 }).then(() => {
-                    location.href = '/'; // Redirect to the desired page after the toast notification is closed
+                    location.href = '/member/main';
                 });
             } else {
                 // If login fails

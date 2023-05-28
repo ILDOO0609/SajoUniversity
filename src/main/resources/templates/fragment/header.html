@@ -50,12 +50,7 @@
  		
 		 </div>
  
-			 <style>
-				#clock {
-					font-size: 48px;
-					font-weight: bold;
-				}
-			</style>
+			
  
  <div class="row">
 		<div class="col">
@@ -359,6 +354,7 @@
 						<div class="col-12">
 						    <label for="time-remaining" class="form-label">&nbsp;</label> 
 						    <input type="text" class="form-control" id="time-remaining" name="time-remaining" value="남은시간">
+						    
 						</div>
 						<div class="col-12">
 						    <label for="confirmation" class="form-label">&nbsp;</label> 
@@ -429,20 +425,7 @@
 		</div>
 	</div>
  
- <script>
-    function updateClock() {
-      var now = new Date();
-      var hours = now.getHours();
-      var minutes = now.getMinutes();
-      var seconds = now.getSeconds();
 
-      var time = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
-
-      document.getElementById('clock').textContent = time;
-    }
-
-    setInterval(updateClock, 1000);
-  </script>
  
  
 </th:block>

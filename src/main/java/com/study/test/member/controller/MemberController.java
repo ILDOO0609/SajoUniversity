@@ -54,10 +54,16 @@ public class MemberController {
 	}
 	
 	// 로그인 페이지 이동
-	@GetMapping("/loginForm")
+	@GetMapping("/loginForm3")
+	public String loginForm3() {
+		return "content//member/login_form3";
+	}
+	
+	// 메인 페이지 이동
+	@GetMapping("/main")
 	public String loginForm() {
 		
-		return "content//member/login_form";
+		return "content//member/main";
 	}
 	
 	
@@ -90,10 +96,6 @@ public class MemberController {
 	 
 	
 	
-	@GetMapping("/game")
-	public String game() {
-		return "content//member/game";
-	}
 	
 	// 회원가입 이메일인증
 	@ResponseBody

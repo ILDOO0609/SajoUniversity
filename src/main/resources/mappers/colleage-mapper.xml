@@ -25,6 +25,12 @@
 		<result column="SEMESTER"  property="semester"/>
 	</resultMap>
 	
+			<!-- GRADE 테이블 RESULTMAP -->
+	<resultMap type="com.study.test.colleage.vo.GradeVO" id="grade">
+		<id		column="GRADE"	 property="grade"/>
+		<result	column="SCORE"   property="score"/>
+	</resultMap>
+	
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ쿼리문 작성ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 	
 	<!-- 학기 테이블 조회 (SEMESTER)-->
@@ -69,7 +75,12 @@
 		AND MEM_NO = #{memNo}
 	</select>
 	
-	
+	<!-- 성적 테이블 조회 -->
+	<select id="getGradeList" resultMap="grade">
+		SELECT GRADE
+			, SCORE
+		FROM GRADE
+	</select>
 </mapper>
 
 

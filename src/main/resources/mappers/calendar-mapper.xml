@@ -9,10 +9,7 @@
 		<result column="REG_DATE" property="regDate"/>
 		<result column="START_DATE" property="startDate"/>
 		<result column="END_DATE" property="endDate"/>
-		<result column="CAL_COLOR" property="calColor"/>
-		<result column="CAL_WRITER" property="calWriter"/>
 		<result column="CAL_CONTENT" property="calContent"/>
-		<result column="CAL_DAY" property="calDay"/>
 		<result column="CAL_BACK_COLOR" property="calBackColor"/>
 	
 	</resultMap>
@@ -24,16 +21,42 @@
 			, TO_CHAR(REG_DATE, 'YYYY-MM-DD') REG_DATE
 			, TO_CHAR(START_DATE, 'YYYY-MM-DD') START_DATE
 			, TO_CHAR(END_DATE, 'YYYY-MM-DD') END_DATE
-			, CAL_COLOR
-			, CAL_WRITER
 			, CAL_CONTENT
-			, CAL_DAY
 			, CAL_BACK_COLOR
 		FROM CALLENDAR
 	</select>
 
+	<select id="showSchedule" resultMap="calendar">
+		SELECT CAL_NO
+			, TITLE
+			, REG_DATE
+			, START_DATE
+			, END_DATE
+			, CAL_CONTENT
+		FROM CALLENDAR
+		ORDER BY CALNO DESC	
+	</select>
 
-
+	<!-- 학사일정 일정추가 -->
+	<insert id="addSchedule">
+		INSERT INTO CALLENDAR(
+			CAL_NO
+			, TITLE
+			, REG_DATE
+			, START_DATE
+			, END_DATE
+			, CAL_CONTENT
+		) VALUES (
+			(SELECT 'CAL_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CAL_NO, 5))), 0) + 1, 3, '0') 
+         	FROM CALLENDAR)
+         	, #{title}
+         	, #{regDate}
+         	, #{startDate}
+         	, #{endDate}
+         	, #{calContent}
+		)
+	</insert>
+	
 </mapper>
 
 

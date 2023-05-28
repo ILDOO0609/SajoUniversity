@@ -55,7 +55,7 @@
 					<td>[[${enr.maxNum}]]</td>
 					<td>[[${enr.semesterVO.semYear}]]/[[${enr.semesterVO.semester}]]학기</td>
 					<td>
-					<form id="deleteEnr" th:action="@{/stu/stuSemEnrollNowForDelete}" method="post">
+					<form id="deleteEnr[[${state.count}]]" th:action="@{/stu/stuSemEnrollNowForDelete}" method="post">
 						<input type="hidden" name="lecNo" th:value="${enr.lecNo}">
 						<input class="btn btn-danger" type="button" value="취소" th:onclick="deleteEnr(this);">
 					</form>

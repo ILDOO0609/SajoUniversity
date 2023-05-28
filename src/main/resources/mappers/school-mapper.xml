@@ -11,12 +11,10 @@
 		<result column="SCH_INFO_DATE" 		property="schInfoDate"/>
 		<result column="SCH_INFO_STARTDATE" property="schInfoStartDate"/>
 		<result column="SCH_INFO_ENDDATE" 	property="schInfoEndDate"/>
-		<result column="REGDATE" 			property="regDate"/>
-		<result column="STARTDATE" 			property="startDate"/>
-		<result column="ENDTDATE" 			property="endDate"/>
 		<result column="SCH_INFO_READ_CNT" 	property="schInfoReadCnt"/>
 		<result column="SCH_INFO_NUM" 		property="schInfoNum"/>
 		<result column="SCH_INFO_SEARCH" 	property="schInfoSearch"/>
+		<result column="SCH_INFO_Month" 	property="schInfoMonth"/>
 		<result column="PREVNO"				property="prevNum"/>
 		<result column="PREV_TITLE"			property="prevTitle"/>	
 		<result column="NEXTNO"				property="nextNum"/>	
@@ -72,28 +70,31 @@
 		SELECT SCH_INFO_CODE
 			, SCH_INFO_TITLE
 			, SCH_INFO_WRITER
-			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') REGDATE
-			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') STARTDATE
-			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') ENDTDATE
+			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') SCH_INFO_DATE
+			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') SCH_INFO_STARTDATE
+			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') SCH_INFO_ENDDATE
 			, SCH_INFO_NUM
+			, SCH_INFO_READ_CNT
 		FROM SCHOOL_INFORMATION
 		WHERE 1=1
 		<if test='schInfoSearch != null and !schInfoSearch.equals("")'>
 		AND UPPER(SCH_INFO_TITLE) LIKE '%'||UPPER(#{schInfoSearch})||'%'
 		</if>
-		ORDER BY SCH_INFO_DATE DESC
+		ORDER BY SCH_INFO_NUM DESC
 		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	
 	<select id="schInfoMonthAjax" resultMap="school">
-		SELECT SCH_INFO_CODE
-			, SCH_INFO_TITLE
-			, SCH_INFO_WRITER
-			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') REGDATE
-			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') STARTDATE
-			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') ENDTDATE
-			, SCH_INFO_NUM
-		FROM SCHOOL_INFORMATION
+	    SELECT SCH_INFO_CODE
+	        , SCH_INFO_TITLE
+	        , SCH_INFO_WRITER
+	        , TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') SCH_INFO_DATE
+	        , TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') SCH_INFO_STARTDATE
+	        , TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') SCH_INFO_ENDDATE
+	        , SCH_INFO_NUM
+	    FROM SCHOOL_INFORMATION
+	    WHERE TO_CHAR(SCH_INFO_STARTDATE, 'MM') = #{schInfoMonth}
+	    ORDER BY SCH_INFO_STARTDATE
 	</select>
 	
 	<!-- 상세조회 -->
@@ -101,9 +102,9 @@
 		SELECT SCH_INFO_CODE
 			, SCH_INFO_TITLE
 			, SCH_INFO_WRITER
-			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') REGDATE
-			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') STARTDATE
-			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') ENDTDATE
+			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') SCH_INFO_DATE
+			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') SCH_INFO_STARTDATE
+			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') SCH_INFO_ENDDATE
 			, SCH_INFO_READ_CNT
 			, SCH_INFO_CONTENT
 			, SCH_INFO_NUM
@@ -159,34 +160,12 @@
 	
 	
 	
-	
-	<!--학사일정 캘린더 일정조회 -->
-	<select id="selectMember" resultMap="memberMapper.member">
-		SELECT MEM_NO
-			, MEM_NAME
-			, MEM_EMAIL
-			, MEM_ADDR
-			, MEM_TELL
-			, MEM_GENDER
-			, MEM_BIRTHDAY
-			, MEM_ROLE
-		FROM MEMBER	
-	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<!-- 학사조회 -> 학생조회 -->
 	<select id="checkStuList" resultMap="stuMapper.stu">
 		SELECT STU_NO
 		    , STU_YEAR
 		    , STU_SEM
-		    , STU_STATUS
+		    , DECODE(STU_STATUS, 1, '재학', 2, '휴학') as STU_STATUS
 		    , ST.MEM_NO
 		    , MEM_NAME
 		    , COLL.COLL_NO
@@ -197,8 +176,17 @@
 		WHERE ST.COLL_NO = COLL.COLL_NO
 		AND ST.DEPT_NO = DP.DEPT_NO
 		AND ST.MEM_NO = MEM.MEM_NO
-		
+<!-- 		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(MEM_NAME) LIKE UPPER('%'||#{searchValue} ||'%')
+		</if> -->
+		<if test="collNo != null and collNo != ''">
+		AND COLL.COLL_NO = #{collNo}
+		</if>
+		<if test="deptNo != null and deptNo != ''">
+		AND DP.DEPT_NO = #{deptNo}
+		</if>
 	</select>
+	
 	
 	<!-- 학사조회 -> 교수/교직원 조회 -->
 	<select id="checkProList" resultMap="empMapper.lecture">
@@ -215,7 +203,13 @@
 		AND EM.DEPT_NO = DP.DEPT_NO
 		AND EM.COLL_NO = COLL.COLL_NO
 		<if test='searchValue != null and !searchValue.equals("")'>
-		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
+		AND UPPER(MEM_NAME) LIKE UPPER('%'||#{searchValue} ||'%')
+		</if>
+		<if test="collNo != null and collNo != ''">
+		AND COLL.COLL_NO = #{collNo}
+		</if>
+		<if test="deptNo != null and deptNo != ''">
+		AND DP.DEPT_NO = #{deptNo}
 		</if>
 	</select>
 	
@@ -223,9 +217,193 @@
 	
 	
 	
+	<!-- 휴학관리 전체 조회-->
+	<select id="getStatusInfoList" resultMap="stuMapper.status">
+		SELECT
+		    STATUS_NO
+		    , MEM_NAME
+		    , ST.MEM_NO
+		    , STU_YEAR
+		    , DE.DEPT_NO
+		    , DEPT_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS APPLY_DATE
+		    , DECODE(ING_STATUS, 'I', '승인대기', 'P', '승인완료', 'R', '승인취소') AS ING_STATUS
+		    , NOW_STATUS
+		    , AFTER_STATUS
+		FROM MEMBER MB, STU ST, COLLEAGE COLL, DEPT DE, STATUS_INFO SI
+		WHERE ST.STU_NO = SI.STU_NO
+		AND ST.DEPT_NO = DE.DEPT_NO
+		AND ST.COLL_NO = COLL.COLL_NO
+		AND MB.MEM_NO = ST.MEM_NO
+		AND ING_STATUS = 'I'
+	</select>
+	
+		<!-- 휴학관리 승인 조회-->
+	<select id="getStatusInfoAppList" resultMap="stuMapper.status">
+		SELECT
+		    STATUS_NO
+		    , MEM_NAME
+		    , ST.MEM_NO
+		    , STU_YEAR
+		    , DE.DEPT_NO
+		    , DEPT_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS APPLY_DATE
+		    , DECODE(ING_STATUS, 'I', '승인대기', 'P', '승인완료', 'R', '승인취소') AS ING_STATUS
+		    , NOW_STATUS
+		    , AFTER_STATUS
+		FROM MEMBER MB, STU ST, COLLEAGE COLL, DEPT DE, STATUS_INFO SI
+		WHERE ST.STU_NO = SI.STU_NO
+		AND ST.DEPT_NO = DE.DEPT_NO
+		AND ST.COLL_NO = COLL.COLL_NO
+		AND MB.MEM_NO = ST.MEM_NO
+		AND ING_STATUS = 'P'
+	</select>
+	
+	<!-- 휴학관리 취소 조회-->
+	<select id="getStatusInfoDeniedList" resultMap="stuMapper.status">
+		SELECT
+		    STATUS_NO
+		    , MEM_NAME
+		    , ST.MEM_NO
+		    , STU_YEAR
+		    , DE.DEPT_NO
+		    , DEPT_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS APPLY_DATE
+		    , DECODE(ING_STATUS, 'I', '승인대기', 'P', '승인완료', 'R', '승인취소') AS ING_STATUS
+		    , NOW_STATUS
+		    , AFTER_STATUS
+		FROM MEMBER MB, STU ST, COLLEAGE COLL, DEPT DE, STATUS_INFO SI
+		WHERE ST.STU_NO = SI.STU_NO
+		AND ST.DEPT_NO = DE.DEPT_NO
+		AND ST.COLL_NO = COLL.COLL_NO
+		AND MB.MEM_NO = ST.MEM_NO
+		AND ING_STATUS = 'R'
+	</select>
 	
 	
 	
+	<!-- 휴학관리 신청회원 조회 -->
+	<select id="updateLeaveSelect" resultType="String">
+		SELECT STU_NO
+		FROM STATUS_INFO
+		WHERE STATUS_NO = #{statusNo}
+	</select>
+	
+	<!-- 휴학관리 신청회원 승인완료 -->
+	<update id="updateLeaveApp">
+		UPDATE STATUS_INFO
+		SET ING_STATUS = 'P'
+			, APPROVAL_DATE = SYSDATE
+			, NOW_STATUS = 'A'
+		WHERE STATUS_NO = #{statusNo}
+	</update>
+	
+	<!-- 휴학관리 신청회원 승인완료 학생 정보 업데이트 -->
+	<update id="updateLeaveAppStu">
+		UPDATE STU
+		SET STU_STATUS = 2
+		WHERE STU_NO = #{stuNo}
+	</update>
+	
+	<!-- 휴학관리 신청회원 승인취소 -->
+	<update id="updateLeaveDenied">
+		UPDATE STATUS_INFO
+		SET ING_STATUS = 'R'
+			, APPROVAL_DATE = SYSDATE
+			, AFTER_STATUS = 'E'
+		WHERE STATUS_NO = #{statusNo}
+	</update>
+	
+	<!-- 휴학관리 신청회원 승인취소 학생 정보 업데이트 -->
+	<update id="updateLeaveDeniedStu">
+		UPDATE STU
+		SET STU_STATUS = 2
+		WHERE STU_NO = #{stuNo}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!--회원메뉴 회원조회 -->
+	<select id="selectMemberList" resultMap="memberMapper.member">
+		SELECT MEM_NO
+			, MEM_NAME
+			, MEM_EMAIL
+			, MEM_ADDR
+			, MEM_TELL
+			, MEM_GENDER
+			, MEM_BIRTHDAY
+			, DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
+			, IS_CONFIRMED
+		FROM MEMBER
+		WHERE IS_CONFIRMED = 'N'
+	</select>
+	
+	<!-- 승인처리할 회원조회 -->
+	<select id="selectMember" resultMap="memberMapper.member">
+		SELECT MEM_NO
+			, MEM_NAME
+			, MEM_EMAIL
+			, MEM_ADDR
+			, MEM_ADDR_DETAIL
+			, MEM_TELL
+			, MEM_IMAGE
+			, MEM_GENDER
+			, MEM_BIRTHDAY
+			, MEM_ROLE
+			, REG_DATE
+		FROM MEMBER
+		WHERE MEM_NO = #{memNo}
+	</select>	
+	
+	
+	
+	<!-- 회원메뉴 -> 회원승인처리 -->
+	<update id="updatePosition">
+		UPDATE MEMBER
+		SET IS_CONFIRMED = 'Y'
+		WHERE MEM_NO = ${memNo}
+	</update>
+	
+	<insert id="insertStu">
+		INSERT INTO STU(
+			STU_NO
+			, MEM_NO
+		)VALUES(
+			(SELECT 'STU_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STU_NO, 4))), 0) + 1, 3, '0') 
+         	FROM STU)
+         	, #{memNo}
+		)
+	</insert>
+	<insert id="insertEmp">
+		INSERT INTO EMP(
+			EMP_NO
+			, MEM_NO
+			, EMP_TYPE
+		)VALUES(
+			(SELECT 'STU_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STU_NO, 4))), 0) + 1, 3, '0') 
+         	FROM STU)
+         	, #{memNo}
+         	, #{memRole}
+		)
+	</insert>	
+	
+
 	
 	
 	

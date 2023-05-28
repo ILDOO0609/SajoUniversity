@@ -10,38 +10,27 @@ a {
 	color: inherit;
 }
 
-.mainMenuList {
-	background-color: #0d3f7a;
-	color: white;
-	font-weight: bold;
-	height: 40px;
-	
-}
-
-
-.mainMenu:hover{
-	cursor:pointer;
-}
-
-.mainMenu:hover .subMenu{
-	display: block;
-	list-style: none;
-	position: absolute;
-	z-index: 1;
-	color: black;
-}
-
-.subMenu {
-	display: none;
-	border: 1px solid #dddddd;
-	background-color: white;
-	padding: 0;
-	width: 10%;
+#stuTable{
 	text-align: center;
-}
-.subMenu > li:hover > a {
-	display: block;
-	background-color: #dddddd;
-	color: black;
+	margin: 0 auto;
 	
+}
+#stuTable > thead > tr{
+	vertical-align: middle;	
+	align-items: center;
+}
+
+#proTable{
+	text-align: center;
+	margin: 0 auto;
+}
+
+#proTable > thead > tr{
+	vertical-align: middle;	
+	align-items: center;
+}
+
+#memberTable > tbody > tr{
+	vertical-align: middle;	
+	align-items: center;
 }

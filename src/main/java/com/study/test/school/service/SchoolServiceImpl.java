@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.vo.EmpVO;
@@ -12,6 +13,7 @@ import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 import com.study.test.util.PageVO;
 
@@ -35,6 +37,11 @@ public class SchoolServiceImpl implements SchoolService{
 	@Override
 	public List<SchoolInfoVO> searchInfoListAjax(SchoolInfoVO schoolInfoVO) {
 		return sqlSession.selectList("schoolMapper.getSchoolInfo", schoolInfoVO);
+	}
+	//학사안내 게시글 월 셀렉박스 
+	@Override
+	public List<SchoolInfoVO> schInfoMonthAjax(int schInfoMonth) {
+		return sqlSession.selectList("schoolMapper.schInfoMonthAjax", schInfoMonth);
 	}
 	
 	//학사안내 게시글 -> 상세조회 페이지이동 
@@ -101,27 +108,113 @@ public class SchoolServiceImpl implements SchoolService{
 	
 	//학생 조회
 	@Override
-	public List<StuVO> checkStuList() {
-		return sqlSession.selectList("schoolMapper.checkStuList");
+	public List<StuVO> checkStuList(StuVO stuVO) {
+		return sqlSession.selectList("schoolMapper.checkStuList",stuVO);
 	}
+	//학생 조회 -> 검색
+	@Override
+	public List<StuVO> searchStuListAjax(StuVO stuVO) {
+		return sqlSession.selectList("schoolMapper.checkStuList", stuVO);
+	}
+	
 	
 	//교수&교직원 조회
 	@Override
-	public List<EmpVO> checkProList() {
-		return sqlSession.selectList("schoolMapper.checkProList");
+	public List<EmpVO> checkProList(LectureVO lectureVO) {
+		return sqlSession.selectList("schoolMapper.checkProList", lectureVO);
 	}
 	//교수&교직원 조회->검색
 	@Override
 	public List<LectureVO> searchProListAjax(LectureVO lectureVO) {
-		return sqlSession.selectList("school.checkProList", lectureVO);
+		return sqlSession.selectList("schoolMapper.checkProList", lectureVO);
 	}
+	
+	
+	
+// -------학적변동------------------------------------------------------	
+	//학적변동 -> 휴학관리 대기조회
+	@Override
+	public List<StatusInfoVO> getStatusInfoList() {
+		return sqlSession.selectList("schoolMapper.getStatusInfoList");
+	}
+	//학적변동 -> 휴학승인 승인완료조회
+	@Override
+	public List<StatusInfoVO> getStatusInfoAppList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("schoolMapper.getStatusInfoAppList");
+	}
+	//학적변동 -> 휴학승인 승인취소조회
+	@Override
+	public List<StatusInfoVO> getStatusInfoDeniedList() {
+		return sqlSession.selectList("schoolMapper.getStatusInfoDeniedList");
+	}
+	
+	//학적변동 -> 휴학신청 회원조회
+	@Override
+	public String updateLeaveSelect(String statusNo) {
+		return sqlSession.selectOne("schoolMapper.updateLeaveSelect", statusNo);
+	}
+	//학적변동 -> 휴학신청 승인
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void updateLeaveApp(StatusInfoVO statusInfoVO) {
+		sqlSession.update("schoolMapper.updateLeaveApp", statusInfoVO);
+		sqlSession.update("schoolMapper.updateLeaveAppStu",statusInfoVO);
+	}
+	//학적변동 -> 휴학신청 취소
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void updateLeaveDenied(StatusInfoVO statusInfoVO) {
+		sqlSession.update("schoolMapper.updateLeaveDenied", statusInfoVO);
+		sqlSession.update("schoolMapper.updateLeaveDeniedStu", statusInfoVO);
+	}
+
+	
+	
+	
+	
+	
 	
 	
 // -------회원메뉴 회원조회------------------------------------------------------
+	//등록회원 전체조회
 	@Override
-	public List<MemberVO> selectMember() {
-		return sqlSession.selectList("schoolMapper.selectMember");
+	public List<MemberVO> selectMemberList() {
+		return sqlSession.selectList("schoolMapper.selectMemberList");
 	}
+
+	//등록회원 업데이트할 회원 조회
+	@Override
+	public MemberVO selectMember(String memNo) {
+		return sqlSession.selectOne("schoolMapper.selectMember", memNo);
+	}
+	//등록회원 업데이트
+	@Override
+	public void updatePosition(String memNo) {
+		sqlSession.update("schoolMapper.updatePosition", memNo);
+	}
+	//등록회원 업데이트 정보인서트 
+	@Override
+	public void insertStu(MemberVO memberVO) {
+		sqlSession.insert("schoolMapper.insertStu", memberVO);
+	}
+	@Override
+	public void insertEmp(MemberVO memberVO) {
+		sqlSession.insert("schoolMapper.insertEmp", memberVO);
+	}
+
+
+
+
+	
+
+	
+
+	
+
+
+	
+
 
 
 	

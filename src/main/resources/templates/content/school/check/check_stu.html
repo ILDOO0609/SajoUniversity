@@ -11,96 +11,88 @@
 	<div class="col">
 		<div class="row">
 			<div class="col" style="padding-right: 0px;">
-				<table class="table align-middle">
+				<table class="table table-hover" id="stuTable">
+					<colgroup>
+						<col width="15%">					
+						<col width="20%">					
+						<col width="15%">					
+						<col width="20%">					
+						<col width="10%">					
+						<col width="20%">					
+					</colgroup>
 					<thead>
-						<tr>
-							<td>
+						<tr style="text-align: left; font-weight: bold;">
+							<td colspan="6">
 								학생 정보
 							</td>
-						</tr>
+						</tr> 
+
 						<tr>
+							<td>단과대학</td>
 							<td>
-								<div class="row text-center">
-									<div class="col-2">단과대학</div>
-									<div class="col-2">
-										<select class="form-select" name="collNo" onchange="changeColl(this);">
-											<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
-										</select>
-									</div>
-									<div class="col-2">전공학과</div>
-									<div class="col-2" id="deptDiv">
-										<select class="form-select" name="deptNo">
-											<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
-												[[${dept.deptName}]]
-											</option>
-										</select>
-									</div>
-									<div class="col-2">학생명</div>
-									<div class="col-2">
-										<input type="text" class="form-control" name="searchValue">
-									</div>
-								</div>
+								<select class="form-select" name="collNo" onchange="changeColl(this);">
+									<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
+								</select>
 							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="row text-center">
-									<div class="col-2">재적상태</div>
-									<div class="col-2">
-										<select class="form-select" name="searchKeyword">
-											<option>전체</option>
-											<option>재학</option>
-											<option>휴학</option>
-										</select>
-									</div>
-									<div class="col-2">학년</div>
-									<div class="col-2">
-										<select class="form-select" name="searchKeyword">
-											<option>전체</option>
-											<option>1학년</option>
-											<option>2학년</option>
-											<option>3학년</option>
-											<option>4학년</option>
-										</select>
-									</div>
-									<div class="col-4 d-grid">
-										<input type="button" class="btn btn-primary" value="Search" onclick="searchOrderList();">
-									</div>
-								</div>
+							<td>전공학과</td>							
+							<td id="deptDiv">
+								<select class="form-select" name="deptNo">
+									<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
+										[[${dept.deptName}]]
+									</option>
+								</select>
 							</td>
+							<td>학생명</td>							
+							<td><input type="text" class="form-control" id="searchStuInput" placeholder="학생명 입력"></td>							
 						</tr>
-					</thead>
-					<tbody>
+						
 						<tr>
+							<td>재적상태</td>
 							<td>
+								<select class="form-select" name="searchKeyword">
+									<option>전체</option>
+									<option>재학</option>
+									<option>휴학</option>
+								</select>
+							</td>
+							<td>학년</td>							
+							<td>
+								<select class="form-select" name="searchKeyword">
+									<option>전체</option>
+									<option>1학년</option>
+									<option>2학년</option>
+									<option>3학년</option>
+									<option>4학년</option>
+								</select>
+							</td>
+							<td colspan="2" style="text-align: right;">
+								<input type="button" class="btn btn-primary" value="Search" onclick="searchStuList();">
+							</td>							
+						</tr>
+						
+						<tr style="text-align: left; font-weight: bold;">
+							<td colspan="6">
 								학생 전체 조회 및 검색 결과
 							</td>
 						</tr>
 						<tr>
-							<td>
-								<div class="row text-center">
-									<div class="col-2">학번</div>
-									<div class="col-2">학년</div>
-									<div class="col-2">학생명</div>
-									<div class="col-2">단과대학</div>
-									<div class="col-2">전공</div>
-									<div class="col-2">재적상태</div>
-								</div>
-							</td>						
+							<td>학번</td>
+							<td>단과대학</td>
+							<td>학생명</td>
+							<td>전공학과</td>
+							<td>학년</td>
+							<td>재적상태</td>
 						</tr>	
-						<tr>
-							<td>
-								<div class="row text-center">
-									<th:block th:each="stu : ${stuList}">
-										<div class="col-2">[[${stu.memNo}]]</div>
-										<div class="col-2">[[${stu.stuYear}]]</div>
-										<div class="col-2">[[${stu.memberVO.memName}]]</div>
-										<div class="col-2">[[${stu.colleageVO.collName}]]</div>
-										<div class="col-2">[[${stu.deptVO.deptName}]]</div>
-										<div class="col-2">[[${stu.stuStatus}]]</div>
-									</th:block>
-								</div>
-							</td>						
+					</thead>
+					
+					<tbody>
+						<tr th:each="stu : ${stuList}">
+							<td>[[${stu.memNo}]]</td>
+							<td>[[${stu.colleageVO.collName}]]</td>
+							<td>[[${stu.memberVO.memName}]]</td>
+							<td>[[${stu.deptVO.deptName}]]</td>
+							<td>[[${stu.stuYear}]]</td>
+							<td>[[${stu.stuStatus}]]</td>
 						</tr>	
 					</tbody>	
 				</table>
@@ -112,7 +104,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<script type="text/javascript" src="/js/content/school/school.js"></script>
+	<script type="text/javascript" src="/js/content/school/check.js"></script>
 </th:block>
 
 </html>

@@ -21,13 +21,14 @@
 			<span>작성자 : </span><span th:text="${detail.schInfoWriter}"></span>
 		</div>
 		<div class="col-2">
-			<span>등록일 : </span><span th:text="${detail.regDate}"></span> 
+			<span>등록일 : </span><span th:text="${detail.schInfoDate}"></span> 
 		</div>
 		<div class="col-2">
 			<span>조회수 : </span><span th:text="${detail.schInfoReadCnt}"></span>
 		</div>
 		<div class="col-6">
-			<span>기간 : </span><span th:text="${detail.startDate}"></span>~<span th:text="${detail.endDate}"></span>
+			<span>기간 : </span><span th:text="${detail.schInfoStartDate}"></span> ~
+			<span th:text="${detail.schInfoEndDate}"></span>
 		</div>
 	</div>	
 	<div class="row">

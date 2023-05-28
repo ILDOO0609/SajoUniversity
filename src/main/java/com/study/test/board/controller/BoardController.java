@@ -2,6 +2,7 @@ package com.study.test.board.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.study.test.board.service.BoardService;
 import com.study.test.board.vo.BoardVO;
+import com.study.test.member.service.memberService;
+import com.study.test.stu.service.StuService;
 import com.study.test.util.PageVO;
 
 import jakarta.annotation.Resource;
@@ -19,6 +22,9 @@ import jakarta.annotation.Resource;
 public class BoardController {
 	@Resource(name="boardService")
 	private BoardService boardService;
+	
+	@Resource(name="memberService")
+	private memberService memberService;
 	
 	// 학생 커뮤니티
 	@GetMapping("/stuBoard")
@@ -45,8 +51,11 @@ public class BoardController {
 	
 	// 게시글 등록 하기
 	@PostMapping("/boardWrite")
-	public String boardWrite(BoardVO boardVO) {
+	public String boardWrite(BoardVO boardVO, Authentication authentication) {
 		boardVO.setCateNo("CATE_001");
+		// 작성자 세팅
+		boardVO.setBoardWriter(memberService.getMemInfoForStu(authentication.getName()).getMemName());
+		
 		
 		if (boardVO.getIsSecret() == null) {
 			boardVO.setIsSecret("N");

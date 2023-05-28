@@ -11,89 +11,78 @@
 	<div class="col">
 		<div class="row">
 			<div class="col" style="padding-right: 0px;">
-				<table class="table align-middle">
+				<table class="table table-hover" id="proTable">
+					<colgroup>
+						<col width="15%">					
+						<col width="15%">					
+						<col width="15%">					
+						<col width="25%">					
+						<col width="30%">					
+					</colgroup>
+					
 					<thead>
-						<tr>
-							<td>
+						<tr style="text-align: left; font-weight: bold;">
+							<td colspan="5">
 								교수/교직원 정보
 							</td>
 						</tr>
+						
 						<tr>
+							<td>직책</td>
 							<td>
-								<div class="row text-center">
-									<div class="col-2">직책</div>
-									<div class="col-2">
-										<div class="form-check text-start">
-											<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교수" checked>
-											<label class="form-check-label" for="gender_male">교수</label>
-										</div>
-									</div>
-									<div class="col-2">
-										<div class="form-check text-start">
-											<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교직원">
-											<label class="form-check-label" for="gender_female">교직원</label>
-										</div>
-									</div>
-									<div class="col-2">교수/교직원명</div>
-									<div class="col-4 d-grid">
-										<input type="text" class="form-control" id="searchInput" placeholder="이름을 입력해주세요.">
-									</div>
-								</div>
+								<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교수" checked>
+								<label class="form-check-label" for="gender_male">교수</label>
+							</td>
+							<td>
+								<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교직원">
+								<label class="form-check-label" for="gender_female">교직원</label>
+							</td>
+							<td>교수/교직원 명</td>
+							<td>
+								<input type="text" class="form-control" name="searchValue" id="searchProInput" placeholder="교수&교직원명 입력">
 							</td>
 						</tr>
+						
 						<tr>
+							<td>단과대학</td>
 							<td>
-								<div class="row text-center">
-									<div class="col-2">단과대학</div>
-									<div class="col-2">
-										<select class="form-select" name="collNo" onchange="changeColl(this);">
-											<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
-										</select>
-									</div>
-									<div class="col-2">전공학과</div>
-									<div class="col-2" id="deptDiv">
-										<select class="form-select" name="deptNo">
-											<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
-												[[${dept.deptName}]]
-											</option>
-										</select>
-									</div>
-									<div class="col-4 d-grid">
-										<input type="button" class="btn btn-primary" value="Search" onclick="searchProList();">
-									</div>
-								</div>
+								<select class="form-select" name="collNo" onchange="changeColl(this);">
+									<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
+								</select>
+							</td>
+							<td>전공학과</td>
+							<td id="deptDiv">
+								<select class="form-select" name="deptNo">
+									<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
+										[[${dept.deptName}]]
+									</option>
+								</select>
+							</td>
+							<td style="text-align: right;">
+								<input type="button" class="btn btn-primary" value="Search" onclick="searchProList();">
 							</td>
 						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
+						
+						<tr style="text-align: left; font-weight: bold;">
+							<td colspan="5">
 								교수&교직원 전체 조회 및 검색 결과
 							</td>
 						</tr>
 						<tr>
-							<td>
-								<div class="row text-center">
-									<div class="col-2">직원번호</div>
-									<div class="col-2">직책</div>
-									<div class="col-3">교수/교직원명</div>
-									<div class="col-3">단과대학</div>
-									<div class="col-2">전공</div>
-								</div>
-							</td>						
+							<td>직원번호</td>
+							<td>직책</td>
+							<td>교수/교직원명</td>
+							<td>단과대학</td>
+							<td>전공</td>
 						</tr>	
-						<tr>
-							<td id="tdTag">
-								<div class="row text-center">
-									<th:block th:each="pro : ${proList}">
-										<div class="col-2">[[${pro.empVO.memNo}]]</div>
-										<div class="col-2">[[${pro.empVO.empType}]]</div>
-										<div class="col-3">[[${pro.memberVO.memName}]]</div>
-										<div class="col-3">[[${pro.colleageVO.collName}]]</div>
-										<div class="col-2">[[${pro.deptVO.deptName}]]</div>
-									</th:block>
-								</div>
-							</td>						
+					</thead>
+					<tbody>
+						<tr th:each="pro : ${proList}">
+							<td>[[${pro.empVO.memNo}]]</td>
+							<td>[[${pro.empVO.empType}]]</td>
+							<td>[[${pro.memberVO.memName}]]</td>
+							<td>[[${pro.colleageVO.collName}]]</td>
+							<td>[[${pro.deptVO.deptName}]]</td>
 						</tr>	
 					</tbody>	
 				</table>
@@ -106,7 +95,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<script type="text/javascript" src="/js/content/school/school.js"></script>
+	<script type="text/javascript" src="/js/content/school/check.js"></script>
 </th:block>
 
 </html>

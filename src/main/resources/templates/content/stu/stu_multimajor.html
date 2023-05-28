@@ -10,12 +10,182 @@
 </th:block>
 
 <th:block layout:fragment="content">
-복수전공
+복수전공신청
+<form id="formTag" action="/stu/confirmMulti" method="post">
+<input type="hidden" name="stuYear" th:value="${stuInfo.stuYear}">
+<input type="hidden" name="stuSem" th:value="${stuInfo.stuSem}">
+<input type="hidden" name="stuNo" th:value="${stuInfo.stuNo}">
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<colgroup>
+				<col width="10%;">
+				<col width="15%;">
+				<col width="15%;">
+				<col width="15%;">
+				<col width="15%;">
+			</colgroup>
+			<tr>
+				<td rowspan="5" ><img th:src="@{'/upload/' + ${memInfo.memImage}}" style="width: 100%; height: 100%"></td>
+				<td>성명</td>
+				<td>[[${memInfo.memName}]]</td>
+				<td>학번</td>
+				<td>[[${memInfo.memNo}]]</td>
+			</tr>
+			<tr>
+				<td>단과대학</td>
+				<td>[[${collInfo.collName}]]</td>
+				<td>소속학과</td>
+				<td>[[${deptInfo.deptName}]]</td>
+			</tr>
+			<tr>
+				<td>학기</td>
+				<td>[[${stuInfo.stuYear}+${stuInfo.stuSem}]]학기</td>
+				<td>학적상태</td>
+				<td>[[${stuInfo.stuStatus}]]</td>
+			</tr>
+			<tr>
+				<td>이메일</td>
+				<td>[[${memInfo.memEmail}]]</td>
+				<td>전화번호</td>
+				<td>[[${memInfo.memTell}]]</td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td colspan="3">[[${memInfo.memAddr  + ' ' +  memInfo.memAddrDetail}]]</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<tr>
+				<td>현재 단과대학</td>
+				<td>[[${collInfo.collName}]]</td>
+				<td>현재 소속대학</td>
+				<td>[[${deptInfo.deptName}]]</td>
+			</tr>
+			<tr>
+				<td>복수전공 신청 단과대학</td>
+				<td>
+				<div>
+					<select style="width: 200px;" class="form-select" name="multiMajorColl" onchange="changeColl(this)">
+						<option value="">전체</option>
+						<option th:each = "coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
+					</select>
+				</div>
+				</td>
+				<td>복수전공 신청 소속학과</td>
+				<td>
+					<div id="deptDiv">
+						<select style="width: 200px;" class="form-select" name="multiMajorDept">
+							<option value="">전체</option>
+							<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo == dept.collNo}">
+								[[${dept.deptName}]]
+							</option>
+						</select>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div class="mb-5">
+			<textarea name="applyReason" class="form-control mb-5 applyReason" rows="5" cols="50" style="resize: none;" placeholder="복수전공 신청 사유를 작성해 주세요."></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col text-center mb-5">
+			<input class="btn btn-primary" type="button" value="복수전공신청" onclick="applyMulti();">
+		</div>
+	</div>
+</div>
+</form>
+
+<button id="hiddenBtn" style="display: none;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Scrollable modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">복수전공 신청 관련 유의사항 안내</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+		다양한 분야의 전문지식을 취득하기 위하여 다전공제를 채택함에 따라 제1전공(주전공)이외에 제2, 3전공을 이수할 수 있는 제도 (제1전공(주전공)과 동일한 수준의 전공으로 인정됨, 최대 제3전공(본인전공 포함)까지만 가능)
+		<br>
+		<br>
+		대상학과
+		<br>
+		본교의 모든 학부(과)를 복수전공의 대상학과로 개방함(5년제 건축학 전공, 간호학과 제외)
+		교직과정을 이수하지 않는 학생이 사범계열 학과를 복수전공하는 것은 불가
+		신청 자격 및 시기
+		<br>
+		<br>
+		가. 신청자격
+		<br>
+		제 1전공(주전공)에서 2학기 이상 이수한 자. 단, 교원자격취득을 목적으로 하는 복수전공자는 성적 평점평균이 3.00이상인 자
+		<br>
+		나. 신청시기 및 절차
+		<br>
+		2학년 1학기 초부터 4학년 2학기 초 공고된 기간 (교원자격증 취득을 위한 복수전공 교직이수자는 3학년 1학기 복수전공 학부(과)에서 선발함)
+		<br>
+		통합정보시스템을 이용하여 신청 → 지원서출력 → 제1전공・제2전공 교수서명 → 지원서 제출(제2전공 신청학부(과))(한 학기에 1개 전공 신청 가능)
+		<br>
+		다.
+		<br> 
+		편입생의 경우에는 제1전공(주전공)에서 1학기이상 이수 후 신청 가능
+		<br>
+		라.
+		<br>
+		제3전공 신청자격: 제1전공의 전공과목을 18학점이상, 제2전공의 전공학점을 9학점 이상 이수한 자에게 허용함
+		제2전공의 이수학점
+		교육과정 참조
+		<br>
+		<br>
+		신청방법
+		<br>
+		본인 통합정보시스템을 이용하여 신청 후 주전공과 복수전공 날인 후 복수전공 학과에 제출 (한 학기에 1개 전공 신청 가능)
+		<br>
+		<br>
+		유의사항
+		<br>
+		복수(부), 연계(융합) 전공자가 제1전공(주전공)의 졸업요건은 갖추었으나, 복수(부), 연계(융합)전공의 졸업요건을 갖추지 못한 경우에는 졸업이 불가함.
+		<br>
+		단, 복수(부), 연계(융합)전공을 취소하거나 학기연장으로 복수(부), 연계(융합)전공의 졸업요건을 충족하면 당해학기 학위수여 일정에 맞추어 학위가 가능함
+		<br>
+		다전공의 현장실습·인턴십 교과목은 전공이수 학점으로 최대 15학점까지 인정
+		<br>
+		<br>
+		담당부서
+		<br>
+		교무처 학사지원팀 052-520-5518
+      </div>
+      <div class="modal-footer justify-content-center row">
+	      <div class="mt-2 mb-2">
+	      	<label>
+	    	  <input class="form-check-input" type="checkbox" id="isAgree"> 위 내용을 확인하였고 동의합니다
+	    	</label>
+	      </div>
+	      	<div class="col-3 d-grid">
+		        <button id="confirmBtn" type="button" class="btn btn-primary" onclick="confirmMulti();" disabled>확인</button>
+	      	</div>
+	      	<div class="col-3 d-grid">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-   <!-- <script type="text/javascript" src="첨부될 js 파일 경로"></script> -->
+	<script type="text/javascript" src="/js/content/stu/stu_multimajor.js"></script>
 </th:block>
 
 </html>

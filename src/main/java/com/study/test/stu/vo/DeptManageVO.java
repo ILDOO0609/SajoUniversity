@@ -1,5 +1,8 @@
 package com.study.test.stu.vo;
 
+import com.study.test.colleage.vo.ColleageVO;
+import com.study.test.colleage.vo.DeptVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,7 +12,6 @@ import lombok.ToString;
 @ToString
 public class DeptManageVO {
 	private String applyNo;
-	private String applyCode;
 	private String applyDate;
 	private String applyReason;
 	private String approvalDate;
@@ -17,11 +19,11 @@ public class DeptManageVO {
 	private String stuYear;
 	private String stuSem;
 	private String stuNo;
-	private String fromColl;
-	private String toColl;
-	private String fromDept;
-	private String toDept;
 	private String multiMajorColl;
 	private String multiMajorDept;
 	
-}
+	private DeptVO deptVO;
+	private StuVO stuVO;
+	private ColleageVO colleageVO;
+	
+}	

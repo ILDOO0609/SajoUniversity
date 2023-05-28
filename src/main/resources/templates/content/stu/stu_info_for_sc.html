@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{fragment/layout}">
+
+<!-- 연결해야 할 외부 css파일 -->
+<th:block layout:fragment="content_css">
+   <!-- <link rel="stylesheet" href="첨부될 css 파일 경로"> -->
+</th:block>
+
+<th:block layout:fragment="content">
+학적기본조회
+<br>
+- 휴학/복학 신청 현황
+<div class="row">
+	<div class="col">
+		<table class="table text-center">
+			<thead>
+				<tr>
+					<td>전공대학</td>
+					<td>소속학과</td>
+					<td>현재학적상태</td>
+					<td>신청 후 학적상태</td>
+					<td>신청일</td>
+					<td>승인일</td>
+					<td>승인상태</td>
+					<td>신청여부</td>
+				</tr>
+			</thead>
+			<tbody class="align-middle">
+				<tr th:if="${statusInfo == null or #lists.size(statusInfo) == 0}">
+					<td colspan="8">신청한 내역이 없습니다.</td>
+				</tr>
+				<tr th:unless="${statusInfo == null or #lists.size(statusInfo) == 0}">
+					<td>[[${collInfo.collName}]]</td>
+					<td>[[${deptInfo.deptName}]]</td>
+					<td>[[${statusInfo.nowStatus}]]</td>
+					<td>[[${statusInfo.afterStatus}]]</td>
+					<td>[[${statusInfo.applyDate}]]</td>
+					<td>[[${statusInfo.approvalDate}]]</td>
+					<td>[[${statusInfo.ingStatus}]]</td>
+					<td th:if="${statusInfo != null and statusInfo.ingStatus.equals('처리중')}">
+						<input class="btn btn-primary" type="button" value="신청취소" onclick="deleteAbsence();">
+					</td>
+					<td th:unless="${statusInfo != null and statusInfo.ingStatus.equals('처리중')}">
+						[[${statusInfo.ingStatus}]]
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+- 복수전공 신청 현황
+<div class="row">
+	<div class="col">
+		<table class="table text-center">
+			<thead>
+				<tr>
+					<td>전공대학</td>
+					<td>소속학과</td>
+					<td>복수전공대학</td>
+					<td>복수전공학과</td>
+					<td>신청일</td>
+					<td>승인일</td>
+					<td>승인상태</td>
+					<td>신청여부</td>
+				</tr>
+			</thead>
+			<tbody class="align-middle">
+				<tr th:if="${getDeptInfo == null or #lists.size(getDeptInfo)==0}">
+					<td colspan="8">신청한 내역이 없습니다.</td>
+				</tr>
+				<th:block th:each="dept : ${getDeptInfo}">
+				<tr th:unless="${getDeptInfo == null or #lists.size(getDeptInfo)==0}" class="align-middle">
+					<td>[[${collInfo.collName}]]</td>
+					<td>[[${deptInfo.deptName}]]</td>
+					<td>[[${dept.colleageVO.collName}]]</td>
+					<td>[[${dept.deptVO.deptName}]]</td>
+					<td>[[${dept.applyDate}]]</td>
+					<td>[[${dept.approvalDate}]]</td>
+					<td>[[${dept.processStatus}]]</td>
+					<td th:if="${getDeptInfo != null and dept.processStatus.equals('처리중')}">
+						<input class="btn btn-primary" type="button" value="신청취소" onclick="deleteMultiMajor();">
+					</td>
+					<td th:unless="${getDeptInfo != null and dept.processStatus.equals('처리중')}">
+						[[${dept.processStatus}]]
+					</td>
+				</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
+</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/stu/stu_info_for_sc.js"></script>
+</th:block>
+
+</html>

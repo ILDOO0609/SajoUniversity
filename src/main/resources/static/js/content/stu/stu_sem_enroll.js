@@ -22,16 +22,21 @@ function changeColl(coll){
 // 단과대학 변경 시 소속학과 변경
 function drawDeptSelectbox(deptList){
 	const dept_div = document.querySelector('#deptDiv');
-	
 	dept_div.replaceChildren();
 		
 	let str = '';
 	
-	str += `<select class="form-select text-center" name="deptNo">`;
-	for(const dept of deptList){
-		str += `<option id="deptNo" value="${dept.deptNo}">${dept.deptName}</option>`;
-	}
-	str += `</select>`;
+	if (deptList.length === 0) {
+        str += `<select class="form-select text-center" name="deptNo">`;
+        str += `<option value=''>전체</option>`;
+        str += `</select>`;
+  	} else {
+        str += `<select class="form-select text-center" name="deptNo">`;
+        for (const dept of deptList) {
+            str += `<option id="deptNo" value="${dept.deptNo}">${dept.deptName}</option>`;
+    }
+        str += `</select>`;
+    }
 	
 	dept_div.insertAdjacentHTML('afterbegin',str);
 }

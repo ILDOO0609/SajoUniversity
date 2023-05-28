@@ -6,6 +6,7 @@ import com.study.test.colleage.vo.ColleageVO;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.vo.EnrollmentVO;
 import com.study.test.emp.vo.LectureVO;
+import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 
@@ -48,4 +49,19 @@ public interface StuService {
 	
 	// 복학 신청
 	void updateStatusStuForRe(String stuNo);
+	
+	// 복수전공 신청
+	void insertMultiMajor(DeptManageVO deptManageVO);
+	
+	// 학적조회(복수전공)
+	List<DeptManageVO> getDeptManageForStu(String stuNo);
+	
+	// 학적조회(휴학/복학상태)
+	StatusInfoVO getStatusInfoForStu(String stuNo);
+	
+	// 휴학/복학신청 취소
+	void deleteAbsence(String stuNo);
+	
+	// 복수전공 신청 취소
+	void deleteMultiMajor(String stuNo);
 }

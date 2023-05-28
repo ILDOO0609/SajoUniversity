@@ -20,6 +20,7 @@ import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.service.memberService;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.stu.service.StuService;
+import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 
@@ -42,6 +43,23 @@ public class StuController {
 	
 	@Resource(name="memberService")
 	private memberService memberService;
+	
+	// 학생 학적 기본조회
+	@GetMapping("/stuInfoForSc")
+	public String stuInfoForSc(Authentication authentication, String stuNo, Model model, String memNo) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		// 휴학복학상태 조회
+		model.addAttribute("statusInfo", stuService.getStatusInfoForStu(stuNo));
+		// 복수전공 신청 조회
+		model.addAttribute("getDeptInfo", stuService.getDeptManageForStu(stuNo));
+		
+		memNo = authentication.getName();
+		model.addAttribute("collInfo", stuService.getCollName(memNo));
+		model.addAttribute("deptInfo", stuService.getDeptName(memNo));
+		
+		return "content/stu/stu_info_for_sc";
+	}
+	
 	
 	// 학생 정보 조회
 	@GetMapping("/stuInfo")
@@ -102,9 +120,10 @@ public class StuController {
 	
 	//  복수전공 신청 처리
 	@PostMapping("/confirmMulti")
-	public void confirmMulti() {
+	public String confirmMulti(DeptManageVO deptManageVO) {
+		stuService.insertMultiMajor(deptManageVO);
 		
-		
+		return "redirect:/stu/stuInfoForSc";
 	}
 	
 	
@@ -219,7 +238,7 @@ public class StuController {
 		
 		stuService.applyAbsence(statusInfoVO);
 		
-		return "redirect:/stu/stuStatus";
+		return "redirect:/stu/stuInfoForSc";
 	}
 	
 	// 복학신청 페이지
@@ -231,8 +250,6 @@ public class StuController {
 		model.addAttribute("stuInfo", stuService.getStuInfo(memNo));
 		model.addAttribute("collInfo", stuService.getCollName(memNo));
 		model.addAttribute("deptInfo", stuService.getDeptName(memNo));
-		
-		
 		
 		return "content/stu/stu_status_re";
 	}
@@ -250,6 +267,26 @@ public class StuController {
 		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
 		
 		return stuService.getStatusRe(stuNo) >= 1 ? true : false;
+	}
+	
+	// 휴학/복학 신청 취소
+	@GetMapping("/deleteAbsence")
+	public String deleteAbsence(Authentication authentication ,String stuNo) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		
+		stuService.deleteAbsence(stuNo);
+		
+		return "redirect:/stu/stuInfoForSc";
+	}
+	
+	// 복수전공 신청 취소
+	@GetMapping("/deleteMultiMajor")
+	public String deleteMultiMajor(Authentication authentication ,String stuNo) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		
+		stuService.deleteMultiMajor(stuNo);
+		
+		return "redirect:/stu/stuInfoForSc";
 	}
 	
 	// 학생 시간표

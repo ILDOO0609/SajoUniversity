@@ -37,6 +37,7 @@
 
 <!-- jquery 문법 로딩 -->
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!--캘린더 js  -->
 <script src='/fullcalendar-5.11.5/lib/main.js'></script>
 <script src='/fullcalendar-5.11.5/locales-all.min.js'></script>
@@ -53,7 +54,9 @@
 
 
 <!-- content 페이지가 열릴때 같이 열리는 js -->
-<th:block layout:fragment="content_js"></th:block>
+<th:block layout:fragment="content_js">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</th:block>
 </body>
 </html>
 

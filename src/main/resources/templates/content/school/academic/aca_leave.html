@@ -10,64 +10,67 @@
 		<div class="col">
 			<div class="row">
 				<div class="col">
-					<table class="table align-middle">
-						<colgroup>
-							<col width="10%">								
-							<col width="*">								
-							<col width="15%">								
-						</colgroup>
-						<tr>
-							<td class="text-center">승인상태</td>
-							<td>
-								<div class="form-check form-check-inline">
-									<input type="checkbox" class="form-check-input" value="" checked onclick="setSearchCheckbox(this);">
-									<label class="form-check-label">전체</label>
-									<label class="form-check-label">승인대기</label>
-									<label class="form-check-label">승인완료</label>
-									<label class="form-check-label">승인취소</label>
-								</div>
-							</td>
-							<td>
-								<div class="row">
-									<div class="col d-grid">
-										<input type="button" class="btn btn-primary" value="Search" onclick="">
+					<form id="searchForm" th:achtion="@{/school/checkStu}" method="post"> 
+						<table class="table align-middle">
+							<colgroup>
+								<col width="10%">								
+								<col width="*">								
+								<col width="15%">								
+							</colgroup>
+							<tr>
+								<td class="text-center">승인상태</td>
+								<td>
+									<div class="form-check form-check-inline">
+										<input type="checkbox" class="form-check-input" value="" checked onclick="setSearchCheckbox(this);">
+										<label class="form-check-label">전체</label>
+										<label class="form-check-label">승인대기</label>
+										<label class="form-check-label">승인완료</label>
+										<label class="form-check-label">승인취소</label>
 									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td class="text-center">신청일</td>
-							<td colspan="2">
-								<div class="row">
-									<div class="col-3">
-										<div class="input-group">
-											<span class="input-group-text">from</span>
-											<input type="date" class="form-control" name="searchFromDate">
+								</td>
+								<td>
+									<div class="row">
+										<div class="col d-grid">
+											<input type="button" class="btn btn-primary" value="Search" onclick="">
 										</div>
 									</div>
-									<div class="col-3">
-										<div class="input-group">
-											<span class="input-group-text">to</span>
-											<input type="date" class="form-control" name="searchToDate">
+								</td>
+							</tr>
+							<tr>
+								<td class="text-center">신청일</td>
+								<td colspan="2">
+									<div class="row">
+										<div class="col-3">
+											<div class="input-group">
+												<span class="input-group-text">from</span>
+												<input type="date" class="form-control" name="searchFromDate">
+											</div>
+										</div>
+										<div class="col-3">
+											<div class="input-group">
+												<span class="input-group-text">to</span>
+												<input type="date" class="form-control" name="searchToDate" >
+											</div>
+										</div>
+										<div class="col-2">
+											<select class="form-select" name="searchKeyword">
+												<option >학생이름</option>
+												<option >학생학번</option>
+												<option >소속대학</option>
+											</select>												
+										</div>
+										<div class="col-4">
+											<input type="text" class="form-control" name="searchValue" >
 										</div>
 									</div>
-									<div class="col-2">
-										<select class="form-select" name="searchKeyword">
-											<option>학생이름</option>
-											<option>학생학번</option>
-											<option>학생학과</option>
-										</select>												
+									<div class="row">
+										<div class="col"></div>
 									</div>
-									<div class="col-4">
-										<input type="text" class="form-control" name="searchValue">
-									</div>
-								</div>
-								<div class="row">
-									<div class="col"></div>
-								</div>
-							</td>
-						</tr>
-					</table>
+								</td>
+							</tr>
+						</table>
+					</form>	
+				
 				승인대기 목록
 					<div class="row">
 						<div class="col">
@@ -129,7 +132,8 @@
 							</th:block>
 						</div>
 					</div>
-
+				
+				
 				승인완료 목록
 					<div class="row">
 						<div class="col">

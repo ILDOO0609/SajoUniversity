@@ -52,7 +52,7 @@
 								<tr th:each="map, state : ${mapList}">
 									<th:block th:if="${map['LEC_STATUS']=='Y'}">
 										<td>[[${#lists.size(mapList)-state.index}]]</td>
-										<td><a href="javascript:void(0);" th:onclick="getStuEnrList([[${map['LEC_NO']}]]);">[[${map['LEC_NAME']}]]</a></td>
+										<td><a href="javascript:void(0);" th:onclick="getStuEnrList([[${map['LEC_NO']}]],[[${map['SEM_NO']}]]);">[[${map['LEC_NAME']}]]</a></td>
 										<td>[[${map['LEC_SCORE']}]]</td>
 										<td>[[${map['COLL_NAME']}]]</td>
 										<td>[[${map['DEPT_NAME']}]]</td>

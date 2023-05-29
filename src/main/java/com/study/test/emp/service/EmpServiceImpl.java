@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.vo.LectureTimeVO;
 import com.study.test.emp.vo.LectureVO;
+import com.study.test.emp.vo.StuGradeVO;
 
 
 @Service("empService")
@@ -26,12 +27,13 @@ public class EmpServiceImpl implements EmpService{
 		return sqlSession.selectOne("empMapper.getNowEmpNo", memNo);
 	}
 	
-	//강의 및 강의시간 등록 
+	//강의 및 강의시간 및 강의자료 등록 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void insertLecture(HashMap<String, Object> map) {
 		sqlSession.insert("empMapper.insertLecture", map.get("lectureVO"));
 		sqlSession.insert("empMapper.regLectureTime", map);
+		sqlSession.insert("empMapper.insertLecturePDF", map.get("lecturePDFVO"));
 	}
 	
 	//강의 목록 조회
@@ -95,6 +97,20 @@ public class EmpServiceImpl implements EmpService{
 	@Override
 	public List<Map<String, String>> getStuEnrForRegScore(String lecNo) {
 		return sqlSession.selectList("empMapper.getStuEnrForRegScore", lecNo);
+	}
+
+	
+	//학생성적 등록
+	@Override
+	public boolean insertStuGrade(StuGradeVO stuGradeVO) {
+		return sqlSession.insert("empMapper.insertStuGrade", stuGradeVO) == 1 ? true : false;
+		
+	}
+	
+	//학생성적 변경
+	@Override
+	public boolean updateStuGrade(StuGradeVO stuGradeVO) {
+		return sqlSession.update("empMapper.updateStuGrade", stuGradeVO) == 1 ? true : false;
 	}
 
 	

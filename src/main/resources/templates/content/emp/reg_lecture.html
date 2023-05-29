@@ -12,7 +12,7 @@
 <th:block layout:fragment="content">
 <div class="row" style="width: 80%; margin: 0 auto;">
 	<div class="col text-center">
-	<form action="/emp/regLecture" method="post" id="regForm">
+	<form action="/emp/regLecture" method="post" id="regForm" enctype="multipart/form-data">
 	<input type="hidden" name="semNo" value="SEM_0101">
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 등록 ROW ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 		<div class="row mb-5">
@@ -97,7 +97,7 @@
 						강의 자료 등록 
 					</div>
 					<div class="col-4">
-						<input type="file" class="form-control"> 
+						<input type="file" class="form-control" name="pdfFile"> 
 					</div>
 				</div>
 				<div id="container">
@@ -156,7 +156,6 @@
 <!-- 연결해야 할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/emp/reg_lecture.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 </th:block>
 

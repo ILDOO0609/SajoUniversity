@@ -82,7 +82,7 @@
 						</tr>
 						<tr th:unless="${#lists.size(lectureList)==0}" th:each="lecture : ${lectureList}">
 							<td id="lecNo">[[${lecture.lecNo}]]</td>
-							<td id="lecName">[[${lecture.lecName}]]</td>
+							<td id="lecName"><a th:href="${'/pdfFile/'+lecture.lecturePDFVO.attachedPdfName}" target="_blank">[[${lecture.lecName}]]</a></td>
 							<td>[[${lecture.lecScore}]]</td>
 							<td>[[${lecture.colleageVO.collName}]]</td>
 							<td>[[${lecture.deptVO.deptName}]]</td>

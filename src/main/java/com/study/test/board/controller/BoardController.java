@@ -26,6 +26,12 @@ public class BoardController {
 	@Resource(name="memberService")
 	private memberService memberService;
 	
+	//전체 게시판 목록 페이지
+	@GetMapping("/boardList")
+	public String boardList() {
+		return "content/board/board_list";
+	}
+	
 	// 학생 커뮤니티
 	@GetMapping("/stuBoard")
 	public String stuBoard(BoardVO boardVO, Model model, PageVO pageVO) {
@@ -34,7 +40,7 @@ public class BoardController {
 		pageVO.setTotalDataCnt(boardService.getBoardListCnt());
 		pageVO.setPageInfo();
 		
-		// 게시글 조회
+		// 게시글 조회 
 		model.addAttribute("boardList", boardService.getBoard(pageVO));
 		
 		return "content/stu/stu_board";

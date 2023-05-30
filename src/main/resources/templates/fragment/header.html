@@ -42,7 +42,7 @@
  		
  		
  		<span class="header-title" style="font-size: 48px;">사조대학 &nbsp;&nbsp;</span>
- 		<span id="clock"></span>
+ 		
  		
 
 			
@@ -50,12 +50,7 @@
  		
 		 </div>
  
-			 <style>
-				#clock {
-					font-size: 48px;
-					font-weight: bold;
-				}
-			</style>
+			
  
  <div class="row">
 		<div class="col">
@@ -66,6 +61,11 @@
 							회원등록
 						</span>
 						<div class="dropdown">
+						<span><a href="/member/time"> 디지털 시계</span>
+						<span><a href="/member/stuRegPerMonth">월별등록통계</a> </span> <!-- 드롭다운 걸어서 휴학, 재적 학생 통계 추가 -->
+						<span><a href="/member/weather"> 날씨</span>
+						<span><a href="/member/map"> 오시는 길</span>
+						
 						<span><a href="/board/boardList">게시판</a></span>
 							<div class="dropdown-content">
 								<a href="/board/boardList">게시판 목록</a>
@@ -352,6 +352,7 @@
 						<div class="col-12">
 						    <label for="time-remaining" class="form-label">&nbsp;</label> 
 						    <input type="text" class="form-control" id="time-remaining" name="time-remaining" value="남은시간">
+						    
 						</div>
 						<div class="col-12">
 						    <label for="confirmation" class="form-label">&nbsp;</label> 
@@ -422,20 +423,7 @@
 		</div>
 	</div>
  
- <script>
-    function updateClock() {
-      var now = new Date();
-      var hours = now.getHours();
-      var minutes = now.getMinutes();
-      var seconds = now.getSeconds();
 
-      var time = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
-
-      document.getElementById('clock').textContent = time;
-    }
-
-    setInterval(updateClock, 1000);
-  </script>
  
  
 </th:block>

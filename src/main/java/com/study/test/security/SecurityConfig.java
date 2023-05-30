@@ -41,7 +41,7 @@ public class SecurityConfig {
 				.anyRequest().authenticated()
 			.and()
 				.formLogin()
-				.loginPage("/member/loginForm")
+				.loginPage("/member/loginForm3")
 				.usernameParameter("memNo")
 				.passwordParameter("memPw")
 				.loginProcessingUrl("/member/login")

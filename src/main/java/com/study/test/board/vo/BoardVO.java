@@ -21,7 +21,6 @@ public class BoardVO {
 	private int replyCnt;
 	private String isSecret;
 	private String isNotice;
-	private String cateNo;
 	
 	private List<ReplyVO> replyList;
 }

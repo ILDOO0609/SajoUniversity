@@ -302,6 +302,7 @@
 		    STU_GRADE ON STU_GRADE.STU_NO = STU.STU_NO AND ENR.LEC_NO = STU_GRADE.LEC_NO
 		WHERE 
 		    ENR.LEC_NO = #{lecNo}
+		ORDER BY MEMBER.MEM_NO
 	</select>
 	
 	<!-- 학생 성적 등록 -->

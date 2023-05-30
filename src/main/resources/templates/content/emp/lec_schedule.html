@@ -10,7 +10,7 @@
 </th:block>
 
 <th:block layout:fragment="content">
-<div class="row">
+<div class="row lec-schedule">
 	<div class="col">
 		<div class="row">
 			<div class="col">
@@ -19,7 +19,8 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				* 김교수 강의 시간표입니다. pdf 다운로드
+				* 김교수 강의 시간표입니다. 
+				<input type="button" value="pdf다운로드" onclick="pdf();">
 			</div>
 		</div>
 		<div class="row">
@@ -56,6 +57,8 @@
 <!-- 연결해야 할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/emp/lec_schedule.js"></script>
+	<script type="text/javascript" src="/js/content/emp/html2canvas.js"></script>
+	<script type="text/javascript" src="/js/content/emp/jspdf.min.js"></script>
 </th:block>
 
 </html>

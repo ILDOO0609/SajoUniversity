@@ -118,6 +118,11 @@ public class StuServiceImpl implements StuService{
 		sqlSession.delete("stuMapper.deleteMultiMajor", stuNo);
 		
 	}
+
+	@Override
+	public List<LectureVO> getLectureListForStuTimeTable(String stuNo) {
+		return sqlSession.selectList("empMapper.getLectureListForStuTimeTable", stuNo);
+	}
 	
 	
 	

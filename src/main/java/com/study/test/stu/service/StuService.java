@@ -64,4 +64,8 @@ public interface StuService {
 	
 	// 복수전공 신청 취소
 	void deleteMultiMajor(String stuNo);
+	
+	// 학생 시간표 조회
+	List<LectureVO> getLectureListForStuTimeTable(String stuNo);
+	
 }

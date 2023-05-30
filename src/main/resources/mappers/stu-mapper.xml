@@ -57,7 +57,7 @@
 SELECT STU_NO
 	, STU_YEAR
 	, STU_SEM
-	, STU_STATUS
+	, DECODE(STU_STATUS, 1, '재학중', 2,'휴학중', 3, '제적') STU_STATUS
 	, MEM_NO
 	, COLL_NO
 	, DEPT_NO

@@ -386,6 +386,22 @@
 		SET NOW_NUM = NOW_NUM - 1
 		WHERE LEC_NO = #{lecNo}
 	</update>
+	
+	<!-- 학생 시간표 조회 -->
+	<select id="getLectureListForStuTimeTable" resultMap="lecture">
+		SELECT TIME_NO
+		    , DECODE(LEC_DAY, '월', 1, '화', 2, '수', 3, '목', 4, '금', 5) LEC_DAY
+		    , FIRST_TIME
+		    , LAST_TIME
+		    , LEC.LEC_NO
+		    , STU_NO
+		    , LEC.LEC_NAME
+		    , LEC_SCORE
+		FROM LECTURE LEC, LECTURE_TIME, ENROLLMENT
+		WHERE LEC.LEC_NO = LECTURE_TIME.LEC_NO
+		AND ENROLLMENT.LEC_NO = LEC.LEC_NO
+		AND STU_NO = #{stuNo}
+	</select>
 </mapper>
 
 

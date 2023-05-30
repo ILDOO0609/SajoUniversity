@@ -291,7 +291,12 @@ public class StuController {
 	
 	// 학생 시간표
 	@GetMapping("/stuTimetable")
-	public String stuTimetable() {
+	public String stuTimetable(Authentication authentication, String stuNo, Model model) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		
+		model.addAttribute("lecList", stuService.getLectureListForStuTimeTable(stuNo));
+		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+stuService.getLectureListForStuTimeTable(stuNo));
 		
 		return "content/stu/stu_timetable";
 	}

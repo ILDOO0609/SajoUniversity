@@ -68,4 +68,12 @@ public interface StuService {
 	// 학생 시간표 조회
 	List<LectureVO> getLectureListForStuTimeTable(String stuNo);
 	
+	// 학생 성적 조회
+	List<LectureVO> getStuGradeForStu(String stuNo);
+	
+	// 학생 평점 평균
+	double getAvg(String stuNo);
+	
+	// 학생 총수강학점
+	int getTotalScore(String stuNo);
 }

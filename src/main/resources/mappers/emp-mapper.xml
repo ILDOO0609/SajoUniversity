@@ -25,6 +25,8 @@
 		<result column="DEPT_NO" 	  property="deptNo"/>
 		<result column="SEARCH_VALUE" property="searchValue"/>
 		<association property="stuVO" 	       resultMap="stuMapper.stu"></association>
+		<association property="gradeVO" 	   resultMap="grade"></association>
+		<association property="stuGradeVO" 	   resultMap="stuGrade"></association>
 		<association property="semesterVO"     resultMap="semester"></association>
 		<association property="memberVO"   	   resultMap="memberMapper.member"></association>
 		<association property="empVO" 	   	   resultMap="emp"></association>
@@ -63,6 +65,11 @@
 		<result column="SEM_NO" 	  property="semNo"/>
 		<result column="GRADE" 		  property="grade"/>
 		<result column="LEC_NO" 	  property="lecNo"/>
+	</resultMap>
+
+	<resultMap type="com.study.test.emp.vo.GradeVO" id="grade">
+		<id 	column="GRADE" 	property="grade"/>
+		<result column="SCORE" property="score"/>
 	</resultMap>
 	
 	<resultMap type="com.study.test.emp.vo.LecturePDFVO" id="lecturePDF">
@@ -331,29 +338,29 @@
 	<!-- 수강신청용 강의 조회 -->
 	<select id="getLectureForStu" resultMap="lecture">
 		SELECT LECTURE.LEC_NO
-			, LEC_NAME
-			, LEC_SCORE
-			, CREATE_DATE
-			, MAX_NUM
-			, NOW_NUM
-			, LEC_STATUS
-			, LECTURE.EMP_NO
-			, SEM_NO
-			, LECTURE.COLL_NO
-            , COLL_NAME
-			, LECTURE.DEPT_NO
-			, DEPT_NAME
-			, LEC_DAY
-			, FIRST_TIME
-			, LAST_TIME
-            , EMP.MEM_NO
-            , MEM_NAME
-		FROM LECTURE, LECTURE_TIME, COLLEAGE COLL, DEPT, MEMBER, EMP
+		         , LECTURE.LEC_NAME
+		         , LECTURE.LEC_SCORE
+		         , LECTURE.CREATE_DATE
+		         , LECTURE.MAX_NUM
+		         , LECTURE.NOW_NUM
+		         , LECTURE.LEC_STATUS
+		         , LECTURE.EMP_NO
+		         , LECTURE.SEM_NO
+		         , LECTURE.COLL_NO
+		         , COLL.COLL_NAME
+		         , LECTURE.DEPT_NO
+		         , DEPT.DEPT_NAME
+		         , LECTURE_TIME.LEC_DAY
+		         , LECTURE_TIME.FIRST_TIME
+		         , LECTURE_TIME.LAST_TIME
+		         , MEMBER.MEM_NO
+		         , MEMBER.MEM_NAME
+		FROM LECTURE, LECTURE_TIME, COLLEAGE COLL, DEPT, EMP, MEMBER
 		WHERE LECTURE.LEC_NO = LECTURE_TIME.LEC_NO
 		AND LECTURE.COLL_NO = COLL.COLL_NO
 		AND LECTURE.DEPT_NO = DEPT.DEPT_NO
-        AND EMP.COLL_NO = LECTURE.COLL_NO
-        AND MEMBER.MEM_NO = EMP.MEM_NO
+		AND LECTURE.EMP_NO = EMP.EMP_NO
+		AND EMP.MEM_NO = MEMBER.MEM_NO
 		<if test='searchValue != null and !searchValue.equals("")'>
 		AND UPPER(LEC_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
@@ -406,12 +413,12 @@
             , SEMESTER
 		FROM LECTURE, LECTURE_TIME, COLLEAGE COLL, DEPT, MEMBER, EMP, ENROLLMENT ENR, SEMESTER SEM, STU
 		WHERE LECTURE.LEC_NO = LECTURE_TIME.LEC_NO
-		AND LECTURE.COLL_NO = COLL.COLL_NO
-		AND LECTURE.DEPT_NO = DEPT.DEPT_NO
-		AND EMP.COLL_NO = LECTURE.COLL_NO
-		AND MEMBER.MEM_NO = EMP.MEM_NO
-		AND LECTURE.LEC_NO = ENR.LEC_NO
-		AND SEM.SEM_NO = LECTURE.SEM_NO
+        AND LECTURE.COLL_NO = COLL.COLL_NO
+        AND LECTURE.DEPT_NO = DEPT.DEPT_NO
+        AND LECTURE.EMP_NO = EMP.EMP_NO
+        AND LECTURE.LEC_NO = ENR.LEC_NO
+        AND LECTURE.SEM_NO = SEM.SEM_NO
+        AND MEMBER.MEM_NO = STU.MEM_NO
         AND ENR.STU_NO = STU.STU_NO
         AND LECTURE.LEC_STATUS = 'Y'
 		AND STU.STU_NO = #{stuNo}
@@ -462,7 +469,47 @@
 		AND STU_NO = #{stuNo}
 	</select>
 	
-	<!--  -->
+	<!-- 학생 성적 조회 -->
+	<select id="getStuGradeForStu" resultMap="lecture">
+		SELECT STU_GRADE_NO
+		    , STU.STU_NO
+		    , STU_GRADE.GRADE
+		    , LEC.SEM_NO
+		    , LEC.LEC_NO
+		    , LEC.LEC_NAME
+		    , SEM.SEM_YEAR
+		    , SEM.SEMESTER
+		    , LEC.LEC_SCORE
+		    , SCORE
+		FROM STU_GRADE, LECTURE LEC, STU, SEMESTER SEM, GRADE
+		WHERE STU_GRADE.STU_NO = STU.STU_NO
+		AND STU_GRADE.LEC_NO = LEC.LEC_NO
+		AND STU_GRADE.SEM_NO = SEM.SEM_NO
+		AND STU_GRADE.GRADE = GRADE.GRADE
+		AND STU.STU_NO = #{stuNo}
+	</select>
+	
+	<!-- 학생 평점 평균 -->
+	<select id="getAvg" resultType="double">
+		SELECT AVG(SCORE)
+	    FROM STU_GRADE, LECTURE LEC, STU, SEMESTER SEM, GRADE
+	    WHERE STU_GRADE.STU_NO = STU.STU_NO
+        AND STU_GRADE.LEC_NO = LEC.LEC_NO
+        AND STU_GRADE.SEM_NO = SEM.SEM_NO
+        AND STU_GRADE.GRADE = GRADE.GRADE
+        AND STU.STU_NO = #{stuNo}
+	</select>
+	
+	<!-- 학생 총수강학점 -->
+	<select id="getTotalScore" resultType="int">
+	    SELECT SUM(LEC_SCORE)
+	    FROM STU_GRADE, LECTURE LEC, STU, SEMESTER SEM, GRADE
+	    WHERE STU_GRADE.STU_NO = STU.STU_NO
+        AND STU_GRADE.LEC_NO = LEC.LEC_NO
+        AND STU_GRADE.SEM_NO = SEM.SEM_NO
+        AND STU_GRADE.GRADE = GRADE.GRADE
+        AND STU.STU_NO = #{stuNo}
+	</select>
 </mapper>
 
 

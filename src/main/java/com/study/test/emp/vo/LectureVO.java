@@ -30,8 +30,10 @@ public class LectureVO {
 	private String deptNo;
 	private MemberVO memberVO;
 	// 학생 수강신청용 추가
+	private GradeVO gradeVO;
 	private SemesterVO semesterVO;
 	private StuVO stuVO;
+	private StuGradeVO stuGradeVO;
 	private EnrollmentVO enrollmentVO;
 	private EmpVO empVO;
 	private DeptVO deptVO;

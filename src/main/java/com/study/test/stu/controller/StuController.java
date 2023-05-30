@@ -60,6 +60,18 @@ public class StuController {
 		return "content/stu/stu_info_for_sc";
 	}
 	
+	// 학생 성적 조회
+	@GetMapping("/stuGetGrade")
+	public String stuGetGrade(Authentication authentication, String stuNo, Model model) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		
+		model.addAttribute("gradeList", stuService.getStuGradeForStu(stuNo));
+		model.addAttribute("stuAvg", stuService.getAvg(stuNo));
+		model.addAttribute("totalScoreForStu", stuService.getTotalScore(stuNo));
+		
+		return "content/stu/stu_get_grade";
+	}
+	
 	
 	// 학생 정보 조회
 	@GetMapping("/stuInfo")

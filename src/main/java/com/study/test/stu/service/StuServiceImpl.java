@@ -123,6 +123,21 @@ public class StuServiceImpl implements StuService{
 	public List<LectureVO> getLectureListForStuTimeTable(String stuNo) {
 		return sqlSession.selectList("empMapper.getLectureListForStuTimeTable", stuNo);
 	}
+
+	@Override
+	public List<LectureVO> getStuGradeForStu(String stuNo) {
+		return sqlSession.selectList("empMapper.getStuGradeForStu", stuNo);
+	}
+
+	@Override
+	public double getAvg(String stuNo) {
+		return sqlSession.selectOne("empMapper.getAvg", stuNo);
+	}
+
+	@Override
+	public int getTotalScore(String stuNo) {
+		return sqlSession.selectOne("empMapper.getTotalScore", stuNo);
+	}
 	
 	
 	

@@ -30,3 +30,7 @@ a {
 	align-items: center;
 }
 
+#memberTable > tbody > tr{
+	vertical-align: middle;	
+	align-items: center;
+}

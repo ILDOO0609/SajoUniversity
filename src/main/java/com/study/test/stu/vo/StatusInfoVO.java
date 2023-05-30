@@ -17,4 +17,5 @@ public class StatusInfoVO {
 	private String stuNo;
 	private String statusContent;
 	
+	private StuVO stuVO;
 }

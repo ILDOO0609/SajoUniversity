@@ -43,34 +43,38 @@ function drawDeptSelectbox(deptList){
 //학생조회 검색
 function searchStuList(){
 	const searchValue = document.querySelector('#searchStuInput').value;
-	
-	if(searchValue == ''){
-		alert('검색할 이름을 입력하세요.');
-		return;
-	}
-	
+	const collNo = document.querySelector('select[name="collNo"]').value;
+	const deptNo = document.querySelector('select[name="deptNo"]').value;
+
 	//ajax start
 	$.ajax({
 	   url: '/school/searchStuListAjax', //요청경로
 	   type: 'post',
-	   data: {'searchValue':searchValue}, //필요한 데이터
+	   data: {'searchValue':searchValue, 'collNo' : collNo, 'deptNo' : deptNo}, //필요한 데이터
 	   success: function(result) {
 			console.log(result)
-			const tbodyTag = document.querySelector('#tbodyTag');
+			const tbodyTag = document.querySelector('#stuTable > tbody');
 			tbodyTag.replaceChildren();
+			
 			let str = '';
 			
-			for(let i = 0; i < result.length; i++){
-				str += `<tr>`;
-				str += `<td>${result[i].schInfoNum}</td>`;
-				str += `<td>`;
-				str += `<a href="/school/schoolBoardDetail?schInfoCode='${result[i].schInfoCode}'">${result[i].schInfoTitle}</a>`;
-				str += `</td>`;
-				str += `<td>${result[i].schInfoDate}</td>`;
-				str += `<td>${result[i].schInfoStartDate} ~ ${result[i].schInfoEndDate}</td>`;
-				str += `</tr>`;
+			if(result.length == 0){
+					str += `<tr>`;
+					str += `<td colspan="6">조회된 회원이 없습니다.</td>`;
+					str += `</tr>`;
 			}
-			
+			else{
+				for(const stu of result){
+					str += `<tr>`;
+					str += `<td>${stu.memNo}</td>`;
+					str += `<td>${stu.colleageVO.collName}</td>`;
+					str += `<td>${stu.memberVO.memName}</td>`;
+					str += `<td>${stu.deptVO.deptName}</td>`;
+					str += `<td>${stu.stuYear}</td>`;
+					str += `<td>${stu.stuStatus}</td>`;
+					str += `</tr>`;
+				}
+			}
 			tbodyTag.insertAdjacentHTML('afterbegin', str);
 
 	   },
@@ -92,8 +96,6 @@ function searchStuList(){
 
 
 
-
-// --------학사조회------------------------------------------------------
 //교수 교직원 라디오 버튼 클릭시 실행
 $("input[name='checkPosition']").change(function(){
 	
@@ -106,12 +108,15 @@ $("input[name='checkPosition']").change(function(){
 	}
 	
 	var name = $("input[name='checkPosition']:checked").val();
-	alert(name + '이(가) 선택되었습니다.');
+	swal(name , "선택이(가) 완료되었습니다.", "success");
 				
 });
 //교수/교직원 조회 -> 검색
 function searchProList(){
 	const searchValue = document.querySelector('#searchProInput').value;
+	const collNo = document.querySelector('select[name="collNo"]').value;
+	const deptNo = document.querySelector('select[name="deptNo"]').value;
+	
 	
 	//ajax start
 		$.ajax({
@@ -119,20 +124,28 @@ function searchProList(){
 			type: 'post',
 			async: true,
 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-			data: {'searchValue':searchValue}, //필요한 데이터
+			data: {'searchValue':searchValue, 'collNo' : collNo, 'deptNo' : deptNo}, //필요한 데이터
 			success: function(result) {
 				const tdTag = document.querySelector('#proTable > tbody');
 				tdTag.replaceChildren();	
 				
 				let str = '';
 				
-				str += `<div class="row text-center">`;
-				for(const pro of result){
-					str += `<div class="col-2">${pro.empVO.memNO}</div>`; 
-					str += `<div class="col-2">${pro.empVO.empType}</div>`; 
-					str += `<div class="col-2">${pro.memverVO.memName}</div>`; 
-					str += `<div class="col-2">${pro.colleageVo.collName}</div>`; 
-					str += `<div class="col-2">${pro.deptVO.deptName}</div>`; 
+				if(result.length == 0){
+					str += `<tr>`
+					str += `<td colspan="5">조회된 회원이 없습니다.</td>`
+					str += `</tr>`
+				}
+				else{
+					for(const pro of result){
+						str += `<tr>`;
+						str += `<td>${pro.empVO.memNo}</td>`;
+						str += `<td>${pro.empVO.empType}</td>`;
+						str += `<td>${pro.memberVO.memName}</td>`;
+						str += `<td>${pro.colleageVO.collName}</td>`;
+						str += `<td>${pro.deptVO.deptName}</td>`;
+						str += `</tr>`;
+					}
 				}
 				
 				tdTag.insertAdjacentHTML('afterbegin', str);

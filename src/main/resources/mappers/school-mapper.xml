@@ -126,7 +126,7 @@
 		SELECT STU_NO
 		    , STU_YEAR
 		    , STU_SEM
-		    , DECODE(STU_STATUS, 1, '재학', 2, '휴학') as STU_STATUS
+		    , STU_STATUS
 		    , ST.MEM_NO
 		    , MEM_NAME
 		    , COLL.COLL_NO
@@ -211,7 +211,7 @@
 		</if>
 	</select>
 	
-		<!-- 휴학관리 승인 조회-->
+	<!-- 휴학관리 승인 조회-->
 	<select id="getStatusInfoAppList" resultMap="stuMapper.status">
 		SELECT
 		    STATUS_NO
@@ -289,7 +289,7 @@
 	<!-- 휴학관리 신청회원 승인완료 학생 정보 업데이트 -->
 	<update id="updateLeaveAppStu">
 		UPDATE STU
-		SET STU_STATUS = 2
+		SET STU_STATUS = '휴학'
 		WHERE STU_NO = #{stuNo}
 	</update>
 	
@@ -305,9 +305,36 @@
 	<!-- 휴학관리 신청회원 승인취소 학생 정보 업데이트 -->
 	<update id="updateLeaveDeniedStu">
 		UPDATE STU
-		SET STU_STATUS = 2
+		SET STU_STATUS = '재학'
 		WHERE STU_NO = #{stuNo}
 	</update>
+	
+	
+	
+	<select id="getStatusReturnList" resultMap="stuMapper.status">
+		SELECT
+		    STATUS_NO
+		    , MB.MEM_NO
+		    , MEM_NAME
+		    , ST.MEM_NO
+		    , STU_YEAR
+		    , DE.DEPT_NO
+		    , DEPT_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS APPLY_DATE
+		    , DECODE(ING_STATUS, 'I', '승인대기', 'P', '승인완료', 'R', '승인취소') AS ING_STATUS
+		    , NOW_STATUS
+		    , AFTER_STATUS
+		FROM MEMBER MB, STU ST, COLLEAGE COLL, DEPT DE, STATUS_INFO SI
+		WHERE ST.STU_NO = SI.STU_NO
+		AND ST.DEPT_NO = DE.DEPT_NO
+		AND ST.COLL_NO = COLL.COLL_NO
+		AND MB.MEM_NO = ST.MEM_NO
+		AND ING_STATUS = 'I'
+		AND NOW_STATUS = 'A'
+	</select>
+	
 	
 	
 	
@@ -325,32 +352,33 @@
 	<select id="selectMemberList" resultMap="memberMapper.member">
 		SELECT MEM_NO
 			, MEM_NAME
-			, MEM_EMAIL
-			, MEM_ADDR
-			, REPLACE(REPLACE(REPLACE(TRIM(MEM_TELL), ' ', ''), CHR(9), ''), CHR(10), '') AS MEM_TELL
-			, MEM_GENDER
-			, MEM_BIRTHDAY
+			, TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 			, DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
 			, IS_CONFIRMED
 		FROM MEMBER
-		WHERE IS_CONFIRMED = 'N'
+		WHERE IS_CONFIRMED = 'I'
+		AND MEM_ROLE != 'stf'
 	</select>
+	
 	
 	<!-- 승인처리할 회원조회 -->
 	<select id="selectMember" resultMap="memberMapper.member">
 		SELECT MEM_NO
-			, MEM_NAME
-			, MEM_EMAIL
-			, MEM_ADDR
-			, MEM_ADDR_DETAIL
-			, MEM_TELL
-			, MEM_IMAGE
-			, MEM_GENDER
-			, MEM_BIRTHDAY
-			, MEM_ROLE
-			, REG_DATE
+		    , MEM_NAME
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+		    , DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
+		    , IS_CONFIRMED
+		    , MEM_EMAIL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , MEM_TELL
+		    , MEM_IMAGE
+		    , MEM_GENDER
+		    , MEM_BIRTHDAY
 		FROM MEMBER
-		WHERE MEM_NO = #{memNo}
+		WHERE IS_CONFIRMED = 'I'
+		AND MEM_ROLE != 'stf'
+		AND MEM_NO = #{memId}
 	</select>	
 	
 	
@@ -366,26 +394,40 @@
 		INSERT INTO STU(
 			STU_NO
 			, MEM_NO
+		    , STU_YEAR
+		    , STU_SEM
+		    , STU_STATUS
+		    , COLL_NO
+		    , DEPT_NO
 		)VALUES(
-			(SELECT 'STU_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STU_NO, 4))), 0) + 1, 3, '0') 
+			(SELECT 'STU_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STU_NO, 5))), 0) + 1, 3, '0') 
          	FROM STU)
          	, #{memNo}
+         	, 1
+		    , 1
+		    , 1
+		    , #{collNo}
+		    , #{deptNo}
 		)
 	</insert>
 	<insert id="insertEmp">
 		INSERT INTO EMP(
-			EMP_NO
-			, MEM_NO
-			, EMP_TYPE
+		    EMP_NO
+		    , MEM_NO
+		    , EMP_TYPE
+		    , DEPT_NO
+		    , COLL_NO
 		)VALUES(
-			(SELECT 'STU_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STU_NO, 4))), 0) + 1, 3, '0') 
-         	FROM STU)
-         	, #{memNo}
-         	, #{memRole}
+		    (SELECT 'EMP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(EMP_NO, 5))), 0) + 1, 3, '0') 
+		    FROM EMP)
+		    , #{memNo}
+		    , #{memRole}
+		    , #{deptNo}
+		    , #{collNo}
 		)
 	</insert>	
 	
-
+	
 	
 	
 	

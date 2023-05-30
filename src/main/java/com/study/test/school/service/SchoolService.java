@@ -85,8 +85,11 @@ public interface SchoolService {
 	//학적변동 -> 휴학신청 취소
 	void updateLeaveDenied(StatusInfoVO statusInfoVO);
 	
-	
-	
+		
+	//학적변동 -> 복학관리 대기조회
+	List<StatusInfoVO> getStatusReturnList();
+	//학적변동 -> 휴학승인 승인완료조회
+	//학적변동 -> 휴학승인 승인취소조회
 	
 	
 	

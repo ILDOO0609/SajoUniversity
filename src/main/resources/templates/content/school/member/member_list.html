@@ -13,30 +13,38 @@
 				<tr>
 					<td>No(ID)</td>
 					<td>이름</td>
-					<td>이메일</td>
-					<td>주소</td>
-					<td>전화번호</td>
-					<td>신청일</td>
-					<td>직책</td>
-					<td>승인여부</td>
+					<td>신청일(시간)</td>
+					<td>신청대학</td>
+					<td>신청학과</td>
+					<td style="text-align: center;">신청직책</td>
+					<td style="text-align: center;">승인여부</td>
 				</tr>
 			</thead>
 				<tbody>
 				<th:block th:if="${#lists.size(memberList) == 0}">
  					<tr>
- 						<td colspan="8">조회된 회원이 없습니다.</td>
+ 						<td colspan="7">조회된 회원이 없습니다.</td>
  					</tr>
  				</th:block>
  				<th:block th:unless="${#lists.size(memberList) == 0}">
 					<tr th:each="member : ${memberList}">
 						<td id="memNo" th:text="${member.memNo}">[[${member.memNo}]]</td>
 						<td>[[${member.memName}]]</td>
-						<td>[[${member.memEmail}]]</td>
-						<td>[[${member.memAddr}]]</td>
-						<td>[[${member.memTell}]]</td>
-						<td>2023-05-23</td>
-						<td id="memRole" th:text="${member.memRole}">[[${member.memRole}]]</td>
+						<td>[[${member.regDate}]]</td>
 						<td>
+							<select class="form-select" name="collNo" onchange="changeColl(this);">
+									<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
+							</select>
+						</td>
+						<td id="deptDiv">
+							<select class="form-select" name="deptNo">
+								<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
+									[[${dept.deptName}]]
+								</option>
+							</select>
+						</td>
+						<td id="memRole" style="text-align: center;" th:text="${member.memRole}">[[${member.memRole}]]</td>
+						<td style="text-align: center;">
 							<button  class="btn btn-primary" th:onclick="updatePosition([[${member.memNo}]]);" style="cursor: pointer;">승인완료</button>
 							<button  class="btn btn-danger" type="button" style="cursor: pointer;">승인거부</button>
 						</td>

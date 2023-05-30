@@ -78,7 +78,7 @@
 					</thead>
 					<tbody id="tbodyTag">
 						<tr th:if="${#lists.size(lectureList)==0}">
-							<td colspan="11">등록된 강의가 없습니다.</td>
+							<td colspan="12">등록된 강의가 없습니다.</td>
 						</tr>
 						<tr th:unless="${#lists.size(lectureList)==0}" th:each="lecture : ${lectureList}">
 							<td id="lecNo">[[${lecture.lecNo}]]</td>

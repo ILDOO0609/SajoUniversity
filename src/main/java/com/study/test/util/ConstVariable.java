@@ -5,5 +5,5 @@ public class ConstVariable {
 	public static final String UPLOAD_PATH = "";
 	
 	//pdf파일 경로
-	public static final String PDF_UPLOAD_PATH = "D:\\dev\\workspace_STS\\SajoUniversity\\src\\main\\resources\\static\\pdfFile\\";
+	public static final String PDF_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\SajoUniversity\\src\\main\\resources\\static\\pdfFile\\";
 }

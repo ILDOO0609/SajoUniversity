@@ -283,33 +283,10 @@ public class EmpController {
 		return empService.updateStuGrade(stuGradeVO);
 	}
 	
-	//학사 공지사항
-	@GetMapping("/noticeBoard")
-	public String noticeBoard() {
-		return "content/emp/notice_board";
-	}
-	
-	//게시글 작성 화면
-	@GetMapping("/boardWrite")
-	public String boardWrite() {
-		return "content/emp/board_write_form";
-	}
-	
-	//나의 게시글 조회
-	@GetMapping("/selectMyBoard")
-	public String getMyBoard() {
-		return "content/emp/my_board";
-	}
-	
 	//현재 교수의 EMP_NO 조회
 	public String getNowEmpNo(Authentication authentication) {
 		User user = (User)authentication.getPrincipal(); 
 		String empNo = empService.getNowEmpNo(user.getUsername());
 		return empNo;
 	}
-	@GetMapping("/pdf")
-	public String pdf() {
-		return "content/emp/pdf";
-	}
-	
 }

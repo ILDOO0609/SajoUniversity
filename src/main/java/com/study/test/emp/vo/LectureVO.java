@@ -38,4 +38,5 @@ public class LectureVO {
 	private ColleageVO colleageVO;
 	private List<LectureTimeVO> lectureTimeList;
 	private String searchValue;
+	private LecturePDFVO lecturePDFVO;
 }

@@ -2,7 +2,6 @@ package com.study.test.emp.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,16 +14,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.study.test.colleage.service.ColleageService;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.colleage.vo.GradeVO;
 import com.study.test.emp.service.EmpService;
+import com.study.test.emp.vo.LecturePDFVO;
 import com.study.test.emp.vo.LectureTimeVO;
 import com.study.test.emp.vo.LectureVO;
+import com.study.test.emp.vo.StuGradeVO;
+import com.study.test.util.UploadUtil;
 
 import jakarta.annotation.Resource;
-import oracle.jdbc.proxy.annotation.GetProxy;
 
 
 @Controller
@@ -127,7 +129,13 @@ public class EmpController {
 	
 	//강의 등록
 	@PostMapping("/regLecture")
-	public String regLecture(LectureVO lectureVO, LectureTimeVO lectureTimeVO, Authentication authentication) {
+	public String regLecture(LectureVO lectureVO, LecturePDFVO lecturePDFVO, MultipartFile pdfFile, LectureTimeVO lectureTimeVO, Authentication authentication) {
+		//--파일 첨부--//
+		//pdf파일 업로드
+		System.out.println("@@@@@@@"+pdfFile);
+		lecturePDFVO = UploadUtil.uploadPdfFile(pdfFile);
+		
+		System.out.println("@@@@@@@@@@"+lecturePDFVO);
 		
 		//LectureTimeVO를 여러개 담는 lecTimeList통 생성
 		List<LectureTimeVO> lecTimeList = new ArrayList<>();
@@ -156,6 +164,8 @@ public class EmpController {
 		for(LectureTimeVO lecTime : lecTimeList) {
 			lecTime.setLecNo(getNextLectNo);
 		}
+		//lecturePDFVO에 LEC_NO세팅
+		lecturePDFVO.setLecNo(getNextLectNo);
 		
 		//EMP_NO세팅
 		lectureVO.setEmpNo(getNowEmpNo(authentication));
@@ -164,7 +174,8 @@ public class EmpController {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("lectureVO", lectureVO);
 		map.put("lecTimeList", lecTimeList);
-		
+		map.put("lecturePDFVO", lecturePDFVO);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+map);
 		//강의 등록
 		empService.insertLecture(map);
 		
@@ -257,40 +268,19 @@ public class EmpController {
 		
 		return map;
 	}
-	//게시판
-	@GetMapping("/empBoard")
-	public String empBoard() {
-		return "content/emp/emp_board";
+	
+	//학생성적 등록 Ajax
+	@ResponseBody
+	@PostMapping("/regScoreAjax")
+	public boolean regScoreAjax(StuGradeVO stuGradeVO) {
+		return empService.insertStuGrade(stuGradeVO);
 	}
 	
-	//학사 공지사항
-	@GetMapping("/notice")
-	public String notice() {
-		return "content/emp/notice";
-	}
-	
-	//Q&A 화면
-	@GetMapping("/questionAndAnswer")
-	public String questionAndAnswer() {
-		return "content/emp/question_answer";
-	}
-	
-	//게시글 작성 화면
-	@GetMapping("/boardWrite")
-	public String boardWrite() {
-		return "content/emp/board_write_form";
-	}
-	
-	//나의 게시글 조회
-	@GetMapping("/selectMyBoard")
-	public String getMyBoard() {
-		return "content/emp/my_board";
-	}
-	
-	//교수 달력화면 
-	@GetMapping("/empCalender")
-	public String empCalender() {
-		return "content/emp/emp_calender";
+	//학생성적 변경 Ajax
+	@ResponseBody
+	@PostMapping("/updateScoreAjax")
+	public boolean updateScoreAjax(StuGradeVO stuGradeVO) {
+		return empService.updateStuGrade(stuGradeVO);
 	}
 	
 	//현재 교수의 EMP_NO 조회
@@ -299,5 +289,4 @@ public class EmpController {
 		String empNo = empService.getNowEmpNo(user.getUsername());
 		return empNo;
 	}
-	
 }

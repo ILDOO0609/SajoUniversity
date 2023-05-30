@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.vo.LectureVO;
+import com.study.test.emp.vo.StuGradeVO;
 
 public interface EmpService {
 	//접속해 있는 교수의 EMP_NO조회
@@ -43,4 +44,10 @@ public interface EmpService {
 	
 	//성적등록위한 강의 수강학생 조회
 	List<Map<String, String>> getStuEnrForRegScore(String lecNo);
+	
+	//학생 성적 등록
+	boolean insertStuGrade(StuGradeVO stuGradeVO);
+	
+	//학생 성적 변경
+	boolean updateStuGrade(StuGradeVO stuGradeVO);
 }

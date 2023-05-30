@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.study.test.board.vo.BoardImgVO;
+import com.study.test.emp.vo.LecturePDFVO;
 
 
 public class UploadUtil {
@@ -52,5 +53,31 @@ public class UploadUtil {
 				
 			}
 			return result;
-		}	
+		}
+		
+	//pdf파일 업로드 메소드
+	public static LecturePDFVO uploadPdfFile(MultipartFile pdfFile) {
+		LecturePDFVO pdfvo = null;
+		
+		if (!pdfFile.isEmpty()) {
+			pdfvo = new LecturePDFVO();
+			
+			String originFileName = pdfFile.getOriginalFilename();
+			String uuid = UUID.randomUUID().toString();
+			String extension = originFileName.substring(originFileName.lastIndexOf("."));
+			String attachedFileName = uuid + extension;
+			
+			try {
+				File file = new File(ConstVariable.PDF_UPLOAD_PATH + attachedFileName);
+				pdfFile.transferTo(file);
+				
+				pdfvo.setAttachedPdfName(attachedFileName);
+				pdfvo.setOriginPdfName(originFileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return pdfvo;
+	}
 }

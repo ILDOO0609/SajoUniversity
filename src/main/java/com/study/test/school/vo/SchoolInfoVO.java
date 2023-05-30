@@ -23,10 +23,4 @@ public class SchoolInfoVO extends PageVO{
 	private String schInfoSearch;
 	private int schInfoMonth;
 	
-	
-	private String prevNum;
-	private String prevTitle;
-	private String nextNum;
-	private String nextTitle;
-	
 }

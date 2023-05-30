@@ -84,6 +84,7 @@ public class SchoolController {
 	@ResponseBody
 	@PostMapping("/schInfoMonthAjax")
 	public List<SchoolInfoVO> schInfoMonthAjax(int schInfoMonth){
+		System.out.println("@@@@@@@@@@@########@#@#@" + schInfoMonth);
 		return schoolService.schInfoMonthAjax(schInfoMonth);
 	}
 	
@@ -114,8 +115,33 @@ public class SchoolController {
 		//조회수
 		schoolService.updateSchoolBoardReadCnt(schInfoCode);
 		//이전글다음글
-		model.addAttribute("move", schoolService.movePage(schoolInfoVO.getSchInfoCode())); 
+		String numberStr = schInfoCode.substring(9);
+		int prevNumber = Integer.parseInt(schInfoCode.substring(9)) - 1;
+		int nextNumber = Integer.parseInt(schInfoCode.substring(9)) + 1;
 		
+		String prevStr = schInfoCode.replace(numberStr, String.format("%03d", prevNumber)); // 숫자를 3자리로 포맷팅하여 대체
+		String nextStr = schInfoCode.replace(numberStr, String.format("%03d", nextNumber)); // 숫자를 3자리로 포맷팅하여 대체
+	
+		SchoolInfoVO prevDetail = schoolService.schoolBoardDetail(prevStr);
+		SchoolInfoVO nextDetail = schoolService.schoolBoardDetail(nextStr);
+		
+		System.out.println("@@@@@@@@@@@@@@@이전글" + prevDetail);
+		System.out.println("@@@@@@@@@@@@다음글" + nextDetail);
+	
+		if(prevDetail == null) {
+			prevDetail = new SchoolInfoVO();
+			prevDetail.setSchInfoTitle("이전글이 없습니다.");
+		}
+		if(nextDetail == null) {
+			nextDetail = new SchoolInfoVO();
+			nextDetail.setSchInfoTitle("다음글이 없습니다.");
+		}
+		
+		model.addAttribute("prevList", prevDetail); 
+		model.addAttribute("nextList", nextDetail);
+		
+		System.out.println("@@@@@@@@@@@@@@@이전글" + schoolService.schoolBoardDetail(prevStr));
+		System.out.println("@@@@@@@@@@@@다음글" + schoolService.schoolBoardDetail(nextStr));
 		
 		return "content/school/school/school_board_detail";
 	}
@@ -179,7 +205,7 @@ public class SchoolController {
 	}
 	
 	//학사조회 -> 학생조회 페이지
-	@GetMapping("/checkStu")
+	@RequestMapping("/checkStu")
 	public String checkStu(Model model) {
 		//단과대학 정보 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());

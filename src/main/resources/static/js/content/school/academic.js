@@ -1,3 +1,12 @@
+//검색버튼 클릭시 실행
+function searchOrderList(){
+	const search_form = document.querySelector('#searchForm');
+	
+	search_form.submit();	
+	
+}
+
+//승인완료 클릭시 실행
 function updateLeaveApp(statusNo){
 	const check_box = document.querySelector('#leaveTable');
 	const checked_box = check_box.querySelectorAll('input[type="checkbox"]:checked').length;
@@ -26,6 +35,7 @@ function updateLeaveApp(statusNo){
 
 }
 
+//승인취소 클릭시 실행
 function updateLeaveDenied(statusNo){
 	const check_box = document.querySelector('#leaveTable');
 	const checked_box = check_box.querySelectorAll('input[type="checkbox"]:checked').length;

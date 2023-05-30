@@ -178,11 +178,10 @@ function click_ok(){
 }
 
 
-function updateModal(calNo){
-	const update_modal = new bootstrap.Modal('#updateCalendar');
+//function updateModal(calNo){
+//	const update_modal = new bootstrap.Modal('#updateCalendar');
 	
-	update
-}
+//}
 
 
 

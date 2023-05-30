@@ -15,34 +15,7 @@
 		<result column="SCH_INFO_NUM" 		property="schInfoNum"/>
 		<result column="SCH_INFO_SEARCH" 	property="schInfoSearch"/>
 		<result column="SCH_INFO_Month" 	property="schInfoMonth"/>
-		<result column="PREVNO"				property="prevNum"/>
-		<result column="PREV_TITLE"			property="prevTitle"/>	
-		<result column="NEXTNO"				property="nextNum"/>	
-		<result column="NEXT_TITLE"			property="nextTitle"/>
 	</resultMap>
-
-	<!-- <resultMap type="com.study.test.school.vo.PrenextPageVO" id="prevnext">
-		<result column="PREVNO"			property="prevNo"/>
-		<result column="PREV_TITLE"		property="prevTitle"/>	
-		<result column="NEXTNO"			property="nextNo"/>	
-		<result column="NEXT_TITLE"		property="nextTitle"/>
-	</resultMap> -->
-	
-	<resultMap type="com.study.test.school.vo.SchMonthVO" id="month">
-		<result column="MONTH_01" property="month_01"/>
-		<result column="MONTH_02" property="month_02"/>
-		<result column="MONTH_03" property="month_03"/>
-		<result column="MONTH_04" property="month_04"/>
-		<result column="MONTH_05" property="month_05"/>
-		<result column="MONTH_06" property="month_06"/>
-		<result column="MONTH_07" property="month_07"/>
-		<result column="MONTH_08" property="month_08"/>
-		<result column="MONTH_09" property="month_09"/>
-		<result column="MONTH_10" property="month_10"/>
-		<result column="MONTH_11" property="month_11"/>
-		<result column="MONTH_12" property="month_12"/>
-	</resultMap>
-	
 	
 	<insert id="insertSchoolInfo">
 		INSERT INTO SCHOOL_INFORMATION (
@@ -92,6 +65,7 @@
 	        , TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') SCH_INFO_STARTDATE
 	        , TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') SCH_INFO_ENDDATE
 	        , SCH_INFO_NUM
+	        , SCH_INFO_READ_CNT
 	    FROM SCHOOL_INFORMATION
 	    WHERE TO_CHAR(SCH_INFO_STARTDATE, 'MM') = #{schInfoMonth}
 	    ORDER BY SCH_INFO_STARTDATE
@@ -119,19 +93,6 @@
 			SCH_INFO_READ_CNT = SCH_INFO_READ_CNT + 1
 		WHERE SCH_INFO_CODE = #{schInfoCode}
 	</update>
-	
-	<!-- 이전글 다음글 조회 -->
-	<select id="movePage" resultMap="school">
-		SELECT SCH_INFO_CODE
-	        , SCH_INFO_TITLE
-	        , LAG(SCH_INFO_CODE, 1, 0) OVER(ORDER BY SCH_INFO_CODE ASC) PREVNO
-	        , LAG(SCH_INFO_TITLE, 1, '이전글이 없습니다.') OVER(ORDER BY SCH_INFO_CODE) PREV_TITLE
-	        , LEAD(SCH_INFO_CODE, 1, 0) OVER(ORDER BY SCH_INFO_CODE ASC) NEXTNO
-	        , LEAD(SCH_INFO_TITLE, 1, '다음글이 없습니다.') OVER(ORDER BY SCH_INFO_CODE) NEXT_TITLE
-	    FROM SCHOOL_INFORMATION
-	    WHERE SCH_INFO_CODE = #{schInfoCode}
-	    ORDER BY SCH_INFO_CODE
-	</select>
 	
 	<!-- 학사안내 게시글 -> 상세 -> 수정 -->	
 	<update id="updateSchoolInfo">
@@ -176,7 +137,7 @@
 		WHERE ST.COLL_NO = COLL.COLL_NO
 		AND ST.DEPT_NO = DP.DEPT_NO
 		AND ST.MEM_NO = MEM.MEM_NO
-<!-- 		<if test='searchValue != null and !searchValue.equals("")'>
+		<!-- <if test='memberVO.searchValue != null and !memberVO.searchValue.equals("")'>
 		AND UPPER(MEM_NAME) LIKE UPPER('%'||#{searchValue} ||'%')
 		</if> -->
 		<if test="collNo != null and collNo != ''">
@@ -221,6 +182,7 @@
 	<select id="getStatusInfoList" resultMap="stuMapper.status">
 		SELECT
 		    STATUS_NO
+		    , MB.MEM_NO
 		    , MEM_NAME
 		    , ST.MEM_NO
 		    , STU_YEAR
@@ -238,12 +200,22 @@
 		AND ST.COLL_NO = COLL.COLL_NO
 		AND MB.MEM_NO = ST.MEM_NO
 		AND ING_STATUS = 'I'
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate} 
+		</if>
+		<if test='searchFromDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
+		</if>
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
 	</select>
 	
 		<!-- 휴학관리 승인 조회-->
 	<select id="getStatusInfoAppList" resultMap="stuMapper.status">
 		SELECT
 		    STATUS_NO
+		    , MB.MEM_NO
 		    , MEM_NAME
 		    , ST.MEM_NO
 		    , STU_YEAR
@@ -261,12 +233,22 @@
 		AND ST.COLL_NO = COLL.COLL_NO
 		AND MB.MEM_NO = ST.MEM_NO
 		AND ING_STATUS = 'P'
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>               
+		AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
+		</if>
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
 	</select>
 	
 	<!-- 휴학관리 취소 조회-->
 	<select id="getStatusInfoDeniedList" resultMap="stuMapper.status">
 		SELECT
 		    STATUS_NO
+		    , MB.MEM_NO
 		    , MEM_NAME
 		    , ST.MEM_NO
 		    , STU_YEAR

@@ -540,6 +540,25 @@ function authenMail() {
 	  alert('이메일이 성공적으로 발송되었습니다.');
 	  btnAuth.disabled = true;
 	  alert(authoMail)
+	    var timeRemaining = 180;
+		var countdownTimer;
+		
+		function startTimer() {
+		  var timeRemainingInput = document.querySelector('#time-remaining');
+		  countdownTimer = setInterval(function() {
+		    var minutes = Math.floor(timeRemaining / 60);
+		    var seconds = timeRemaining % 60;
+		    timeRemainingInput.value = minutes + 'm ' + seconds + 's';
+		
+		    if (timeRemaining <= 0) {
+		      clearInterval(countdownTimer);
+		      timeRemainingInput.value = 'Time expired';
+		      document.querySelector('#joinBtn').disabled = true;
+		    }
+		
+		    timeRemaining--;
+		  }, 1000);
+		}
 	},
     error: function() {
       alert('메일전송에 실패하였습니다..');
@@ -550,24 +569,7 @@ function authenMail() {
   });
 }
 
-var timeRemaining = 180;
-var countdownTimer;
 
-function startTimer() {
-  var timeRemainingInput = document.querySelector('#time-remaining');
-  countdownTimer = setInterval(function() {
-    var minutes = Math.floor(timeRemaining / 60);
-    var seconds = timeRemaining % 60;
-    timeRemainingInput.value = minutes + 'm ' + seconds + 's';
-
-    if (timeRemaining <= 0) {
-      clearInterval(countdownTimer);
-      timeRemainingInput.value = 'Time expired';
-    }
-
-    timeRemaining--;
-  }, 1000);
-}
 
 
 function checkVerificationCode() {
@@ -582,6 +584,7 @@ function checkVerificationCode() {
 	document.querySelector('#joinBtn').disabled = false;
   } else {
     alert('인증번호가 일치하지 않습니다. \n 발송된 인증번호를 다시 확인 해주세요.');
+    document.querySelector('#joinBtn').disabled = true;
   }
 }
 

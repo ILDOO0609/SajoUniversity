@@ -402,6 +402,8 @@
 		AND ENROLLMENT.LEC_NO = LEC.LEC_NO
 		AND STU_NO = #{stuNo}
 	</select>
+	
+	<!--  -->
 </mapper>
 
 

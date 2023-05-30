@@ -32,6 +32,7 @@
 		<association property="colleageVO" 	   resultMap="colleageMapper.colleage"></association>
 		<association property="memberVO"   	   resultMap="memberMapper.member"></association>
 		<association property="enrollmentVO"   resultMap="enrollment"></association>
+		<association property="lecturePDFVO"   resultMap="lecturePDF"></association>
 		<collection property="lectureTimeList" resultMap="lectureTime"></collection>
 	</resultMap>
 	
@@ -54,6 +55,21 @@
 		<result column="FIRST_TIME"  property="firstTime"/>
 		<result column="LAST_TIME"   property="lastTime"/>
 		<result column="LEC_NO"  	 property="lecNo"/>
+	</resultMap>
+	
+	<resultMap type="com.study.test.emp.vo.StuGradeVO" id="stuGrade">
+		<id 	column="STU_GRADE_NO" property="stuGradeNo"/>
+		<result column="STU_NO" 	  property="stuNo"/>
+		<result column="SEM_NO" 	  property="semNo"/>
+		<result column="GRADE" 		  property="grade"/>
+		<result column="LEC_NO" 	  property="lecNo"/>
+	</resultMap>
+	
+	<resultMap type="com.study.test.emp.vo.LecturePDFVO" id="lecturePDF">
+		<id 	column="PDF_NO" 	 	   property="pdfNo"/>
+		<result column="ORIGIN_PDF_NAME"   property="originPdfName"/>
+		<result column="ATTACHED_PDF_NAME" property="attachedPdfName"/>
+		<result column="LEC_NO"			   property="lecNo"/>
 	</resultMap>
 	
 	<!-- 접속해있는 교수의 EMP_NO 조회  -->
@@ -113,6 +129,21 @@
 		</foreach>
 	</insert>
 	
+	<!-- 강의자료 등록 -->
+	<insert id="insertLecturePDF">
+		INSERT INTO LECTURE_PDF (
+			PDF_NO
+			 , ORIGIN_PDF_NAME
+			 , ATTACHED_PDF_NAME
+			 , LEC_NO
+		) VALUES (
+			(SELECT 'PDF_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(PDF_NO, 5))), 0) +1,3,0) FROM LECTURE_PDF) 
+			, #{originPdfName}
+			, #{attachedPdfName}
+			, #{lecNo}
+		)
+	</insert>
+	
 	<!-- 강의 시간표 작성 위한 강의 및 강의시간 조회 -->
 	<select id="getLectureListForSchedule" resultType="HashMap">
 		SELECT LEC_NAME
@@ -140,13 +171,15 @@
 		    , MEM_NAME
 		    , MAX_NUM
 		    , NOW_NUM
+		    , ATTACHED_PDF_NAME
 		    , DECODE(LEC_STATUS, 'Y', '강의중', 'N', '폐강') LEC_STATUS
-		FROM LECTURE LEC, LECTURE_TIME TIME, DEPT, EMP, MEMBER, COLLEAGE COLL
+		FROM LECTURE LEC, LECTURE_TIME TIME, DEPT, EMP, MEMBER, COLLEAGE COLL, LECTURE_PDF PDF
 		WHERE LEC.LEC_NO = TIME.LEC_NO
 		AND LEC.DEPT_NO = DEPT.DEPT_NO
 		AND LEC.COLL_NO = COLL.COLL_NO
 		AND MEMBER.MEM_NO = EMP.MEM_NO
 		AND LEC.EMP_NO = EMP.EMP_NO
+		AND PDF.LEC_NO = LEC.LEC_NO
 		AND EMP.EMP_NO = #{empNo}
 		<if test='searchValue != null and !searchValue.equals("")'>
 		AND UPPER(LEC_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
@@ -160,7 +193,7 @@
 		<if test='lecNo != null and lecNo != "" '>
 		AND TIME.LEC_NO = #{lecNo}
 		</if>
-		ORDER BY LEC.NAME
+		ORDER BY LEC_NAME
 	</select>
 	
 	<!-- 강의 폐강시 강의상태 수정 -->
@@ -216,6 +249,7 @@
 			, LEC_SCORE
 			, COLL_NAME
 			, DEPT_NAME
+			, SEM_NO
 		FROM LECTURE LEC, DEPT, COLLEAGE COLL 
 		WHERE LEC.DEPT_NO = DEPT.DEPT_NO
 		AND LEC.COLL_NO = COLL.COLL_NO
@@ -256,7 +290,8 @@
 		    ENR.STU_NO, 
 		    MEMBER.MEM_NAME, 
 		    MEMBER.MEM_NO, 
-		    COALESCE(STU_GRADE.GRADE, '미등록') AS GRADE
+		    NVL(STU_GRADE.GRADE, '미등록') AS GRADE,
+		    NVL(STU_GRADE_NO, '미등록') AS STU_GRADE_NO
 		FROM 
 		    STU
 		INNER JOIN 
@@ -268,6 +303,30 @@
 		WHERE 
 		    ENR.LEC_NO = #{lecNo}
 	</select>
+	
+	<!-- 학생 성적 등록 -->
+	<insert id="insertStuGrade">
+		INSERT INTO STU_GRADE (
+			STU_GRADE_NO
+			, STU_NO
+			, SEM_NO
+			, GRADE
+			, LEC_NO
+		) VALUES (
+			(SELECT 'STU_GRADE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(STU_GRADE_NO, 11))), 0) +1,3,0) FROM STU_GRADE)
+			, #{stuNo}
+			, #{semNo}
+			, #{grade}
+			, #{lecNo}
+		)
+	</insert>
+	
+	<!-- 학생 성적 변경 -->
+	<update id="updateStuGrade">
+		UPDATE STU_GRADE SET
+			GRADE = #{grade}
+		WHERE STU_GRADE_NO = #{stuGradeNo}
+	</update>
 	
 	<!-- 수강신청용 강의 조회 -->
 	<select id="getLectureForStu" resultMap="lecture">

@@ -55,8 +55,8 @@ function drawLectureListTable(){
 				else{
 					for(const lec of result){
 						str += `<tr>`;
-						str += `	<td>${lec.lecNo}</td>`;
-						str += `	<td>${lec.lecName}</td>`;
+						str += `	<td id="lecNo">${lec.lecNo}</td>`;
+						str += `	<td id ="lecName"><a href="/pdfFile/${lec.lecturePDFVO.attachedPdfName}">${lec.lecName}</a></td>`;
 						str += `	<td>${lec.lecScore}</td>`;
 						str += `	<td>${lec.colleageVO.collName}</td>`;
 						str += `	<td>${lec.deptVO.deptName}</td>`;
@@ -127,7 +127,7 @@ function searchLecture(){
 					for(const lec of result){
 						str += `<tr>`;
 						str += `	<td id="lecNo">${lec.lecNo}</td>`;
-						str += `	<td id="lecName">${lec.lecName}</td>`;
+						str += `	<td id ="lecName"><a href="/pdfFile/${lec.lecturePDFVO.attachedPdfName}">${lec.lecName}</a></td>`;
 						str += `	<td>${lec.lecScore}</td>`;
 						str += `	<td>${lec.colleageVO.collName}</td>`;
 						str += `	<td>${lec.deptVO.deptName}</td>`;

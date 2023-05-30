@@ -1,94 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-   layout:decorate="~{fragment/layout}">
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
 
-<!-- 연결해야 할 외부 css파일 -->
+
+<!-- 연결해야 할 외부 css 파일 -->
+<!-- layout에 css 적용 -->
 <th:block layout:fragment="content_css">
 	<link rel="stylesheet" href="/css/login.css">
 </th:block>
 
+<!-- layout에 content 구문에 적용 -->
 <th:block layout:fragment="content">
-				
-				
-				<!-- 출처 : 유튜브 : 김포대학교 홍보자료 -->
-				<iframe width="100%" height="100%"
-					src="https://www.youtube.com/embed/cPXZI2SMaok?autoplay=1&mute=1&controls=0&loop=1&playlist=cPXZI2SMaok"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					allowfullscreen>
-				</iframe>
 
-					<div class="btn btn-dark d-grid mb-2">
-						<span data-bs-toggle="modal" data-bs-target="#loginModal" style="cursor: pointer;">LOGIN</span> 
-					</div>
-				
-<div id="wrapper">
-
-
-
-	<!-- HEADER -->
-	<div id="header">	
-		<h1 class="hidden" style="display: none;">사조대학 포털시스템</h1>
-			
-
-		</div>
+<div class="imgBox">
+		<img class="imgBG" src="https://cdn.pixabay.com/photo/2020/02/06/20/01/university-library-4825366_1280.jpg">
+	</div>
+	<img class="gimpoLogo" src=""/>
+	<div class="timeBox">
 	
-	<!-- CONTENTS -->
-	<div id="container">
-		<div id="contain">
 		
+	</div>
+	<!-- 로그인 섹션 -->
+	<section class="loginSec">
+		<div class="login-inputBox">
+			<div style="text-align: center; font-size: 20px; margin-bottom: 5px;">사조 대학에 오신걸 환영합니다.</div>
 			
-			
-			<div id="help_btn" class="btn_help_box">
-				<div class="btn_help_type1" style="text-align: center; ">
-					<p>통합 로그인 아이디를 모를 경우, 아이디 찾기를 사용하세요.</p>
-					<p>통합 로그인 비밀번호가 기억나지 않는 경우
-						비밀번호를 이메일로 재발급 받고 이용해주세요.
-					</p>
-					<span data-bs-toggle="modal" data-bs-target="#findNoModal" style="cursor: pointer;" class="mt-3 mb-3 btn btn-dark">
-									아이디찾기
-					</span>
-					
-					<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer;" class="mt-3 mb-3 btn btn-dark">
+			<!-- 로그인 버튼 -->
+			<span data-bs-toggle="modal" data-bs-target="#loginModal"class="btn btn-dark" style="cursor: pointer;">LOGIN</span> 
+		
+		
+			<!-- ID/ PW 찾기 기능 -->
+			<div class="findFnc">
+				<span data-bs-toggle="modal" data-bs-target="#findNoModal" style="cursor: pointer; margin: 5px;" class="mt-3 mb-3 btn btn-dark" >
+									아이디찾기 
+				</span>
+				
+				<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer; margin: 5px;" class="mt-3 mb-3 btn btn-dark">
 									비밀번호 찾기
-					</span>
-					
-					
-				<p class="mb10">
-						<a href="/member/pop1" target="_blank" rel="noopener noreferrer"><strong
-							style="color: #294798">개인정보 처리방침</strong></a> <a
-							onclick="openPopupWindow(event, this.href);"
-							title="Rejection of unauthorized e-mail collection opens in a new window"
-							href="/member/pop2">이메일무단수집거부</a>
-					</p>
-					
-					<!-- 이메일무단수집거부 클릭시 팝업창 띄우기 -->
-					<script>
-						function openPopupWindow(event, url) {
-							event.preventDefault();
-							window
-								.open(url, '', 'left=100,top=100,width=710,height=480,scrollbars=yes');
-						}
-					</script>
-
-
-					<p class="mb10">COPYRIGHT© SAJO UNIVERSITY ALL RIGHTS RESERVED.</p>
-				</div>
+				</span>
+				
 				
 			</div>
 			
-							
+			<div>
+				<p>
+					<a href="/member/pop1" target="_blank" rel="noopener noreferrer"><strong
+						style="color: #294798">개인정보 처리방침</strong></a> <a
+						onclick="openPopupWindow(event, this.href);"
+						title="Rejection of unauthorized e-mail collection opens in a new window"
+						href="/member/pop2">이메일무단수집거부</a>
+				</p>
+
+
+				<!-- 이메일무단수집거부 클릭시 팝업창 띄우기 -->
+				<script>
+					function openPopupWindow(event, url) {
+						event.preventDefault();
+						window
+								.open(url, '',
+										'left=100,top=100,width=710,height=480,scrollbars=yes');
+					}
+				</script>
+			</div>
+			<span>COPYRIGHT© SAJO UNIVERSITY</span><br><span style="text-align: center"> ALL RIGHTS RESERVED.</span>
 		</div>
-		
-		
-	</div>
-</div>
-
-
-
-<!--비밀번호 찾기 Modal -->
+	</section>
+	
+	
+	
+	<!--비밀번호 찾기 Modal -->
 		<div class="modal fade" id="findPwModal" 
 			data-bs-keyboard="false" tabindex="-1"
 			aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -190,15 +172,19 @@
 				</div>
 			</div>
 		</div>
+		
+
+
 
 
 </th:block>
 
-<!-- 연결해야 할 외부 js파일 -->
+<!-- 연결해야 할 외부 js 파일 -->
+<!-- layout에서 자바스크립트 실행 -->
 <th:block layout:fragment="content_js">
-   <!-- <script type="text/javascript" src="첨부될 js 파일 경로"></script> -->
-   
-   
+	<!-- <script type="text/javascript" src="/js/test.js"></script> -->
+					<!-- 사용 시 위의 경로 수정-->
 </th:block>
+
 
 </html>

@@ -112,22 +112,27 @@ function infoSearchList(){
 function regSchInfo(){
 	const schInfoTitle_tag = document.querySelector('#schInfoTitle').value;
 	if(schInfoTitle_tag == ''){
-		alert('글 제목은 필수 입력입니다.');
+		swal("등록 실패", "제목은 필수 입력입니다.", "error");
 		return;
 	}
-	alert('정상적으로 등록 되었습니다.');
-	document.querySelector('#regSchInfoForm').submit();
+	swal("등록 완료", "글 등록이 완료되었습니다.", "success",{button: "확인"})
+	.then((result) => {
+		document.querySelector('#regSchInfoForm').submit();	
+	})
 }
 //학사안내 글삭제
 function deleteInfo(schInfoCode){
-	alert('해당글이 삭제 되었습니다.');
-	location.href = `/school/deleteSchoolInfo?schInfoCode=${schInfoCode}`;
-	
+	swal("삭제 완료", "글 삭제가 완료되었습니다.", "error", {button: "확인"})
+	.then((result) => {
+		location.href = `/school/deleteSchoolInfo?schInfoCode=${schInfoCode}`;	
+	})
 }
 //학사안내 글수정
 function schInfoUpdate(){
-	confirm('해당글을 수정할까요?');
-	document.querySelector('#schInfoUpdateForm').submit();
+	swal("수정 완료" , "글 수정이 완료되었습니다.", "success", {button: "확인"})
+	.then((result) => {
+		document.querySelector('#schInfoUpdateForm').submit();
+	})
 }
 
 

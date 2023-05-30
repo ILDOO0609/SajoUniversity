@@ -173,6 +173,15 @@ public class SchoolServiceImpl implements SchoolService{
 	
 	
 	
+	//학적변동 -> 복학관리 대기조회
+	@Override
+	public List<StatusInfoVO> getStatusReturnList() {
+		return sqlSession.selectList("schoolMapper.getStatusReturnList");
+	}
+
+	
+	
+	
 	
 	
 	

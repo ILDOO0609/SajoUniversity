@@ -309,16 +309,20 @@ public class SchoolController {
 	}
 	
 	
-	
-	
-	
-	//학적변동 -> 복학페이지 
+	//학적변동 -> 복학페이지 조회
 	@GetMapping("/acaReturn")
-	public String acaReturn() {
+	public String acaReturn(Model model) {
+		//승인대기조회
+		model.addAttribute("statuslist", schoolService.getStatusReturnList());
+		//승인완료조회
+		//승인취소조회
+		
 		return "content/school/academic/aca_return";
 	}
 	
-	
+	//학적변동 -> 복학신청 승인완료처리
+	@ResponseBody
+	@PostMapping("/updateReturnAppAjax")
 	
 	
 	
@@ -356,6 +360,11 @@ public class SchoolController {
 	//회원 -> 회원관리 페이지
 	@GetMapping("/memberList")
 	public String memberList(Model model) {
+		//단과대학 정보 조회
+		model.addAttribute("colleageList", colleageService.getColleageList());
+		//전공학과 정보 조회
+		model.addAttribute("deptList", colleageService.getDeptList());
+		//회원등록 전체 조회
 		model.addAttribute("memberList", schoolService.selectMemberList()); 
 		return "content/school/member/member_list";
 	}
@@ -376,6 +385,7 @@ public class SchoolController {
 			schoolService.insertEmp(memberVO);
 		}
 		schoolService.updatePosition(memNo);
+		
 	 }
 	
 	

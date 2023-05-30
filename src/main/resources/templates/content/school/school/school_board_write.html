@@ -9,43 +9,51 @@
 		<div class="row">
 			<div class="col">
 		 		<table class="table align-middle">
-		 			<tbody>
+		 			<colgroup>
+		 				<col width="15%">
+		 				<col width="*">
+		 			</colgroup>
+		 			<tbody style="text-align: center;">
 		 				<tr>
-		 					<td>제목</td>
+		 					<td>글제목</td>
 		 					<td>
-		 						<input type="text" name="schInfoTitle" id="schInfoTitle">
+		 						<input type="text" class="form-control" name="schInfoTitle" id="schInfoTitle">
 		 					</td>
 		 				</tr>
 						<tr>
 							<td>시작일</td>
 							<td>
-								<input type="date" name="schInfoStartDate">
+								<input type="date" class="form-control" name="schInfoStartDate">
 							</td>
 						</tr>
 						<tr>
 							<td>종료일</td>
 							<td>
-								<input type="date" name="schInfoEndDate">
+								<input type="date" class="form-control" name="schInfoEndDate">
 							</td>
 						</tr>
 		 				<tr>
 		 					<td>내용</td>
 		 					<td>
-		 						<textarea rows="20" cols="100" name="schInfoContent"></textarea>
+		 						<textarea rows="20" cols="100" class="form-control" name="schInfoContent"></textarea>
 		 					</td>
 		 				</tr>
 		 				
 		 				<tr>
 		 					<td>첨부파일</td>
 		 					<td>
-		 						<input type="file">
+		 						<input type="file" class="form-control">
 		 					</td>
 		 				</tr>
 		 			</tbody>
 					<tfoot>
 						<tr>
-		 					<td colspan="4">
+		 					<td>
+		 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		 						<input type="button" class="btn btn-primary" value="글 등록" onclick="regSchInfo();">
+		 					</td>
+		 					<td style="text-align: right;">
+		 						<input type="button" class="btn btn-primary" value="목록으로 가기"  th:onclick="|location.href='@{/school/info}';|">
 		 					</td>
 		 				</tr>
 					</tfoot> 			

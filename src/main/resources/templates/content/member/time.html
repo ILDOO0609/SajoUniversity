@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
+
+
+<!-- 연결해야 할 외부 css 파일 -->
+<!-- layout에 css 적용 -->
+<th:block layout:fragment="content_css">
+	<!-- <link rel="stylesheet" href="/css/test.css"> -->
+				<!-- 사용 시 위의 경로 수정-->
+</th:block>
+
+<!-- layout에 content 구문에 적용 -->
+<th:block layout:fragment="content">
+
+<style>
+      #clock {
+        font-size: 48px;
+        text-align: center;
+        margin-top: 200px;
+      }
+    </style>
+				
+				<div id="clock"></div>
+
+    <script>
+      function updateClock() {
+        // Get the current time
+        var currentTime = new Date();
+
+        // Extract hours, minutes, and seconds
+        var hours = currentTime.getHours();
+        var minutes = currentTime.getMinutes();
+        var seconds = currentTime.getSeconds();
+
+        // Add leading zeros if necessary
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        // Format the time string
+        var timeString = hours + ":" + minutes + ":" + seconds;
+
+        // Update the clock element
+        document.getElementById("clock").innerText = timeString;
+      }
+
+      // Update the clock every second
+      setInterval(updateClock, 1000);
+    </script>
+				
+				
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일 -->
+<!-- layout에서 자바스크립트 실행 -->
+<th:block layout:fragment="content_js">
+	<!-- <script type="text/javascript" src="/js/test.js"></script> -->
+					<!-- 사용 시 위의 경로 수정-->
+</th:block>
+
+
+</html>

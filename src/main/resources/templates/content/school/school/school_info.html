@@ -7,7 +7,7 @@
 <th:block layout:fragment="content">
 	<h1 style="text-align: center;">학사 안내</h1>
 	<form id="schInfoSearchForm" th:action="@{/school/info}" method="post">
-		<div class="row">
+		<div class="row" style="padding-bottom: 15px;">
 		 	<div class="col-3">
 				<select class="form-select" id="schInfoYear" name="schInfoYear" onchange="schInfoYear">
 					<th:block th:each="num : ${#numbers.sequence(thisYear-4, thisYear)}">
@@ -52,9 +52,9 @@
 	 				<col width="10%">
 	 			</colgroup>
 	 			<thead>
-	 				<tr>
-	 					<td>번호</td>
-	 					<td>제목</td>
+	 				<tr style="font-size: 20px; font-weight: bold;">
+	 					<td>글 번호</td>
+	 					<td>글 제목</td>
 	 					<td>등록일</td>
 	 					<td>기간</td>
 	 					<td>조회수</td>
@@ -74,9 +74,16 @@
 		 							[[${info.schInfoTitle}]]
 		 						</a>
 		 					</td>
-		 					<td>[[${info.schInfoDate}]]</td>
-		 					<td>[[${info.schInfoStartDate}]] ~ [[${info.schInfoEndDate}]]</td>
-		 					<td>[[${info.schInfoReadCnt}]]</td>
+		 					<td>
+		 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">[[${info.schInfoDate}]]</a>
+		 					</td>
+		 					<td>
+		 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">[[${info.schInfoStartDate}]] ~ [[${info.schInfoEndDate}]]</a>
+		 						
+		 					</td>
+		 					<td>
+		 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">[[${info.schInfoReadCnt}]]</a>
+		 					</td>
 		 				</tr>
 	 				</th:block>
 	 			</tbody>

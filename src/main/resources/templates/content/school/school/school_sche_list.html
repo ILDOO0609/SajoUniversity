@@ -11,12 +11,6 @@
 <meta charset='utf-8' />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
-<style>
-#calendar{
-   width:60%;
-   margin:20px auto;
-}
-</style>
 </head>
 <th:block layout:fragment="content">
 	<div class="row">
@@ -36,7 +30,7 @@
 					<col width="22%">
 				</colgroup>
 				<thead>
-					<tr>
+					<tr style="font-size: 18px; font-weight: bold;">
 						<td>등록일</td>
 						<td>제목</td>
 						<td>시작일</td>
@@ -58,7 +52,7 @@
 												<col width="25%">
 												<col width="25%">
 											</colgroup>
-											<tbody  style="border-style: hidden;">
+											<tbody style="border-style: hidden;">
 												<tr>
 													<td>[[${calendar.regDate}]]</td>
 													<td>[[${calendar.title}]]</td>

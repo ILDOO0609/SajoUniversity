@@ -54,10 +54,31 @@ public class MemberController {
 	}
 	
 	// 로그인 페이지 이동
-	@GetMapping("/loginForm")
+	@GetMapping("/loginForm3")
+	public String loginForm3() {
+		return "content//member/login_form3";
+	}
+	// 지도 페이지 이동
+	@GetMapping("/map")
+	public String map() {
+		return "content//member/map";
+	}
+	// 날씨 페이지 이동
+	@GetMapping("/weather")
+	public String weather() {
+		return "content//member/weather";
+	}
+	// 시계 페이지 이동
+	@GetMapping("/time")
+	public String time() {
+		return "content//member/time";
+	}
+	
+	// 메인 페이지 이동
+	@GetMapping("/main")
 	public String loginForm() {
 		
-		return "content//member/login_form";
+		return "content//member/main";
 	}
 	
 	
@@ -72,7 +93,6 @@ public class MemberController {
 	// 회원 가입
 	@PostMapping("/join")
 	public String join(MemberVO memberVO) {
-				
 		String encodedPw = encoder.encode(memberVO.getMemPw());
 		
 		memberVO.setMemPw(encodedPw);
@@ -91,10 +111,6 @@ public class MemberController {
 	 
 	
 	
-	@GetMapping("/game")
-	public String game() {
-		return "content//member/game";
-	}
 	
 	// 회원가입 이메일인증
 	@ResponseBody
@@ -200,7 +216,8 @@ public class MemberController {
 	        String trans_tell = loginInfo.getMemTell();
 	        String found_no = loginInfo.getMemNo();
 
-	        String tell = trans_tell.replaceAll("\\s+", "");
+	        String tell = trans_tell.replaceAll("-", "").replaceAll("\\s+", ""); // - 잡고 공백 잡기
+	        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + tell);
 	        DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCSFHN1XY1FX02NP", "B6URLZWJHLKFCHD7USZ9DWCWBMDUTDLV", "https://api.coolsms.co.kr");
 
 	        Message message = new Message();

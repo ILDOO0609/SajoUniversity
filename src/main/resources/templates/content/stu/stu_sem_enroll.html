@@ -97,7 +97,7 @@
 				<td>[[${lec.nowNum}]]</td>
 				<td>[[${lec.maxNum}]]</td>
 				<td>
-					<input type="button" class="btn btn-primary forCheckEnr" value="수강신청" th:onclick="applyEnrollment([[${lec.lecNo}]],[[${lec.semNo}]], this);">
+					<input type="button" th:classappend="${lec.nowNum} >= ${lec.maxNum} ? 'disabled' : ''" class="btn btn-primary forCheckEnr" value="수강신청" th:onclick="applyEnrollment([[${lec.lecNo}]],[[${lec.semNo}]], this);">
 				</td>
 			</tr>
 		</table>

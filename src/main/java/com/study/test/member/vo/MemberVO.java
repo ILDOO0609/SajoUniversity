@@ -25,4 +25,8 @@ public class MemberVO {
 	private String searchValue;
 
 	private String[] memTells;
+	
+	private String isConfirmed;
+	
+	
 }

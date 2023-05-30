@@ -18,16 +18,27 @@ function infoSelectMonth(){
 			tbodyTag.replaceChildren();
 			let str = '';
 			
-			for(let i = 0; i < result.length; i++){
+			if(result.length == 0){
 				str += `<tr>`;
-				str += `<td>${result[i].schInfoNum}</td>`;
-				str += `<td>`;
-				str += `<a href="/school/schoolBoardDetail?schInfoCode='${result[i].schInfoCode}'">${result[i].schInfoTitle}</a>`;
-				str += `</td>`;
-				str += `<td>${result[i].schInfoDate}</td>`;
-				str += `<td>${result[i].schInfoStartDate} ~ ${result[i].schInfoEndDate}</td>`;
+				str += `<td colspan="5">조회된 안내글이 없습니다.</td>`;
 				str += `</tr>`;
+				
 			}
+			else{
+				for(let i = 0; i < result.length; i++){
+					str += `<tr>`;
+					str += `<td>${result[i].schInfoNum}</td>`;
+					str += `<td>`;
+					str += `<a href="/school/schoolBoardDetail?schInfoCode='${result[i].schInfoCode}'">${result[i].schInfoTitle}</a>`;
+					str += `</td>`;
+					str += `<td>${result[i].schInfoDate}</td>`;
+					str += `<td>${result[i].schInfoStartDate} ~ ${result[i].schInfoEndDate}</td>`;
+					str += `<td>${result[i].schInfoReadCnt}</td>`;
+					str += `</tr>`;
+				}
+				
+			}
+			
 			
 			tbodyTag.insertAdjacentHTML('afterbegin', str);
 
@@ -119,6 +130,26 @@ function schInfoUpdate(){
 	document.querySelector('#schInfoUpdateForm').submit();
 }
 
+
+//글 상세보기, 이전글
+function prev(schInfoCode){
+	var number = parseInt(schInfoCode.substr(9), 10); // 문자열에서 숫자 부분 추출
+	var incrementedNumber = number - 1; // 숫자 증가
+	var replacedStr = schInfoCode.replace(number, incrementedNumber); // 문자열에서 숫자 대체
+	console.log(replacedStr);	
+
+	location.href='/school/schoolBoardDetail?schInfoCode=' + replacedStr;
+}
+
+//글 상세보기, 다음글
+function next(schInfoCode){
+	var number = parseInt(schInfoCode.substr(9), 10); // 문자열에서 숫자 부분 추출
+	var incrementedNumber = number + 1; // 숫자 증가
+	var replacedStr = schInfoCode.replace(number, incrementedNumber); // 문자열에서 숫자 대체
+	console.log(replacedStr);	
+
+	location.href='/school/schoolBoardDetail?schInfoCode=' + replacedStr;
+}
 
 
 
@@ -250,38 +281,7 @@ changeYearMonth(current_year, current_month);
 	
 	
 
-//--------------회원메뉴--------------------------------------------------------------
-function position(memNo, memRole) {
-	memNo_tag = document.querySelector('#memNo').value;
-	memRole_tag = document.querySelector('#memRole').value;
-	
-	if(memNo == null){
-		if(memRole = stu){
-			
-		}
-	}
-	
-	
-	//ajax start
-	$.ajax({
-   		url: '/test2/test2', //요청경로
-		type: 'post',
-		async: true,
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	   	data: {}, //필요한 데이터
-	   	success: function(result) {
-	      alert('ajax 통신 성공');
-	      alert(result);
-	   	},
-	   	error: function() {
-	      alert('실패');
-		}
-	});
-	//ajax end
 
-	
-}
-	
 
 
 

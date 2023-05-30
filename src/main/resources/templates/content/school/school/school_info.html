@@ -17,7 +17,7 @@
 		 	</div>
 		 	<div class="col-3">
 		 		<select class="form-select" id="schInfoMonth" name="schInfoMonth" onchange="infoSelectMonth();">
-					<option>전체(월)</option>
+					<option value="allMonth">전체(월)</option>
 					<option value="1">1월</option>
 					<option value="2">2월</option>
 					<option value="3">3월</option>
@@ -45,10 +45,11 @@
 	 	<div class="col">
 	 		<table class="table table-hover text-center align-middle" id="schInfoTable">
 	 			<colgroup>
-	 				<col>
-	 				<col>
-	 				<col>
-	 				<col>
+	 				<col width="10%">
+	 				<col width="*%">
+	 				<col width="15%">
+	 				<col width="25%">
+	 				<col width="10%">
 	 			</colgroup>
 	 			<thead>
 	 				<tr>
@@ -56,6 +57,7 @@
 	 					<td>제목</td>
 	 					<td>등록일</td>
 	 					<td>기간</td>
+	 					<td>조회수</td>
 	 				</tr>
 	 			</thead>
 	 			<tbody id="tbodyTag">
@@ -74,6 +76,7 @@
 		 					</td>
 		 					<td>[[${info.schInfoDate}]]</td>
 		 					<td>[[${info.schInfoStartDate}]] ~ [[${info.schInfoEndDate}]]</td>
+		 					<td>[[${info.schInfoReadCnt}]]</td>
 		 				</tr>
 	 				</th:block>
 	 			</tbody>

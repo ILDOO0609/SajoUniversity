@@ -22,16 +22,21 @@ function changeColl(coll){
 // 단과대학 변경 시 소속학과 변경
 function drawDeptSelectbox(deptList){
 	const dept_div = document.querySelector('#deptDiv');
-	
 	dept_div.replaceChildren();
 		
 	let str = '';
 	
-	str += `<select class="form-select text-center" name="deptNo">`;
-	for(const dept of deptList){
-		str += `<option id="deptNo" value="${dept.deptNo}">${dept.deptName}</option>`;
-	}
-	str += `</select>`;
+	if (deptList.length === 0) {
+        str += `<select class="form-select text-center" name="deptNo">`;
+        str += `<option value=''>전체</option>`;
+        str += `</select>`;
+  	} else {
+        str += `<select class="form-select text-center" name="deptNo">`;
+        for (const dept of deptList) {
+            str += `<option id="deptNo" value="${dept.deptNo}">${dept.deptName}</option>`;
+    }
+        str += `</select>`;
+    }
 	
 	dept_div.insertAdjacentHTML('afterbegin',str);
 }
@@ -79,7 +84,7 @@ function searchLecture(){
 						str += `<td>${result[i].lectureTimeList[0].lecDay}/${result[i].lectureTimeList[0].firstTime}~${result[i].lectureTimeList[0].lastTime}</td>`;
 						str += `<td>${result[i].nowNum}</td>`;
 						str += `<td>${result[i].maxNum}</td>`;
-						str += `<td><input type="button" class="btn btn-primary" value="수강신청" onclick="applyEnrollment('${result[i].lecNo}','${result[i].semNo}', this);"></td>`;
+						str += `<td><input ${result[i].nowNum >= result[i].maxNum ? 'disabled' : ''} type="button" class="btn btn-primary" value="수강신청" onclick="applyEnrollment('${result[i].lecNo}','${result[i].semNo}', this);"></td>`;
 						str += ``;
 						str += `</tr>`;
 					}
@@ -108,6 +113,7 @@ function doEnrollment(lecNo, semNo){
 			data: {'lecNo':lecNo, 'semNo':semNo}, //필요한 데이터
 			success: function(result) {
 				if(result){
+					return;
 				}
 				else{
 					alert('다시 시도하세요');
@@ -130,7 +136,7 @@ function applyEnrollment(lecNo, semNo){
 		checkEnrollment(lecNo, semNo);
 		
 	}
-	
+	return;
 }
 
 
@@ -147,7 +153,8 @@ function checkEnrollment(lecNo, semNo){
 			data: {'lecNo':lecNo}, //필요한 데이터
 			success: function(result) {
 				if (result) {
-            		alert('이미 수강신청한 강의 입니다.')
+            		alert('이미 수강신청한 강의 입니다.');
+            		return;
         		}
 				else{
 					doEnrollment(lecNo, semNo);

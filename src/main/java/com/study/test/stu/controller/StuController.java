@@ -20,6 +20,7 @@ import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.service.memberService;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.stu.service.StuService;
+import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 
@@ -42,6 +43,23 @@ public class StuController {
 	
 	@Resource(name="memberService")
 	private memberService memberService;
+	
+	// 학생 학적 기본조회
+	@GetMapping("/stuInfoForSc")
+	public String stuInfoForSc(Authentication authentication, String stuNo, Model model, String memNo) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		// 휴학복학상태 조회
+		model.addAttribute("statusInfo", stuService.getStatusInfoForStu(stuNo));
+		// 복수전공 신청 조회
+		model.addAttribute("getDeptInfo", stuService.getDeptManageForStu(stuNo));
+		
+		memNo = authentication.getName();
+		model.addAttribute("collInfo", stuService.getCollName(memNo));
+		model.addAttribute("deptInfo", stuService.getDeptName(memNo));
+		
+		return "content/stu/stu_info_for_sc";
+	}
+	
 	
 	// 학생 정보 조회
 	@GetMapping("/stuInfo")
@@ -81,10 +99,31 @@ public class StuController {
 	
 	// 복수전공 신청
 	@GetMapping("/stuMultimajor")
-	public String stuMultimajor() { 
+	public String stuMultimajor(Authentication authentication, Model model, String memNo) { 
+		// 학생 정보 조회
+		memNo = authentication.getName();
+		model.addAttribute("memInfo", memberService.getMemInfoForStu(memNo));
+		model.addAttribute("stuInfo", stuService.getStuInfo(memNo));
+		model.addAttribute("collInfo", stuService.getCollName(memNo));
+		model.addAttribute("deptInfo", stuService.getDeptName(memNo));
+		
+		// 단과대학 조회
+		model.addAttribute("colleageList", colleageService.getColleageList());
+		// 소속학과 조회
+		model.addAttribute("deptList", colleageService.getDeptList());
+		
 		
 		return "content/stu/stu_multimajor";
 		
+	}
+	
+	
+	//  복수전공 신청 처리
+	@PostMapping("/confirmMulti")
+	public String confirmMulti(DeptManageVO deptManageVO) {
+		stuService.insertMultiMajor(deptManageVO);
+		
+		return "redirect:/stu/stuInfoForSc";
 	}
 	
 	
@@ -117,7 +156,6 @@ public class StuController {
 		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
 		
 		model.addAttribute("enrList", stuService.getEnrollmentNow(stuNo));
-		
 		
 		return "content/stu/stu_sem_enroll_now";
 	}
@@ -185,15 +223,71 @@ public class StuController {
 		
 	}
 	
+	// 휴학신청 진행중인 학생 중복신청 x
+	@ResponseBody
+	@PostMapping("/forStatusSubmitAjax")
+	public int forStatusSubmitAjax(Authentication authentication) {
+		
+		return stuService.getIngStatus(stuService.getStuInfo(authentication.getName()).getStuNo());
+	}
+	
+	// 휴학처리
 	@PostMapping("/stuAbsence")
 	public String stuAbsence(StatusInfoVO statusInfoVO, Authentication authentication) {
 		statusInfoVO.setStuNo(stuService.getStuInfo(authentication.getName()).getStuNo());
 		
 		stuService.applyAbsence(statusInfoVO);
 		
-		return "redirect:/stu/stuStatus";
+		return "redirect:/stu/stuInfoForSc";
 	}
 	
+	// 복학신청 페이지
+	@GetMapping("/stuStatusRe")
+	public String stuStatusRe(Authentication authentication, Model model, String memNo) {
+		// 학생 정보 조회
+		memNo = authentication.getName();
+		model.addAttribute("memInfo", memberService.getMemInfoForStu(memNo));
+		model.addAttribute("stuInfo", stuService.getStuInfo(memNo));
+		model.addAttribute("collInfo", stuService.getCollName(memNo));
+		model.addAttribute("deptInfo", stuService.getDeptName(memNo));
+		
+		return "content/stu/stu_status_re";
+	}
+	
+	@GetMapping("/stu/stuAbsenceRe")
+	public String stuAbsenceRe() {
+		
+		return "redirect:/stu/stuInfo";
+	}
+	
+	// 복학 처리가능한지 검사
+	@ResponseBody
+	@PostMapping("/stuAbsenceReAjax")
+	public boolean stuAbsenceReAjax(Authentication authentication, String stuNo) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		
+		return stuService.getStatusRe(stuNo) >= 1 ? true : false;
+	}
+	
+	// 휴학/복학 신청 취소
+	@GetMapping("/deleteAbsence")
+	public String deleteAbsence(Authentication authentication ,String stuNo) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		
+		stuService.deleteAbsence(stuNo);
+		
+		return "redirect:/stu/stuInfoForSc";
+	}
+	
+	// 복수전공 신청 취소
+	@GetMapping("/deleteMultiMajor")
+	public String deleteMultiMajor(Authentication authentication ,String stuNo) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
+		
+		stuService.deleteMultiMajor(stuNo);
+		
+		return "redirect:/stu/stuInfoForSc";
+	}
 	
 	// 학생 시간표
 	@GetMapping("/stuTimetable")

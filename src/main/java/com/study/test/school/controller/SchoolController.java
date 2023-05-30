@@ -1,7 +1,9 @@
 package com.study.test.school.controller;
 
 import java.time.Year;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -17,8 +19,12 @@ import com.study.test.colleage.service.ColleageService;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.service.EmpService;
 import com.study.test.emp.vo.LectureVO;
+import com.study.test.member.vo.MemberVO;
+import com.study.test.school.service.CalendarService;
 import com.study.test.school.service.SchoolService;
+import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 import com.study.test.util.DateUtill;
 
@@ -36,6 +42,8 @@ public class SchoolController {
 	@Resource(name = "colleageService")
 	private ColleageService colleageService;
 	
+	@Resource(name = "calendarService")
+	private CalendarService calendarService;
 	
 	//학사메뉴 클릭시 페이지
 	@GetMapping("/main")
@@ -76,10 +84,9 @@ public class SchoolController {
 	@ResponseBody
 	@PostMapping("/schInfoMonthAjax")
 	public List<SchoolInfoVO> schInfoMonthAjax(int schInfoMonth){
+		System.out.println("@@@@@@@@@@@########@#@#@" + schInfoMonth);
 		return schoolService.schInfoMonthAjax(schInfoMonth);
 	}
-	
-	
 	
 	//학사메뉴 -> 학사안내 게시글 작성페이지
 	@GetMapping("/regSchoolBoard")
@@ -108,8 +115,33 @@ public class SchoolController {
 		//조회수
 		schoolService.updateSchoolBoardReadCnt(schInfoCode);
 		//이전글다음글
-		model.addAttribute("move", schoolService.movePage(schoolInfoVO.getSchInfoCode())); 
+		String numberStr = schInfoCode.substring(9);
+		int prevNumber = Integer.parseInt(schInfoCode.substring(9)) - 1;
+		int nextNumber = Integer.parseInt(schInfoCode.substring(9)) + 1;
 		
+		String prevStr = schInfoCode.replace(numberStr, String.format("%03d", prevNumber)); // 숫자를 3자리로 포맷팅하여 대체
+		String nextStr = schInfoCode.replace(numberStr, String.format("%03d", nextNumber)); // 숫자를 3자리로 포맷팅하여 대체
+	
+		SchoolInfoVO prevDetail = schoolService.schoolBoardDetail(prevStr);
+		SchoolInfoVO nextDetail = schoolService.schoolBoardDetail(nextStr);
+		
+		System.out.println("@@@@@@@@@@@@@@@이전글" + prevDetail);
+		System.out.println("@@@@@@@@@@@@다음글" + nextDetail);
+	
+		if(prevDetail == null) {
+			prevDetail = new SchoolInfoVO();
+			prevDetail.setSchInfoTitle("이전글이 없습니다.");
+		}
+		if(nextDetail == null) {
+			nextDetail = new SchoolInfoVO();
+			nextDetail.setSchInfoTitle("다음글이 없습니다.");
+		}
+		
+		model.addAttribute("prevList", prevDetail); 
+		model.addAttribute("nextList", nextDetail);
+		
+		System.out.println("@@@@@@@@@@@@@@@이전글" + schoolService.schoolBoardDetail(prevStr));
+		System.out.println("@@@@@@@@@@@@다음글" + schoolService.schoolBoardDetail(nextStr));
 		
 		return "content/school/school/school_board_detail";
 	}
@@ -134,9 +166,7 @@ public class SchoolController {
 		return "redirect:/school/info";
 	}
 
-	
-	
-	
+
 	
 	
 	//학사메뉴 -> 학사일정 페이지
@@ -145,9 +175,13 @@ public class SchoolController {
 		model.addAttribute("calendarList", schoolService.calendarList());
 		return "content/school/school/school_sche_list";
 	}
-	
-	
-	
+	//학사메뉴 -> 학사일정 -> 일정추가
+	@PostMapping("/addSchedule")
+	public String addSchedule(CalendarVO calendarVO, Authentication authentication) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@#" + calendarVO);
+		calendarService.addSchedule(calendarVO);
+		return "redirect:/school/scheList";
+	}
 	
 	
 //-------------------------------학사조회--------------------------------------------
@@ -171,14 +205,15 @@ public class SchoolController {
 	}
 	
 	//학사조회 -> 학생조회 페이지
-	@GetMapping("/checkStu")
+	@RequestMapping("/checkStu")
 	public String checkStu(Model model) {
 		//단과대학 정보 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		//전공학과 정보 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
 		//학생조회
-		model.addAttribute("stuList", schoolService.checkStuList());
+		StuVO stuVO = new StuVO();
+		model.addAttribute("stuList", schoolService.checkStuList(stuVO));
 		return "content/school/check/check_stu";
 	}
 	//학사조회 -> 검색
@@ -193,13 +228,13 @@ public class SchoolController {
 	
 	//학사조회 -> 교수&교직원 조회 페이지
 	@GetMapping("/checkPro")
-	public String checkPro(Model model) {
+	public String checkPro(Model model, LectureVO lectureVO) {
 		//단과대학 정보 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		//전공학과 정보 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
 		//교수&교직원 조회
-		model.addAttribute("proList", schoolService.checkProList());
+		model.addAttribute("proList", schoolService.checkProList(lectureVO));
 		
 		return "content/school/check/check_pro";
 	}
@@ -224,7 +259,8 @@ public class SchoolController {
 	
 	
 	
-	
+//-------------------------------학적변동--------------------------------------------
+		
 	
 	
 	//학적변동 메인 페이지
@@ -233,11 +269,48 @@ public class SchoolController {
 		return "content/school/academic/aca_main";
 	}
 	
-	//학적변동 -> 휴학페이지
+	//학적변동 -> 휴학페이지 조회
 	@GetMapping("/acaLeave")
-	public String acaLeave() {
+	public String acaLeave(Model model) {
+		//승인대기조회
+		model.addAttribute("statuslist", schoolService.getStatusInfoList());
+		//승인완료조회
+		model.addAttribute("statusApplist", schoolService.getStatusInfoAppList());
+		//승인취소조회
+		model.addAttribute("statusDeniedlist", schoolService.getStatusInfoDeniedList());
+		
 		return "content/school/academic/aca_leave";
 	}
+	//학적변동 -> 휴학관리 승인완료처리
+	@ResponseBody
+	@PostMapping("/updateLeaveAppAjax")
+	public void updateLeaveApp(String statusNo) {
+		
+		String stuNo = schoolService.updateLeaveSelect(statusNo);
+		StatusInfoVO statusInfoVO = new StatusInfoVO();
+		statusInfoVO.setStatusNo(statusNo);
+		statusInfoVO.setStuNo(stuNo);
+		
+		schoolService.updateLeaveApp(statusInfoVO);
+	}
+	
+	//학적변동 -> 휴학관리 승인취소처리
+	@ResponseBody
+	@PostMapping("/updateLeaveDeniedAjax")
+	public void updateLeaveAppDenied(String statusNo) {
+		
+		String stuNo = schoolService.updateLeaveSelect(statusNo);
+		StatusInfoVO statusInfoVO = new StatusInfoVO();
+		statusInfoVO.setStatusNo(statusNo);
+		statusInfoVO.setStuNo(stuNo);
+		
+		schoolService.updateLeaveDenied(statusInfoVO);
+		
+	}
+	
+	
+	
+	
 	
 	//학적변동 -> 복학페이지 
 	@GetMapping("/acaReturn")
@@ -278,18 +351,33 @@ public class SchoolController {
 	
 	
 	
-	
+//	
 
 	//회원 -> 회원관리 페이지
 	@GetMapping("/memberList")
 	public String memberList(Model model) {
-		model.addAttribute("memberList", schoolService.selectMember()); 
+		model.addAttribute("memberList", schoolService.selectMemberList()); 
 		return "content/school/member/member_list";
 	}
 	
 	
-
-
+	
+	 //회원 -> 승인
+	 @ResponseBody
+	 @PostMapping("/updatePosition") 
+	 public void updatePosition(String memNo) {
+		MemberVO memberVO  = schoolService.selectMember(memNo);
+		System.out.println("@@@@@@@@@@@@@@@@@@#######" + memberVO);
+		
+		if(memberVO.getMemRole().equals("stu")) {
+			schoolService.insertStu(memberVO);
+		}
+		else {
+			schoolService.insertEmp(memberVO);
+		}
+		schoolService.updatePosition(memNo);
+	 }
+	
 	
 	
 	

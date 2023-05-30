@@ -11,6 +11,7 @@ import com.study.test.colleage.vo.ColleageVO;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.vo.EnrollmentVO;
 import com.study.test.emp.vo.LectureVO;
+import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 
@@ -71,6 +72,50 @@ public class StuServiceImpl implements StuService{
 	@Override
 	public void applyAbsence(StatusInfoVO statusInfoVO) {
 		sqlSession.insert("stuMapper.applyAbsence", statusInfoVO);
+		
+	}
+
+	@Override
+	public int getIngStatus(String stuNo) {
+		return sqlSession.selectOne("stuMapper.getIngStatus", stuNo);
+	}
+
+	@Override
+	public int getStatusRe(String stuNo) {
+		return sqlSession.selectOne("stuMapper.getStatusRe", stuNo);
+	}
+
+	@Override
+	public void updateStatusStuForRe(String stuNo) {
+		sqlSession.update("stuMapper.updateStatusStuForRe", stuNo);
+		
+	}
+
+	@Override
+	public void insertMultiMajor(DeptManageVO deptManageVO) {
+		sqlSession.insert("stuMapper.insertMultiMajor", deptManageVO);
+		
+	}
+
+	@Override
+	public List<DeptManageVO> getDeptManageForStu(String stuNo) {
+		return sqlSession.selectList("stuMapper.getDeptManageForStu", stuNo);
+	}
+
+	@Override
+	public StatusInfoVO getStatusInfoForStu(String stuNo) {
+		return sqlSession.selectOne("stuMapper.getStatusInfoForStu", stuNo);
+	}
+
+	@Override
+	public void deleteAbsence(String stuNo) {
+		sqlSession.delete("stuMapper.deleteAbsence", stuNo);
+		
+	}
+
+	@Override
+	public void deleteMultiMajor(String stuNo) {
+		sqlSession.delete("stuMapper.deleteMultiMajor", stuNo);
 		
 	}
 	

@@ -118,16 +118,31 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	
 	
-	//교수&교직원 조회
+	//교수 조회
 	@Override
 	public List<EmpVO> checkProList(LectureVO lectureVO) {
 		return sqlSession.selectList("schoolMapper.checkProList", lectureVO);
 	}
-	//교수&교직원 조회->검색
+	//교직원 조회
+	@Override
+	public List<MemberVO> checkStfList(MemberVO memberVO) {
+		return sqlSession.selectList("schoolMapper.checkStfList", memberVO);
+	}
+
+	
+	//교수 조회->검색
 	@Override
 	public List<LectureVO> searchProListAjax(LectureVO lectureVO) {
 		return sqlSession.selectList("schoolMapper.checkProList", lectureVO);
 	}
+	//교직원 조회->검색
+	@Override
+	public List<MemberVO> searchStfListAjax(MemberVO memberVO) {
+		return sqlSession.selectList("schoolMapper.checkStfList", memberVO);
+	}
+	
+	
+	
 	
 	
 	
@@ -154,14 +169,14 @@ public class SchoolServiceImpl implements SchoolService{
 	public String updateLeaveSelect(String statusNo) {
 		return sqlSession.selectOne("schoolMapper.updateLeaveSelect", statusNo);
 	}
-	//학적변동 -> 휴학신청 승인
+	//학적변동 -> 휴학신청 승인완료
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void updateLeaveApp(StatusInfoVO statusInfoVO) {
 		sqlSession.update("schoolMapper.updateLeaveApp", statusInfoVO);
 		sqlSession.update("schoolMapper.updateLeaveAppStu",statusInfoVO);
 	}
-	//학적변동 -> 휴학신청 취소
+	//학적변동 -> 휴학신청 승인취소
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void updateLeaveDenied(StatusInfoVO statusInfoVO) {
@@ -178,8 +193,36 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<StatusInfoVO> getStatusReturnList() {
 		return sqlSession.selectList("schoolMapper.getStatusReturnList");
 	}
-
+	//학적변동 -> 복학관리 승인완료조회
+	@Override
+	public List<StatusInfoVO> getStatusReturnAppList() {
+		return sqlSession.selectList("schoolMapper.getStatusReturnAppList");
+	}
+	//학적변동 -> 복학관리 승인취소조회
+	@Override
+	public List<StatusInfoVO> getStatusReturnDeniedList() {
+		return sqlSession.selectList("schoolMapper.getStatusReturnDeniedList");
+	}
 	
+	//학적변동 -> 복학신청 회원조회
+	@Override
+	public String updateReturnSelect(String statusNo) {
+		return sqlSession.selectOne("schoolMapper.updateReturnSelect", statusNo);
+	}
+	//학적변동 -> 복학신청 승인완료
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void updateReturnApp(StatusInfoVO statusInfoVO) {
+		sqlSession.update("schoolMapper.updateReturnApp", statusInfoVO);
+		sqlSession.update("schoolMapper.updateReturnAppStu", statusInfoVO);
+	}
+	//학적변동 -> 복학신청 승인취소
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void updateReturnDenied(StatusInfoVO statusInfoVO) {
+		sqlSession.update("schoolMapper.updateReturnDenied", statusInfoVO);
+		sqlSession.update("schoolMapper.updateReturnDeniedStu", statusInfoVO);
+	}
 	
 	
 	
@@ -202,16 +245,28 @@ public class SchoolServiceImpl implements SchoolService{
 	public void updatePosition(String memNo) {
 		sqlSession.update("schoolMapper.updatePosition", memNo);
 	}
-	//등록회원 업데이트 정보인서트 
+	//등록회원 업데이트 학생 정보인서트 
 	@Override
-	public void insertStu(MemberVO memberVO) {
-		sqlSession.insert("schoolMapper.insertStu", memberVO);
+	public void insertStu(StuVO stuVO) {
+		sqlSession.insert("schoolMapper.insertStu", stuVO);
 	}
+	//등록회원 업데이트 교수 정보인서트
 	@Override
-	public void insertEmp(MemberVO memberVO) {
-		sqlSession.insert("schoolMapper.insertEmp", memberVO);
+	public void insertEmp(StuVO stuVO) {
+		sqlSession.insert("schoolMapper.insertEmp", stuVO);
 	}
 
+
+
+	
+
+	
+
+
+
+	
+
+	
 
 
 

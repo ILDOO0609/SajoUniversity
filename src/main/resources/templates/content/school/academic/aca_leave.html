@@ -106,8 +106,8 @@
 					 					</tr>
 					 				</th:block>
 									<th:block th:unless="${#lists.size(statuslist) == 0}">
-										<tr th:each="status, state : ${statuslist}">
-											<td><input type="checkbox" class="form-check-input"></td>
+										<tr th:each="status : ${statuslist}">
+											<td><input type="checkbox" class="form-check-input chk" th:value="${status.statusNo}"></td>
 											<td>[[${status.statusNo}]]</td>
 											<td>[[${status.stuVO.memberVO.memName}]]</td>
 											<td>[[${status.stuVO.memberVO.memNo}]]</td>
@@ -120,16 +120,14 @@
 									</th:block>	
 								</tbody>
 							</table>
-							<th:block th:each="status, state : ${statuslist}">
-								<div class="row" style="padding-right: 12px;">
-									<div class="col-1 offset-10 d-grid">
-										<input type="button" class="btn btn-primary" th:onclick="updateLeaveApp([[${status.statusNo}]]);" value="승인완료">
-									</div>
-									<div class="col-1 d-grid">
-										<input type="button" class="btn btn-danger" th:onclick="updateLeaveDenied([[${status.statusNo}]]);" value="승인취소">
-									</div>
+							<div class="row" style="padding-right: 12px;">
+								<div class="col-1 offset-10 d-grid">
+									<input type="button" class="btn btn-primary" th:onclick="updateLeaveApp();" value="승인완료">
 								</div>
-							</th:block>
+								<div class="col-1 d-grid">
+									<input type="button" class="btn btn-danger" th:onclick="updateLeaveDenied();" value="승인취소">
+								</div>
+							</div>
 						</div>
 					</div>
 				

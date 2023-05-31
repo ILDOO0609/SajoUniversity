@@ -126,7 +126,7 @@
 		SELECT STU_NO
 		    , STU_YEAR
 		    , STU_SEM
-		    , DECODE(STU_STATUS, 1, '재학중', 2,'휴학중', 3, '제적') STU_STATUS
+		    , DECODE(STU_STATUS, '1', '재학중', '2','휴학중', '3', '제적') STU_STATUS
 		    , ST.MEM_NO
 		    , MEM_NAME
 		    , COLL.COLL_NO
@@ -320,10 +320,16 @@
 	<!-- 휴학관리 신청회원 승인취소 학생 정보 업데이트 -->
 	<update id="updateLeaveDeniedStu">
 		UPDATE STU
-		SET STU_STATUS = '재학'
+		SET STU_STATUS = '1'
 		WHERE STU_NO = #{stuNo}
 	</update>
 	
+
+
+
+
+
+
 	
 	<!-- 복학관리 전체 조회 -->
 	<select id="getStatusReturnList" resultMap="stuMapper.status">
@@ -351,10 +357,97 @@
 	</select>
 	
 	
+	<!-- 복학관리 승인 조회-->
+	<select id="getStatusReturnAppList" resultMap="stuMapper.status">
+		SELECT
+		    STATUS_NO
+		    , MB.MEM_NO
+		    , MEM_NAME
+		    , ST.MEM_NO
+		    , STU_YEAR
+		    , DE.DEPT_NO
+		    , DEPT_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS APPLY_DATE
+		    , DECODE(ING_STATUS, 'I', '승인대기', 'P', '승인완료', 'R', '승인취소') AS ING_STATUS
+		    , NOW_STATUS
+		    , AFTER_STATUS
+		FROM MEMBER MB, STU ST, COLLEAGE COLL, DEPT DE, STATUS_INFO SI
+		WHERE ST.STU_NO = SI.STU_NO
+		AND ST.DEPT_NO = DE.DEPT_NO
+		AND ST.COLL_NO = COLL.COLL_NO
+		AND MB.MEM_NO = ST.MEM_NO
+		AND ING_STATUS = 'P'
+		AND NOW_STATUS = 'E'
+	</select>
+	
+	<!-- 복학관리 취소 조회-->
+	<select id="getStatusReturnDeniedList" resultMap="stuMapper.status">
+		SELECT
+		    STATUS_NO
+		    , MB.MEM_NO
+		    , MEM_NAME
+		    , ST.MEM_NO
+		    , STU_YEAR
+		    , DE.DEPT_NO
+		    , DEPT_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS APPLY_DATE
+		    , DECODE(ING_STATUS, 'I', '승인대기', 'P', '승인완료', 'R', '승인취소') AS ING_STATUS
+		    , NOW_STATUS
+		    , AFTER_STATUS
+		FROM MEMBER MB, STU ST, COLLEAGE COLL, DEPT DE, STATUS_INFO SI
+		WHERE ST.STU_NO = SI.STU_NO
+		AND ST.DEPT_NO = DE.DEPT_NO
+		AND ST.COLL_NO = COLL.COLL_NO
+		AND MB.MEM_NO = ST.MEM_NO
+		AND ING_STATUS = 'R'
+		AND NOW_STATUS = 'A'
+	</select>
 	
 	
+	<!-- 복학관리 신청회원 조회 -->
+	<select id="updateReturnSelect" resultType="String">
+		SELECT STU_NO
+		FROM STATUS_INFO
+		WHERE STATUS_NO = #{statusNo}
+	</select>
 	
+	<!-- 복학관리 신청회원 승인완료 -->
+	<update id="updateReturnApp">
+		UPDATE STATUS_INFO
+		SET ING_STATUS = 'P'
+			, APPROVAL_DATE = SYSDATE
+			, NOW_STATUS = 'E'
+			, AFTER_STATUS = 'E'
+		WHERE STATUS_NO = #{statusNo}
+	</update>
 	
+	<!-- 복학관리 신청회원 승인완료 학생 정보 업데이트 -->
+	<update id="updateReturnAppStu">
+		UPDATE STU
+		SET STU_STATUS = '1'
+		WHERE STU_NO = #{stuNo}
+	</update>
+	
+	<!-- 복학관리 신청회원 승인취소 -->
+	<update id="updateReturnDenied">
+		UPDATE STATUS_INFO
+		SET ING_STATUS = 'R'
+			, APPROVAL_DATE = SYSDATE
+			, NOW_STATUS = 'A'
+			, AFTER_STATUS = 'A'
+		WHERE STATUS_NO = #{statusNo}
+	</update>
+	
+	<!-- 복학관리 신청회원 승인취소 학생 정보 업데이트 -->
+	<update id="updateReturnDeniedStu">
+		UPDATE STU
+		SET STU_STATUS = '2'
+		WHERE STU_NO = #{stuNo}
+	</update>
 	
 	
 	
@@ -395,7 +488,6 @@
 		AND MEM_ROLE != 'stf'
 		AND MEM_NO = #{memId}
 	</select>	
-	
 	
 	
 	<!-- 회원메뉴 -> 회원승인처리 -->

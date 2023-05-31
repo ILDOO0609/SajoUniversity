@@ -10,6 +10,12 @@
 </th:block>
 
 <th:block layout:fragment="content">
+<style>
+.active{
+	color : white;
+	background-color: blue;
+}
+</style>
 <div class="row">
 	<div class="col">
 		<div class="row">
@@ -19,9 +25,9 @@
 		</div>
 		<div class="row text-end mb-3">
 			<div class="col-2">
-				<select name="cateNo" class="form-select">
-					<option th:each="cate : ${cateList}" th:value="${cate.cateNo}" th:if="${cate.cateName =='자유게시판'}" selected>[[${cate.cateName}]]</option>
-					<option th:each="cate : ${cateList}" th:value="${cate.cateNo}" th:unless="${cate.cateName =='자유게시판'}">[[${cate.cateName}]]</option>
+				<select name="cateNo" class="form-select" onchange="categorySearch(this);">
+					<option value="all" selected>전체</option>
+					<option th:each="cate : ${cateList}" th:value="${cate.cateNo}">[[${cate.cateName}]]</option>
 				</select>
 			</div>
 			<div class="col-10">
@@ -30,7 +36,7 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				<table class="table table-striped text-center">
+				<table class="table text-center">
 				<colgroup>
 					<col width="10%">
 					<col width="50%">
@@ -48,11 +54,26 @@
 							<td>조회수</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr th:each="board, state : ${boardList}">
-							<td>[[${boardList.size()-state.index}]]</td>
+					<tbody id="tbodyTag">
+						<tr th:each="board, state : ${boardList}" th:classappend="${board.isNotice=='Y' ? 'active' : ''}">
+							<td th:if="${board.isNotice=='Y'}">공지</td>
+							<td th:if="${board.isNotice=='N'}">[[${boardList.size()-state.index}]]</td>
 							<td>[[${board.boardCategoryVO.cateName}]]</td>
-							<td> <a th:href="@{/board/boardDetail(boardNo=${board.boardNo})}"> [[${board.boardTitle}]] </a> </td>
+							<td> 
+								<th:bolck th:if="${board.isSecret == 'Y'}">
+			 						<img src="/img/lock.png" width="20px;">
+			 					</th:bolck>
+			 					<th:block th:if="${board.isSecret == 'Y'}">
+			 						<a th:href="@{/board/checkPw(boardNo=${board.boardNo})}">
+			 							<span th:text="${board.boardTitle}"></span>
+			 						</a>
+			 					</th:block>
+			 					<th:block th:if="${board.isSecret == 'N'}">
+			 						<a th:href="@{/board/boardDetail(boardNo=${board.boardNo})}">
+			 							<span th:text="${board.boardTitle}"></span>
+			 						</a>
+			 					</th:block>
+							</td>
 							<td>[[${board.boardWriter}]]</td>
 							<td>[[${board.boardCreateDate}]]</td>
 							<td>[[${board.boardReadCnt}]]</td>
@@ -110,7 +131,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-   <!-- <script type="text/javascript" src="첨부될 js 파일 경로"></script> -->
+    <script type="text/javascript" src="/js/content/board/board_list.js"></script> 
 </th:block>
 
 </html>

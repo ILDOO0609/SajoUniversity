@@ -1,5 +1,6 @@
 package com.study.test.board.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.study.test.board.vo.BoardCategoryVO;
@@ -7,10 +8,10 @@ import com.study.test.board.vo.BoardVO;
 import com.study.test.util.PageVO;
 
 public interface BoardService {
-	// 학생커뮤니티 조회
-	public List<BoardVO> getBoard(PageVO pageVO);
+	//게시글 조회
+	public List<BoardVO> getBoard(HashMap<String, Object>map);
 	
-	// 학생커뮤니티 게시글 등록
+	//게시글 등록
 	public void regBoard(BoardVO boardVO);
 	
 	// 게시글 상세보기
@@ -24,6 +25,9 @@ public interface BoardService {
 	
 	// 게시글 삭제
 	public void deleteBoard(String boardNo);
+	
+	//게시판 수정
+	void updateBoard(BoardVO boardVO);
 	
 	// 전체 데이터 수 조회
 	public int getBoardListCnt();
@@ -45,5 +49,8 @@ public interface BoardService {
 	
 	//카테고리 삭제
 	void deleteCate(String cateCode);
+	
+	//비밀번호 조회
+	int getBoardPw(String boardNo);
 	
 }

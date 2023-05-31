@@ -1,25 +1,31 @@
 package com.study.test.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.study.test.board.service.BoardService;
 import com.study.test.board.vo.BoardCategoryVO;
 import com.study.test.board.vo.BoardImgVO;
 import com.study.test.board.vo.BoardVO;
 import com.study.test.member.service.memberService;
+import com.study.test.reply.service.ReplyService;
 import com.study.test.stu.service.StuService;
 import com.study.test.util.PageVO;
 import com.study.test.util.UploadUtil;
 
+import groovyjarjarantlr4.v4.parse.GrammarTreeVisitor.mode_return;
 import jakarta.annotation.Resource;
 
 @Controller
@@ -30,6 +36,9 @@ public class BoardController {
 	
 	@Resource(name="memberService")
 	private memberService memberService;
+	
+	@Resource(name = "replyService")
+	private ReplyService replyService;
 	
 	//게시판 카테고리 관리 페이지
 	@GetMapping("/boardCateManage")
@@ -84,12 +93,31 @@ public class BoardController {
 		pageVO.setTotalDataCnt(boardService.getBoardListCnt());
 		pageVO.setPageInfo();
 		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pageVO", pageVO);
+		
 		//카테고리 목록 조회
 		model.addAttribute("cateList", boardService.getCateList());
 		// 게시글 조회 
-		model.addAttribute("boardList", boardService.getBoard(pageVO));
+		model.addAttribute("boardList", boardService.getBoard(map));
 		return "content/board/board_list";
 	}
+	
+	//게시판 카테고리로 검색
+	@ResponseBody
+	@PostMapping("/cateSearchAjax")
+	public List<BoardVO> boardList(String cateNo, PageVO pageVO){
+		// 전체 데이터 수 조회
+		pageVO.setTotalDataCnt(boardService.getBoardListCnt());
+		pageVO.setPageInfo();
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("pageVO", pageVO);
+		map.put("cateNo", cateNo);
+		return boardService.getBoard(map); 
+	}
+	
 	
 	//게시글 작성 페이지
 	@GetMapping("/boardWriteForm")
@@ -101,14 +129,12 @@ public class BoardController {
 	// 게시글 등록 하기
 	@PostMapping("/regBoard")
 	public String boardWrite(BoardVO boardVO, Authentication authentication, MultipartFile mainImg) {
-		
-		System.out.println("@@@@@@@@");
+		User user = (User)authentication.getPrincipal();
 		
 		boardVO.setBoardImgVO(UploadUtil.uploadFile(mainImg)); 
 		boardVO.setCateNo(boardVO.getBoardCategoryVO().getCateNo());
-		
 		// 작성자 세팅
-		boardVO.setBoardWriter(memberService.getMemInfoForStu(authentication.getName()).getMemName());
+		boardVO.setBoardWriter(user.getUsername());
 		
 		//게시글번호 세팅
 		String nextBoardNo = boardService.getNextBoardNo();
@@ -148,6 +174,8 @@ public class BoardController {
 		// 게시글 상세보기 조회
 		model.addAttribute("boardDetail", boardService.getBoardDetail(boardNo));
 		
+		//댓글 목록 조회
+		model.addAttribute("replyList",replyService.getReplyList(boardNo)); 
 		
 		return "content/board/board_detail";
 	}
@@ -160,9 +188,36 @@ public class BoardController {
 		return "redirect:/board/boardList";
 	}
 	
+	//게시글 수정 페이지
 	@GetMapping("/updateBoard")
-	public String updateBoard(String boardNo) {
+	public String updateBoard(String boardNo, Model model) {
+		model.addAttribute("cateList", boardService.getCateList());
+		model.addAttribute("boardDetail", boardService.getBoardDetail(boardNo));
+		return "content/board/update_board_form";
+	}
+	
+	//게시글 수정
+	@PostMapping("/updateBoard")
+	public String updateBoard(BoardVO boardVO, MultipartFile mainImg) {
 		
+		boardVO.setBoardImgVO(UploadUtil.uploadFile(mainImg)); 
+		
+		if (boardVO.getIsSecret() == null) {
+			boardVO.setIsSecret("N");
+		}
+		else {
+			boardVO.setIsSecret("Y");
+		}
+		
+		if (boardVO.getIsNotice() == null) {
+			boardVO.setIsNotice("N");
+		}
+		else {
+			boardVO.setIsNotice("Y");
+		} 
+		
+		System.out.println(boardVO);
+		boardService.updateBoard(boardVO);
 		return "redirect:/board/boardList";
 	}
 	
@@ -172,6 +227,12 @@ public class BoardController {
 		return "content/emp/my_board";
 	}
 
-	
+	//게시글 비밀번호체크
+	@GetMapping("/checkPw")
+	public String checkPw(String boardNo, Model model) {
+		model.addAttribute("boardPw", boardService.getBoardPw(boardNo));
+		model.addAttribute("boardNo", boardNo);
+		return "content/board/check_pw";
+	}
 	
 }

@@ -14,20 +14,20 @@ import com.study.test.emp.vo.LecturePDFVO;
 public class UploadUtil {
 	
 	//단일 파일 업로드 메소드
-	public static BoardImgVO uploadFile(MultipartFile img) {
+	public static BoardImgVO uploadFile(MultipartFile mainImg) {
 		BoardImgVO imgVO = null;
 		
-		if (!img.isEmpty()) {
+		if (!mainImg.isEmpty()) {
 			imgVO = new BoardImgVO();
 			
-			String originFileName = img.getOriginalFilename();
+			String originFileName = mainImg.getOriginalFilename();
 			String uuid = UUID.randomUUID().toString();
 			String extension = originFileName.substring(originFileName.lastIndexOf("."));
 			String attachedFileName = uuid + extension;
 			
 			try {
 				File file = new File(ConstVariable.UPLOAD_PATH + attachedFileName);
-				img.transferTo(file);
+				mainImg.transferTo(file);
 				
 				imgVO.setAttachedName(attachedFileName);
 				imgVO.setOriginName(originFileName);
@@ -40,21 +40,6 @@ public class UploadUtil {
 		return imgVO;
 	}
 	
-	
-	//다중 파일 업로드 메소드
-		public static List<BoardImgVO> multiFileUpload(MultipartFile[] imgs) {
-			//첨부된 파일정보를 다 담을 수 있는 통
-			List<BoardImgVO> result = new ArrayList<>();
-			
-			for (MultipartFile img : imgs) {
-				BoardImgVO vo = uploadFile(img);
-				vo.setIsMain("N");
-				result.add(vo);
-				
-			}
-			return result;
-		}
-		
 	//pdf파일 업로드 메소드
 	public static LecturePDFVO uploadPdfFile(MultipartFile pdfFile) {
 		LecturePDFVO pdfvo = null;

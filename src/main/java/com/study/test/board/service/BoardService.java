@@ -2,6 +2,7 @@ package com.study.test.board.service;
 
 import java.util.List;
 
+import com.study.test.board.vo.BoardCategoryVO;
 import com.study.test.board.vo.BoardVO;
 import com.study.test.util.PageVO;
 
@@ -26,4 +27,23 @@ public interface BoardService {
 	
 	// 전체 데이터 수 조회
 	public int getBoardListCnt();
+	
+	//다음에 조회될 게시판번호
+	String getNextBoardNo();
+	
+	//카테고리 목록 조회
+	List<BoardCategoryVO> getCateList();
+	
+	//카테고리 등록
+	int regCategory(String cateName);
+	
+	//카테고리명 중복 체크
+	int checkCateName(String cateName);
+	
+	//카테고리 사용여부 수정
+	int changeIsUse(String cateCode);
+	
+	//카테고리 삭제
+	void deleteCate(String cateCode);
+	
 }

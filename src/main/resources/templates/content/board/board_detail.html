@@ -19,19 +19,19 @@
 					<td>작성자</td>
 					<td></td>
 					<td>작성일</td>
-					<td>[[${boardDetailList.boardCreateDate}]]</td>
+					<td>[[${boardDetail.boardCreateDate}]]</td>
 				</tr>
 				<tr>
 					<td>제목</td>
-					<td>[[${boardDetailList.boardTitle}]]</td>
+					<td>[[${boardDetail.boardTitle}]]</td>
 					<td>조회수</td>
-					<td>[[${boardDetailList.boardReadCnt}]]</td>
+					<td>[[${boardDetail.boardReadCnt}]]</td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td colspan="3">
-						[[${boardDetailList.boardContent}]]
+						[[${boardDetail.boardContent}]]
 					</td>
 				</tr>
 			</tbody>
@@ -41,8 +41,8 @@
 	
 	<div class="row">
 		<div class="col">
-			<input type="button" class="btn btn-primary" value="수정" th:onclick="|location.href='@{/board/updateBoard(boardNo=${boardDetailList.boardNo})}'|">
-			<input type="button" class="btn btn-danger" value="삭제" th:onclick="|location.href='@{/board/deleteBoard(boardNo=${boardDetailList.boardNo})}'|">
+			<input type="button" class="btn btn-primary" value="수정" th:onclick="|location.href='@{/board/updateBoard(boardNo=${boardDetail.boardNo})}'|">
+			<input type="button" class="btn btn-danger" value="삭제" th:onclick="|location.href='@{/board/deleteBoard(boardNo=${boardDetail.boardNo})}'|">
 			<input type="button" class="btn btn-primary" value="목록" onclick="location.href='/board/boardList'">
 		</div>
 	</div>

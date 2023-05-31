@@ -19,8 +19,12 @@ public class BoardVO {
 	private String boardCreateDate;
 	private int boardReadCnt;
 	private int replyCnt;
+	private int secretPw;
 	private String isSecret;
 	private String isNotice;
+	private String cateNo;
 	
 	private List<ReplyVO> replyList;
+	private BoardImgVO boardImgVO;
+	private BoardCategoryVO boardCategoryVO;
 }

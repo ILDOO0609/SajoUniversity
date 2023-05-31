@@ -132,10 +132,7 @@ public class EmpController {
 	public String regLecture(LectureVO lectureVO, LecturePDFVO lecturePDFVO, MultipartFile pdfFile, LectureTimeVO lectureTimeVO, Authentication authentication) {
 		//--파일 첨부--//
 		//pdf파일 업로드
-		System.out.println("@@@@@@@"+pdfFile);
 		lecturePDFVO = UploadUtil.uploadPdfFile(pdfFile);
-		
-		System.out.println("@@@@@@@@@@"+lecturePDFVO);
 		
 		//LectureTimeVO를 여러개 담는 lecTimeList통 생성
 		List<LectureTimeVO> lecTimeList = new ArrayList<>();

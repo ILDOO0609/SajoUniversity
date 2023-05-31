@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,7 @@ import com.study.test.stu.service.StuService;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
+import com.study.test.util.TimeTableForTime;
 
 import jakarta.annotation.Resource;
 
@@ -266,11 +268,6 @@ public class StuController {
 		return "content/stu/stu_status_re";
 	}
 	
-	@GetMapping("/stu/stuAbsenceRe")
-	public String stuAbsenceRe() {
-		
-		return "redirect:/stu/stuInfo";
-	}
 	
 	// 복학 처리가능한지 검사
 	@ResponseBody
@@ -280,6 +277,15 @@ public class StuController {
 		
 		return stuService.getStatusRe(stuNo) >= 1 ? true : false;
 	}
+	
+	// 복학 처리
+	@GetMapping("/stu/stuAbsenceRe")
+	public String stuAbsenceRe(Authentication authentication, String stuNo) {
+		stuService.updateStatusStuForRe(stuNo);
+		
+		return "redirect:/stu/stuInfoForSc";
+	}
+	
 	
 	// 휴학/복학 신청 취소
 	@GetMapping("/deleteAbsence")
@@ -307,10 +313,18 @@ public class StuController {
 		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
 		
 		model.addAttribute("lecList", stuService.getLectureListForStuTimeTable(stuNo));
-		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+stuService.getLectureListForStuTimeTable(stuNo));
+
+		model.addAttribute("timeTableForTime", new TimeTableForTime());
 		
 		return "content/stu/stu_timetable";
 	}
+	
+	@ModelAttribute("timeTableForTime")
+    public TimeTableForTime getTimeTableForTime() {
+        return new TimeTableForTime();
+    }
+
+   
+
 
 }

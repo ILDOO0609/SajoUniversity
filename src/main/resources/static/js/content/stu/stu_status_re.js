@@ -11,7 +11,7 @@ function applyAbsenceRe(){
 			data: {}, //필요한 데이터
 			success: function(result) {
 				if(result){
-					alert('휴학 신청이 완료 되었습니다.');
+					alert('복학 신청이 완료 되었습니다.');
 					location.href="/stu/stuAbsenceRe";
 				}
 				else{

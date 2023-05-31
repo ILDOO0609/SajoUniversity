@@ -11,7 +11,7 @@
 
 <th:block layout:fragment="content">
 시간표
-<div class="row">
+<div class="row timetable">
 	<div class="col">
 		<div class="row">
 			<div class="col">
@@ -20,7 +20,7 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				* 시간표입니다. pdf 다운로드
+				<input type="button" class="btn btn-primary btn-sm mb-3 float-end" onclick="pdf();" value="pdf 다운로드">
 			</div>
 		</div>
 		<div class="row">
@@ -49,9 +49,9 @@
 							<td colspan="6">등록된 강의가 없습니다.</td>
 						</tr>
 						<th:block>
-							<tr th:each="time, state : ${#numbers.sequence(1,9)}" style="height: 40px;">
+							<tr th:each="time, state : ${#numbers.sequence(1,9)}" >
 								<td class="text-start">
-									[[${time+'교시'}]] 
+									[[${time+'교시'}]] <br> <span style="display: inline">([[${timeTableForTime.getTimeString(time)}]])</span>
 								</td>
 								 <td th:each="num : ${#numbers.sequence(1,5)}">
 				                    <th:block th:each="lec : ${lecList}"
@@ -73,7 +73,9 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-   <!-- <script type="text/javascript" src="첨부될 js 파일 경로"></script> -->
+	<script type="text/javascript" src="/js/content/stu/html2canvas.js"></script>
+	<script type="text/javascript" src="/js/content/stu/jspdf.min.js"></script>
+	<script type="text/javascript" src="/js/content/stu/stu_timetable.js"></script>
 </th:block>
 
 </html>

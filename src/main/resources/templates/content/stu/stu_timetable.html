@@ -10,7 +10,6 @@
 </th:block>
 
 <th:block layout:fragment="content">
-시간표
 <div class="row timetable">
 	<div class="col">
 		<div class="row">
@@ -18,14 +17,12 @@
 				<h3>강의 시간표</h3>
 			</div>
 		</div>
+		<div class="text-end mb-3">
+       		<button class="btn btn-primary btn-sm" onclick="pdf();">PDF 다운로드</button>
+   		</div>
 		<div class="row">
 			<div class="col">
-				<input type="button" class="btn btn-primary btn-sm mb-3 float-end" onclick="pdf();" value="pdf 다운로드">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<table class="table text-center align-middle" border="1">
+				<table class="table table-bordered text-center " border="1">
 					<colgroup>
 						<col width="5%">
 						<col width="19%">
@@ -35,30 +32,30 @@
 						<col width="19%">
 					</colgroup>
 					<thead>
-						<tr>
-							<td></td>
-							<td>월</td>
-							<td>화</td>
-							<td>수</td>
-							<td>목</td>
-							<td>금</td>
-						</tr>
-					</thead>
+			            <tr>
+			                <th></th>
+			                <th>월</th>
+			                <th>화</th>
+			                <th>수</th>
+			                <th>목</th>
+			                <th>금</th>
+			            </tr>
+			        </thead>
 					<tbody>
 						<tr th:if="${lecList.size} == 0">
 							<td colspan="6">등록된 강의가 없습니다.</td>
 						</tr>
 						<th:block>
-							<tr th:each="time, state : ${#numbers.sequence(1,9)}" >
+							<tr th:each="time, state : ${#numbers.sequence(1,9)}">
 								<td class="text-start">
-									[[${time+'교시'}]] <br> <span style="display: inline">([[${timeTableForTime.getTimeString(time)}]])</span>
+									[[${time+'교시'}]]
 								</td>
 								 <td th:each="num : ${#numbers.sequence(1,5)}">
 				                    <th:block th:each="lec : ${lecList}"
 				                              th:if="${lec.lectureTimeList[0].lecDay == num.toString() 
 				                                       and lec.lectureTimeList[0].firstTime &lt;= time.toString() 
 				                                       and lec.lectureTimeList[0].lastTime >= time.toString()}">
-				                            [[${lec.lecName}]]
+				                            <p th:text="${lec.lecName}"></p>
 				                    </th:block>
 				                </td>
 							</tr>

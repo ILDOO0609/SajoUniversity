@@ -76,4 +76,7 @@ public interface StuService {
 	
 	// 학생 총수강학점
 	int getTotalScore(String stuNo);
+	
+	List<LectureVO> getSumScoreForStu(String stuNo);
+	
 }

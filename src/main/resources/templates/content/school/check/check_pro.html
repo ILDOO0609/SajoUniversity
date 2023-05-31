@@ -59,7 +59,8 @@
 								</select>
 							</td>
 							<td style="text-align: right;">
-								<input type="button" class="btn btn-primary" value="Search" onclick="searchProList();">
+								<input type="button" class="btn btn-primary" id="serachPro" value="Search" onclick="searchProList();">
+								<input type="button" class="btn btn-warning" id="serachStf" value="Search" onclick="searchStfList();">
 							</td>
 						</tr>
 						
@@ -68,22 +69,22 @@
 								교수&교직원 전체 조회 및 검색 결과
 							</td>
 						</tr>
+					</thead>
+					<tbody>
 						<tr>
-							<td>직원번호</td>
+							<td>교수번호</td>
 							<td>직책</td>
-							<td>교수/교직원명</td>
+							<td>교수명</td>
 							<td>단과대학</td>
 							<td>전공</td>
 						</tr>	
-					</thead>
-					<tbody>
 						<tr th:each="pro : ${proList}">
 							<td>[[${pro.empVO.memNo}]]</td>
-							<td>[[${pro.empVO.empType}]]</td>
+							<td>[[${pro.memberVO.memRole}]]</td>
 							<td>[[${pro.memberVO.memName}]]</td>
 							<td>[[${pro.colleageVO.collName}]]</td>
 							<td>[[${pro.deptVO.deptName}]]</td>
-						</tr>	
+						</tr>
 					</tbody>	
 				</table>
 			</div>

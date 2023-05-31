@@ -61,17 +61,26 @@
 							회원등록
 						</span>
 						<div class="dropdown">
-						<span><a href="/member/time"> 디지털 시계</span>
-						<span><a href="/member/stuRegPerMonth">월별등록통계</a> </span> <!-- 드롭다운 걸어서 휴학, 재적 학생 통계 추가 -->
-						<span><a href="/member/weather"> 날씨</span>
-						<span><a href="/member/map"> 오시는 길</span>
 						
 						<span><a href="/board/boardList">게시판</a></span>
 							<div class="dropdown-content">
+								<a href="/board/boardCateManage">게시판 카테고리 관리</a>
 								<a href="/board/boardList">게시판 목록</a>
 								<a href="/board/boardWriteForm">게시글쓰기</a>
 								<a href="/board/myBoard">나의 게시글 조회</a>
 							</div>
+	
+							<span><a href="/member/time"> 디지털 시계</a></span>
+							<span><a href="/member/stuRegPerMonth">월별등록통계</a> </span> <!-- 드롭다운 걸어서 휴학, 재적 학생 통계 추가 -->
+							<span><a href="/member/weather"> 날씨</a></span>
+							<span><a href="/member/map"> 오시는 길</a></span>
+						
+							<span><a href="/board/boardList">게시판</a></span>
+								<div class="dropdown-content">
+									<a href="/board/boardList">게시판 목록</a>
+									<a href="/board/boardWriteForm">게시글쓰기</a>
+									<a href="/board/myBoard">나의 게시글 조회</a>
+								</div>
 						</div>
 						<span><a href="/member/stuRegPerMonth">월별등록통계</a> </span>
 						<span> 메뉴 2</span>
@@ -247,8 +256,8 @@
               회원메뉴
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="/school/memberList">회원 관리</a></li>
-              <li><a class="dropdown-item" href="/school/memberList">회원 관리</a></li>
+              <li><a class="dropdown-item" href="/school/memberList">신규 회원</a></li>
+              <li><a class="dropdown-item" href="/school/memberList">승인/취소 조회</a></li>
             </ul>
           </li>
         </ul>
@@ -264,13 +273,8 @@
  
  
  
- 
- 
- 
-
 
 	
-<!--  </div> -->
  
  <!--LOGIN Modal -->
 	<div class="modal fade" id="loginModal" 
@@ -475,7 +479,7 @@
 						</div>
 					
 						<div class="col-12 d-grid">
-							<button id="joinBtn" onclick="join();" type="button" class="btn">회 원 등 록</button>
+							<button id="joinBtn" onclick="join();" type="button" class="btn" disabled>회 원 등 록</button>
 						</div>
  						
  						

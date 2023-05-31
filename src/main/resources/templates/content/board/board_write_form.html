@@ -12,35 +12,66 @@
 .hide{
 	display: none;
 }
+#secretNum{
+	height: 20px;
+}
+
 </style>
-글쓰기페이지
+
 <div class="row">
-	<div class="col">
-		<form th:action="@{/board/boardWrite}" method="post" enctype="multipart/form-data">
-			<table>
-				<tr>
-					<td>제목</td>
-					<td><input type="text" name="boardTitle" class="form-control"> </td>
-				</tr>
-				<tr>
-					<td>내용</td>
-					<td><textarea rows="5" cols="50" style="resize: none;" name="boardContent" class="form-control"></textarea></td>
-				</tr>
-				<tr>
-					<td>이미지 파일 첨부</td>
-					<td><input type="file" class="form-control"></td>
-				</tr>
-				<tr>
-					<td>비밀글 여부</td>
-					<td>
-						<input type="checkbox" id="isSecret" name="isSecret" onclick="togglePw();" class="form-check-input"> Y
-					</td>
-				</tr>
-			</table>
-			<div class="hide" id="toggleDiv">
-				비밀번호<input type="text" id="boardPw" class="form-control">
+	<div class="offset-2 col-8">
+		<form action="/board/regBoard" method="post" enctype="multipart/form-data">
+			<div class="row mb-3 text-center">
+				<div class="col">
+					<h3>게시글 작성</h3>
+				</div>
 			</div>
-		<input type="submit" value="글 등록" class="btn btn-primary">
+			<div class="row mb-3">
+				<div class="col">
+					<select name="cateNo" class="form-select">
+						<option th:each="cate : ${cateList}" th:value="${cate.cateNo}" sec:authorize="hasRole('ROLE_stf')">[[${cate.cateName}]]</option>
+						<option th:each="cate : ${cateList}" th:value="${cate.cateNo}">[[${cate.cateName}]]</option>
+					</select>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<input type="text" class="form-control" name="boardTitle" placeholder="제목을 입력해주세요.">
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col form-floating">
+					<textarea class="form-control" name="boardContent" placeholder="내용을 입력해주세요." style="height: 350px; resize: none;"></textarea>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-6">
+					파일추가
+				</div>
+				<div class="col-2 d-flex align-items-center justify-content-center">
+					<div class="form-check form-switch">
+						<input type="checkbox" class="form-check-input" name="isNotice" id="noticeChk" onclick="notice();">공지사항
+					</div>
+				</div>
+				<div class="col-2 d-flex align-items-center justify-content-center">
+					<div class="form-check form-switch">
+						<input type="checkbox"  class="form-check-input" id="secretChk" name="isSecret" onclick="secret();">비밀글
+					</div>
+				</div>
+				<div class="col-2" style="margin-top: 2px;">
+					<input type="number" oninput="maxLengthCheck(this)" class="form-control" id="secretNum" name="secretPw" disabled>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					<input type="file" class="form-control" name="mainImg">
+				</div>
+			</div>
+			<div class="row text-center">
+				<div class="col">
+					<input type="submit" class="btn btn-primary" value="등록">
+				</div>
+			</div>
 		</form>
 	</div>
 </div>

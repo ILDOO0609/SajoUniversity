@@ -13,9 +13,13 @@
 	<result column="BOARD_READ_CNT" 	property="boardReadCnt"/>
 	<result column="REPLY_CNT" 			property="replyCnt"/>
 	<result column="IS_SECRET" 			property="isSecret"/>
+	<result column="SECRET_PW" 			property="secretPw"/>
 	<result column="IS_NOTICE" 			property="isNotice"/>
-	<collection property="replyList" resultMap="replyMapper.reply"></collection>
+	<result column="CATE_NO" 			property="cateNo"/>
+	<association property="boardImgVO" resultMap="boardImg"></association>
+	<collection  property="replyList"  resultMap="replyMapper.reply"></collection>
 </resultMap>
+
 <resultMap type="com.study.test.board.vo.BoardImgVO" id="boardImg">
 	<id 	column="IMG_CODE" 	   property="imgCode"/>
 	<result column="ORIGIN_NAME"   property="originName"/>
@@ -24,72 +28,153 @@
 	<result column="BOARD_NO" 	   property="boardNo"/>
 </resultMap>
 
-<select id="getBoard" resultMap="board">
-SELECT BOARD_NO
-    , BOARD_TITLE
-    , BOARD_WRITER
-    , TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
-    , BOARD_READ_CNT
-    , REPLY_CNT
-    , IS_SECRET
-    , IS_NOTICE
-FROM BOARD
-ORDER BY BOARD_NO DESC
-OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
-</select>
+<resultMap type="com.study.test.board.vo.BoardCategoryVO" id="category">
+	<id 	column="CATE_NO"   property="cateNo"/>
+	<result column="CATE_NAME" property="cateName"/>
+	<result column="IS_USE"    property="isUse"/>
+</resultMap>
+	
+	<!-- 카테고리 관리 페이지에서 카테고리 목록 조회 -->
+	<select id="getCateList" resultMap="category">
+		SELECT CATE_NO
+			, CATE_NAME
+			, IS_USE
+		FROM BOARD_CATEGORY
+	</select>
+	
+	<!-- 카테고리 등록 -->
+	<insert id="regCategory">
+		INSERT INTO BOARD_CATEGORY (
+			CATE_NO
+			, CATE_NAME
+		) VALUES (
+			(SELECT 'CATE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CATE_NO, 6))), 0) +1,3,0) FROM BOARD_CATEGORY)
+			, #{cateName}
+		)
+	</insert>
+	
+	<!-- 카테고리 중복이름 방지 -->
+	<select id="checkCateName" resultType="int">
+		SELECT COUNT(CATE_NAME)
+		FROM BOARD_CATEGORY
+		WHERE CATE_NAME = #{cateName}
+	</select>
+	
+	<!-- 카테고리 사용여부 수정 -->
+	<update id="changeIsUse">
+		UPDATE BOARD_CATEGORY 
+		SET 
+			IS_USE = DECODE(IS_USE, 'Y', 'N', 'N', 'Y')
+		WHERE CATE_NO = #{cateNo}
+	</update>
+	
+	<!-- 카테고리 삭제 -->
+	<delete id="deleteCate">
+		DELETE BOARD_CATEGORY
+		WHERE CATE_NO = #{cateNo}
+	</delete>
 
-
-
-<select id="getBoardDetail" resultMap="board">
-SELECT BOARD_NO
-	, BOARD_TITLE
-	, BOARD_CONTENT
-	, BOARD_WRITER
-	, BOARD_CREATE_DATE
-	, BOARD_READ_CNT
-	, REPLY_CNT
-FROM BOARD
-WHERE BOARD_NO = #{boardNo}
-</select>
-
-<insert id="regBoard">
-INSERT INTO BOARD (
-	BOARD_NO
-	, BOARD_TITLE
-	, BOARD_CONTENT
-	, IS_SECRET
-	, BOARD_WRITER
-) VALUES (
-	(SELECT 'BOARD_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOARD_NO, 7))), 0) + 1, 3, '0') 
-         FROM BOARD)
-	, #{boardTitle}
-	, #{boardContent}
-	, #{isSecret}
-	, #{boardWriter}
-)
-</insert>
-
-<select id="getBoardReadCnt" resultType="int">
-SELECT BOARD_READ_CNT
-FROM BOARD
-WHERE BOARD_NO = #{boardNo}
-</select>
-
-<update id="updateReadCnt">
-UPDATE BOARD
-SET BOARD_READ_CNT = #{boardReadCnt} + 1
-WHERE BOARD_NO = #{boardNo}
-</update>
-
-<delete id="deleteBoard">
-DELETE BOARD
-WHERE BOARD_NO = #{boardNo}
-</delete>
-
-<select id="getBoardListCnt" resultType="int">
-SELECT COUNT(BOARD_NO)
-FROM BOARD
-</select>
+	<select id="getBoard" resultMap="board">
+		SELECT BOARD_NO
+		    , BOARD_TITLE
+		    , BOARD_WRITER
+		    , TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
+		    , BOARD_READ_CNT
+		    , REPLY_CNT
+		    , IS_SECRET
+		    , IS_NOTICE
+		    , BOARD.CATE_NO
+		FROM BOARD, BOARD_CATEGORY CATE
+		WHERE BOARD.CATE_NO = CATE.CATE_NO
+		ORDER BY BOARD_NO DESC
+		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
+	</select>
+	
+	
+	
+	<select id="getBoardDetail" resultMap="board">
+		SELECT BOARD_NO
+			, BOARD_TITLE
+			, BOARD_CONTENT
+			, BOARD_WRITER
+			, BOARD_CREATE_DATE
+			, BOARD_READ_CNT
+			, REPLY_CNT
+			, BOARD.CATE_NO
+		FROM BOARD, BOARD_CATEGORY CATE
+		WHERE BOARD.CATE_NO = CATE.CATE_NO
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<!-- 다음에 들어갈 게시판번호 조회 -->
+	<select id="getNextBoardNo" resultType="String">
+		(SELECT 'BOARD_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOARD_NO, 7))), 0) + 1, 3, '0') FROM BOARD) 
+	</select>
+	
+	<insert id="regBoard">
+		INSERT INTO BOARD (
+			BOARD_NO
+			, BOARD_TITLE
+			, BOARD_CONTENT
+			, IS_SECRET
+			, IS_NOTICE
+			, BOARD_WRITER
+			, SECRET_PW
+			, CATE_NO
+		) VALUES (
+			#{boardNo}
+			, #{boardTitle}
+			, #{boardContent}
+			, #{isSecret}
+			, #{isNotice}
+			, #{boardWriter}
+			, #{secretPw}
+			, #{cateNo}
+		)
+	</insert>
+	
+	<insert id="regBoardImg">
+		INSERT INTO BOARD_IMG (
+			IMG_CODE
+			, ORIGIN_NAME
+			, ATTACHED_NAME
+			, BOARD_NO
+		) VALUES (
+			(SELECT 'IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(IMG_CODE, 5))), 0) + 1, 3, '0') FROM BOARD_IMG) 
+			, #{originName}
+			, #{attachedName}
+			, #{boardNo}		
+		)
+		
+	</insert>
+	
+	<select id="getBoardReadCnt" resultType="int">
+		SELECT BOARD_READ_CNT
+		FROM BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<update id="updateReadCnt">
+		UPDATE BOARD
+		SET BOARD_READ_CNT = #{boardReadCnt} + 1
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<delete id="deleteBoard">
+		DELETE BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</delete>
+	
+	<select id="getBoardListCnt" resultType="int">
+		SELECT COUNT(BOARD_NO)
+		FROM BOARD
+	</select>
+	
+	<update id="updateBoard">
+		UPDATE BOARD SET 
+		BOARD_TITLE = #{boardTitle}
+		BOARD_CONTENT = #{boardContent}
+	</update>
 
 </mapper>
 

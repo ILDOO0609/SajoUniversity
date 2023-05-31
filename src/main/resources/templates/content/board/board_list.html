@@ -10,12 +10,34 @@
 </th:block>
 
 <th:block layout:fragment="content">
-전체 게시판
 <div class="row">
 	<div class="col">
 		<div class="row">
 			<div class="col">
-				<table class="table">
+				<h1 style="text-align:center; font-weight: bold;">BOARD</h1>
+			</div>
+		</div>
+		<div class="row text-end mb-3">
+			<div class="col-2">
+				<select name="cateNo" class="form-select">
+					<option th:each="cate : ${cateList}" th:value="${cate.cateNo}" th:if="${cate.cateName =='자유게시판'}" selected>[[${cate.cateName}]]</option>
+					<option th:each="cate : ${cateList}" th:value="${cate.cateNo}" th:unless="${cate.cateName =='자유게시판'}">[[${cate.cateName}]]</option>
+				</select>
+			</div>
+			<div class="col-10">
+				<input type="button" value="글쓰기" class="btn btn-primary" th:onclick="|location.href='@{/board/boardWriteForm}'|">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<table class="table table-striped text-center">
+				<colgroup>
+					<col width="10%">
+					<col width="50%">
+					<col width="15%">
+					<col width="15%">
+					<col width="10%">
+				</colgroup>
 					<thead>
 						<tr>
 							<td>No.</td>
@@ -23,7 +45,6 @@
 							<td>작성자</td>
 							<td>작성일</td>
 							<td>조회수</td>
-							<td>댓글수</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -33,47 +54,54 @@
 							<td>[[${board.boardWriter}]]</td>
 							<td>[[${board.boardCreateDate}]]</td>
 							<td>[[${board.boardReadCnt}]]</td>
-							<td>[[${board.replyCnt}]]</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 		
-<div class="row justify-content-center">
-	<div class="col-3">
-		<nav aria-label="Page navigation example">
-		  <ul class="pagination" >
-		    <li class="page-item">
-		      <a class="page-link" th:href="@{/board/boardList(nowPage=${pageVO.beginPage-1})}" aria-label="Previous">
-		        <span aria-hidden="true">&laquo;</span>
-		      </a>
-		    </li>
-		<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
-		    <li class="page-item"><a class="page-link" th:href="@{/board/boardList(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
-		</th:block>
-		  
-		    <li class="page-item">
-		      <a class="page-link" th:href="@{/board/boardList(nowPage=${pageVO.endPage+1})}" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav>
-	</div>
-</div>
-		
-		
-		
-		
-		
-		
-		
-		<div class="row text-center mt-5 mb-5">
-			<div class="col">
-				<input type="button" value="글쓰기" class="btn btn-primary" th:onclick="|location.href='@{/board/boardWriteForm}'|">
+		<div class="row justify-content-center">
+			<div class="col-2">
+				<nav aria-label="Page navigation example">
+				  <ul class="pagination" >
+				    <li class="page-item" th:classappend="${pageVO.nowPage == 1 ? 'disabled':''}">
+				      <a class="page-link" th:href="@{/board/boardList(nowPage=${pageVO.beginPage-1})}" aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+					<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
+					    <li class="page-item"><a class="page-link" th:href="@{/board/boardList(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
+					</th:block>
+				    <li class="page-item">
+				      <a class="page-link" th:href="@{/board/boardList(nowPage=${pageVO.endPage+1})}" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
 			</div>
 		</div>
+		
+		<div class="row">
+			<div class="col-2 d-flex align-items-center justify-content-center">
+		        <div class="form-check">
+		            <input type="checkbox" class="form-check-input">비밀글 제외
+		        </div>
+		    </div>
+			<div class="col-2">
+				<select class="form-select">
+					<option>제목</option>
+					<option>작성자</option>
+				</select>
+			</div>
+			<div class="col-7 d-grid">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+			<div class="col-1">
+				<input type="button" class="btn btn-primary" value="검색">
+			</div>
+		</div>
+		
 	</div>
 </div>
 </th:block>

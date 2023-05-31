@@ -10,9 +10,10 @@ function applyAbsenceRe(){
 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 			data: {}, //필요한 데이터
 			success: function(result) {
+				console.log(result);
 				if(result){
 					alert('복학 신청이 완료 되었습니다.');
-					location.href="/stu/stuAbsenceRe";
+					location.href='/stu/stuAbsenceRe';
 				}
 				else{
 					alert('휴학 상태인 학생만 복학신청이 가능합니다.');

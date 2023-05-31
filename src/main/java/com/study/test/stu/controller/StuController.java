@@ -279,8 +279,9 @@ public class StuController {
 	}
 	
 	// 복학 처리
-	@GetMapping("/stu/stuAbsenceRe")
+	@GetMapping("/stuAbsenceRe")
 	public String stuAbsenceRe(Authentication authentication, String stuNo) {
+		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
 		stuService.updateStatusStuForRe(stuNo);
 		
 		return "redirect:/stu/stuInfoForSc";

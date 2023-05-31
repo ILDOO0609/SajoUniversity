@@ -28,7 +28,10 @@
  				</th:block>
  				<th:block th:unless="${#lists.size(memberList) == 0}">
 					<tr th:each="member : ${memberList}">
-						<td id="memNo" th:text="${member.memNo}">[[${member.memNo}]]</td>
+						<td>
+							[[${member.memNo}]]
+							<input type="hidden" id="memNo" th:value="${member.memNo}">
+						</td>
 						<td>[[${member.memName}]]</td>
 						<td>[[${member.regDate}]]</td>
 						<td>
@@ -43,10 +46,10 @@
 								</option>
 							</select>
 						</td>
-						<td id="memRole" style="text-align: center;" th:text="${member.memRole}">[[${member.memRole}]]</td>
+						<td style="text-align: center;" th:text="${member.memRole}"></td>
 						<td style="text-align: center;">
-							<button  class="btn btn-primary" th:onclick="updatePosition([[${member.memNo}]]);" style="cursor: pointer;">승인완료</button>
-							<button  class="btn btn-danger" type="button" style="cursor: pointer;">승인거부</button>
+							<button id="memRole" class="btn btn-primary" th:value="${member.memRole}" onclick="updatePosition();" style="cursor: pointer;">승인완료</button>
+							<button class="btn btn-danger" type="button" style="cursor: pointer;">승인거부</button>
 						</td>
 					</tr>
 				</th:block>

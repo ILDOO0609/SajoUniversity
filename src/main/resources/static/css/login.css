@@ -13,14 +13,20 @@ body,html{
 	width:100%;
 	}
 	/*김포대학교 로고*/
-	.gimpoLogo,.timeBox{
+	.gimpoLogo,.timeBox,.weather{
 	position:absolute;
-	top:10px;left:10px;
+	top:65px;right:10px;
 	/* background-color:black; */
-	width:210px;
-	height:70px;
+	width:500px;
+	height:100px;
 	}
 	.timeBox{
+	left: 230px;
+	width: 100px;
+	height: 50px;
+	top: 65px;
+	}
+	.weather{
 	left: 230px;
 	width: 100px;
 	height: 50px;
@@ -28,7 +34,7 @@ body,html{
 	}
 	/*로그인 섹션*/
 	.loginSec{position:absolute;
-	right:8%;
+	right:7%;
 	/* height:100vh; */
 	height:auto;
 	width:300px;
@@ -36,6 +42,7 @@ body,html{
 	/* height:100%; */
 	display:flex;
 	align-items:center;
+	top: 20%;
 	}
 	/*로그인 flex 아래 정렬로 지정해줌*/
 	.login-inputBox{display:flex;

@@ -58,27 +58,18 @@ public class MemberController {
 	public String loginForm3() {
 		return "content//member/login_form3";
 	}
-	// 지도 페이지 이동
-	@GetMapping("/map")
-	public String map() {
-		return "content//member/map";
-	}
-	// 날씨 페이지 이동
-	@GetMapping("/weather")
-	public String weather() {
-		return "content//member/weather";
-	}
-	// 시계 페이지 이동
-	@GetMapping("/time")
-	public String time() {
-		return "content//member/time";
-	}
 	
 	// 메인 페이지 이동
 	@GetMapping("/main")
 	public String loginForm() {
 		
 		return "content//member/main";
+	}
+	// 메인 페이지 이동
+	@GetMapping("/map")
+	public String map() {
+		
+		return "content//member/map";
 	}
 	
 	
@@ -289,7 +280,7 @@ public class MemberController {
 	
 	
 	
-	// 월별 등록 차트d
+	// 월별 등록 차트
 	@GetMapping("/stuRegPerMonth")
 	public String stuRegPerMonth(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
 		
@@ -351,6 +342,137 @@ public class MemberController {
 		
 		return map;
 	}
+	
+	
+	///
+	
+	// 월별 등록 차트
+		@GetMapping("/stuRegPerMonth2")
+		public String stuRegPerMonth2(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
+			
+			// 올해 날짜
+			if (year == 0) {
+				year = DateUtill.getYear();
+			}
+
+			// 2. map으로 하기
+			List<Map<String, Integer>> mapList = memberService.getMonthlyData_02(year);
+
+			List<Map<String, Integer>> resultList = new ArrayList<>();
+
+			for (Map<String, Integer> map : mapList) {
+
+				// 키는 문자열, 값은 숫자
+				Map<String, Integer> map1 = new TreeMap<>(map); // 순번 추가
+				resultList.add(map1);
+
+				// map에 들어잇는 모든 키값
+				Set<String> keySet = map1.keySet();
+
+				for (String key : keySet) {
+					System.out.println("key : " + key + " / value = " + map1.get(key));
+				}
+				System.out.println();
+
+			}
+
+			model.addAttribute("mapList", resultList);
+
+			// year라는 이름으로 맨처음엔 올해년도를 넘기고, ajax를 타고 오면 해당연도를 넘긴다.
+			model.addAttribute("year", year);
+
+			// 올해 연도 넘기기
+			model.addAttribute("sysYear", DateUtill.getYear());
+
+			return "content/member/stu_reg_per_month2";
+		}
+		
+		
+		// 월별 통계 - 차트
+		@ResponseBody
+		@PostMapping("/getChartDataAjax2")
+		public Map<String, List<Integer>> getChartDataAjax2(int year) {
+			
+			
+			List<StatisticsVO> list = memberService.getMonthlyData_2(year); 
+
+			// 등록 학생 list
+			List<Integer> cntList = list.get(0).getDataToList();
+			System.out.println(cntList);
+			// 추가사항 list
+			// List<Integer> somethingElse = list.get(1).getDataToList();
+			
+			// 두 개의 리스트를 담을 수 있는 Map
+			Map<String, List<Integer>> map = new HashMap<>();
+			map.put("cntList", cntList);
+			
+			return map;
+		}
+		///
+		
+		// 월별 등록 차트
+		@GetMapping("/stuRegPerMonth3")
+		public String stuRegPerMonth3(Model model, @RequestParam(required = false, defaultValue = "0") int year) {
+			
+			// 올해 날짜
+			if (year == 0) {
+				year = DateUtill.getYear();
+			}
+			
+			// 2. map으로 하기
+			List<Map<String, Integer>> mapList = memberService.getMonthlyData_03(year);
+			
+			List<Map<String, Integer>> resultList = new ArrayList<>();
+			
+			for (Map<String, Integer> map : mapList) {
+				
+				// 키는 문자열, 값은 숫자
+				Map<String, Integer> map1 = new TreeMap<>(map); // 순번 추가
+				resultList.add(map1);
+				
+				// map에 들어잇는 모든 키값
+				Set<String> keySet = map1.keySet();
+				
+				for (String key : keySet) {
+					System.out.println("key : " + key + " / value = " + map1.get(key));
+				}
+				System.out.println();
+				
+			}
+			
+			model.addAttribute("mapList", resultList);
+			
+			// year라는 이름으로 맨처음엔 올해년도를 넘기고, ajax를 타고 오면 해당연도를 넘긴다.
+			model.addAttribute("year", year);
+			
+			// 올해 연도 넘기기
+			model.addAttribute("sysYear", DateUtill.getYear());
+			
+			return "content/member/stu_reg_per_month3";
+		}
+		
+		
+		// 월별 통계 - 차트
+		@ResponseBody
+		@PostMapping("/getChartDataAjax3")
+		public Map<String, List<Integer>> getChartDataAjax3(int year) {
+			
+			
+			List<StatisticsVO> list = memberService.getMonthlyData_3(year); 
+			
+			// 등록 학생 list
+			List<Integer> cntList = list.get(0).getDataToList();
+			System.out.println(cntList);
+			// 추가사항 list
+			// List<Integer> somethingElse = list.get(1).getDataToList();
+			
+			// 두 개의 리스트를 담을 수 있는 Map
+			Map<String, List<Integer>> map = new HashMap<>();
+			map.put("cntList", cntList);
+			
+			return map;
+		}
+	
 	
 	
 }

@@ -47,7 +47,7 @@
 							<tbody>
 								<tr th:each="mapData, state: ${mapList}">
 									<td>
-										[[${state.index == 0 ? '등록학생' : '?'}]]
+										[[${state.index == 0 ? '재적학생' : '?'}]]
 									</td>
 									<th:block th:each="data : ${mapData}">
 										<td>[[${data.value}]]</td>
@@ -78,7 +78,7 @@
 <th:block layout:fragment="content_js">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- 차트.js 연결 -->		
 	
-	<script type="text/javascript" src="/js/content/school/stu_reg_per_month.js"></script> <!-- 차트에 필요한 js코드 추가 -->
+	<script type="text/javascript" src="/js/content/school/stu_reg_per_month3.js"></script> <!-- 차트에 필요한 js코드 추가 -->
 </th:block>
 
 

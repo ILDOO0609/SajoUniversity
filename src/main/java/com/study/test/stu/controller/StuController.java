@@ -70,6 +70,8 @@ public class StuController {
 		model.addAttribute("gradeList", stuService.getStuGradeForStu(stuNo));
 		model.addAttribute("stuAvg", stuService.getAvg(stuNo));
 		model.addAttribute("totalScoreForStu", stuService.getTotalScore(stuNo));
+		model.addAttribute("sumScoreList", stuService.getSumScoreForStu(stuNo));
+	
 		
 		return "content/stu/stu_get_grade";
 	}

@@ -41,6 +41,7 @@
 					<thead>
 						<tr>
 							<td>No.</td>
+							<td>카테고리</td>
 							<td>제목</td>
 							<td>작성자</td>
 							<td>작성일</td>
@@ -50,6 +51,7 @@
 					<tbody>
 						<tr th:each="board, state : ${boardList}">
 							<td>[[${boardList.size()-state.index}]]</td>
+							<td>[[${board.boardCategoryVO.cateName}]]</td>
 							<td> <a th:href="@{/board/boardDetail(boardNo=${board.boardNo})}"> [[${board.boardTitle}]] </a> </td>
 							<td>[[${board.boardWriter}]]</td>
 							<td>[[${board.boardCreateDate}]]</td>

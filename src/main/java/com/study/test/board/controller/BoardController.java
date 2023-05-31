@@ -102,8 +102,9 @@ public class BoardController {
 	@PostMapping("/regBoard")
 	public String boardWrite(BoardVO boardVO, Authentication authentication, MultipartFile mainImg) {
 		
-		boardVO.setBoardImgVO(UploadUtil.uploadFile(mainImg)); 
+		System.out.println("@@@@@@@@");
 		
+		boardVO.setBoardImgVO(UploadUtil.uploadFile(mainImg)); 
 		boardVO.setCateNo(boardVO.getBoardCategoryVO().getCateNo());
 		
 		// 작성자 세팅

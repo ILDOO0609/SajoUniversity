@@ -31,4 +31,14 @@ function secret(){
       object.value = object.value.slice(0, 4);
  }
  
+ //게시글 등록
+ function regBoard(){
+	
+	if(document.querySelector('#secretChk').checked && document.querySelector('#secretNum').value == ''){
+		alert('비밀글 암호를 입력해주세요');
+		return;
+	}
+	
+	document.querySelector('#formTag').submit();
+}
  

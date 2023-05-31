@@ -17,6 +17,7 @@
 	<result column="IS_NOTICE" 			property="isNotice"/>
 	<result column="CATE_NO" 			property="cateNo"/>
 	<association property="boardImgVO" resultMap="boardImg"></association>
+	<association property="boardCategoryVO" resultMap="category"></association>
 	<collection  property="replyList"  resultMap="replyMapper.reply"></collection>
 </resultMap>
 
@@ -84,6 +85,7 @@
 		    , IS_SECRET
 		    , IS_NOTICE
 		    , BOARD.CATE_NO
+		    , CATE_NAME
 		FROM BOARD, BOARD_CATEGORY CATE
 		WHERE BOARD.CATE_NO = CATE.CATE_NO
 		ORDER BY BOARD_NO DESC

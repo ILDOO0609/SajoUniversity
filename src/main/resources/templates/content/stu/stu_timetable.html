@@ -22,7 +22,7 @@
    		</div>
 		<div class="row">
 			<div class="col">
-				<table class="table table-bordered text-center " border="1">
+				<table class="table table-bordered text-center align-middle" border="1">
 					<colgroup>
 						<col width="5%">
 						<col width="19%">
@@ -41,7 +41,7 @@
 			                <th>금</th>
 			            </tr>
 			        </thead>
-					<tbody>
+					<tbody class="align-middle">
 						<tr th:if="${lecList.size} == 0">
 							<td colspan="6">등록된 강의가 없습니다.</td>
 						</tr>
@@ -55,7 +55,7 @@
 				                              th:if="${lec.lectureTimeList[0].lecDay == num.toString() 
 				                                       and lec.lectureTimeList[0].firstTime &lt;= time.toString() 
 				                                       and lec.lectureTimeList[0].lastTime >= time.toString()}">
-				                            <p th:text="${lec.lecName}"></p>
+				                            [[${lec.lecName}]]
 				                    </th:block>
 				                </td>
 							</tr>

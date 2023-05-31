@@ -1,5 +1,7 @@
 
+
 function pdf(){
+	
 	//시간표 pdf로 새창 띄우기
    const body_tag = document.querySelector('.timetable');
    // 현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환

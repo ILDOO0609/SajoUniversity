@@ -138,6 +138,11 @@ public class StuServiceImpl implements StuService{
 	public int getTotalScore(String stuNo) {
 		return sqlSession.selectOne("empMapper.getTotalScore", stuNo);
 	}
+
+	@Override
+	public List<LectureVO> getSumScoreForStu(String stuNo) {
+		return sqlSession.selectList("empMapper.getSumScoreForStu", stuNo);
+	}
 	
 	
 	

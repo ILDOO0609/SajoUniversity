@@ -72,6 +72,7 @@ FROM STATUS_INFO
 WHERE STU_NO = #{stuNo}
 AND ING_STATUS = 'I'
 AND NOW_STATUS = 'E'
+OR NOW_STATUS = 'A'
 </select>
 
 <!--휴학처리-->

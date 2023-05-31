@@ -5,7 +5,9 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.study.test.board.vo.BoardCategoryVO;
 import com.study.test.board.vo.BoardVO;
 import com.study.test.util.PageVO;
 
@@ -13,16 +15,48 @@ import com.study.test.util.PageVO;
 public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	//카테고리 목록 조회
+	@Override
+	public List<BoardCategoryVO> getCateList() {
+		return sqlSession.selectList("boardMapper.getCateList");
+	}
 
+	//카테고리 등록
+	@Override
+	public int regCategory(String cateName) {
+		return sqlSession.insert("boardMapper.regCategory", cateName);
+	}
+	
+	//카테고리명 중복 체크
+	@Override
+	public int checkCateName(String cateName) {
+		return sqlSession.selectOne("boardMapper.checkCateName", cateName);
+	}
+	
+	//카테고리 사용여부 수정
+	@Override
+	public int changeIsUse(String cateCode) {
+		return sqlSession.update("boardMapper.changeIsUse", cateCode);
+	}
+
+	@Override
+	public void deleteCate(String cateCode) {
+		sqlSession.delete("boardMapper.deleteCate", cateCode);
+	}
+	
 	@Override
 	public List<BoardVO> getBoard(PageVO pageVO) {
 		return sqlSession.selectList("boardMapper.getBoard", pageVO);
 	}
-
+	
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void regBoard(BoardVO boardVO) {
 		sqlSession.insert("boardMapper.regBoard", boardVO);
-		
+		if(boardVO.getBoardImgVO() != null) {
+			sqlSession.insert("boardMapper.regBoardImg", boardVO.getBoardImgVO());
+		}
 	}
 
 	@Override
@@ -50,6 +84,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int getBoardListCnt() {
 		return sqlSession.selectOne("boardMapper.getBoardListCnt");
+	}
+
+	@Override
+	public String getNextBoardNo() {
+		return sqlSession.selectOne("boardMapper.getNextBoardNo");
 	}
 	
 }

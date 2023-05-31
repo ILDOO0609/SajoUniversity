@@ -228,23 +228,33 @@ public class SchoolController {
 	
 	//학사조회 -> 교수&교직원 조회 페이지
 	@GetMapping("/checkPro")
-	public String checkPro(Model model, LectureVO lectureVO) {
+	public String checkPro(Model model, LectureVO lectureVO, MemberVO memberVO) {
 		//단과대학 정보 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		//전공학과 정보 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
-		//교수&교직원 조회
+		//교수 조회
 		model.addAttribute("proList", schoolService.checkProList(lectureVO));
+		//교직원 조회
+		model.addAttribute("stfList", schoolService.checkStfList(memberVO));
 		
 		return "content/school/check/check_pro";
 	}
 	
-	//학사조회 -> 교수&교직원 조회 -> 검색
+	//학사조회 -> 교수&교직원 조회 -> 교수검색
 	@ResponseBody
 	@PostMapping("/searchProListAjax")
 	public List<LectureVO> searchProListAjax(LectureVO lectureVO){
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + lectureVO);
 		return schoolService.searchProListAjax(lectureVO);
+	}
+	//학사조회 -> 교수&교직원 조회 -> 교직원검색
+	@ResponseBody
+	@PostMapping("/searchStfListAjax")
+	public List<MemberVO> searchStfListAjax(MemberVO memberVO){
+		System.out.println("@#@#@#@@@@@@@@@@@@@@#@#@##" + memberVO);
+		return schoolService.searchStfListAjax(memberVO);
+		
 	}
 	
 	
@@ -308,14 +318,15 @@ public class SchoolController {
 		
 	}
 	
-	
 	//학적변동 -> 복학페이지 조회
 	@GetMapping("/acaReturn")
 	public String acaReturn(Model model) {
 		//승인대기조회
-		model.addAttribute("statuslist", schoolService.getStatusReturnList());
+		model.addAttribute("returnList", schoolService.getStatusReturnList());
 		//승인완료조회
+		model.addAttribute("returnAppList", schoolService.getStatusReturnAppList());
 		//승인취소조회
+		model.addAttribute("returnDeniedList", schoolService.getStatusReturnDeniedList());
 		
 		return "content/school/academic/aca_return";
 	}
@@ -323,9 +334,28 @@ public class SchoolController {
 	//학적변동 -> 복학신청 승인완료처리
 	@ResponseBody
 	@PostMapping("/updateReturnAppAjax")
-	
-	
-	
+	public void updateReturnApp(String statusNo) {
+		String stuNo = schoolService.updateReturnSelect(statusNo);
+		StatusInfoVO statusInfoVO = new StatusInfoVO();
+		statusInfoVO.setStatusNo(statusNo);
+		statusInfoVO.setStuNo(stuNo);
+		
+		schoolService.updateReturnApp(statusInfoVO);
+	}
+		
+	//학적변동 -> 복학신청 승인취소처리
+	@ResponseBody
+	@PostMapping("/updateReturnDeniedAjax")
+	public void updateReturnDenied(String statusNo) {
+		
+		String stuNo = schoolService.updateReturnSelect(statusNo);
+		StatusInfoVO statusInfoVO = new StatusInfoVO();
+		statusInfoVO.setStatusNo(statusNo);
+		statusInfoVO.setStuNo(stuNo);
+		
+		schoolService.updateReturnDenied(statusInfoVO);
+		
+	}
 	
 
 	//수업 -> 메인 페이지
@@ -374,16 +404,18 @@ public class SchoolController {
 	 //회원 -> 승인
 	 @ResponseBody
 	 @PostMapping("/updatePosition") 
-	 public void updatePosition(String memNo) {
-		MemberVO memberVO  = schoolService.selectMember(memNo);
-		System.out.println("@@@@@@@@@@@@@@@@@@#######" + memberVO);
+	 public void updatePosition(String memNo, StuVO stuVO) {
+		MemberVO memberVO = schoolService.selectMember(memNo);
+		stuVO.setMemberVO(memberVO);
+		System.out.println("@##@#################" + stuVO);
 		
 		if(memberVO.getMemRole().equals("stu")) {
-			schoolService.insertStu(memberVO);
+			schoolService.insertStu(stuVO);
 		}
 		else {
-			schoolService.insertEmp(memberVO);
+			schoolService.insertEmp(stuVO);
 		}
+		
 		schoolService.updatePosition(memNo);
 		
 	 }

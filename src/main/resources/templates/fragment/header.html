@@ -61,14 +61,17 @@
 							회원등록
 						</span>
 						<div class="dropdown">
-						
-							<span><a href="/board/boardList">게시판</a></span>
-								<div class="dropdown-content">
-									<a href="/board/boardList">게시판 목록</a>
-									<a href="/board/boardWriteForm">게시글쓰기</a>
-									<a href="/board/myBoard">나의 게시글 조회</a>
-								</div>
+			
+						<span><a href="/board/boardList">게시판</a></span>
+							<div class="dropdown-content">
+								<a href="/board/boardCateManage">게시판 카테고리 관리</a>
+								<a href="/board/boardList">게시판 목록</a>
+								<a href="/board/boardWriteForm">게시글쓰기</a>
+								<a href="/board/myBoard">나의 게시글 조회</a>
+							</div>
+	
 						</div>
+						
 						<div class="dropdown">
 							<span>통계 </span>
 							<div class="dropdown-content">
@@ -83,6 +86,8 @@
 							<span><a href="https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C524447%2C1082335&rt1=&rt2=%EC%B9%B4%EC%B9%B4%EC%98%A4&rtIds=%2C&rtTypes=%2C">길찾기</a></span>
 						</div>
 						</div>
+						
+						<span> <span th:text="${#authentication.authorities}"></span></span>
 				</div>
 			</nav>
 		</div>
@@ -91,123 +96,188 @@
 	
 	
 	
-	
- <div class="row">
-	<div class="col">
-		<nav class="navbar navbar-expand-lg bg-body-tertiary">
-			<div class="container-fluid">			
-				<div class="dropdown">
-					<span class="dropbtn_icon">개인정보 </span>
-					<div class="dropdown-content">
-						<a href="/stu/stuInfoForSc">학적 기본 조회</a>
-						<a href="/stu/stuGetGrade">성적 조회</a>
-						<a href="/stu/stuInfo">개인 정보 조회</a>
-						<a href="/stu/updateStuInfoForm">개인 정보 수정</a>
-					</div>
-				</div>
-				<div class="dropdown">
-					<span>교과과정</span>
-					<div class="dropdown-content">
-						<a href="/stu/stuSemEnroll">수강 신청</a>
-						<a href="/stu/stuSemEnrollNow">수강 신청 내역</a>
-						<a href="/stu/stuMultimajor">복수 전공 신청</a>
-						<a href="/stu/stuStatus">휴학 신청</a>
-						<a href="/stu/stuStatusRe">복학 신청</a>
-					</div>
-				</div>
-				<div class="dropdown">
-					<span>시간표</span>
-					<div class="dropdown-content">
-						<a href="/stu/stuTimetable">개인 시간표 조회</a>
-					</div>
-				</div>
-				<div class="dropdown">
-					<span>대학생활</span>
-					<div class="dropdown-content">
-						<a href="/board/stuBoard">학생 커뮤니티</a>
-						<a href="#">실시간 대화</a>
-					</div>
-				</div>
-			</div>
-		</nav>
-	</div>
+<!-- 학생 -->
+<div sec:authorize="hasRole('ROLE_stu')">
+ <nav class="navbar navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Offcanvas dark navbar</a>
+    <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">학생 메뉴</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              개인정보
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="/stu/stuInfoForSc">학적 기본 조회</a></li>
+              <li><a class="dropdown-item" href="/stu/stuGetGrade">성적 조회</a></li>
+              <li><a class="dropdown-item" href="/stu/stuInfo">개인 정보 조회</a></li>
+              <li><a class="dropdown-item" href="/stu/updateStuInfoForm">개인 정보 수정</a></li>
+            </ul>
+            
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              교과과정
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="/stu/stuSemEnroll">수강 신청</a></li>
+              <li><a class="dropdown-item" href="/stu/stuSemEnrollNow">수강 신청 내역</a></li>
+              <li><a class="dropdown-item" href="/stu/stuMultimajor">복수 전공 신청</a></li>
+              <li><a class="dropdown-item" href="/stu/stuStatus">휴학 신청</a></li>
+              <li><a class="dropdown-item" href="/stu/stuStatusRe">복학 신청</a></li>
+            </ul>
+            
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              시간표
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="/stu/stuTimetable">개인 시간표 조회</a></li>
+   
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex mt-3" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-light" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>
+</div>
+
+
+
+
+
+
+<!-- 교수 -->
+<div sec:authorize="hasRole('ROLE_pro')">
+ <nav class="navbar navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Offcanvas dark navbar</a>
+    <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">교수 메뉴</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/emp/regLecture">강의 등록</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/emp/lecSchedule">강의 시간표</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/emp/lectureList">강의 리스트</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/emp/regScore">성적등록</a>
+          </li>
+        </ul>
+        <form class="d-flex mt-3" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-light" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>
+</div>
+
+ 
+<!-- 교직원 -->
+<div sec:authorize="hasRole('ROLE_stf')">
+ <nav class="navbar navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Offcanvas dark navbar</a>
+    <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">교직원 메뉴</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              학사 메뉴
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="/school/info">학사 안내</a></li>
+              <li><a class="dropdown-item" href="/school/scheList">학사 일정</a></li>
+            </ul>
+            
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              학사조회
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="/school/checkStu">학생 조회</a></li>
+              <li><a class="dropdown-item" href="/school/checkPro">교수 조회</a></li>
+              <li><a class="dropdown-item" href="/school/checkLec">강의/학점 조회</a></li>
+            </ul>
+            
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              학적변동
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="/school/acaLeave">휴학 관리</a></li>
+              <li><a class="dropdown-item" href="/school/acaReturn">복학 관리</a></li>
+            </ul>
+            
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              수업메뉴
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="/school/lessonMajorDouble">복수전공 관리</a></li>
+              <li><a class="dropdown-item" href="/school/lessonWarning">학사경고 관리</a></li>
+            </ul>
+
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              회원메뉴
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="/school/memberList">신규 회원</a></li>
+              <li><a class="dropdown-item" href="/school/memberList">승인/취소 조회</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex mt-3" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-light" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>
 </div>
  
  
  
- 
- 
- <!-- <div sec:authorize="hasRole('ROLE_pro')"> -->
-	 <div class="row">
-		<div class="col">
-			<nav class="navbar navbar-expand-lg bg-body-tertiary">
-				<div class="container-fluid">
-					<div class="dropdown">
-						<span class="dropbtn_icon"><a href="/emp/regLecture">강의 등록 </a></span>
-					</div>
-					<div class="dropdown">
-						<span><a href="/emp/lecSchedule">강의 시간표</a></span>
-					</div>
-					<div class="dropdown">
-						<span><a href="/emp/lectureList">강의 리스트</a></span>
-					</div>
-					<div class="dropdown">
-						<span><a href="/emp/regScore">성적등록</a></span>
-					</div>
-				</div>
-			</nav>
-		</div>
-	</div>
-
-<!-- <div sec:authorize="hasRole('ROLE_stf')"> -->
-	<div class="row">
-		<div class="col">
-			<div class="dropdown">
-				<button class="btn" type="button" data-bs-toggle="dropdown" style="border: 1px solid white;">
-					학사 메뉴
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="/school/info"><button class="dropdown-item" type="button">학사 안내</button></a></li>
-					<li><a href="/school/scheList"><button class="dropdown-item" type="button">학사 일정</button></a></li>
-				</ul>
-					
-				<button class="btn" type="button" data-bs-toggle="dropdown" style="border: 1px solid white;">
-					학사 조회
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="/school/checkStu"><button class="dropdown-item" type="button">학생 조회</button></a></li>
-					<li><a href="/school/checkPro"><button class="dropdown-item" type="button">교수 조회</button></a></li>
-					<li><a href="/school/checkLec"><button class="dropdown-item" type="button">강의/학점 조회</button></a></li>
-				</ul>	
-					
-				<button class="btn" type="button" data-bs-toggle="dropdown" style="border: 1px solid white;">
-					학적 변동
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="/school/acaLeave"><button class="dropdown-item" type="button">휴학 관리</button></a></li>
-					<li><a href="/school/acaReturn"><button class="dropdown-item" type="button">복학 관리</button></a></li>
-				</ul>
-				
-				<button class="btn" type="button" data-bs-toggle="dropdown" style="border: 1px solid white;">
-					수업 메뉴
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="/school/lessonMajorDouble"><button class="dropdown-item" type="button">복수전공 관리</button></a></li>
-					<li><a href="/school/lessonWarning"><button class="dropdown-item" type="button">학사경고 관리</button></a></li>
-				</ul>
-				<button class="btn" type="button" data-bs-toggle="dropdown" style="border: 1px solid white;">
-					회원 메뉴
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="/school/memberList"><button class="dropdown-item" type="button">회원 관리</button></a></li>
-				</ul>
-			</div>
-		</div>	
-	</div>
-
 
 	
-<!--  </div> -->
  
  <!--LOGIN Modal -->
 	<div class="modal fade" id="loginModal" 
@@ -437,25 +507,4 @@
 
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

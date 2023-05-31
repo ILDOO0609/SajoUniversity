@@ -43,9 +43,9 @@ function lecScheduleAjax() {
 }
 function pdf(){
 	//시간표 pdf로 새창 띄우기
-   const body_tag = document.querySelector('.lec-schedule');
+   const body_tag = document.querySelector('.schedule-table');
    // 현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환
-   html2canvas(document.querySelector('.lec-schedule'), {
+   html2canvas(document.querySelector('.schedule-table'), {
       scale:3,
       onrendered: function(body_tag) {
       

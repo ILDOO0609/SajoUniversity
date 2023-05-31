@@ -25,6 +25,65 @@
 		</table>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<thead>
+				<tr>
+					<td>학년</td>
+					<td>학기</td>
+					<td>신청학점</td>
+					<td>이수학점</td>
+					<td>평점평균</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="score : ${sumScoreList}">
+					<td>[[${score.semesterVO.semYear}]]</td>
+					<td>[[${score.semesterVO.semester}]]학기</td>
+					<td>[[${score.lecScore}]]</td>
+					<td>[[${score.lecScore}]]</td>
+					<td>[[${score.gradeVO.score}]]</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col">
+		<table class="table text-center">
+		<colgroup>
+			<col width="25%">
+			<col width="20%">
+			<col width="15%">
+			<col width="15%">
+			<col width="">
+		</colgroup>
+		<thead>
+			<tr>
+				<td>교과목명</td>
+				<td>담당교수</td>
+				<td>학점</td>
+				<td>등급</td>
+				<td>비고</td>
+			</tr>
+		</thead>
+			<tbody>
+				<tr th:each="grade : ${gradeList}">
+					<td>[[${grade.lecName}]]</td>
+					<td>[[${grade.memberVO.memName}]]</td>
+					<td>[[${grade.lecScore}]]</td>
+					<td>
+						[[${grade.gradeVO.grade}]] / [[${grade.gradeVO.score}]] 
+					</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
 <div class="row">
 	<div class="col">
 		<table class="table"></table>

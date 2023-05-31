@@ -39,7 +39,7 @@ function forStatusSubmit (){
 		data: {}, //필요한 데이터
 		success: function(result) {
 			if(result > 0){
-				alert('휴학신청 처리중 입니다.');
+				alert('휴학 또는 휴학신청 처리중 입니다.');
 				location.href='/stu/stuInfo'
 			}
 			else{

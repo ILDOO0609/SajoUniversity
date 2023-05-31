@@ -61,36 +61,49 @@ public interface SchoolService {
 	//학생 조회 -> 검색
 	List<StuVO> searchStuListAjax(StuVO stuVO);
 	
-	
-	//교수&교직원 조회
+	//교수 조회
 	List<EmpVO> checkProList(LectureVO lectureVO);
-	//교수&교직원 검색
+	//교직원 조회
+	List<MemberVO> checkStfList(MemberVO memberVO);
+	
+	//교수 검색
 	List<LectureVO> searchProListAjax(LectureVO lectureVO);
-
+	//교직원 검색
+	List<MemberVO> searchStfListAjax(MemberVO memberVO);
 	
 	
 // -------학적변동------------------------------------------------------	
 	
 	//학적변동 -> 휴학관리 대기조회
 	List<StatusInfoVO> getStatusInfoList();
-	//학적변동 -> 휴학승인 승인완료조회
+	//학적변동 -> 휴학 승인완료조회
 	List<StatusInfoVO> getStatusInfoAppList();
-	//학적변동 -> 휴학승인 승인취소조회
+	//학적변동 -> 휴학 승인취소조회
 	List<StatusInfoVO> getStatusInfoDeniedList();
 	
 	//학적변동 -> 휴학신청 회원조회
 	String updateLeaveSelect(String statusNo);
-	//학적변동 -> 휴학신청 승인
+	//학적변동 -> 휴학신청 승인완료
 	void updateLeaveApp(StatusInfoVO statusInfoVO);
-	//학적변동 -> 휴학신청 취소
+	//학적변동 -> 휴학신청 승인취소
 	void updateLeaveDenied(StatusInfoVO statusInfoVO);
 	
 		
+	
 	//학적변동 -> 복학관리 대기조회
 	List<StatusInfoVO> getStatusReturnList();
-	//학적변동 -> 휴학승인 승인완료조회
-	//학적변동 -> 휴학승인 승인취소조회
+	//학적변동 -> 복학관리 승인완료조회
+	List<StatusInfoVO> getStatusReturnAppList();
+	//학적변동 -> 복학관리 승인취소조회
+	List<StatusInfoVO> getStatusReturnDeniedList();
 	
+	
+	//학적변동 -> 복학신청 회원조회
+	String updateReturnSelect(String statusNo);
+	//학적변동 -> 복학승인 승인완료
+	void updateReturnApp(StatusInfoVO statusInfoVO);
+	//학적변동 -> 복학승인 승인취소
+	void updateReturnDenied(StatusInfoVO statusInfoVO);
 	
 	
 	
@@ -107,8 +120,8 @@ public interface SchoolService {
 	void updatePosition(String memNo);
 	
 	//등록회원 업데이트 정보인서트 
-	void insertStu(MemberVO memberVO);
-	void insertEmp(MemberVO memberVO);
+	void insertStu(StuVO stuVO);
+	void insertEmp(StuVO stuVO);
 	
 	
 	

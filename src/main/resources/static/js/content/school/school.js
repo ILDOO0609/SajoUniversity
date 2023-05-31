@@ -58,7 +58,11 @@ function infoSearchList(){
 	const schInfoSearch = document.querySelector('#schInfoSearchInput').value;
 	
 	if(schInfoSearch == ''){
-		alert('검색할 제목을 입력하세요.');
+		
+		swal("검색 실패", "검색할 제목을 입력하세요.", "error", {button: "확인"})
+		.then((result) => {
+		})
+		
 		return;
 	}
 	

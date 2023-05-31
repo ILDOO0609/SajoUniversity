@@ -75,7 +75,7 @@ function join() {
 // 회원가입 버튼 비활성화
 function setDisabled() {
 
-	document.querySelector('#joinBtn').disabled = true;
+	 // document.querySelector('#joinBtn').disabled = true;
 
 }
 
@@ -514,6 +514,7 @@ function findNo(btn) {
 
 
 var authoMail;
+var countdownTimer;
 
 // 회원가입시 인증번호 이메일 인증
 function authenMail() {
@@ -541,7 +542,7 @@ function authenMail() {
 	  btnAuth.disabled = true;
 	  alert(authoMail)
 	    var timeRemaining = 180;
-		var countdownTimer;
+		
 		
 		function startTimer() {
 		  var timeRemainingInput = document.querySelector('#time-remaining');
@@ -576,10 +577,13 @@ function checkVerificationCode() {
 	alert(authoMail);
   var authMail = document.querySelector('#auth_mail').value;
   var confirmBtn = document.querySelector('#confirmation');
+  var timeRemainingInput = document.querySelector('#time-remaining');
+  
   alert(authMail)
   if (authMail === authoMail) {
-    clearInterval(countdownTimer);
     alert('인증번호가 일치합니다. \n 회원가입을 마저 진행 해주세요.');
+    clearInterval(countdownTimer);
+    timeRemainingInput.value = '인증이 완료되었습니다';
     confirmBtn.disabled = true;
 	document.querySelector('#joinBtn').disabled = false;
   } else {

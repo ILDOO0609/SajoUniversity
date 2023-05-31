@@ -96,15 +96,15 @@
 										<td>승인여부</td>
 									</tr>
 								</thead>
-								<tbody id="leaveTable">
-									<th:block th:if="${#lists.size(statuslist) == 0}">
+								<tbody id="returnTable">
+									<th:block th:if="${#lists.size(returnList) == 0}">
 					 					<tr>
 					 						<td colspan="9">조회된 회원이 없습니다.</td>
 					 					</tr>
 					 				</th:block>
-									<th:block th:unless="${#lists.size(statuslist) == 0}">
-										<tr th:each="status, state : ${statuslist}">
-											<td><input type="checkbox" class="form-check-input"></td>
+									<th:block th:unless="${#lists.size(returnList) == 0}">
+										<tr th:each="status, state : ${returnList}">
+											<td><input type="checkbox" class="form-check-input chk"></td>
 											<td>[[${status.statusNo}]]</td>
 											<td>[[${status.stuVO.memberVO.memName}]]</td>
 											<td>[[${status.stuVO.memberVO.memNo}]]</td>
@@ -117,16 +117,14 @@
 									</th:block>	
 								</tbody>
 							</table>
-							<th:block>
-								<div class="row" style="padding-right: 12px;">
-									<div class="col-1 offset-10 d-grid">
-										<input type="button" class="btn btn-primary" th:onclick="updateReturnApp();" value="승인완료">
-									</div>
-									<div class="col-1 d-grid">
-										<input type="button" class="btn btn-danger" th:onclick="updateReturnDenied();" value="승인취소">
-									</div>
+							<div class="row" style="padding-right: 12px;">
+								<div class="col-1 offset-10 d-grid">
+									<input type="button" class="btn btn-primary" onclick="updateReturnApp();" value="승인완료">
 								</div>
-							</th:block>
+								<div class="col-1 d-grid">
+									<input type="button" class="btn btn-danger" onclick="updateReturnDenied();" value="승인취소">
+								</div>
+							</div>
 						</div>
 					</div>
 
@@ -159,22 +157,22 @@
 									</tr>
 								</thead>
 								<tbody>
-									<th:block>
+									<th:block th:if="${#lists.size(returnAppList) == 0}">
 					 					<tr>
 					 						<td colspan="9">조회된 회원이 없습니다.</td>
 					 					</tr>
 					 				</th:block>
-									<th:block>
-										<tr>
+									<th:block th:unless="${#lists.size(returnAppList) == 0}">
+										<tr th:each="status : ${returnAppList}">
 											<td><input type="checkbox" class="form-check-input"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td style="color: blue; font-weight: bold;">
+											<td>[[${status.statusNo}]]</td>
+											<td>[[${status.stuVO.memberVO.memName}]]</td>
+											<td>[[${status.stuVO.memberVO.memNo}]]</td>
+											<td>[[${status.stuVO.stuYear}]]</td>
+											<td>[[${status.stuVO.colleageVO.collName}]]</td>
+											<td>[[${status.stuVO.deptVO.deptName}]]</td>
+											<td>[[${status.applyDate}]]</td>
+											<td style="color: blue; font-weight: bold;">[[${status.ingStatus}]]</td>
 										</tr>
 									</th:block>	
 								</tbody>
@@ -212,22 +210,22 @@
 									</tr>
 								</thead>
 								<tbody>
-									<th:block>
+									<th:block th:if="${#lists.size(returnDeniedList) == 0}">
 					 					<tr>
 					 						<td colspan="9">조회된 회원이 없습니다.</td>
 					 					</tr>
 					 				</th:block>
-									<th:block>
-										<tr>
+									<th:block th:unless="${#lists.size(returnDeniedList) == 0}">
+										<tr th:each="status : ${returnDeniedList}">
 											<td><input type="checkbox" class="form-check-input"></td>
-											<td></td>											
-											<td></td>											
-											<td></td>											
-											<td></td>											
-											<td></td>											
-											<td></td>											
-											<td></td>											
-											<td style="color: red; font-weight: bold;"></td>
+											<td>[[${status.statusNo}]]</td>
+											<td>[[${status.stuVO.memberVO.memName}]]</td>
+											<td>[[${status.stuVO.memberVO.memNo}]]</td>
+											<td>[[${status.stuVO.stuYear}]]</td>
+											<td>[[${status.stuVO.colleageVO.collName}]]</td>
+											<td>[[${status.stuVO.deptVO.deptName}]]</td>
+											<td>[[${status.applyDate}]]</td>
+											<td style="color: red; font-weight: bold;">[[${status.ingStatus}]]</td>
 										</tr>
 									</th:block>	
 								</tbody>

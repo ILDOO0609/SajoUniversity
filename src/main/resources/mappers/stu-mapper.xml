@@ -98,7 +98,7 @@ WHERE STU_NO = #{stuNo}
 AND NOW_STATUS = 'A'
 </select>
 
-<!--복학처리-->
+<!--복학 신청 처리-->
 <update id="updateStatusStuForRe">
 UPDATE STATUS_INFO
 SET ING_STATUS = 'I'
@@ -155,8 +155,8 @@ AND DEPT.DEPT_NO = DEPT_MANAGE.MULTI_MAJOR_DEPT
 SELECT STATUS_NO
 	, DECODE(NOW_STATUS, 'E', '재학', 'A', '휴학', 'R', '반려') AS NOW_STATUS
 	, DECODE(AFTER_STATUS, 'E', '재학', 'A', '휴학', 'R', '반려') AS AFTER_STATUS
-	, TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') APPLY_DATE
-	, TO_CHAR(APPROVAL_DATE, 'YYYY-MM-DD') APPROVAL_DATE
+	, APPLY_DATE
+	, APPROVAL_DATE
 	, DECODE(ING_STATUS, 'I', '처리중', 'P', '처리완료', 'R', '반려') AS ING_STATUS
 	, STU_NO
 	, STATUS_CONTENT

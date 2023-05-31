@@ -57,9 +57,6 @@
 			<nav class="navbar navbar-expand-lg bg-body-tertiary">
 				<div class="container-fluid">
 						
-						<span data-bs-toggle="modal" data-bs-target="#joinModal" style="cursor: pointer;">
-							회원등록
-						</span>
 						<div class="dropdown">
 			
 						<span><a href="/board/boardList">게시판</a></span>
@@ -81,9 +78,10 @@
 						</div>
 						</div>
 						<div class="dropdown">
-							<span><a href="/member/map">오시는길</a></span>
+							<span>오시는길</span>
 							<div class="dropdown-content">
-							<span><a href="https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C524447%2C1082335&rt1=&rt2=%EC%B9%B4%EC%B9%B4%EC%98%A4&rtIds=%2C&rtTypes=%2C">길찾기</a></span>
+							<span><a href="/member/map">지도 및 로드뷰</a></span>
+							<span><a href="#" onclick="openPopup();">길찾기</a></span>
 						</div>
 						</div>
 						
@@ -500,7 +498,12 @@
 		</div>
 	</div>
  
-
+<script>
+        function openPopup() {
+            var link = "https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C524447%2C1082335&rt1=&rt2=%EC%B9%B4%EC%B9%B4%EC%98%A4&rtIds=%2C&rtTypes=%2C";
+            window.open(link, "_blank", "width=600, height=400");
+        }
+</script>
  
  
 </th:block>

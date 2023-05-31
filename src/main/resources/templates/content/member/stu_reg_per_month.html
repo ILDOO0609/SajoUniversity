@@ -47,7 +47,7 @@
 							<tbody>
 								<tr th:each="mapData, state: ${mapList}">
 									<td>
-										[[${state.index == 0 ? '학생' : '?'}]]
+										[[${state.index == 0 ? '등록학생' : '?'}]]
 									</td>
 									<th:block th:each="data : ${mapData}">
 										<td>[[${data.value}]]</td>

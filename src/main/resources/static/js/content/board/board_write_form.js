@@ -40,6 +40,14 @@ function secret(){
 		return;
 	}
 	
-	document.querySelector('#formTag').submit();
+	Swal.fire({
+        icon: 'success',
+        title: '등록완료',
+        text: '글이 등록 되었습니다.!',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.querySelector('#formTag').submit();
+        }
+    })
 }
  

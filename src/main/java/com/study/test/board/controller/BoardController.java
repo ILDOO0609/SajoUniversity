@@ -223,14 +223,6 @@ public class BoardController {
 		return "redirect:/board/boardList";
 	}
 
-	//게시글 비밀번호체크
-	@GetMapping("/checkPw")
-	public String checkPw(String boardNo, Model model) {
-		model.addAttribute("boardPw", boardService.getBoardPw(boardNo));
-		model.addAttribute("boardNo", boardNo);
-		return "content/board/check_pw";
-	}
-	
 	//게시글 검색
 	@ResponseBody
 	@PostMapping("/searchBoardAjax")

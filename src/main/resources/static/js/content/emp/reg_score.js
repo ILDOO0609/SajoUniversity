@@ -82,10 +82,10 @@ function getStuEnrList(lecNo, semNo){
 				str +=`   </td>`;
 				str +=`   <td>`;
 				if(stu['GRADE']=='미등록'){
-					str +=`	  	<input type="button" value="성적등록" onclick="openRegScore('${lecNo}', '${semNo}', '${stu['STU_NO']}', this);">`;
+					str +=`	  	<input type="button" value="성적등록" class="btn btn-primary" onclick="openRegScore('${lecNo}', '${semNo}', '${stu['STU_NO']}', this);">`;
 				}
 				else{
-					str +=`	  	<input type="button" value="성적변경" onclick="openUpdateScore('${lecNo}', '${semNo}', '${stu['STU_GRADE_NO']}', this);">`;
+					str +=`	  	<input type="button" value="성적변경" class="btn btn-success" onclick="openUpdateScore('${lecNo}', '${semNo}', '${stu['STU_GRADE_NO']}', this);">`;
 				}
 				str +=`   </td>`;
 				str +=`</tr>`;

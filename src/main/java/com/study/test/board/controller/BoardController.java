@@ -89,7 +89,7 @@ public class BoardController {
 	//전체 게시판 목록 페이지
 	@GetMapping("/boardList")
 	public String boardList(BoardVO boardVO, Model model, PageVO pageVO) {
-
+			
 		// 전체 데이터 수 조회
 		pageVO.setTotalDataCnt(boardService.getBoardListCnt());
 		pageVO.setPageInfo();

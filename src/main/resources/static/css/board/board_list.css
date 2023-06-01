@@ -20,14 +20,14 @@ h{
 }
 #searchSelect{
 	width: 130px;
-	border: 1px solid rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.5);
 	border-radius: 0px;
 }
 #searchInput{
 	width:250px; 
-	border: 1px solid rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.5);
 }
 #searchBtn{
-	border: 1px solid rgba(0, 0, 0, 0.1); 
+	border: 1px solid rgba(0, 0, 0, 0.5); 
 	border-radius: 0px;
 }

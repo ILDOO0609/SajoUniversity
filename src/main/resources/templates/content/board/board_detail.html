@@ -30,7 +30,7 @@ img{
 		</div>
 		<div class="row mb-3 row-border">
 			<div class="col-10">
-				작성자 : [[${boardDetail.boardWriter}]]
+				작성자 : [[${boardDetail.memberVO.memName}]]
 			</div>
 			<div class="col-2">
 				조회수 : [[${boardDetail.boardReadCnt}]]
@@ -50,7 +50,7 @@ img{
 		</div>
 		<div class="row mb-3 row-border text-end">
 			<div class="col">
-				<th:block th:if="${boardDetail.boardWriter == #authentication.name}">
+				<th:block th:if="${#authorization.expression('hasRole(''ROLE_stf'')') or boardDetail.boardWriter == #authentication.name}">
 					<input type="button" value="수정" class="btn btn-primary" th:onclick="|location.href='@{/board/updateBoard(boardNo=${boardDetail.boardNo})}';|">
 					<input type="button" value="삭제" class="btn btn-danger" th:onclick="deleteBoard([[${boardDetail.boardNo}]]);">
 				</th:block>
@@ -59,7 +59,7 @@ img{
 		</div>
 		<div class="row mb-3">
 			<div class="col">
-				댓글
+				댓글 [[${boardDetail.replyCnt}]]
 			</div>
 		</div>
 		
@@ -80,9 +80,11 @@ img{
 				[[${reply.replyContent}]]
 			</div>
 			<div class="col-6">
-				[[${reply.replyWriter}]]/[[${reply.replyCreateDate}]]
-				<input type="button" value="수정" class="btn btn-primary" th:onclick="setInput(this, [[${reply.replyNo}]], [[${reply.boardNo}]]);"> 
-				<input type="button" value="삭제" class="btn btn-danger" th:onclick="deleteReply([[${reply.replyNo}]], [[${reply.boardNo}]]);">
+				[[${reply.memberVO.memName}]]/[[${reply.replyCreateDate}]]
+				<th:block th:if="${#authorization.expression('hasRole(''ROLE_stf'')') or reply.replyWriter == #authentication.name}">
+					<input type="button" value="수정" class="btn btn-primary" th:onclick="setInput(this, [[${reply.replyNo}]], [[${reply.boardNo}]]);"> 
+					<input type="button" value="삭제" class="btn btn-danger" th:onclick="deleteReply([[${reply.replyNo}]], [[${reply.boardNo}]]);">
+				</th:block>
 			</div>
 		</div>
 	</div>

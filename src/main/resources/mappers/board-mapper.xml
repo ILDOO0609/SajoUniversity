@@ -18,6 +18,7 @@
 	<result column="CATE_NO" 			property="cateNo"/>
 	<association property="boardImgVO" resultMap="boardImg"></association>
 	<association property="boardCategoryVO" resultMap="category"></association>
+	<association property="memberVO" resultMap="memberMapper.member"></association>
 	<collection  property="replyList"  resultMap="replyMapper.reply"></collection>
 </resultMap>
 
@@ -79,6 +80,7 @@
 		SELECT BOARD_NO
 		    , BOARD_TITLE
 		    , BOARD_WRITER
+		    , MEM_NAME
 		    , TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
 		    , BOARD_READ_CNT
 		    , REPLY_CNT
@@ -87,8 +89,9 @@
 		    , BOARD.CATE_NO
 		    , CATE_NAME
 		    , SECRET_PW
-		FROM BOARD, BOARD_CATEGORY CATE
+		FROM BOARD, BOARD_CATEGORY CATE, MEMBER
 		WHERE BOARD.CATE_NO = CATE.CATE_NO
+		AND MEMBER.MEM_NO = BOARD.BOARD_WRITER
 		<if test="cateNo != null and cateNo != 'all'">
 		AND BOARD.CATE_NO = #{cateNo}
 		</if>
@@ -100,6 +103,7 @@
 		SELECT BOARD_NO
 		    , BOARD_TITLE
 		    , BOARD_WRITER
+		    , MEM_NAME
 		    , TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
 		    , BOARD_READ_CNT
 		    , REPLY_CNT
@@ -108,8 +112,9 @@
 		    , BOARD.CATE_NO
 		    , CATE_NAME
 		    , SECRET_PW
-		FROM BOARD, BOARD_CATEGORY CATE
+		FROM BOARD, BOARD_CATEGORY CATE, MEMBER
 		WHERE BOARD.CATE_NO = CATE.CATE_NO
+		AND MEMBER.MEM_NO = BOARD.BOARD_WRITER
 		<if test="boardListSearchVO.cateNo != null and boardListSearchVO.cateNo != 'all'">
 		AND BOARD.CATE_NO = #{boardListSearchVO.cateNo}
 		</if>
@@ -134,18 +139,21 @@
 		    BOARD_TITLE,
 		    BOARD_CONTENT,
 		    CATE_NAME,
+		    MEM_NAME,
 		    ORIGIN_NAME,
 		    BOARD_WRITER,
 		    TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD HH:MI:SS') AS BOARD_CREATE_DATE,
 		    BOARD_READ_CNT,
 		    REPLY_CNT,
 		    BOARD.CATE_NO,
-		    COALESCE(IMG.ATTACHED_NAME, '미등록') AS ATTACHED_NAME,
-		    COALESCE(IMG.IMG_CODE, '미등록') AS IMG_CODE
+		    NVL(IMG.ATTACHED_NAME, '미등록') AS ATTACHED_NAME,
+		    NVL(IMG.IMG_CODE, '미등록') AS IMG_CODE
 		FROM 
 		    BOARD
 		INNER JOIN 
 		    BOARD_CATEGORY CATE ON BOARD.CATE_NO = CATE.CATE_NO
+		INNER JOIN
+            MEMBER ON BOARD.BOARD_WRITER = MEMBER.MEM_NO
 		LEFT OUTER JOIN 
 		    BOARD_IMG IMG ON BOARD.BOARD_NO = IMG.BOARD_NO
 		WHERE 
@@ -232,6 +240,20 @@
 		FROM BOARD
 		WHERE BOARD_NO = #{boardNo}
 	</select>
+	
+	<!--  댓글 등록시 댓글수 증가 -->
+	<update id="increaseReplyCnt">
+		UPDATE BOARD SET
+			REPLY_CNT = (SELECT REPLY_CNT FROM BOARD WHERE BOARD_NO = #{boardNo}) + 1
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<!--  댓글 삭제 시 댓글수 감소 -->
+	<update id="decreaseReplyCnt">
+		UPDATE BOARD SET
+			REPLY_CNT = (SELECT REPLY_CNT FROM BOARD WHERE BOARD_NO = #{boardNo}) - 1
+		WHERE BOARD_NO = #{boardNo}
+	</update>
 </mapper>
 
 

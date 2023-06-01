@@ -64,7 +64,7 @@ function categorySearch(cateSelect){
 			  	  str += `   		</div>`;
 			  	  str += `       </div>`;
 			  	  str += `   </td>`;
-			  	  str += `   <td>${board.boardWriter}</td>`;
+			  	  str += `   <td>${board.memberVO.memName}</td>`;
 			  	  str += `   <td>${board.boardCreateDate}</td>`;
 			  	  str += `   <td>${board.boardReadCnt}</td>`;
 			  	  str += `</tr>`;
@@ -100,7 +100,6 @@ function searchBoard(){
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: {'inputValue':input_value, 'selectValue':select_value, 'checkValue':check_value, 'cateNo':cate_no}, //필요한 데이터
 		success: function(result) {
-			alert('석옹');
 			console.log(result);
         	const tbody_tag = document.querySelector('#tbodyTag');
 			
@@ -157,7 +156,7 @@ function searchBoard(){
 			  	  str += `   		</div>`;
 			  	  str += `       </div>`;
 			  	  str += `   </td>`;
-			  	  str += `   <td>${board.boardWriter}</td>`;
+			  	  str += `   <td>${board.memberVO.memName}</td>`;
 			  	  str += `   <td>${board.boardCreateDate}</td>`;
 			  	  str += `   <td>${board.boardReadCnt}</td>`;
 			  	  str += `</tr>`;

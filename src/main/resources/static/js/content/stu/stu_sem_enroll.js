@@ -130,13 +130,10 @@ function doEnrollment(lecNo, semNo){
 
 // 수강신청 버튼 클릭
 function applyEnrollment(lecNo, semNo){
-	const result = confirm('수강신청 하시겠습니까?');
+	Swal.fire('수강신청 하시겠습니까?', '', 'question').then(() => {
+		        checkEnrollment(lecNo, semNo);
+		      	});
 	
-	if(result){
-		checkEnrollment(lecNo, semNo);
-		
-	}
-	return;
 }
 
 
@@ -153,14 +150,14 @@ function checkEnrollment(lecNo, semNo){
 			data: {'lecNo':lecNo}, //필요한 데이터
 			success: function(result) {
 				if (result) {
-            		alert('이미 수강신청한 강의 입니다.');
+            		Swal.fire('이미 수강신청한 강의 입니다', '', 'error');
             		return;
         		}
 				else{
 					doEnrollment(lecNo, semNo);
-					
-					alert('수강 신청을 완료 했습니다.');
-					location.href='/stu/stuSemEnroll';
+					Swal.fire('수강 신청을 완료 했습니다', '', 'success').then(() => {
+						document.querySelector('#applyEnroll').submit();
+			      	});
 				}
 			},
 			error: function() {

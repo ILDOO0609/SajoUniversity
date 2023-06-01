@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.study.test.board.service.BoardService;
 import com.study.test.board.vo.BoardCategoryVO;
 import com.study.test.board.vo.BoardImgVO;
+import com.study.test.board.vo.BoardListSearchVO;
 import com.study.test.board.vo.BoardVO;
 import com.study.test.member.service.memberService;
 import com.study.test.reply.service.ReplyService;
@@ -107,6 +108,7 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping("/cateSearchAjax")
 	public List<BoardVO> boardList(String cateNo, PageVO pageVO){
+		
 		// 전체 데이터 수 조회
 		pageVO.setTotalDataCnt(boardService.getBoardListCnt());
 		pageVO.setPageInfo();
@@ -220,12 +222,6 @@ public class BoardController {
 		boardService.updateBoard(boardVO);
 		return "redirect:/board/boardList";
 	}
-	
-	//나의 게시글 조회
-	@GetMapping("/myBoard")
-	public String myBoard() {
-		return "content/emp/my_board";
-	}
 
 	//게시글 비밀번호체크
 	@GetMapping("/checkPw")
@@ -233,6 +229,18 @@ public class BoardController {
 		model.addAttribute("boardPw", boardService.getBoardPw(boardNo));
 		model.addAttribute("boardNo", boardNo);
 		return "content/board/check_pw";
+	}
+	
+	//게시글 검색
+	@ResponseBody
+	@PostMapping("/searchBoardAjax")
+	public List<BoardVO> searchBoardAjax(BoardListSearchVO boardListSearchVO, PageVO pageVO){
+		System.out.println(boardListSearchVO);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("boardListSearchVO", boardListSearchVO);
+		map.put("pageVO", pageVO);
+		System.out.println(map);
+		return boardService.getBoardForSearch(map); 
 	}
 	
 }

@@ -96,6 +96,36 @@
 		OFFSET #{pageVO.offsetCnt} ROWS FETCH NEXT #{pageVO.displayCnt} ROWS ONLY
 	</select>
 	
+	<select id="getBoardForSearch" resultMap="board">
+		SELECT BOARD_NO
+		    , BOARD_TITLE
+		    , BOARD_WRITER
+		    , TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
+		    , BOARD_READ_CNT
+		    , REPLY_CNT
+		    , IS_SECRET
+		    , IS_NOTICE
+		    , BOARD.CATE_NO
+		    , CATE_NAME
+		    , SECRET_PW
+		FROM BOARD, BOARD_CATEGORY CATE
+		WHERE BOARD.CATE_NO = CATE.CATE_NO
+		<if test="boardListSearchVO.cateNo != null and boardListSearchVO.cateNo != 'all'">
+		AND BOARD.CATE_NO = #{boardListSearchVO.cateNo}
+		</if>
+		<if test="boardListSearchVO.selectValue!=null and boardListSearchVO.selectValue =='title'">
+		AND UPPER(BOARD_TITLE) LIKE '%'||UPPER(#{boardListSearchVO.inputValue})||'%'
+		</if>
+		<if test="boardListSearchVO.selectValue!=null and boardListSearchVO.selectValue == 'writer'">
+		AND UPPER(BOARD_WRITER) LIKE '%'||UPPER(#{boardListSearchVO.inputValue})||'%'
+		</if>
+		<if test="boardListSearchVO.checkValue !=null and boardListSearchVO.checkValue =='notSecret'">
+		AND IS_SECRET = 'N'
+		</if>
+		ORDER BY IS_NOTICE DESC, BOARD_NO DESC
+		OFFSET #{pageVO.offsetCnt} ROWS FETCH NEXT #{pageVO.displayCnt} ROWS ONLY
+	</select>
+	
 	
 	
 	<select id="getBoardDetail" resultMap="board">

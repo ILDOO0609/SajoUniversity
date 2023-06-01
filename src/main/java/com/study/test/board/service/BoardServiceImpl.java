@@ -101,5 +101,10 @@ public class BoardServiceImpl implements BoardService{
 	public int getBoardPw(String boardNo) {
 		return sqlSession.selectOne("boardMapper.getBoardPw", boardNo);
 	}
+
+	@Override
+	public List<BoardVO> getBoardForSearch(HashMap<String, Object> map) {
+		return sqlSession.selectList("boardMapper.getBoardForSearch", map);
+	}
 	
 }

@@ -13,6 +13,7 @@ import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 import com.study.test.util.PageVO;
@@ -223,12 +224,44 @@ public class SchoolServiceImpl implements SchoolService{
 		sqlSession.update("schoolMapper.updateReturnDenied", statusInfoVO);
 		sqlSession.update("schoolMapper.updateReturnDeniedStu", statusInfoVO);
 	}
+
+// -------수업메뉴 ------------------------------------------------------	
+
+	//수업메뉴 -> 복수전공관리 -> 승인대기 및 전체조회
+	@Override
+	public List<DeptManageVO> getDeptManageList() {
+		return sqlSession.selectList("schoolMapper.getDeptManageList");
+	}
+	//수업메뉴 -> 복수전공관리 -> 승인완료 조회
+	@Override
+	public List<DeptManageVO> getDeptManageAppList() {
+		return sqlSession.selectList("schoolMapper.getDeptManageAppList");
+	}
+	//수업메뉴 -> 복수전공관리 -> 승인취소 조회
+	@Override
+	public List<DeptManageVO> getDeptManageDeniedList() {
+		return sqlSession.selectList("schoolMapper.getDeptManageDeniedList");
+	}
 	
 	
+	//수업메뉴 -> 복수전공관리 ->복수신청 회원조회
+	@Override
+	public String updateDoubleSelect(String applyNo) {
+		return sqlSession.selectOne("schoolMapper.updateDoubleSelect", applyNo);
+	}
+	//수업메뉴 -> 복수전공관리 ->복수신청 승인완료
+	@Override
+	public void updateDoubleApp(DeptManageVO deptManageVO) {
+		sqlSession.update("schoolMapper.updateDoubleApp", deptManageVO);
+	}
+	//수업메뉴 -> 복수전공관리 ->복수신청 승인취소
+	@Override
+	public void updateDoubleDenied(DeptManageVO deptManageVO) {
+		sqlSession.update("schoolMapper.updateDoubleDenied", deptManageVO);
+	}
 	
 	
-	
-// -------회원메뉴 회원조회------------------------------------------------------
+// -------회원메뉴 ------------------------------------------------------
 	//등록회원 전체조회
 	@Override
 	public List<MemberVO> selectMemberList() {
@@ -255,7 +288,19 @@ public class SchoolServiceImpl implements SchoolService{
 	public void insertEmp(StuVO stuVO) {
 		sqlSession.insert("schoolMapper.insertEmp", stuVO);
 	}
+	
+	//승인/취소 조회
+	@Override
+	public List<MemberVO> selectMemberTotalList() {
+		return sqlSession.selectList("schoolMapper.selectMemberTotalList");
+	}
 
+	
+
+	
+
+
+	
 
 
 	

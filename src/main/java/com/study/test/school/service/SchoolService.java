@@ -8,6 +8,7 @@ import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 import com.study.test.util.PageVO;
@@ -105,25 +106,43 @@ public interface SchoolService {
 	//학적변동 -> 복학승인 승인취소
 	void updateReturnDenied(StatusInfoVO statusInfoVO);
 	
+
 	
+// -------수업메뉴 ------------------------------------------------------	
+
+	//수업메뉴 -> 복수전공관리 -> 승인대기 및 전체조회
+	List<DeptManageVO> getDeptManageList();
+	//수업메뉴 -> 복수전공관리 -> 승인완료 조회
+	List<DeptManageVO> getDeptManageAppList();
+	//수업메뉴 -> 복수전공관리 -> 승인취소 조회
+	List<DeptManageVO> getDeptManageDeniedList();
+	
+	//수업메뉴 -> 복수전공관리 ->복수신청 회원조회
+	String updateDoubleSelect(String applyNo);
+	//수업메뉴 -> 복수전공관리 ->복수신청 승인완료
+	void updateDoubleApp(DeptManageVO deptManageVO);
+	//수업메뉴 -> 복수전공관리 ->복수신청 승인취소
+	void updateDoubleDenied(DeptManageVO deptManageVO);
 	
 	
 	
 // -------회원메뉴 회원조회------------------------------------------------------
-	//등록회원 전체조회
+	//신규회원 전체조회
 	List<MemberVO> selectMemberList();
 	
-	//등록회원 업데이트할 회원 조회
+	//신규회원 업데이트할 회원 조회
 	MemberVO selectMember(String memNo);
 	
-	//등록회원 업데이트
+	//신규회원 업데이트
 	void updatePosition(String memNo);
 	
-	//등록회원 업데이트 정보인서트 
+	//신규회원 업데이트 정보인서트 
 	void insertStu(StuVO stuVO);
 	void insertEmp(StuVO stuVO);
 	
 	
+	//승인/취소 조회
+	List<MemberVO> selectMemberTotalList();
 	
 	
 	

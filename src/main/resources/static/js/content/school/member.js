@@ -3,14 +3,17 @@ function updatePosition(memNo) {
 	
 	const deptNo = document.querySelector('#deptNo').value;
 	const collNo = document.querySelector('#collNo').value;
+	const memRole = document.querySelector('#memRole').value;
+	
+	console.log(memRole);
 	
 	//ajax start
 	$.ajax({
-   		url: '/school/updatePosition', //요청경로
+   		url: '/school/updatePositionAjax', //요청경로
 		type: 'post',
 		async: true,
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	   	data: {'memNo': memNo, 'deptNo':deptNo, 'collNo':collNo}, //필요한 데이터
+	   	data: {'memNo':memNo,'deptNo':deptNo, 'collNo':collNo, 'memRole':memRole}, //필요한 데이터
 	   	success: function(result) {
 			swal("승인완료" , "정상 처리되었습니다.", "success", {button: "확인"})
 			.then((result) => {
@@ -65,5 +68,31 @@ function drawDeptSelectbox(deptList){
 	
 	dept_div.insertAdjacentHTML('afterbegin',str);
 }
+
+
+//회원메뉴 -> 승인/취소조회 -> 승인완료 조회
+function approveO(){
 	
 	
+	//ajax start
+	$.ajax({
+		url: '/school/approveOAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'data': data}, //필요한 데이터
+		success: function(result) {
+
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+	
+	
+}
+//회원메뉴 -> 승인/취소조회 -> 승인취소 조회
+function approveX(){
+	
+}

@@ -24,6 +24,7 @@ import com.study.test.school.service.CalendarService;
 import com.study.test.school.service.SchoolService;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 import com.study.test.util.DateUtill;
@@ -219,7 +220,8 @@ public class SchoolController {
 	//학사조회 -> 검색
 	@ResponseBody
 	@PostMapping("/searchStuListAjax")
-	public List<StuVO> searchStuListAjax(StuVO stuVO){
+	public List<StuVO> searchStuListAjax(StuVO stuVO, MemberVO memberVO){
+		stuVO.setMemberVO(memberVO);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2" + stuVO);
 		return schoolService.searchStuListAjax(stuVO);
 	}
@@ -357,24 +359,56 @@ public class SchoolController {
 		
 	}
 	
+// -------수업메뉴 ------------------------------------------------------	
 
+	
 	//수업 -> 메인 페이지
 	@GetMapping("/lessonMain")
 	public String lesonMain() {
 		return "content/school/lesson/lesson_main";
 	}
-		
-	//수업 -> 수강관리 페이지
-	@GetMapping("/lessonEnrolment")
-	public String lesonEnrolment() {
-		return "content/school/lesson/lesson_enrolment";
-	}
 	
-	//수업 -> 복수전공관리 페이지
+	//수업메뉴 -> 복수전공관리 -> 승인대기 및 전체조회
 	@GetMapping("/lessonMajorDouble")
-	public String lessonMajorDouble() {
+	public String lessonMajorDouble(Model model) {
+		//승인대기조회
+		model.addAttribute("majorList", schoolService.getDeptManageList());
+		//승인완료조회
+		model.addAttribute("returnAppList", schoolService.getStatusReturnAppList());
+		//승인취소조회
+		model.addAttribute("returnDeniedList", schoolService.getStatusReturnDeniedList());
 		return "content/school/lesson/lesson_major_double";
 	}
+	
+	//수업메뉴 -> 복수전공관리 -> 승인완료처리
+	@ResponseBody
+	@PostMapping("/updateDoubleAppAjax")
+	public void updateDoubleApp(String applyNo) {
+		schoolService.updateDoubleSelect(applyNo);
+		DeptManageVO deptManageVo = new DeptManageVO();
+		deptManageVo.setApplyNo(applyNo);
+		schoolService.updateDoubleApp(deptManageVo);
+	}
+	//수업메뉴 -> 복수전공관리 -> 승인취소처리
+	@ResponseBody
+	@PostMapping("/updateDoubleAppAjax")
+	public void updateDoubleDenied(String applyNo) {
+		schoolService.updateDoubleSelect(applyNo);
+		DeptManageVO deptManageVo = new DeptManageVO();
+		deptManageVo.setApplyNo(applyNo);
+		schoolService.updateDoubleDenied(deptManageVo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//수업 -> 학사경고관리 페이지
 	@GetMapping("/lessonWarning")
 	public String lessonWarning() {
@@ -385,9 +419,9 @@ public class SchoolController {
 	
 	
 	
-//	
+//-------------------------------회원메뉴--------------------------------------------
 
-	//회원 -> 회원관리 페이지
+	//회원메뉴 -> 신규회원 페이지
 	@GetMapping("/memberList")
 	public String memberList(Model model) {
 		//단과대학 정보 조회
@@ -401,15 +435,15 @@ public class SchoolController {
 	
 	
 	
-	 //회원 -> 승인
+	 //회원메뉴 -> 신규회원 -> 승인완료
 	 @ResponseBody
-	 @PostMapping("/updatePosition") 
+	 @PostMapping("/updatePositionAjax") 
 	 public void updatePosition(String memNo, StuVO stuVO) {
 		MemberVO memberVO = schoolService.selectMember(memNo);
 		stuVO.setMemberVO(memberVO);
 		System.out.println("@##@#################" + stuVO);
 		
-		if(memberVO.getMemRole().equals("stu")) {
+		if(memberVO.getMemRole().equals("학생")) {
 			schoolService.insertStu(stuVO);
 		}
 		else {
@@ -417,14 +451,17 @@ public class SchoolController {
 		}
 		
 		schoolService.updatePosition(memNo);
-		
 	 }
 	
-	
-	
-	
-	
-	
+	//회원메뉴 -> 승인/취소 전체조회 페이지
+	@GetMapping("/memberSelectList")
+	public String memberSelectList(Model model) {
+		model.addAttribute("memberList", schoolService.selectMemberTotalList());
+		return "content/school/member/member_select_list";
+	}
+	//회원메뉴 -> 승인/취소 승인조회
+//	@ResponseBody
+//	@PostMapping("/approveOAjax")
 	
 	
 	

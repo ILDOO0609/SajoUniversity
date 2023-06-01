@@ -5,7 +5,7 @@ function applyAbsence(){
 	const statusContent = document.querySelector('.status_content').value;
 	
 	if (statusContent == "") {
-		alert('휴학사유를 입력해 주세요.');
+		Swal.fire('휴학사유를 입력해 주세요', '', 'error');
 		return;
 	}
 	
@@ -39,13 +39,13 @@ function forStatusSubmit (){
 		data: {}, //필요한 데이터
 		success: function(result) {
 			if(result > 0){
-				alert('휴학 또는 휴학신청 처리중 입니다.');
-				location.href='/stu/stuInfo'
+				Swal.fire('휴학 또는 휴학신청 처리중 입니다', '', 'error');
 			}
 			else{
 				const formTag = document.querySelector('#stuAbsence');
-				formTag.submit();
-				alert('휴학신청이 완료되었습니다.')
+				Swal.fire('휴학신청이 완료되었습니다.', '', 'success').then(() => {
+								formTag.submit();
+							});
 			}
 			
 		},

@@ -1,5 +1,6 @@
 package com.study.test.board.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -46,8 +47,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public List<BoardVO> getBoard(PageVO pageVO) {
-		return sqlSession.selectList("boardMapper.getBoard", pageVO);
+	public List<BoardVO> getBoard(HashMap<String, Object>map) {
+		return sqlSession.selectList("boardMapper.getBoard", map);
 	}
 	
 	@Override
@@ -89,6 +90,21 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public String getNextBoardNo() {
 		return sqlSession.selectOne("boardMapper.getNextBoardNo");
+	}
+
+	@Override
+	public void updateBoard(BoardVO boardVO) {
+		sqlSession.update("boardMapper.updateBoard", boardVO);
+	}
+
+	@Override
+	public int getBoardPw(String boardNo) {
+		return sqlSession.selectOne("boardMapper.getBoardPw", boardNo);
+	}
+
+	@Override
+	public List<BoardVO> getBoardForSearch(HashMap<String, Object> map) {
+		return sqlSession.selectList("boardMapper.getBoardForSearch", map);
 	}
 	
 }

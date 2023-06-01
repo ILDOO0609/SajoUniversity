@@ -291,7 +291,7 @@ public class StuController {
 	
 	
 	// 휴학/복학 신청 취소
-	@GetMapping("/deleteAbsence")
+	@PostMapping("/deleteAbsence")
 	public String deleteAbsence(Authentication authentication ,String stuNo) {
 		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
 		
@@ -301,7 +301,7 @@ public class StuController {
 	}
 	
 	// 복수전공 신청 취소
-	@GetMapping("/deleteMultiMajor")
+	@PostMapping("/deleteMultiMajor")
 	public String deleteMultiMajor(Authentication authentication ,String stuNo) {
 		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
 		

@@ -45,12 +45,12 @@ function applyMulti(){
 	const selectedCollNo = document.querySelector('select[name="multiMajorColl"]').value;
 	
 	if (statusContent == "") {
-		alert('복수전공 신청 사유를 입력해 주세요.');
+		Swal.fire('복수전공 신청 사유를 입력해 주세요', '', 'error');
 		return;
 	}
 	
 	if (selectedCollNo == ''){
-		alert('복수전공 할 단과대학 및 학과를 선택해 주세요.');
+		Swal.fire('복수전공 할 단과대학 및 학과를 선택해 주세요', '', 'error');
 		return;
 	}
 	
@@ -79,7 +79,10 @@ function confirmMulti() {
 	const collNo = document.querySelector('select[name="multiMajorColl"]').value;
 	const deptNo = document.querySelector('select[name="multiMajorDept"]').value;
 	
-	const formTagForSubmit = document.querySelector('#formTag');
-	formTagForSubmit.submit();
+	Swal.fire('신청이 완료되었습니다.', '', 'success').then(() => {
+		        const formTagForSubmit = document.querySelector('#formTag');
+				formTagForSubmit.submit();
+		      	});
+	
 	
 }

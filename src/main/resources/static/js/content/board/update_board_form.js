@@ -33,7 +33,7 @@ function secret(){
  }
  
  //게시글 등록
- function regBoard(){
+ function updateBoard(){
 	
 	if(document.querySelector('#secretChk').checked && document.querySelector('#secretNum').value == ''){
 		alert('비밀글 암호를 입력해주세요');

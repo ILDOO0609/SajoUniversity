@@ -5,16 +5,54 @@
 <mapper namespace="replyMapper">
 	
 <resultMap type="com.study.test.reply.vo.ReplyVO" id="reply">
-	<id		column="REPLY_NO" 			property="boardNo"/>
-	<result column="REPLY_CONTENT"		property="boardTitle"/>
-	<result column="REPLY_WRITER"		property="boardContent"/>
-	<result column="IS_PRIVATE" 		property="boardWriter"/>
-	<result column="REPLY_CREATE_DATE" 	property="boardCreateDate"/>
-	<result column="BOARD_NO" 	property="boardNo"/>
+	<id		column="REPLY_NO" 			property="replyNo"/>
+	<result column="REPLY_CONTENT"		property="replyContent"/>
+	<result column="REPLY_WRITER"		property="replyWriter"/>
+	<result column="REPLY_CREATE_DATE" 	property="replyCreateDate"/>
+	<result column="BOARD_NO" 		    property="boardNo"/>
 </resultMap>
 
-
+	<!-- 댓글 등록 -->
+	<insert id="regReply">
+		INSERT INTO BOARD_REPLY(
+			REPLY_NO
+			, REPLY_CONTENT
+			, REPLY_WRITER
+			, BOARD_NO
+		) VALUES (
+			(SELECT NVL(MAX(REPLY_NO),0)+1 FROM BOARD_REPLY)
+			, #{replyContent}
+			, #{replyWriter}
+			, #{boardNo}
+		)		
+	</insert>
 	
+	<!-- 댓글 목록 조회 -->
+	<select id="getReplyList" resultMap="reply">
+		SELECT BOARD_NO
+			, REPLY_NO
+			, REPLY_CONTENT
+			, REPLY_WRITER
+			, TO_CHAR(REPLY_CREATE_DATE, 'YYYY-MM-DD HH24:MI') REPLY_CREATE_DATE
+		FROM BOARD_REPLY
+		WHERE BOARD_NO = #{boardNo}
+		ORDER BY REPLY_NO DESC
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply">
+		DELETE BOARD_REPLY
+		WHERE REPLY_NO=#{replyNo}
+	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReply">
+		UPDATE BOARD_REPLY
+		SET 
+			REPLY_CONTENT = #{replyContent} 
+		WHERE REPLY_NO = #{replyNo}
+	</update>
+
 </mapper>
 
 

@@ -86,26 +86,70 @@
 		    , IS_NOTICE
 		    , BOARD.CATE_NO
 		    , CATE_NAME
+		    , SECRET_PW
 		FROM BOARD, BOARD_CATEGORY CATE
 		WHERE BOARD.CATE_NO = CATE.CATE_NO
-		ORDER BY BOARD_NO DESC
-		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
+		<if test="cateNo != null and cateNo != 'all'">
+		AND BOARD.CATE_NO = #{cateNo}
+		</if>
+		ORDER BY IS_NOTICE DESC, BOARD_NO DESC
+		OFFSET #{pageVO.offsetCnt} ROWS FETCH NEXT #{pageVO.displayCnt} ROWS ONLY
+	</select>
+	
+	<select id="getBoardForSearch" resultMap="board">
+		SELECT BOARD_NO
+		    , BOARD_TITLE
+		    , BOARD_WRITER
+		    , TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
+		    , BOARD_READ_CNT
+		    , REPLY_CNT
+		    , IS_SECRET
+		    , IS_NOTICE
+		    , BOARD.CATE_NO
+		    , CATE_NAME
+		    , SECRET_PW
+		FROM BOARD, BOARD_CATEGORY CATE
+		WHERE BOARD.CATE_NO = CATE.CATE_NO
+		<if test="boardListSearchVO.cateNo != null and boardListSearchVO.cateNo != 'all'">
+		AND BOARD.CATE_NO = #{boardListSearchVO.cateNo}
+		</if>
+		<if test="boardListSearchVO.selectValue!=null and boardListSearchVO.selectValue =='title'">
+		AND UPPER(BOARD_TITLE) LIKE '%'||UPPER(#{boardListSearchVO.inputValue})||'%'
+		</if>
+		<if test="boardListSearchVO.selectValue!=null and boardListSearchVO.selectValue == 'writer'">
+		AND UPPER(BOARD_WRITER) LIKE '%'||UPPER(#{boardListSearchVO.inputValue})||'%'
+		</if>
+		<if test="boardListSearchVO.checkValue !=null and boardListSearchVO.checkValue =='notSecret'">
+		AND IS_SECRET = 'N'
+		</if>
+		ORDER BY IS_NOTICE DESC, BOARD_NO DESC
+		OFFSET #{pageVO.offsetCnt} ROWS FETCH NEXT #{pageVO.displayCnt} ROWS ONLY
 	</select>
 	
 	
 	
 	<select id="getBoardDetail" resultMap="board">
-		SELECT BOARD_NO
-			, BOARD_TITLE
-			, BOARD_CONTENT
-			, BOARD_WRITER
-			, BOARD_CREATE_DATE
-			, BOARD_READ_CNT
-			, REPLY_CNT
-			, BOARD.CATE_NO
-		FROM BOARD, BOARD_CATEGORY CATE
-		WHERE BOARD.CATE_NO = CATE.CATE_NO
-		WHERE BOARD_NO = #{boardNo}
+		SELECT 
+		    BOARD.BOARD_NO,
+		    BOARD_TITLE,
+		    BOARD_CONTENT,
+		    CATE_NAME,
+		    ORIGIN_NAME,
+		    BOARD_WRITER,
+		    TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD HH:MI:SS') AS BOARD_CREATE_DATE,
+		    BOARD_READ_CNT,
+		    REPLY_CNT,
+		    BOARD.CATE_NO,
+		    COALESCE(IMG.ATTACHED_NAME, '미등록') AS ATTACHED_NAME,
+		    COALESCE(IMG.IMG_CODE, '미등록') AS IMG_CODE
+		FROM 
+		    BOARD
+		INNER JOIN 
+		    BOARD_CATEGORY CATE ON BOARD.CATE_NO = CATE.CATE_NO
+		LEFT OUTER JOIN 
+		    BOARD_IMG IMG ON BOARD.BOARD_NO = IMG.BOARD_NO
+		WHERE 
+		    BOARD.BOARD_NO = #{boardNo}
 	</select>
 	
 	<!-- 다음에 들어갈 게시판번호 조회 -->
@@ -175,9 +219,19 @@
 	<update id="updateBoard">
 		UPDATE BOARD SET 
 		BOARD_TITLE = #{boardTitle}
-		BOARD_CONTENT = #{boardContent}
+		, BOARD_CONTENT = #{boardContent}
+		, IS_NOTICE = #{isNotice}
+		, IS_SECRET = #{isSecret}
+		, SECRET_PW = #{secretPw}
+		WHERE BOARD_NO = #{boardNo}
 	</update>
-
+	
+	<!-- 비밀번호 체크 -->
+	<select id="getBoardPw" resultType="int">
+		SELECT SECRET_PW
+		FROM BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</select>
 </mapper>
 
 

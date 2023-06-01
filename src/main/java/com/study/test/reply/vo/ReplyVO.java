@@ -11,7 +11,6 @@ public class ReplyVO {
 	private int replyNo;
 	private String replyContent;
 	private String replyWriter;
-	private String isPrivate;
 	private String replyCreateDate;
 	private String boardNo;
 }

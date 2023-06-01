@@ -27,4 +27,5 @@ public class BoardVO {
 	private List<ReplyVO> replyList;
 	private BoardImgVO boardImgVO;
 	private BoardCategoryVO boardCategoryVO;
+	private String searchValue;
 }

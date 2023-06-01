@@ -374,16 +374,32 @@ public class SchoolController {
 		//승인대기조회
 		model.addAttribute("majorList", schoolService.getDeptManageList());
 		//승인완료조회
-		model.addAttribute("returnAppList", schoolService.getStatusReturnAppList());
+		model.addAttribute("majorAppList", schoolService.getDeptManageAppList());
 		//승인취소조회
-		model.addAttribute("returnDeniedList", schoolService.getStatusReturnDeniedList());
+		model.addAttribute("majorDeniedList", schoolService.getDeptManageDeniedList());
 		return "content/school/lesson/lesson_major_double";
 	}
 	
-	
-	
-	
-	
+	//수업메뉴 -> 복수전공관리 -> 승인완료처리
+	@ResponseBody
+	@PostMapping("/updateDoubleAppAjax")
+	public void updateDoubleApp(String applyNo) {
+		String stuNo = schoolService.updateDoubleSelect(applyNo);
+		DeptManageVO deptManageVo = new DeptManageVO();
+		deptManageVo.setApplyNo(applyNo);
+		deptManageVo.setStuNo(stuNo);
+		schoolService.updateDoubleApp(deptManageVo);
+	}
+	//수업메뉴 -> 복수전공관리 -> 승인취소처리
+	@ResponseBody
+	@PostMapping("/updateDoubleDeniedAjax")
+	public void updateDoubleDenied(String applyNo) {
+		String stuNo = schoolService.updateDoubleSelect(applyNo);
+		DeptManageVO deptManageVO = new DeptManageVO();
+		deptManageVO.setApplyNo(applyNo);
+		deptManageVO.setStuNo(stuNo);
+		schoolService.updateDoubleDenied(deptManageVO);
+	}
 	
 	//수업 -> 학사경고관리 페이지
 	@GetMapping("/lessonWarning")
@@ -436,10 +452,25 @@ public class SchoolController {
 		return "content/school/member/member_select_list";
 	}
 	//회원메뉴 -> 승인/취소 승인조회
-//	@ResponseBody
-//	@PostMapping("/approveOAjax")
+	@ResponseBody
+	@PostMapping("/approveOAjax")
+	public List<MemberVO> approveO(String isConfirmed) {
+		return schoolService.selectMemberAddList(isConfirmed);
+	}
+	//회원메뉴 -> 승인/취소 취소조회
+	@ResponseBody
+	@PostMapping("/approveXAjax")
+	public List<MemberVO> approveX(String isConfirmed) {
+		return schoolService.selectMemberDeniedList(isConfirmed);
+	}
 	
 	
+	//회원메뉴 -> 회원상세 모달창
+	@ResponseBody
+	@PostMapping("/getMemberModalAjax")
+	public List<MemberVO> getMemberModal(String memNo){
+		return schoolService.getMemberModal(memNo);
+	}
 	
 	
 	

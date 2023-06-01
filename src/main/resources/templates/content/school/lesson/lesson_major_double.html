@@ -107,8 +107,8 @@
 					 				</th:block>
 									<th:block th:unless="${#lists.size(majorList) == 0}">
 										<tr th:each="major : ${majorList}">
-											<td><input type="checkbox" class="form-check-input chk"></td>
-											<td>[[${major.applyNo}]]</td>
+											<td><input type="checkbox" class="form-check-input chk" th:value="${major.applyNo}"></td>
+											<td >[[${major.applyNo}]]</td>
 											<td>[[${major.stuVO.memberVO.memNo}]]</td>
 											<td>[[${major.stuVO.stuYear}]]</td>
 											<td>[[${major.stuVO.memberVO.memName}]]</td>
@@ -161,22 +161,22 @@
 									</tr>
 								</thead>
 								<tbody>
-									<th:block>
+									<th:block th:if="${#lists.size(majorAppList) == 0}">
 					 					<tr>
 					 						<td colspan="9">조회된 회원이 없습니다.</td>
 					 					</tr>
 					 				</th:block>
-									<th:block>
-										<tr>
-											<td><input type="checkbox" class="form-check-input"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td style="color: blue; font-weight: bold;"></td>
+									<th:block th:unless="${#lists.size(majorAppList) == 0}">
+										<tr th:each="major : ${majorAppList}">
+											<td><input type="checkbox" class="form-check-input chk" th:value="${major.applyNo}"></td>
+											<td >[[${major.applyNo}]]</td>
+											<td>[[${major.stuVO.memberVO.memNo}]]</td>
+											<td>[[${major.stuVO.stuYear}]]</td>
+											<td>[[${major.stuVO.memberVO.memName}]]</td>
+											<td th:value="${major.multiMajorColl}">[[${major.colleageVO.collName}]]</td>
+											<td th:value="${major.multiMajorDept}">[[${major.deptVO.deptName}]]</td>
+											<td>[[${major.applyDate}]]</td>
+											<td style="color: blue;">[[${major.processStatus}]]</td>
 										</tr>
 									</th:block>	
 								</tbody>
@@ -214,22 +214,22 @@
 									</tr>
 								</thead>
 								<tbody>
-									<th:block>
+									<th:block th:if="${#lists.size(majorDeniedList) == 0}">
 					 					<tr>
 					 						<td colspan="9">조회된 회원이 없습니다.</td>
 					 					</tr>
 					 				</th:block>
-									<th:block>
-										<tr>
-											<td><input type="checkbox" class="form-check-input"></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td style="color: red; font-weight: bold;"></td>
+									<th:block th:unless="${#lists.size(majorDeniedList) == 0}">
+										<tr th:each="major : ${majorDeniedList}">
+											<td><input type="checkbox" class="form-check-input chk" th:value="${major.applyNo}"></td>
+											<td >[[${major.applyNo}]]</td>
+											<td>[[${major.stuVO.memberVO.memNo}]]</td>
+											<td>[[${major.stuVO.stuYear}]]</td>
+											<td>[[${major.stuVO.memberVO.memName}]]</td>
+											<td th:value="${major.multiMajorColl}">[[${major.colleageVO.collName}]]</td>
+											<td th:value="${major.multiMajorDept}">[[${major.deptVO.deptName}]]</td>
+											<td>[[${major.applyDate}]]</td>
+											<td style="color: red;">[[${major.processStatus}]]</td>
 										</tr>
 									</th:block>	
 								</tbody>
@@ -244,7 +244,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<script type="text/javascript" src="/js/content/school/academic.js"></script>
+	<script type="text/javascript" src="/js/content/school/lesson.js"></script>
 </th:block>
 
 </html>

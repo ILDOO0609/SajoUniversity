@@ -48,6 +48,7 @@ function updateDoubleDenied(){
 		return
 	}
 	const applyNo = document.querySelector(".chk:checked").value;
+	console.log(applyNo);
 	
 	//ajax start
 	$.ajax({
@@ -57,7 +58,6 @@ function updateDoubleDenied(){
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'applyNo': applyNo}, //필요한 데이터
 	   	success: function(result) {
-		
 			swal("승인 취소", "승인취소 되었습니다.", "success",{button: "확인"})
 			.then((result) => {
 				location.href = `/school/lessonMajorDouble`;
@@ -69,6 +69,5 @@ function updateDoubleDenied(){
 		}
 	});
 	//ajax end
-
 
 }

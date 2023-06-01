@@ -653,7 +653,7 @@
 		ORDER BY REG_DATE DESC
 	</select>
 	
-	<select id="selectMemberCanList" resultMap="memberMapper.member">
+	<select id="selectMemberAddList" resultMap="memberMapper.member">
 		SELECT MEM_NO
 			, MEM_NAME
 			, DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
@@ -667,7 +667,7 @@
 		ORDER BY REG_DATE DESC
 	</select>
 	
-	<select id="selectMemberCanTList" resultMap="memberMapper.member">
+	<select id="selectMemberDeniedList" resultMap="memberMapper.member">
 		SELECT MEM_NO
 			, MEM_NAME
 			, DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
@@ -680,6 +680,49 @@
 		WHERE IS_CONFIRMED = 'N'
 		ORDER BY REG_DATE DESC
 	</select>
+	
+	<!-- 회원클릭시 상세 모달창 -->
+	<select id="getMemberModal" resultMap="memberMapper.member">
+		SELECT MEM.MEM_NO
+		    , MEM_NAME
+		    , MEM_GENDER
+		    , MEM_TELL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , MEM_ROLE
+		    , TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+		    , MEM_EMAIL
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+		    , IS_CONFIRMED
+		    , MEM_IMAGE
+		FROM MEMBER MEM
+		WHERE MEM.MEM_NO = #{memNo}
+	</select>
+	
+<!-- 	
+	<select id="getMemberModal" resultMap="memberMapper.member">
+		SELECT MEM.MEM_NO
+		    , MEM_NAME
+		    , MEM_GENDER
+		    , MEM_TELL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , MEM_ROLE
+		    , MEM_BIRTHDAY
+		    , MEM_EMAIL
+		    , REG_DATE
+		    , IS_CONFIRMED
+		    , MEM_IMAGE
+		    , ST.COLL_NO
+		    , COLL_NAME
+		    , ST.DEPT_NO
+		    , DEPT_NAME
+		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM
+		WHERE ST.COLL_NO = COLL.COLL_NO
+		AND ST.DEPT_NO = DP.DEPT_NO
+		AND ST.MEM_NO = MEM.MEM_NO
+		AND MEM.MEM_NO = #{memNo}
+	</select> -->
 	
 	
 </mapper>

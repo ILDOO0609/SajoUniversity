@@ -17,15 +17,15 @@
 					<h2><a href="/school/memberSelectList">신규회원 승인/취소 전체조회</a></h2>
 				</div>
 				<div class="col-3 d-grid">
-					<button type="button" class="btn btn-primary" id="approveO_btn" onclick="approveO();">승인완료 조회</button>
+					<button type="button" class="btn btn-primary" id="approveO_btn" onclick="approveO('Y');">승인완료 조회</button>
 				</div>
 				<div class="col-3 d-grid">
-					<button type="button" class="btn btn-danger" id="approveX_btn" onclick="approveX();">승인취소 조회</button>
+					<button type="button" class="btn btn-danger" id="approveX_btn" onclick="approveX('N');">승인취소 조회</button>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
-					<table class="table" id="approveTable">
+					<table class="table table-hover" id="approveTable">
 						<thead>
 							<tr>
 								<td>No(ID)</td>
@@ -43,9 +43,11 @@
 								<td class="memName">[[${member.memName}]]</td>
 								<td class="memRole">[[${member.memRole}]]</td>
 								<td class="memBirthday">[[${member.memBirthday}]]</td>
-								<td class="memTell">[[${member.memTell}]]</td>
+								<td class="memTell">
+									<span style="cursor: pointer;" th:onclick="openModal([[${member.memNo}]]);">[[${member.memTell}]]</span>
+								</td>
 								<td class="regDate">[[${member.regDate}]]</td>
-								<td id="isConfirmed">[[${member.isConfirmed}]]</td>
+								<td class="isConfirmed">[[${member.isConfirmed}]]</td>
 							</tr>
 						</tbody>
 					</table>
@@ -53,6 +55,28 @@
 			</div>			
 		</div>
 	</div>
+	
+	
+	<!-- Modal -->
+	<div class="modal fade modal-lg" id="memberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">회원 상세정보</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+				    ...
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
 	
 </th:block>
 

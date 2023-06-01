@@ -141,14 +141,16 @@ public interface SchoolService {
 	void insertEmp(StuVO stuVO);
 	
 	
-	//승인/취소 조회
+	//승인/취소 전체조회
 	List<MemberVO> selectMemberTotalList();
+	//승인/취소 조회 -> 승인완료 조회
+	List<MemberVO> selectMemberAddList(String isConfirmed);
+	//승인/취소 조회 -> 승인취소 조회
+	List<MemberVO> selectMemberDeniedList(String isConfirmed);
 	
 	
-	
-	
-	
-	
+	//회원클릭시 회원상에 모달창
+	List<MemberVO> getMemberModal(String memNo);
 	
 	
 }

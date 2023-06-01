@@ -289,10 +289,26 @@ public class SchoolServiceImpl implements SchoolService{
 		sqlSession.insert("schoolMapper.insertEmp", stuVO);
 	}
 	
-	//승인/취소 조회
+	//승인/취소 전체조회
 	@Override
 	public List<MemberVO> selectMemberTotalList() {
 		return sqlSession.selectList("schoolMapper.selectMemberTotalList");
+	}
+	//승인/취소 조회 -> 승인완료 조회
+	@Override
+	public List<MemberVO> selectMemberAddList(String isConfirmed) {
+		return sqlSession.selectList("schoolMapper.selectMemberAddList", isConfirmed);
+	}
+	//승인/취소 조회 -> 승인취소 조회
+	@Override
+	public List<MemberVO> selectMemberDeniedList(String isConfirmed) {
+		return sqlSession.selectList("schoolMapper.selectMemberDeniedList", isConfirmed);
+	}
+	
+	//회원클릭시 회원상에 모달창
+	@Override
+	public List<MemberVO> getMemberModal(String memNo) {
+		return sqlSession.selectList("schoolMapper.getMemberModal", memNo);
 	}
 
 	

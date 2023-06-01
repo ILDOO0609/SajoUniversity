@@ -34,21 +34,21 @@ function updatePosition(memNo) {
 function changeColl(coll){
 	const coll_no = coll.value;
 	
-		//ajax start
-		$.ajax({
-			url: '/school/changeCollAjax', //요청경로
-			type: 'post',
-			async: true,
-			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-			data: {'collNo':coll_no}, //필요한 데이터
-			success: function(result) {
-				console.log(result);
-				drawDeptSelectbox(result);
-			},
-			error: function() {
-				alert('실패');
-			}
-		});
+	//ajax start
+	$.ajax({
+		url: '/school/changeCollAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'collNo':coll_no}, //필요한 데이터
+		success: function(result) {
+			console.log(result);
+			drawDeptSelectbox(result);
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
 	//ajax end
 }
 
@@ -71,8 +71,8 @@ function drawDeptSelectbox(deptList){
 
 
 //회원메뉴 -> 승인/취소조회 -> 승인완료 조회
-function approveO(){
-	
+function approveO(isConfirmed){
+	console.log(isConfirmed);
 	
 	//ajax start
 	$.ajax({
@@ -80,9 +80,36 @@ function approveO(){
 		type: 'post',
 		async: true,
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		data: {'data': data}, //필요한 데이터
+		data: {'isConfirmed': isConfirmed}, //필요한 데이터
 		success: function(result) {
-
+			console.log(result);
+			const tbodyTag = document.querySelector('#approveTable > tbody');
+			tbodyTag.replaceChildren();
+			
+			let str = '';
+			
+			if(result.length == 0){
+					str += `<tr>`;
+					str += `<td colspan="6">조회된 회원이 없습니다.</td>`;
+					str += `</tr>`;
+			}
+			else{
+				for(const app of result){
+					str += `<tr>`;
+					str += `<td>${app.memNo}</td>`;
+					str += `<td>${app.memName}</td>`;
+					str += `<td>${app.memRole}</td>`;
+					str += `<td>${app.memBirthday}</td>`;
+					str += `<td>${app.memTell}</td>`;
+					str += `<td>${app.regDate}</td>`;
+					str += `<td>${app.isConfirmed}</td>`;
+					str += `</tr>`;
+				}
+				
+			}
+			tbodyTag.insertAdjacentHTML('afterbegin', str);
+			
+			
 		},
 		error: function() {
 			alert('실패');
@@ -93,6 +120,135 @@ function approveO(){
 	
 }
 //회원메뉴 -> 승인/취소조회 -> 승인취소 조회
-function approveX(){
+function approveX(isConfirmed){
+	
+	//ajax start
+	$.ajax({
+		url: '/school/approveXAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'isConfirmed': isConfirmed}, //필요한 데이터
+		success: function(result) {
+			console.log(result);
+			const tbodyTag = document.querySelector('#approveTable > tbody');
+			tbodyTag.replaceChildren();
+			
+			let str = '';
+			
+			if(result.length == 0){
+					str += `<tr>`;
+					str += `<td colspan="6">조회된 회원이 없습니다.</td>`;
+					str += `</tr>`;
+			}
+			else{
+				for(const app of result){
+					str += `<tr>`;
+					str += `<td>${app.memNo}</td>`;
+					str += `<td>${app.memName}</td>`;
+					str += `<td>${app.memRole}</td>`;
+					str += `<td>${app.memBirthday}</td>`;
+					str += `<td>${app.memTell}</td>`;
+					str += `<td>${app.regDate}</td>`;
+					str += `<td>${app.isConfirmed}</td>`;
+					str += `</tr>`;
+				}
+				
+			}
+			tbodyTag.insertAdjacentHTML('afterbegin', str);
+			
+			
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+}
+
+
+//회원 클릭시 상세창 모달 실행
+function openModal(memNo){
+	
+	//ajax start
+	$.ajax({
+		url: '/school/getMemberModalAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'memNo':memNo}, //필요한 데이터
+		success: function(result) {
+			console.log(result);
+			
+			const content_div = document.querySelector('#memberModal .modal-body');
+			content_div.replaceChildren();	
+			let str = '';
+			
+			str += `<div class="row">`;
+			str += `<div class="col">`;
+			str += `<table class="table">`;
+			str += `<colgroup>`;
+			str += `<col width="*%">`;
+			str += `<col width="15%">`;
+			str += `<col width="15%">`;
+			str += `<col width="15%">`;
+			str += `<col width="25%">`;
+			str += `</colgroup>`;
+			
+			
+			result.forEach(function(member, index){
+				str += `<tr>`;
+				str += `<td rowspan="5" ><img th:src="@{'/upload/' + ${member.memImage}}" style="width: 100%; height: 100%"></td>`;
+				str += `<td>성명</td>`;
+				str += `<td>${member.memName}</td>`;
+				str += `<td>학번</td>	`;
+				str += `<td>${member.memNo}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>생년월일</td>`;
+				str += `<td>${member.memBirthday}</td>`;
+				str += `<td>신규가입일</td>`;
+				str += `<td>${member.regDate}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>이메일</td>`;
+				str += `<td>${member.memEmail}</td>`;
+				str += `<td>전화번호</td>`;
+				str += `<td>${member.memTell}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>주소</td>`;
+				str += `<td colspan="3">${member.memAddr  + ' ' +  member.memAddrDetail}</td>`;
+				str += `</tr>`;
+			});
+			
+			
+			
+			content_div.insertAdjacentHTML('afterbegin', str);
+			
+			const modal = new bootstrap.Modal('#memberModal');
+			modal.show();
+		
+		
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+	
+	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+

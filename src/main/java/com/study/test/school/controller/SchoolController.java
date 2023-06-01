@@ -380,30 +380,6 @@ public class SchoolController {
 		return "content/school/lesson/lesson_major_double";
 	}
 	
-	//수업메뉴 -> 복수전공관리 -> 승인완료처리
-	@ResponseBody
-	@PostMapping("/updateDoubleAppAjax")
-	public void updateDoubleApp(String applyNo) {
-		schoolService.updateDoubleSelect(applyNo);
-		DeptManageVO deptManageVo = new DeptManageVO();
-		deptManageVo.setApplyNo(applyNo);
-		schoolService.updateDoubleApp(deptManageVo);
-	}
-	//수업메뉴 -> 복수전공관리 -> 승인취소처리
-	@ResponseBody
-	@PostMapping("/updateDoubleAppAjax")
-	public void updateDoubleDenied(String applyNo) {
-		schoolService.updateDoubleSelect(applyNo);
-		DeptManageVO deptManageVo = new DeptManageVO();
-		deptManageVo.setApplyNo(applyNo);
-		schoolService.updateDoubleDenied(deptManageVo);
-	}
-	
-	
-	
-	
-	
-	
 	
 	
 	

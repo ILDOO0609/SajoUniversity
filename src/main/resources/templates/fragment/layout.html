@@ -15,11 +15,13 @@
 <!-- header에 적용되는 css -->
 <link rel="stylesheet" href="/css/fragment/header.css">
 
-<!-- footer에 적용되는 css -->
-<link rel="stylesheet" href="/css/fragment/footer.css">
-
 <!-- content 페이지가 열릴때 같이 열리는 css -->
 <th:block layout:fragment="content_css"></th:block>
+
+<!-- footer에 적용되는 css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="/css/footer.css">
+
 </head>
 <body>
 <div class="container">
@@ -28,11 +30,22 @@
 			<th:block th:replace="~{fragment/header::headerFragment}"></th:block>
 		</div>
 	</div>
-	<div class="row">
+</div>
+
+	<div class="content-row">
 		<div class="col">
 			<th:block layout:fragment="content"></th:block>
 		</div>
 	</div>
+	
+<div>
+
+	<div class="row footer-row">
+    	<div class="col">
+			<th:block th:replace="~{fragment/footer::footerFragment}"></th:block>
+		</div>
+	</div>
+	
 </div>
 
 

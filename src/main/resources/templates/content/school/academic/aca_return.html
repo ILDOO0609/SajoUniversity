@@ -104,7 +104,7 @@
 					 				</th:block>
 									<th:block th:unless="${#lists.size(returnList) == 0}">
 										<tr th:each="status, state : ${returnList}">
-											<td><input type="checkbox" class="form-check-input chk"></td>
+											<td><input type="checkbox" class="form-check-input chk" th:value="${status.statusNo}"></td>
 											<td>[[${status.statusNo}]]</td>
 											<td>[[${status.stuVO.memberVO.memName}]]</td>
 											<td>[[${status.stuVO.memberVO.memNo}]]</td>

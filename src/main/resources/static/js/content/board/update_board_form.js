@@ -32,7 +32,7 @@ function secret(){
       object.value = object.value.slice(0, 4);
  }
  
- //게시글 등록
+ //게시글 수정
  function updateBoard(){
 	
 	if(document.querySelector('#secretChk').checked && document.querySelector('#secretNum').value == ''){
@@ -40,6 +40,15 @@ function secret(){
 		return;
 	}
 	
-	document.querySelector('#formTag').submit();
+	Swal.fire({
+        icon: 'success',
+        title: '수정완료',
+        text: '글이 수정 되었습니다.!',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.querySelector('#formTag').submit();
+        }
+    })
+	
 }
  

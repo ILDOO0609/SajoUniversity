@@ -1,5 +1,7 @@
 package com.study.test.reply.vo;
 
+import com.study.test.member.vo.MemberVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,4 +15,5 @@ public class ReplyVO {
 	private String replyWriter;
 	private String replyCreateDate;
 	private String boardNo;
+	private MemberVO memberVO;
 }

@@ -30,8 +30,8 @@ public class ReplyController {
 		
 	//댓글 삭제
 	@GetMapping("/deleteReply")
-	public String deleteReply(int replyNo, String boardNo) {
-		replyService.deleteReply(replyNo);
+	public String deleteReply(ReplyVO replyVO, String boardNo) {
+		replyService.deleteReply(replyVO);
 		return "redirect:/board/boardDetail?boardNo="+boardNo;
 	}
 	

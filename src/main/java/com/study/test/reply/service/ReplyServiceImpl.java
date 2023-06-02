@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.study.test.reply.vo.ReplyVO;
 
@@ -15,8 +16,10 @@ public class ReplyServiceImpl implements ReplyService{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void regReply(ReplyVO replyVO) {
 		sqlSession.insert("replyMapper.regReply", replyVO);
+		sqlSession.update("boardMapper.increaseReplyCnt", replyVO);
 	}
 
 	@Override
@@ -25,8 +28,10 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public void deleteReply(int replyNo) {
-		sqlSession.delete("replyMapper.deleteReply", replyNo);
+	@Transactional(rollbackFor = Exception.class)
+	public void deleteReply(ReplyVO replyVO) {
+		sqlSession.delete("replyMapper.deleteReply", replyVO);
+		sqlSession.update("boardMapper.decreaseReplyCnt", replyVO);
 	}
 
 	@Override

@@ -10,6 +10,7 @@
 </th:block>
 
 <th:block layout:fragment="content">
+<div class="container">
 복수전공신청
 <form id="formTag" action="/stu/confirmMulti" method="post">
 <input type="hidden" name="stuYear" th:value="${stuInfo.stuYear}">
@@ -181,6 +182,7 @@
 </div>
 
 
+</div>
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->

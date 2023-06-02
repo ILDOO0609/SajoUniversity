@@ -13,7 +13,7 @@ public interface ReplyService {
 	List<ReplyVO> getReplyList(String boardNo);
 	
 	//댓글 삭제
-	void deleteReply(int replyNo);
+	void deleteReply(ReplyVO replyVO);
 	
 	//댓글 수정
 	void updateReply(ReplyVO replyVO);

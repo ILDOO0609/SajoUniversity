@@ -89,7 +89,7 @@ public class BoardController {
 	//전체 게시판 목록 페이지
 	@GetMapping("/boardList")
 	public String boardList(BoardVO boardVO, Model model, PageVO pageVO) {
-
+			
 		// 전체 데이터 수 조회
 		pageVO.setTotalDataCnt(boardService.getBoardListCnt());
 		pageVO.setPageInfo();
@@ -223,14 +223,6 @@ public class BoardController {
 		return "redirect:/board/boardList";
 	}
 
-	//게시글 비밀번호체크
-	@GetMapping("/checkPw")
-	public String checkPw(String boardNo, Model model) {
-		model.addAttribute("boardPw", boardService.getBoardPw(boardNo));
-		model.addAttribute("boardNo", boardNo);
-		return "content/board/check_pw";
-	}
-	
 	//게시글 검색
 	@ResponseBody
 	@PostMapping("/searchBoardAjax")

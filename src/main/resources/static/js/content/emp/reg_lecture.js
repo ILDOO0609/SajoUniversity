@@ -220,6 +220,17 @@ function change(){
 //강의 등록
 function regLecture(){
 	
+	 // 파일 입력 필드를 참조
+    const pdf_file = document.querySelector('pdfFile');
+
+    // 파일 입력 필드의 값이 비어있는지 확인
+    if (pdf_file.value == '') {
+        // 파일이 선택되지 않았을 경우, 경고 메시지 표시
+        alert('강의자료는 필수입니다.');
+        return ;
+    } 
+
+
 	//유효성 검사 진행
 	const isValid = regValidate();
 	
@@ -228,7 +239,7 @@ function regLecture(){
 	}
 	
 	//회원가입 진행
-	document.querySelector('#regForm').submit();
+	//document.querySelector('#regForm').submit();
 }
 
 //오류 메시지 div 전체 제거

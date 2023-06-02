@@ -17,8 +17,8 @@ function lecScheduleAjax() {
             
 			let str = '';          
 			
-			for(let t = 1; t<9; t++){
-				str += `<tr style="height: 40px;">`;  
+			for(let t = 1; t<10; t++){
+				str += `<tr style="height: 80px;">`;  
 				str += `	<td>`;  
 				str += `    	${t+'교시'}`;  
 				str += `    </td> `;  

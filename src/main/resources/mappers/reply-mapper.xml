@@ -10,6 +10,7 @@
 	<result column="REPLY_WRITER"		property="replyWriter"/>
 	<result column="REPLY_CREATE_DATE" 	property="replyCreateDate"/>
 	<result column="BOARD_NO" 		    property="boardNo"/>
+	<association property="memberVO" resultMap="memberMapper.member"></association>
 </resultMap>
 
 	<!-- 댓글 등록 -->
@@ -33,9 +34,11 @@
 			, REPLY_NO
 			, REPLY_CONTENT
 			, REPLY_WRITER
+			, MEM_NAME
 			, TO_CHAR(REPLY_CREATE_DATE, 'YYYY-MM-DD HH24:MI') REPLY_CREATE_DATE
-		FROM BOARD_REPLY
+		FROM BOARD_REPLY REPLY, MEMBER
 		WHERE BOARD_NO = #{boardNo}
+		AND MEMBER.MEM_NO = REPLY.REPLY_WRITER
 		ORDER BY REPLY_NO DESC
 	</select>
 	

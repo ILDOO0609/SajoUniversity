@@ -1,0 +1,33 @@
+.active{
+	color : white;
+	background-color: #9DB2BF;
+}
+.col-6, .col-3 {
+    margin: 0px;
+    padding: 0px;
+}
+h{
+	text-align: center;
+	font-weight: bold;
+}
+#searchRow{
+	margin: 0 auto; 
+	width: 60%;
+}
+#searchCheck{
+	margin-right: 5px; 
+	margin-bottom: 5px;
+}
+#searchSelect{
+	width: 130px;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	border-radius: 0px;
+}
+#searchInput{
+	width:250px; 
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+#searchBtn{
+	border: 1px solid rgba(0, 0, 0, 0.5); 
+	border-radius: 0px;
+}

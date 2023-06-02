@@ -123,8 +123,6 @@
 
 
 
-
-
 <!-- 교수 -->
 <div sec:authorize="hasRole('ROLE_pro')">
  <nav class="navbar navbar-dark bg-dark fixed-top">
@@ -140,24 +138,26 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav flex-column">
-          <li class="nav-item">
+         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/member/main">Home</a>
           </li>
+	      
+	          <li class="nav-item">
+	            <a class="nav-link" href="/emp/regLecture">강의 등록</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="/emp/lecSchedule">강의 시간표</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="/emp/lectureList">강의 리스트</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="/emp/regScore">성적등록</a>
+	          </li>
+	          
           
-          <li class="nav-item">
-            <a class="nav-link" href="/emp/regLecture">강의 등록</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/emp/lecSchedule">강의 시간표</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/emp/lectureList">강의 리스트</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/emp/regScore">성적등록</a>
-          </li>
-        </ul>
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               게시판
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
@@ -182,6 +182,16 @@
               <li><a class="dropdown-item" href="/member/map">지도 및 로드뷰</a></li>
               <!--<li><a class="dropdown-item" href="#" onclick="openPopup();">길찾기</a></li>  -->
             </ul>
+            
+			
+            
+            
+          </li>
+        
+        
+       
+     
+        </ul>
         <form class="d-flex mt-3" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-light" type="submit">Search</button>

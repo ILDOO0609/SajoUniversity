@@ -360,8 +360,8 @@
 	</update>
 	
 	<!-- 휴학관리 회원 모달 -->
-	<select id="checkLeaveModal" resultMap="stuMapper.stu">
-		SELECT STU_NO
+	<select id="checkLeaveModal" resultMap="stuMapper.status">
+		SELECT ST.STU_NO
 		    , STU_YEAR
 		    , STU_SEM
 		    , DECODE(STU_STATUS, '1', '재학중', '2','휴학중', '3', '제적') STU_STATUS
@@ -379,11 +379,14 @@
 		    , MEM_EMAIL
 		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 		    , MEM_IMAGE
-		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM
+            , STATUS_CONTENT
+            , STATUS_NO
+		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM, STATUS_INFO SI
 		WHERE ST.COLL_NO = COLL.COLL_NO
+        AND ST.STU_NO = SI.STU_NO
 		AND ST.DEPT_NO = DP.DEPT_NO
 		AND ST.MEM_NO = MEM.MEM_NO
-		AND STU_NO = #{stuNo}
+		AND STATUS_NO = #{statusNo}
 	</select>
 
 
@@ -512,7 +515,34 @@
 		WHERE STU_NO = #{stuNo}
 	</update>
 	
-	
+	<!-- 복학관리 회원 모달 -->
+	<select id="checkReturnModal" resultMap="stuMapper.status">
+		SELECT ST.STU_NO
+		    , STU_YEAR
+		    , STU_SEM
+		    , DECODE(STU_STATUS, '1', '재학중', '2','휴학중', '3', '제적') STU_STATUS
+		    , ST.MEM_NO
+		    , MEM_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , DP.DEPT_NO
+		    , DEPT_NAME
+		    , DECODE(MEM_GENDER, 'M', '남', 'F', '여') MEM_GENDER
+		    , MEM_TELL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+		    , MEM_EMAIL
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+		    , MEM_IMAGE
+            , STATUS_NO
+		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM, STATUS_INFO SI
+		WHERE ST.COLL_NO = COLL.COLL_NO
+        AND ST.STU_NO = SI.STU_NO
+		AND ST.DEPT_NO = DP.DEPT_NO
+		AND ST.MEM_NO = MEM.MEM_NO
+		AND STATUS_NO = #{statusNo}
+	</select>
 	
 	
 	

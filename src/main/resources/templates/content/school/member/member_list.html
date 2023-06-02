@@ -7,7 +7,7 @@
 <th:block layout:fragment="content">
 	<div class="container">
 		<span style="font-size: 35px;">신규회원 리스트</span>
-		<span class="col" style="font-size: 0.8em; color: red;">해당 회원 클릭시 회원상세창이 열립니다.</span>
+		<span class="col" style="font-size: 0.8em; color: red;">해당 회원 No(ID)클릭시 회원상세창이 열립니다.</span>
 		<div class="row">
 			<div class="col">
 				<table class="table" id="memberTable">
@@ -29,8 +29,8 @@
 		 					</tr>
 		 				</th:block>
 		 				<th:block th:unless="${#lists.size(memberList) == 0}">
-							<tr th:each="member : ${memberList}" style="cursor: pointer;" th:onclick="openModal([[${member.memNo}]]);">
-								<td>
+							<tr th:each="member : ${memberList}">
+								<td style="cursor: pointer;" th:onclick="openModal([[${member.memNo}]]);">
 									[[${member.memNo}]]
 									<input type="hidden" id="memNo" th:value="${member.memNo}">
 								</td>

@@ -93,7 +93,9 @@ public interface SchoolService {
 	//학적변동 -> 휴학신청 승인취소
 	void updateLeaveDenied(StatusInfoVO statusInfoVO);
 	
-		
+	//학적변동 -> 휴학신청 -> 상세모달
+	List<StuVO> checkLeaveModal(String statusNo);
+	
 	
 	//학적변동 -> 복학관리 대기조회
 	List<StatusInfoVO> getStatusReturnList();
@@ -109,7 +111,8 @@ public interface SchoolService {
 	void updateReturnApp(StatusInfoVO statusInfoVO);
 	//학적변동 -> 복학승인 승인취소
 	void updateReturnDenied(StatusInfoVO statusInfoVO);
-	
+	//학적변동 -> 복학관리 -> 회원클릭시 모달창
+	List<StuVO> checkReturnModal(String statusNo);
 
 	
 // -------수업메뉴 ------------------------------------------------------	
@@ -143,7 +146,6 @@ public interface SchoolService {
 	//신규회원 업데이트 정보인서트 
 	void insertStu(StuVO stuVO);
 	void insertEmp(StuVO stuVO);
-	
 	
 	//승인/취소 전체조회
 	List<MemberVO> selectMemberTotalList();

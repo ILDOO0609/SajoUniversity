@@ -215,17 +215,8 @@
 		AND ST.COLL_NO = COLL.COLL_NO
 		AND MB.MEM_NO = ST.MEM_NO
 		AND NOW_STATUS = 'E'
-		AND ING_STATUS = 'I'
 		AND AFTER_STATUS ='A'
-		<if test='searchFromDate != null and !searchFromDate.equals("")'>
-		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate} 
-		</if>
-		<if test='searchFromDate != null and !searchToDate.equals("")'>
-		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
-		</if>
-		<if test='searchValue != null and !searchValue.equals("")'>
-		AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
-		</if>
+		AND ING_STATUS = 'I'
 	</select>
 	
 	<!-- 휴학관리 승인 조회-->
@@ -249,9 +240,9 @@
 		AND ST.DEPT_NO = DE.DEPT_NO
 		AND ST.COLL_NO = COLL.COLL_NO
 		AND MB.MEM_NO = ST.MEM_NO
+		AND NOW_STATUS = 'A'
+		AND AFTER_STATUS ='A'
 		AND ING_STATUS = 'P'
-		AND AFTER_STATUS ='E'
-		AND NOW_STATUS = 'E'
 	</select>
 	
 	<!-- 휴학관리 취소 조회-->
@@ -275,9 +266,9 @@
 		AND ST.DEPT_NO = DE.DEPT_NO
 		AND ST.COLL_NO = COLL.COLL_NO
 		AND MB.MEM_NO = ST.MEM_NO
-		AND ING_STATUS = 'R'
-		AND AFTER_STATUS = 'E' 
 		AND NOW_STATUS = 'E' 
+		AND AFTER_STATUS = 'E' 
+		AND ING_STATUS = 'R'
 	</select>
 	
 	
@@ -349,9 +340,9 @@
 		AND ST.DEPT_NO = DE.DEPT_NO
 		AND ST.COLL_NO = COLL.COLL_NO
 		AND MB.MEM_NO = ST.MEM_NO
-		AND ING_STATUS = 'I'
 		AND NOW_STATUS = 'A'
 		AND AFTER_STATUS = 'E'
+		AND ING_STATUS = 'I'
 	</select>
 	
 	
@@ -376,9 +367,9 @@
 		AND ST.DEPT_NO = DE.DEPT_NO
 		AND ST.COLL_NO = COLL.COLL_NO
 		AND MB.MEM_NO = ST.MEM_NO
-		AND ING_STATUS = 'P'
 		AND NOW_STATUS = 'E'
 		AND AFTER_STATUS = 'E'
+		AND ING_STATUS = 'P'
 	</select>
 	
 	<!-- 복학관리 취소 조회-->
@@ -402,9 +393,9 @@
 		AND ST.DEPT_NO = DE.DEPT_NO
 		AND ST.COLL_NO = COLL.COLL_NO
 		AND MB.MEM_NO = ST.MEM_NO
-		AND ING_STATUS = 'R'
 		AND NOW_STATUS = 'A'
 		AND AFTER_STATUS = 'A'
+		AND ING_STATUS = 'R'
 	</select>
 	
 	
@@ -456,6 +447,122 @@
 	
 	
 	
+	
+	
+	
+	
+	<!-- 수업메뉴 -> 복수전공 관리 -> 전체조회 -->
+	<select id="getDeptManageList" resultMap="stuMapper.deptManage">
+		SELECT APPLY_NO
+			, TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') APPLY_DATE
+			, DECODE(PROCESS_STATUS, 'I', '승인대기', 'P', '승인완료', 'R', '승인취소') AS PROCESS_STATUS
+			, STU.STU_YEAR
+			, STU.STU_SEM
+			, STU.STU_NO
+			, TO_CHAR(APPROVAL_DATE, 'YYYY-MM-DD') APPROVAL_DATE
+			, MULTI_MAJOR_COLL
+			, MULTI_MAJOR_DEPT
+			, STU.COLL_NO
+			, STU.DEPT_NO
+			, COLL.COLL_NAME
+			, DEPT.DEPT_NAME
+			, MEM_NAME
+			, STU.MEM_NO
+		FROM DEPT_MANAGE, STU, COLLEAGE COLL, DEPT, MEMBER MEM
+		WHERE PROCESS_STATUS = 'I'
+		AND MEM.MEM_NO = STU.MEM_NO
+		AND STU.STU_NO = DEPT_MANAGE.STU_NO
+		AND COLL.COLL_NO = DEPT_MANAGE.MULTI_MAJOR_COLL
+		AND DEPT.DEPT_NO = DEPT_MANAGE.MULTI_MAJOR_DEPT
+	</select>
+	<!-- 수업메뉴 -> 복수전공 관리 -> 승인완료조회 -->
+	<select id="getDeptManageAppList" resultMap="stuMapper.deptManage">
+		SELECT APPLY_NO
+			, TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') APPLY_DATE
+			, DECODE(PROCESS_STATUS, 'I', '승인대기', 'P', '승인완료', 'R', '승인취소') AS PROCESS_STATUS
+			, STU.STU_YEAR
+			, STU.STU_SEM
+			, STU.STU_NO
+			, TO_CHAR(APPROVAL_DATE, 'YYYY-MM-DD') APPROVAL_DATE
+			, MULTI_MAJOR_COLL
+			, MULTI_MAJOR_DEPT
+			, STU.COLL_NO
+			, STU.DEPT_NO
+			, COLL.COLL_NAME
+			, DEPT.DEPT_NAME
+			, MEM_NAME
+			, STU.MEM_NO
+		FROM DEPT_MANAGE, STU, COLLEAGE COLL, DEPT, MEMBER MEM
+		WHERE PROCESS_STATUS = 'P'
+		AND MEM.MEM_NO = STU.MEM_NO
+		AND STU.STU_NO = DEPT_MANAGE.STU_NO
+		AND COLL.COLL_NO = DEPT_MANAGE.MULTI_MAJOR_COLL
+		AND DEPT.DEPT_NO = DEPT_MANAGE.MULTI_MAJOR_DEPT
+	</select>
+	<!-- 수업메뉴 -> 복수전공 관리 -> 승인취소조회 -->
+	<select id="getDeptManageDeniedList" resultMap="stuMapper.deptManage">
+		SELECT APPLY_NO
+			, TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') APPLY_DATE
+			, DECODE(PROCESS_STATUS, 'I', '승인대기', 'P', '승인완료', 'R', '승인취소') AS PROCESS_STATUS
+			, STU.STU_YEAR
+			, STU.STU_SEM
+			, STU.STU_NO
+			, TO_CHAR(APPROVAL_DATE, 'YYYY-MM-DD') APPROVAL_DATE
+			, MULTI_MAJOR_COLL
+			, MULTI_MAJOR_DEPT
+			, STU.COLL_NO
+			, STU.DEPT_NO
+			, COLL.COLL_NAME
+			, DEPT.DEPT_NAME
+			, MEM_NAME
+			, STU.MEM_NO
+		FROM DEPT_MANAGE, STU, COLLEAGE COLL, DEPT, MEMBER MEM
+		WHERE PROCESS_STATUS = 'R'
+		AND MEM.MEM_NO = STU.MEM_NO
+		AND STU.STU_NO = DEPT_MANAGE.STU_NO
+		AND COLL.COLL_NO = DEPT_MANAGE.MULTI_MAJOR_COLL
+		AND DEPT.DEPT_NO = DEPT_MANAGE.MULTI_MAJOR_DEPT
+	</select>
+	
+	<!-- 복수전공관리 신청회원 조회 -->
+	<select id="updateDoubleSelect" resultType="String">
+		SELECT STU_NO
+		FROM DEPT_MANAGE
+		WHERE APPLY_NO = #{applyNo}
+	</select>
+	
+	<!-- 복수전공관리 신청회원 승인완료 -->
+	<update id="updateDoubleApp">
+		UPDATE DEPT_MANAGE
+		SET PROCESS_STATUS = 'P'
+			, APPROVAL_DATE = SYSDATE
+		WHERE APPLY_NO = #{applyNo}
+	</update>
+	
+	<!-- 복수전공관리 신청회원 승인취소 -->
+	<update id="updateDoubleDenied">
+		UPDATE DEPT_MANAGE
+		SET PROCESS_STATUS = 'R'
+			, APPROVAL_DATE = SYSDATE
+		WHERE APPLY_NO = #{applyNo}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!--회원메뉴 회원조회 -->
 	<select id="selectMemberList" resultMap="memberMapper.member">
 		SELECT MEM_NO
@@ -498,7 +605,7 @@
 	</update>
 	
 	<insert id="insertStu">
-		INSERT INTO STU(
+		INSERT INTO STU (
 			STU_NO
 			, MEM_NO
 		    , STU_YEAR
@@ -512,7 +619,7 @@
          	, #{memNo}
          	, '1학년'
 		    , 1
-		    , 1
+		    , '1'
 		    , #{collNo}
 		    , #{deptNo}
 		)
@@ -532,8 +639,90 @@
 		)
 	</insert>	
 	
+	<!-- 회원메뉴 -> 신규회원 승인/취소 조회 -->
+	<select id="selectMemberTotalList" resultMap="memberMapper.member">
+		SELECT MEM_NO
+			, MEM_NAME
+			, DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
+			, REG_DATE
+			, TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+			, MEM_TELL
+			, DECODE(IS_CONFIRMED, 'Y','승인완료', 'N', '승인취소') AS IS_CONFIRMED
+			, MEM_IMAGE
+		FROM MEMBER	
+		ORDER BY REG_DATE DESC
+	</select>
 	
+	<select id="selectMemberAddList" resultMap="memberMapper.member">
+		SELECT MEM_NO
+			, MEM_NAME
+			, DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
+			, REG_DATE
+			, TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+			, MEM_TELL
+			, DECODE(IS_CONFIRMED, 'Y','승인완료', 'N', '승인취소') AS IS_CONFIRMED
+			, MEM_IMAGE
+		FROM MEMBER	
+		WHERE IS_CONFIRMED = 'Y'
+		ORDER BY REG_DATE DESC
+	</select>
 	
+	<select id="selectMemberDeniedList" resultMap="memberMapper.member">
+		SELECT MEM_NO
+			, MEM_NAME
+			, DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
+			, REG_DATE
+			, TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+			, MEM_TELL
+			, DECODE(IS_CONFIRMED, 'Y','승인완료', 'N', '승인취소') AS IS_CONFIRMED
+			, MEM_IMAGE
+		FROM MEMBER	
+		WHERE IS_CONFIRMED = 'N'
+		ORDER BY REG_DATE DESC
+	</select>
+	
+	<!-- 회원클릭시 상세 모달창 -->
+	<select id="getMemberModal" resultMap="memberMapper.member">
+		SELECT MEM.MEM_NO
+		    , MEM_NAME
+		    , MEM_GENDER
+		    , MEM_TELL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , MEM_ROLE
+		    , TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+		    , MEM_EMAIL
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+		    , IS_CONFIRMED
+		    , MEM_IMAGE
+		FROM MEMBER MEM
+		WHERE MEM.MEM_NO = #{memNo}
+	</select>
+	
+<!-- 	
+	<select id="getMemberModal" resultMap="memberMapper.member">
+		SELECT MEM.MEM_NO
+		    , MEM_NAME
+		    , MEM_GENDER
+		    , MEM_TELL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , MEM_ROLE
+		    , MEM_BIRTHDAY
+		    , MEM_EMAIL
+		    , REG_DATE
+		    , IS_CONFIRMED
+		    , MEM_IMAGE
+		    , ST.COLL_NO
+		    , COLL_NAME
+		    , ST.DEPT_NO
+		    , DEPT_NAME
+		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM
+		WHERE ST.COLL_NO = COLL.COLL_NO
+		AND ST.DEPT_NO = DP.DEPT_NO
+		AND ST.MEM_NO = MEM.MEM_NO
+		AND MEM.MEM_NO = #{memNo}
+	</select> -->
 	
 	
 </mapper>

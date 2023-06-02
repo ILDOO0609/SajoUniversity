@@ -54,6 +54,12 @@ public class MemberController {
 	}
 	
 	// 로그인 페이지 이동
+	@GetMapping("/footer")
+	public String footer() {
+		return "fragment/footer";
+	}
+	
+	// 로그인 페이지 이동
 	@GetMapping("/loginForm3")
 	public String loginForm3() {
 		return "content//member/login_form3";

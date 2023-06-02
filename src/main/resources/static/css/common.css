@@ -9,19 +9,35 @@
 
 .container{
 	font-family: 'NEXON Lv1 Gothic OTF';
+	margin-top: 2rem;
 }
-
 
 a{
   text-decoration: none;
   color: inherit;
 }
 
-.slide1 {
-  position: fixed;
+.slide-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* 뷰포트의 100% 높이로 설정 */
+}
+
+.image-wrapper {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.slide1 {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+}
+
+.footer-row {
+	bottom: 0;
+	width: 100%;
 }

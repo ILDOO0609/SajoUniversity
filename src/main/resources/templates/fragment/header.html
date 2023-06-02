@@ -25,64 +25,9 @@
 		</div>
 </div>
 
-			
-<<<<<<< HEAD
 
-=======
-		</div>
- 		
-		 </div>
- 
-			
- 
- <div class="row">
-		<div class="col">
-			<nav class="navbar navbar-expand-lg bg-body-tertiary">
-				<div class="container-fluid">
-						
-						<div class="dropdown">
-						<span><a href="/board/boardList">게시판</a></span>
-							<div class="dropdown-content">
-								<a href="/board/boardCateManage">게시판 카테고리 관리</a>
-								<a href="/board/boardList">게시판 목록</a>
-								<a href="/board/boardWriteForm">게시글쓰기</a>
-							</div>
+
 	
-							<span sec:authorize="isAuthenticated()">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-bitcoin" viewBox="0 0 16 16">
-				 	 <path d="M5.5 13v1.25c0 .138.112.25.25.25h1a.25.25 0 0 0 .25-.25V13h.5v1.25c0 .138.112.25.25.25h1a.25.25 0 0 0 .25-.25V13h.084c1.992 0 3.416-1.033 3.416-2.82 0-1.502-1.007-2.323-2.186-2.44v-.088c.97-.242 1.683-.974 1.683-2.19C11.997 3.93 10.847 3 9.092 3H9V1.75a.25.25 0 0 0-.25-.25h-1a.25.25 0 0 0-.25.25V3h-.573V1.75a.25.25 0 0 0-.25-.25H5.75a.25.25 0 0 0-.25.25V3l-1.998.011a.25.25 0 0 0-.25.25v.989c0 .137.11.25.248.25l.755-.005a.75.75 0 0 1 .745.75v5.505a.75.75 0 0 1-.75.75l-.748.011a.25.25 0 0 0-.25.25v1c0 .138.112.25.25.25L5.5 13zm1.427-8.513h1.719c.906 0 1.438.498 1.438 1.312 0 .871-.575 1.362-1.877 1.362h-1.28V4.487zm0 4.051h1.84c1.137 0 1.756.58 1.756 1.524 0 .953-.626 1.45-2.158 1.45H6.927V8.539z"/>
-					</svg>
-					[[${#authentication.name}]]님 반갑습니다.
-					<a th:href="@{/member/logout}" class="list-group-item list-group-item-action">LOGOUT</a>
-					
-				</span> 
-						
-						</div>
-						
-						<div class="dropdown">
-							<span>통계 </span>
-							<div class="dropdown-content">
-							<span><a href="/member/stuRegPerMonth"> 등록학생현황</a></span>
-							<span><a href="/member/stuRegPerMonth2"> 휴학생현황</a></span>
-							<span><a href="/member/stuRegPerMonth3"> 재학생현황</a></span>
-						</div>
-						</div>
-						<div class="dropdown">
-							<span>오시는길</span>
-							<div class="dropdown-content">
-							<span><a href="/member/map">지도 및 로드뷰</a></span>
-							<span><a href="#" onclick="openPopup();">길찾기</a></span>
-						</div>
-						</div>
-						
-						<span> <span th:text="${#authentication.authorities}"></span></span>
-				</div>
-			</nav>
-		</div>
-	</div>
-	
-	
->>>>>>> a3467e87e6a80ef040d84d898b527b4b8fe9d3fc
 	
 	
 <!-- 학생 -->
@@ -101,7 +46,7 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="/member/main">Home</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -196,7 +141,7 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="/member/main">Home</a>
           </li>
           
           <li class="nav-item">
@@ -264,7 +209,7 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="/member/main">Home</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

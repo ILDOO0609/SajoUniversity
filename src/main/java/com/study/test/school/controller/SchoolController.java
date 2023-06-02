@@ -475,7 +475,18 @@ public class SchoolController {
 	
 	
 	
-	
+	 //회원메뉴 -> 신규회원 -> 승인거절
+	 @ResponseBody
+	 @PostMapping("/updateXPositionAjax") 
+	 public void updateXPosition(String memNo, StuVO stuVO) {
+		MemberVO memberVO = schoolService.selectMember(memNo);
+		
+		stuVO.setMemberVO(memberVO);
+		
+		System.out.println("@##@#################" + stuVO);
+		
+		schoolService.updateXPosition(memNo);
+	 }
 	
 	
 	

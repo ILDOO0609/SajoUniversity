@@ -51,7 +51,7 @@
 						</td>
 						<td style="text-align: center;">
 							<button id="memRole" class="btn btn-primary" th:onclick="updatePosition([[${member.memNo}]]);" style="cursor: pointer;">승인완료</button>
-							<button class="btn btn-danger" type="button" style="cursor: pointer;">승인거부</button>
+							<button class="btn btn-danger" type="button" th:onclick="updateXPosition([[${member.memNo}]]);" style="cursor: pointer;">승인거부</button>
 						</td>
 					</tr>
 				</th:block>

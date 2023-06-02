@@ -48,6 +48,7 @@
 				,	MEM_ROLE
 			FROM MEMBER
 			WHERE MEM_NO = #{memNo}
+			AND IS_CONFIRMED = 'Y'
 		</select>
 		
 		<!-- 비밀번호변경 유무 확인 -->

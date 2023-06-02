@@ -82,6 +82,7 @@ public class MemberController {
 		
 		return "content//member/map";
 	}
+
 	
 	
 	// 교번 중복 체크

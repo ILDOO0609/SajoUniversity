@@ -95,43 +95,18 @@
 		<if test="cateNo != null and cateNo != 'all'">
 		AND BOARD.CATE_NO = #{cateNo}
 		</if>
-		ORDER BY IS_NOTICE DESC, BOARD_NO DESC
-		OFFSET #{pageVO.offsetCnt} ROWS FETCH NEXT #{pageVO.displayCnt} ROWS ONLY
-	</select>
-	
-	<select id="getBoardForSearch" resultMap="board">
-		SELECT BOARD_NO
-		    , BOARD_TITLE
-		    , BOARD_WRITER
-		    , MEM_NAME
-		    , TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
-		    , BOARD_READ_CNT
-		    , REPLY_CNT
-		    , IS_SECRET
-		    , IS_NOTICE
-		    , BOARD.CATE_NO
-		    , CATE_NAME
-		    , SECRET_PW
-		FROM BOARD, BOARD_CATEGORY CATE, MEMBER
-		WHERE BOARD.CATE_NO = CATE.CATE_NO
-		AND MEMBER.MEM_NO = BOARD.BOARD_WRITER
-		<if test="boardListSearchVO.cateNo != null and boardListSearchVO.cateNo != 'all'">
-		AND BOARD.CATE_NO = #{boardListSearchVO.cateNo}
+		<if test="selectValue!=null and selectValue =='title'">
+		AND UPPER(BOARD_TITLE) LIKE '%'||UPPER(#{inputValue})||'%'
 		</if>
-		<if test="boardListSearchVO.selectValue!=null and boardListSearchVO.selectValue =='title'">
-		AND UPPER(BOARD_TITLE) LIKE '%'||UPPER(#{boardListSearchVO.inputValue})||'%'
+		<if test="selectValue!=null and selectValue == 'writer'">
+		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{inputValue})||'%'
 		</if>
-		<if test="boardListSearchVO.selectValue!=null and boardListSearchVO.selectValue == 'writer'">
-		AND UPPER(BOARD_WRITER) LIKE '%'||UPPER(#{boardListSearchVO.inputValue})||'%'
-		</if>
-		<if test="boardListSearchVO.checkValue !=null and boardListSearchVO.checkValue =='notSecret'">
+		<if test="checkValue !=null and checkValue =='notSecret'">
 		AND IS_SECRET = 'N'
 		</if>
 		ORDER BY IS_NOTICE DESC, BOARD_NO DESC
-		OFFSET #{pageVO.offsetCnt} ROWS FETCH NEXT #{pageVO.displayCnt} ROWS ONLY
+		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
-	
-	
 	
 	<select id="getBoardDetail" resultMap="board">
 		SELECT 
@@ -219,9 +194,23 @@
 		WHERE BOARD_NO = #{boardNo}
 	</delete>
 	
+	<!-- 게시판 테이블 데이터개수 조회 -->
 	<select id="getBoardListCnt" resultType="int">
 		SELECT COUNT(BOARD_NO)
-		FROM BOARD
+		FROM BOARD, MEMBER
+		WHERE BOARD.BOARD_WRITER = MEMBER.MEM_NO
+		<if test="cateNo != null and cateNo != 'all'">
+		AND BOARD.CATE_NO = #{cateNo}
+		</if>
+		<if test="selectValue!=null and selectValue =='title'">
+		AND UPPER(BOARD_TITLE) LIKE '%'||UPPER(#{inputValue})||'%'
+		</if>
+		<if test="selectValue!=null and selectValue == 'writer'">
+		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{inputValue})||'%'
+		</if>
+		<if test="checkValue !=null and checkValue =='notSecret'">
+		AND IS_SECRET = 'N'
+		</if>
 	</select>
 	
 	<update id="updateBoard">

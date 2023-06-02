@@ -15,52 +15,50 @@
 <!-- layout에 content 구문에 적용 -->
 <th:block layout:fragment="content">
 		<!-- map을 사용해서 월별 통계 만들기  -->
-<div class="row">
-	<div class="col">
-		<div class="row">
 <div class="container">				
-		<!-- map을 사용해서 월별 통계 만들기  -->
-		<div class="row chart">
-			<div class="col">
-				<select class="form-select" id="yearSelect" onchange="getStatistics();">
-					<th:block th:each="selectYear : ${#numbers.sequence(sysYear - 4, sysYear)}">
-						<option th:selected="${year == selectYear}" th:value="${selectYear}">[[${selectYear}]]</option>																									
-					</th:block>
-				</select>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				 <canvas id="myChart"></canvas>
-			</div>
-		</div>
-		<div class="row">
-			<table class="table">
-				<thead>
-					<tr>
-						<td>
-						
-						</td>
-						<th:block th:each="month : ${#numbers.sequence(1, 12)}">
-							<td>[[${#numbers.formatInteger(month,2)}]]월</td>
+	<div class="row">
+		<div class="col">
+					<!-- map을 사용해서 월별 	통계 만들기  -->
+			<div class="row chart">
+				<div class="col">
+					<select class="form-select" id="yearSelect" onchange="getStatistics();">
+						<th:block th:each="selectYear : ${#numbers.sequence(sysYear - 4, sysYear)}">
+							<option th:selected="${year == selectYear}" th:value="${selectYear}">[[${selectYear}]]</option>																									
 						</th:block>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="mapData, state: ${mapList}">
-						<td>
-							[[${state.index == 0 ? '등록학생' : '?'}]]
-						</td>
-						<th:block th:each="data : ${mapData}">
-							<td>[[${data.value}]]</td>
-						</th:block>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>		
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					 <canvas id="myChart"></canvas>
+				</div>
+			</div>
+			<div class="row">
+				<table class="table">
+					<thead>
+						<tr>
+							<td>
+							
+							</td>
+							<th:block th:each="month : ${#numbers.sequence(1, 12)}">
+								<td>[[${#numbers.formatInteger(month,2)}]]월</td>
+							</th:block>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="mapData, state: ${mapList}">
+							<td>
+								[[${state.index == 0 ? '등록학생' : (state.index == 1 ? '재학생' : (state.index == 2 ? '휴학생' : ''))}]]
+							</td>
+							<th:block th:each="data : ${mapData}">
+								<td>[[${data.value}]]</td>
+							</th:block>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>		
+	</div>		
 </div>			
 </th:block>
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.study.test.board.vo.BoardCategoryVO;
+import com.study.test.board.vo.BoardListSearchVO;
 import com.study.test.board.vo.BoardVO;
 import com.study.test.util.PageVO;
 
@@ -47,8 +48,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public List<BoardVO> getBoard(HashMap<String, Object>map) {
-		return sqlSession.selectList("boardMapper.getBoard", map);
+	public List<BoardVO> getBoard(BoardListSearchVO boardListSearchVO) {
+		return sqlSession.selectList("boardMapper.getBoard", boardListSearchVO);
 	}
 	
 	@Override
@@ -83,8 +84,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int getBoardListCnt() {
-		return sqlSession.selectOne("boardMapper.getBoardListCnt");
+	public int getBoardListCnt(BoardListSearchVO boardListSearchVO) {
+		return sqlSession.selectOne("boardMapper.getBoardListCnt", boardListSearchVO);
 	}
 
 	@Override

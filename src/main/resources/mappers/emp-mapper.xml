@@ -497,7 +497,7 @@
 	
 	<!-- 학생 평점 평균 -->
 	<select id="getAvg" resultType="double">
-		SELECT ROUND(AVG(SCORE), 2) AS AVG_SCORE
+		SELECT NVL(ROUND(AVG(SCORE), 2), 0) AS AVG_SCORE
 	    FROM STU_GRADE, LECTURE LEC, STU, SEMESTER SEM, GRADE
 	    WHERE STU_GRADE.STU_NO = STU.STU_NO
         AND STU_GRADE.LEC_NO = LEC.LEC_NO
@@ -508,7 +508,7 @@
 	
 	<!-- 학생 총수강학점 -->
 	<select id="getTotalScore" resultType="int">
-	    SELECT SUM(LEC_SCORE)
+	    SELECT NVL(SUM(LEC_SCORE), 0)
 	    FROM STU_GRADE, LECTURE LEC, STU, SEMESTER SEM, GRADE
 	    WHERE STU_GRADE.STU_NO = STU.STU_NO
         AND STU_GRADE.LEC_NO = LEC.LEC_NO

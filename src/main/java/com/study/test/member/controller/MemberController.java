@@ -53,10 +53,15 @@ public class MemberController {
 		return "main";
 	}
 	
-	// 로그인 페이지 이동
+	// footer 확인용
 	@GetMapping("/footer")
 	public String footer() {
 		return "fragment/footer";
+	}
+	// 채팅방 확인용
+	@GetMapping("/chat")
+	public String chat() {
+		return "content/member/chat";
 	}
 	
 	// 로그인 페이지 이동
@@ -71,7 +76,7 @@ public class MemberController {
 		
 		return "content//member/main";
 	}
-	// 메인 페이지 이동
+	// 지도 이동
 	@GetMapping("/map")
 	public String map() {
 		

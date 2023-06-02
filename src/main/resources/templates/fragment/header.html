@@ -25,10 +25,6 @@
 		</div>
 </div>
 
-
-
-	
-	
 	
 <!-- 학생 -->
 <div sec:authorize="hasRole('ROLE_stu')">
@@ -102,7 +98,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
               <li><a class="dropdown-item" href="/member/map">지도 및 로드뷰</a></li>
-              <!--<li><a class="dropdown-item" href="#" onclick="openPopup();">길찾기</a></li>  -->
+              <li><a class="dropdown-item" href="#" onclick="openPopup();">오시는 길 찾기</a></li>
             </ul>
             
 			
@@ -123,8 +119,6 @@
 
 
 
-
-
 <!-- 교수 -->
 <div sec:authorize="hasRole('ROLE_pro')">
  <nav class="navbar navbar-dark bg-dark fixed-top">
@@ -140,9 +134,23 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav flex-column">
-          <li class="nav-item">
+         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/member/main">Home</a>
           </li>
+	      
+	          <li class="nav-item">
+	            <a class="nav-link" href="/emp/regLecture">강의 등록</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="/emp/lecSchedule">강의 시간표</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="/emp/lectureList">강의 리스트</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="/emp/regScore">성적등록</a>
+	          </li>
+	          
           
           <li class="nav-item">
             <a class="nav-link" href="/emp/regLecture">강의 등록</a>
@@ -158,6 +166,8 @@
           </li>
         </ul>
          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               게시판
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
@@ -182,6 +192,16 @@
               <li><a class="dropdown-item" href="/member/map">지도 및 로드뷰</a></li>
               <!--<li><a class="dropdown-item" href="#" onclick="openPopup();">길찾기</a></li>  -->
             </ul>
+            
+			
+            
+            
+          </li>
+        
+        
+       
+     
+        </ul>
         <form class="d-flex mt-3" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-light" type="submit">Search</button>
@@ -320,10 +340,10 @@
 							
 							<div class="row mb-3">
 								<div class="col-6 d-grid">
-									<input type="button" class="btn d-grid mt-3 btn-primary" value="로그인" onclick="login();" id="toastStart">
+									<input type="button" class="btn d-grid mt-3 btn-dark" value="로그인" onclick="login();" id="toastStart">
 								</div>
 								<div class="col-6 d-grid">
-									<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer;" class="btn d-grid mt-3 btn-primary">
+									<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer;" class="btn d-grid mt-3 btn-dark">
 									비밀번호 찾기
 									</span>
 								</div>
@@ -358,9 +378,9 @@
  							<input type="text" class="form-control" id="memNo" name="memNo" placeholder="등록할 학번 및 교번을 숫자로 입력하세요." onkeyup="setDisabled();">
  						</div>
  						
- 						<div class="col-3">
+ 						<div class="col-3 d-grid">
  							<label for="check_id" class="form-label">&nbsp;</label>
- 							<input type="button" class="btn" id="check_id" value="중복 확인" onclick="isDuplicateMemNo();">
+ 							<input type="button" class="btn btn-dark" id="check_id" value="중복 확인" onclick="isDuplicateMemNo();">
  						</div>
  						
  						<div class="col-12">
@@ -460,7 +480,7 @@
 						
 						<div class="col-3 d-grid">
 							<label for="search_btn" class="form-label">&nbsp;</label> <!-- &nbsp; 하면 space처리 됨 -->
-							<input type="button" class="btn btn-primary" id="search_btn" value="Search" onclick="searchAddr();" placeholder="주소는 필수 입력 입니다.">
+							<input type="button" class="btn btn-dark" id="search_btn" value="Search" onclick="searchAddr();" placeholder="주소는 필수 입력 입니다.">
 						</div>
 						
 						<div class="col-12">

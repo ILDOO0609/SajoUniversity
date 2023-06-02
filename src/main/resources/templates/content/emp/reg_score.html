@@ -10,90 +10,92 @@
 </th:block>
 
 <th:block layout:fragment="content">
-<div class="row">
-	<div class="col">
-	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-		<div class="row">
-			<div class="col">
-				<div class="row">
-					<div class="col">
-						강의 조회
+<div class="container">
+	<div class="row">
+		<div class="col">
+		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+			<div class="row">
+				<div class="col">
+					<div class="row">
+						<div class="col">
+							강의 조회
+						</div>
 					</div>
-				</div>
-				<div class="row mb-3">
-					<div class="col-3">
-						<input type="text" placeholder="등록한 교과목명" class="form-control" id="searchInput">
-					</div>
-					<div class="col-9">
-						<input type="button" value="Search" class="btn btn-primary" onclick="searchLecture();">
-					</div>
-				</div>
-			</div>
-		</div>
-	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 목록ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-		<div class="row mb-3">
-			<div class="col">
-				<div class="row">
-					<div class="col">
-						강의 목록
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<table class="table">
-							<thead>
-								<tr>
-									<td>No</td>
-									<td>교과목명</td>
-									<td>강의 학점</td>
-									<td>단과대학</td>
-									<td>학과</td>
-								</tr>
-							</thead>
-							<tbody id="tbodyTagOfLecture">
-								<tr th:each="map, state : ${mapList}">
-									<th:block th:if="${map['LEC_STATUS']=='Y'}">
-										<td>[[${#lists.size(mapList)-state.index}]]</td>
-										<td><a href="javascript:void(0);" th:onclick="getStuEnrList([[${map['LEC_NO']}]],[[${map['SEM_NO']}]]);">[[${map['LEC_NAME']}]]</a></td>
-										<td>[[${map['LEC_SCORE']}]]</td>
-										<td>[[${map['COLL_NAME']}]]</td>
-										<td>[[${map['DEPT_NAME']}]]</td>
-									</th:block>
-								</tr>
-							</tbody>
-						</table>
+					<div class="row mb-3">
+						<div class="col-3">
+							<input type="text" placeholder="등록한 교과목명" class="form-control" id="searchInput">
+						</div>
+						<div class="col-9">
+							<input type="button" value="Search" class="btn btn-primary" onclick="searchLecture();">
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ수강 학생ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-		<div class="row">
-			<div class="col">
-				<div class="row">
-					<div class="col">
-						수강 학생
+		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 목록ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+			<div class="row mb-3">
+				<div class="col">
+					<div class="row">
+						<div class="col">
+							강의 목록
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<table class="table">
+								<thead>
+									<tr>
+										<td>No</td>
+										<td>교과목명</td>
+										<td>강의 학점</td>
+										<td>단과대학</td>
+										<td>학과</td>
+									</tr>
+								</thead>
+								<tbody id="tbodyTagOfLecture">
+									<tr th:each="map, state : ${mapList}">
+										<th:block th:if="${map['LEC_STATUS']=='Y'}">
+											<td>[[${#lists.size(mapList)-state.index}]]</td>
+											<td><a href="javascript:void(0);" th:onclick="getStuEnrList([[${map['LEC_NO']}]],[[${map['SEM_NO']}]]);">[[${map['LEC_NAME']}]]</a></td>
+											<td>[[${map['LEC_SCORE']}]]</td>
+											<td>[[${map['COLL_NAME']}]]</td>
+											<td>[[${map['DEPT_NAME']}]]</td>
+										</th:block>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col">
-						<table class="table text-center">
-							<colgroup>
-								<col width="25%">
-								<col width="25%">
-								<col width="25%">
-								<col width="25%">
-							</colgroup>
-							<thead>
-								<tr>
-									<td>학번</td>
-									<td>이름</td>
-									<td>성적</td>
-									<td>등록</td>
-								</tr>
-							</thead>
-							<tbody id="tbodyTagOfStu">
-							</tbody>
-						</table>
+			</div>
+		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ수강 학생ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+			<div class="row">
+				<div class="col">
+					<div class="row">
+						<div class="col">
+							수강 학생
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<table class="table text-center">
+								<colgroup>
+									<col width="25%">
+									<col width="25%">
+									<col width="25%">
+									<col width="25%">
+								</colgroup>
+								<thead>
+									<tr>
+										<td>학번</td>
+										<td>이름</td>
+										<td>성적</td>
+										<td>등록</td>
+									</tr>
+								</thead>
+								<tbody id="tbodyTagOfStu">
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>

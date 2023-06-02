@@ -10,119 +10,121 @@
 </th:block>
 
 <th:block layout:fragment="content">
-<div class="row">
-	<div class="col">
-		<div class="row mb-3">
-			<div class="col">강의 리스트</div>
-		</div>
-		<div class="row mb-5">
-			<div class="col-4">
-				<div class="form-check form-check-inline">
-				  <input class="form-check-input lecStatus" type="radio" value="all" id="all" name="lecStatus" checked>
-				  <label class="form-check-label">전체</label>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<div class="row mb-3">
+				<div class="col">강의 리스트</div>
+			</div>
+			<div class="row mb-5">
+				<div class="col-4">
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input lecStatus" type="radio" value="all" id="all" name="lecStatus" checked>
+					  <label class="form-check-label">전체</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input lecStatus" type="radio" value="Y" name="lecStatus">
+					  <label class="form-check-label">강의</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input lecStatus" type="radio" value="N" name="lecStatus">
+					  <label class="form-check-label">폐강</label>
+					</div>
 				</div>
-				<div class="form-check form-check-inline">
-				  <input class="form-check-input lecStatus" type="radio" value="Y" name="lecStatus">
-				  <label class="form-check-label">강의</label>
+				<div class="col-2">
+					<select class="form-select text-center">
+						<option>강의명</option>
+					</select>
 				</div>
-				<div class="form-check form-check-inline">
-				  <input class="form-check-input lecStatus" type="radio" value="N" name="lecStatus">
-				  <label class="form-check-label">폐강</label>
+				<div class="col-4">
+					<input type="text" class="form-control" id="searchInput" placeholder="검색">
+				</div>
+				<div class="col-2">
+					<input type="button" class="btn btn-primary" value="search" onclick="searchLecture();">
 				</div>
 			</div>
-			<div class="col-2">
-				<select class="form-select text-center">
-					<option>강의명</option>
-				</select>
-			</div>
-			<div class="col-4">
-				<input type="text" class="form-control" id="searchInput" placeholder="검색">
-			</div>
-			<div class="col-2">
-				<input type="button" class="btn btn-primary" value="search" onclick="searchLecture();">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<table class="table table table-striped text-center align-middle">
-					<colgroup>
-						<col width="8%">
-						<col width="8%">
-						<col width="8%">
-						<col width="8%">
-						<col width="8%">
-						<col width="8%">
-						<col width="8%">
-						<col width="8%">
-						<col width="8%">
-						<col width="8%">
-						<col width="8%">
-					</colgroup>
-					<thead class="thead">
-						<tr>
-							<td>#</td>
-							<td>
-								강의명
-							</td>
-							<td>학점</td>
-							<td>단대명</td>
-							<td>학과명</td>
-							<td>담당교수</td>
-							<td>최대인원</td>
-							<td>현재인원</td>
-							<td>날짜</td>
-							<td>강의상태</td>
-							<td>강의변경</td>
-							<td>폐강</td>
-						</tr>
-					</thead>
-					<tbody id="tbodyTag">
-						<tr th:if="${#lists.size(lectureList)==0}">
-							<td colspan="12">등록된 강의가 없습니다.</td>
-						</tr>
-						<tr th:unless="${#lists.size(lectureList)==0}" th:each="lecture : ${lectureList}">
-							<td id="lecNo">[[${lecture.lecNo}]]</td>
-							<td id="lecName"><a th:href="${'/pdfFile/'+lecture.lecturePDFVO.attachedPdfName}" target="_blank">[[${lecture.lecName}]]</a></td>
-							<td>[[${lecture.lecScore}]]</td>
-							<td>[[${lecture.colleageVO.collName}]]</td>
-							<td>[[${lecture.deptVO.deptName}]]</td>
-							<td>[[${lecture.memberVO.memName}]]</td>
-							<td>[[${lecture.maxNum}]]</td>
-							<td>[[${lecture.nowNum}]]</td>
-							<td>
-								<th:block th:each="lectureTime : ${lecture.lectureTimeList}">
-									<th:block th:if="${lectureTime.firstTime==lectureTime.lastTime}">
-										[[${lectureTime.lecDay+'/'+lectureTime.firstTime+'교시'}]]
+			<div class="row">
+				<div class="col">
+					<table class="table table table-striped text-center align-middle">
+						<colgroup>
+							<col width="8%">
+							<col width="8%">
+							<col width="8%">
+							<col width="8%">
+							<col width="8%">
+							<col width="8%">
+							<col width="8%">
+							<col width="8%">
+							<col width="8%">
+							<col width="8%">
+							<col width="8%">
+						</colgroup>
+						<thead class="thead">
+							<tr>
+								<td>#</td>
+								<td>
+									강의명
+								</td>
+								<td>학점</td>
+								<td>단대명</td>
+								<td>학과명</td>
+								<td>담당교수</td>
+								<td>최대인원</td>
+								<td>현재인원</td>
+								<td>날짜</td>
+								<td>강의상태</td>
+								<td>강의변경</td>
+								<td>폐강</td>
+							</tr>
+						</thead>
+						<tbody id="tbodyTag">
+							<tr th:if="${#lists.size(lectureList)==0}">
+								<td colspan="12">등록된 강의가 없습니다.</td>
+							</tr>
+							<tr th:unless="${#lists.size(lectureList)==0}" th:each="lecture : ${lectureList}">
+								<td id="lecNo">[[${lecture.lecNo}]]</td>
+								<td id="lecName"><a th:href="${'/pdfFile/'+lecture.lecturePDFVO.attachedPdfName}" target="_blank">[[${lecture.lecName}]]</a></td>
+								<td>[[${lecture.lecScore}]]</td>
+								<td>[[${lecture.colleageVO.collName}]]</td>
+								<td>[[${lecture.deptVO.deptName}]]</td>
+								<td>[[${lecture.memberVO.memName}]]</td>
+								<td>[[${lecture.maxNum}]]</td>
+								<td>[[${lecture.nowNum}]]</td>
+								<td>
+									<th:block th:each="lectureTime : ${lecture.lectureTimeList}">
+										<th:block th:if="${lectureTime.firstTime==lectureTime.lastTime}">
+											[[${lectureTime.lecDay+'/'+lectureTime.firstTime+'교시'}]]
+										</th:block>
+										<th:block th:unless="${lectureTime.firstTime==lectureTime.lastTime}">
+											[[${lectureTime.lecDay+'/'+lectureTime.firstTime+'~'+lectureTime.lastTime+'교시'}]]
+										</th:block>
 									</th:block>
-									<th:block th:unless="${lectureTime.firstTime==lectureTime.lastTime}">
-										[[${lectureTime.lecDay+'/'+lectureTime.firstTime+'~'+lectureTime.lastTime+'교시'}]]
-									</th:block>
-								</th:block>
-							</td>
-							<td>[[${lecture.lecStatus}]]</td>
-							<td th:if="${lecture.lecStatus == '폐강'}">
-								<input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary" disabled>
-							</td>
-							<td th:unless="${lecture.lecStatus == '폐강'}">
-								<input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary">
-							</td>
-							<td th:if="${lecture.lecStatus == '폐강'}">
-								<input type="button" value="폐강" th:onclick="regClose([[${lecture.lecNo}]]);" disabled>
-							</td>
-							<td th:unless="${lecture.lecStatus == '폐강'}">
-								<input type="button" value="폐강" th:onclick="regClose([[${lecture.lecNo}]]);">
-							</td>
-						</tr>
-					</tbody>
-				</table>
+								</td>
+								<td>[[${lecture.lecStatus}]]</td>
+								<td th:if="${lecture.lecStatus == '폐강'}">
+									<input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary" disabled>
+								</td>
+								<td th:unless="${lecture.lecStatus == '폐강'}">
+									<input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary">
+								</td>
+								<td th:if="${lecture.lecStatus == '폐강'}">
+									<input type="button" value="폐강" th:onclick="regClose([[${lecture.lecNo}]]);" disabled>
+								</td>
+								<td th:unless="${lecture.lecStatus == '폐강'}">
+									<input type="button" value="폐강" th:onclick="regClose([[${lecture.lecNo}]]);">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
-		<div class="modal fade" id="updateModal" data-bs-keyboard="false"
-			tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-body" id="modal-body">
-					  
+			<div class="modal fade" id="updateModal" data-bs-keyboard="false"
+				tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body" id="modal-body">
+						  
+						</div>
 					</div>
 				</div>
 			</div>

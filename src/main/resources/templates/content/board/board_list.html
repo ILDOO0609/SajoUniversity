@@ -11,133 +11,135 @@
 </th:block>
 
 <th:block layout:fragment="content">
-<div class="row">
-	<div class="col">
-		<div class="row">
-			<div class="col">
-				<h1 style="text-align:center; font-weight: bold;">BOARD</h1>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<div class="row">
+				<div class="col">
+					<h1 style="text-align:center; font-weight: bold;">BOARD</h1>
+				</div>
 			</div>
-		</div>
-		<div class="row text-end mb-3">
-			<div class="col-2">
-				<select name="cateNo" class="form-select" id="cateSelect" onchange="categorySearch(this);">
-					<option value="all" selected>전체</option>
-					<option th:each="cate : ${cateList}" th:value="${cate.cateNo}">[[${cate.cateName}]]</option>
-				</select>
+			<div class="row text-end mb-3">
+				<div class="col-2">
+					<select name="cateNo" class="form-select" id="cateSelect" onchange="categorySearch(this);">
+						<option value="all" selected>전체</option>
+						<option th:each="cate : ${cateList}" th:value="${cate.cateNo}">[[${cate.cateName}]]</option>
+					</select>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<table class="table text-center align-middle table-hover">
-				<colgroup>
-					<col width="10%">
-					<col width="10%">
-					<col width="40%">
-					<col width="15%">
-					<col width="15%">
-					<col width="10%">
-				</colgroup>
-					<thead>
-						<tr>
-							<td>No.</td>
-							<td>카테고리</td>
-							<td>제목</td>
-							<td>작성자</td>
-							<td>작성일</td>
-							<td>조회수</td>
-						</tr>
-					</thead>
-					<tbody id="tbodyTag">
-						<tr th:each="board, state : ${boardList}" th:classappend="${board.isNotice=='Y' ? 'active' : ''}">
-							<td th:if="${board.isNotice=='Y'}">
-								<img src="/img/notice.png" width="35px;">
-								공지
-							</td>
-							<td th:if="${board.isNotice=='N'}">[[${boardList.size()-state.index}]]</td>
-							<td>[[${board.boardCategoryVO.cateName}]]</td>
-							<td> 
-								<div class="board-title">
-									<th:bolck th:if="${board.isSecret == 'Y'}">
-										<img src="/img/lock.png" width="20px;">
-									</th:bolck>
-									<th:block th:if="${board.isSecret == 'Y'}">
-										<a href="javascript:void(0);" onclick="showInput(this);">
-											<span>[[${board.boardTitle}]]</span>
-										</a>
-									</th:block>
-								</div>
-								<div>
-									<th:block th:if="${board.isSecret == 'N'}">
-										<a th:href="@{/board/boardDetail(boardNo=${board.boardNo})}">
-											<span>[[${board.boardTitle}]]</span>
-										</a>
-									</th:block>
-								</div>
-								<div class="inputArea" style="display:none;">
-									<div class="row">
-										<div class="col-6">
-											 <input type="password" oninput="maxLengthCheck(this)" id="passwordInput" class="form-control">
-										</div>
-										<div class="col-3">
-											<button th:onclick="ok(this,[[${board.secretPw}]], [[${board.boardNo}]])" class="btn btn-primary">확인</button>
-										</div>
-										<div class="col-3">
-											<button onclick="cancel(this)" class="btn btn-danger">취소</button>
-										</div>
+			<div class="row">
+				<div class="col">
+					<table class="table text-center align-middle table-hover">
+					<colgroup>
+						<col width="10%">
+						<col width="10%">
+						<col width="40%">
+						<col width="15%">
+						<col width="15%">
+						<col width="10%">
+					</colgroup>
+						<thead>
+							<tr>
+								<td>No.</td>
+								<td>카테고리</td>
+								<td>제목</td>
+								<td>작성자</td>
+								<td>작성일</td>
+								<td>조회수</td>
+							</tr>
+						</thead>
+						<tbody id="tbodyTag">
+							<tr th:each="board, state : ${boardList}" th:classappend="${board.isNotice=='Y' ? 'active' : ''}">
+								<td th:if="${board.isNotice=='Y'}">
+									<img src="/img/notice.png" width="35px;">
+									공지
+								</td>
+								<td th:if="${board.isNotice=='N'}">[[${boardList.size()-state.index}]]</td>
+								<td>[[${board.boardCategoryVO.cateName}]]</td>
+								<td> 
+									<div class="board-title">
+										<th:bolck th:if="${board.isSecret == 'Y'}">
+											<img src="/img/lock.png" width="20px;">
+										</th:bolck>
+										<th:block th:if="${board.isSecret == 'Y'}">
+											<a href="javascript:void(0);" onclick="showInput(this);">
+												<span>[[${board.boardTitle}]]</span>
+											</a>
+										</th:block>
 									</div>
-							    </div>
-							</td>
-							<td>[[${board.memberVO.memName}]]</td>
-							<td>[[${board.boardCreateDate}]]</td>
-							<td>[[${board.boardReadCnt}]]</td>
-						</tr>
-					</tbody>
-				</table>
+									<div>
+										<th:block th:if="${board.isSecret == 'N'}">
+											<a th:href="@{/board/boardDetail(boardNo=${board.boardNo})}">
+												<span>[[${board.boardTitle}]]</span>
+											</a>
+										</th:block>
+									</div>
+									<div class="inputArea" style="display:none;">
+										<div class="row">
+											<div class="col-6">
+												 <input type="password" oninput="maxLengthCheck(this)" id="passwordInput" class="form-control">
+											</div>
+											<div class="col-3">
+												<button th:onclick="ok(this,[[${board.secretPw}]], [[${board.boardNo}]])" class="btn btn-primary">확인</button>
+											</div>
+											<div class="col-3">
+												<button onclick="cancel(this)" class="btn btn-danger">취소</button>
+											</div>
+										</div>
+								    </div>
+								</td>
+								<td>[[${board.memberVO.memName}]]</td>
+								<td>[[${board.boardCreateDate}]]</td>
+								<td>[[${board.boardReadCnt}]]</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
-		<div class="row text-end">
-			<div class="col">
-				<input type="button" value="글작성" class="btn btn-dark" th:onclick="|location.href='@{/board/boardWriteForm}'|">
+			<div class="row text-end">
+				<div class="col">
+					<input type="button" value="글작성" class="btn btn-dark" th:onclick="|location.href='@{/board/boardWriteForm}'|">
+				</div>
 			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-2">
-				<nav aria-label="Page navigation example">
-				  <ul class="pagination" >
-				    <li class="page-item" th:classappend="${pageVO.nowPage == 1 ? 'disabled':''}">
-				      <a class="page-link" th:href="@{/board/boardList(nowPage=${pageVO.beginPage-1})}" aria-label="Previous">
-				        <span aria-hidden="true">&laquo;</span>
-				      </a>
-				    </li>
-					<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
-					    <li class="page-item"><a class="page-link" th:href="@{/board/boardList(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
-					</th:block>
-				    <li class="page-item">
-				      <a class="page-link" th:href="@{/board/boardList(nowPage=${pageVO.endPage+1})}" aria-label="Next">
-				        <span aria-hidden="true">&raquo;</span>
-				      </a>
-				    </li>
-				  </ul>
-				</nav>
+			<div class="row justify-content-center">
+				<div class="col-2">
+					<nav aria-label="Page navigation example">
+					  <ul class="pagination" >
+					    <li class="page-item" th:classappend="${pageVO.nowPage == 1 ? 'disabled':''}">
+					      <a class="page-link" th:href="@{/board/boardList(nowPage=${pageVO.beginPage-1})}" aria-label="Previous">
+					        <span aria-hidden="true">&laquo;</span>
+					      </a>
+					    </li>
+						<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
+						    <li class="page-item"><a class="page-link" th:href="@{/board/boardList(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
+						</th:block>
+					    <li class="page-item">
+					      <a class="page-link" th:href="@{/board/boardList(nowPage=${pageVO.endPage+1})}" aria-label="Next">
+					        <span aria-hidden="true">&raquo;</span>
+					      </a>
+					    </li>
+					  </ul>
+					</nav>
+				</div>
 			</div>
-		</div>
-		
-		<div class="row" id="searchRow">
-			<div class="col-2 d-flex align-items-center justify-content-center">
-	            <input type="checkbox" class="form-check-input from-check" id="searchCheck" value="notSecret">비밀글 제외
-		    </div>
-		    <div class="col-10 input-group" style="width: 60%;">
-			    <select id="searchSelect" class="form-select-sm">
-					<option value="title">제목</option>
-					<option value="writer">작성자</option>
-			    </select>
-			    <input type="text" class="form-control-sm" id="searchInput" placeholder="Search">
-			    <button class="btn btn-outline-dark" id="searchBtn" onclick="searchBoard();">
-				     <i class="fas fa-search"></i>
-			     </button>
+			
+			<div class="row" id="searchRow">
+				<div class="col-2 d-flex align-items-center justify-content-center">
+		            <input type="checkbox" class="form-check-input from-check" id="searchCheck" value="notSecret">비밀글 제외
+			    </div>
+			    <div class="col-10 input-group" style="width: 60%;">
+				    <select id="searchSelect" class="form-select-sm">
+						<option value="title">제목</option>
+						<option value="writer">작성자</option>
+				    </select>
+				    <input type="text" class="form-control-sm" id="searchInput" placeholder="Search">
+				    <button class="btn btn-outline-dark" id="searchBtn" onclick="searchBoard();">
+					     <i class="fas fa-search"></i>
+				     </button>
+				</div>
 			</div>
+			
 		</div>
-		
 	</div>
 </div>
 </th:block>

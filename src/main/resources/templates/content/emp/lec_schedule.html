@@ -18,44 +18,46 @@ table td{
 	border: 1px solid rgba(0, 0, 0, 0.1);
 }
 </style>
-<div class="row lec-schedule">
-	<div class="col">
-		<div class="row">
-			<div class="col">
-				<h3>교수 강의 시간표</h3>
+<div class="container">
+	<div class="row lec-schedule">
+		<div class="col">
+			<div class="row">
+				<div class="col">
+					<h3>교수 강의 시간표</h3>
+				</div>
 			</div>
-		</div>
-		<div class="row mb-3">
-			<div class="col">
-				* 김교수 강의 시간표입니다. 
-				<input type="button" value="pdf다운로드" class="btn btn-primary" onclick="pdf();">
+			<div class="row mb-3">
+				<div class="col">
+					* 김교수 강의 시간표입니다. 
+					<input type="button" value="pdf다운로드" class="btn btn-primary" onclick="pdf();">
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<table class="table text-center align-middle schedule-table" border="1" style="width: 100%;">
-				    <colgroup>
-				        <col width="1%">
-				        <col width="18%">
-				        <col width="198">
-				        <col width="19%">
-				        <col width="19%">
-				        <col width="19%">
-				    </colgroup>
-				    <thead>
-				        <tr>
-				            <td>비고</td>
-				            <td>월</td>
-				            <td>화</td>
-				            <td>수</td>
-				            <td>목</td> 
-				            <td>금</td>
-				        </tr>
-				    </thead>
-				    <tbody id="tbodyTag">
-				    
-				    </tbody>
-				</table>
+			<div class="row">
+				<div class="col">
+					<table class="table text-center align-middle schedule-table" border="1" style="width: 100%;">
+					    <colgroup>
+					        <col width="1%">
+					        <col width="18%">
+					        <col width="198">
+					        <col width="19%">
+					        <col width="19%">
+					        <col width="19%">
+					    </colgroup>
+					    <thead>
+					        <tr>
+					            <td>비고</td>
+					            <td>월</td>
+					            <td>화</td>
+					            <td>수</td>
+					            <td>목</td> 
+					            <td>금</td>
+					        </tr>
+					    </thead>
+					    <tbody id="tbodyTag">
+					    
+					    </tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

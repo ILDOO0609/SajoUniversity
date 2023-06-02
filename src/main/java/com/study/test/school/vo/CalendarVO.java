@@ -14,5 +14,4 @@ public class CalendarVO {
 	private String startDate;
 	private String endDate;
 	private String calContent;
-	private String calBackColor;
 }

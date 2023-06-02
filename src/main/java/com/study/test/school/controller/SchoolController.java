@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -170,7 +171,7 @@ public class SchoolController {
 
 	
 	
-	//학사메뉴 -> 학사일정 페이지
+	//학사메뉴 -> 학사일정 페이지 및 전체조회
 	@GetMapping("/scheList")
 	public String calendarList(Model model) {
 		model.addAttribute("calendarList", schoolService.calendarList());
@@ -178,7 +179,7 @@ public class SchoolController {
 	}
 	//학사메뉴 -> 학사일정 -> 일정추가
 	@PostMapping("/addSchedule")
-	public String addSchedule(CalendarVO calendarVO, Authentication authentication) {
+	public String addSchedule(CalendarVO calendarVO) {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@#" + calendarVO);
 		calendarService.addSchedule(calendarVO);
 		return "redirect:/school/scheList";
@@ -217,7 +218,7 @@ public class SchoolController {
 		model.addAttribute("stuList", schoolService.checkStuList(stuVO));
 		return "content/school/check/check_stu";
 	}
-	//학사조회 -> 검색
+	//학사조회 -> 학생조회 -> 학생검색
 	@ResponseBody
 	@PostMapping("/searchStuListAjax")
 	public List<StuVO> searchStuListAjax(StuVO stuVO, MemberVO memberVO){
@@ -225,6 +226,13 @@ public class SchoolController {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2" + stuVO);
 		return schoolService.searchStuListAjax(stuVO);
 	}
+	//학사조회 -> 학생조회 -> 상세모달창
+	@ResponseBody
+	@PostMapping("/getStuModalAjax")
+	public List<StuVO> getStuModalAjax(String stuNo){
+		return schoolService.checkStuModal(stuNo);
+	}
+	
 	
 	
 	
@@ -253,11 +261,18 @@ public class SchoolController {
 	//학사조회 -> 교수&교직원 조회 -> 교직원검색
 	@ResponseBody
 	@PostMapping("/searchStfListAjax")
-	public List<MemberVO> searchStfListAjax(MemberVO memberVO){
+	public List<MemberVO> searchStfListAjax(MemberVO memberVO, Model model){
 		System.out.println("@#@#@#@@@@@@@@@@@@@@#@#@##" + memberVO);
 		return schoolService.searchStfListAjax(memberVO);
-		
 	}
+	//학사조회 -> 교수&교직원 조회 -> 교수/교직원 모달
+	@ResponseBody
+	@PostMapping("/getProModalAjax")
+	public List<LectureVO> checkProModal(String empNo){
+		return schoolService.checkProModal(empNo);
+	}
+	
+	
 	
 	
 	//학사조회 -> 강의및학점 페이지

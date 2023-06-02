@@ -13,86 +13,89 @@
 
 </head>
 <th:block layout:fragment="content">
-	<div class="row">
-		<div class="col-6">
-			<div><h3>Calandar</h3></div>
-			<div id='calendar-container'>
-    			<div id='calendar'></div>
- 			</div>
-		</div>
-		<div class="col-6">
-			<div><h3>일정안내</h3></div>
-			<table class="table">
-				<colgroup>
-					<col width="22%">
-					<col width="34%">
-					<col width="22%">
-					<col width="22%">
-				</colgroup>
-				<thead>
-					<tr style="font-size: 18px; font-weight: bold;">
-						<td>등록일</td>
-						<td>제목</td>
-						<td>시작일</td>
-						<td>종료일</td>
-					</tr>
-				</thead>
-			</table>	
-			<div class="row">
-				<div class="col">
-					<div class="accordion accordion-flush" id="accordionFlushExample">
-						<th:block th:each="calendar, state : ${calendarList}">
-							<div class="accordion-item">
-								<h2 class="accordion-header">
-									<button class="accordion-button collapsed" style="padding: 0px;" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#panel_' + state.count}" aria-expanded="false" aria-controls="flush-collapseOne">
-										<table class="table table-hover" id="calendarTable">
-											<colgroup>
-												<col width="25%">
-												<col width="25%">
-												<col width="25%">
-												<col width="25%">
-											</colgroup>
-											<tbody style="border-style: hidden;">
-												<tr>
-													<td>[[${calendar.regDate}]]</td>
-													<td>[[${calendar.title}]]</td>
-													<td>[[${calendar.startDate}]]</td>
-													<td>[[${calendar.endDate}]]</td>
-												</tr>
-											</tbody>
-										</table>
-									</button>
-								</h2>
-								<div th:id="${'panel_' + state.count}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-									<div class="accordion-body">
-										<table class="table">
-											<thead>
-												<tr>
-													<td><h5>일정내용</h5></td>
-													<td style="text-align: right;">
-														<button  class="btn btn-primary" th:onclick="updateModal([[${calendar.calNo}]])" style="cursor: pointer;">일정수정</button>
-														<button  class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="" style="cursor: pointer;">일정삭제</button>
-													</td>
-												</tr>
-												<tr>
-													<td colspan="2">[[${calendar.calContent}]]</td>
-												</tr>
-											</thead>
-										</table>
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+				<div><h3>Calandar</h3></div>
+				<div id='calendar-container'>
+	    			<div id='calendar'></div>
+	 			</div>
+	 			<button  class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#insertCalendar" style="cursor: pointer;">일정추가</button>
+				<div id="calendarBox">
+			        <div id="calendar"></div>
+			    </div>
+			</div>
+			<div class="col-6">
+				<div><h3>일정안내</h3></div>
+				<table class="table">
+					<colgroup>
+						<col width="23%">
+						<col width="31%">
+						<col width="23%">
+						<col width="23%">
+					</colgroup>
+					<thead>
+						<tr style="font-size: 18px; font-weight: bold;">
+							<td>등록일</td>
+							<td>제목</td>
+							<td>시작일</td>
+							<td>종료일</td>
+						</tr>
+					</thead>
+				</table>	
+				<div class="row">
+					<div class="col">
+						<div class="accordion accordion-flush" id="accordionFlushExample">
+							<th:block th:each="calendar, state : ${calendarList}">
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button collapsed" style="padding: 0px;" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#panel_' + state.count}" aria-expanded="false" aria-controls="flush-collapseOne">
+											<table class="table table-hover" id="calendarTable">
+												<colgroup>
+													<col width="23%">
+													<col width="31%">
+													<col width="23%">
+													<col width="23%">
+												</colgroup>
+												<tbody style="border-style: hidden;">
+													<tr>
+														<td>[[${calendar.regDate}]]</td>
+														<td>[[${calendar.title}]]</td>
+														<td>[[${calendar.startDate}]]</td>
+														<td>[[${calendar.endDate}]]</td>
+													</tr>
+												</tbody>
+											</table>
+										</button>
+									</h2>
+									<div th:id="${'panel_' + state.count}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+										<div class="accordion-body">
+											<table class="table">
+												<thead>
+													<tr>
+														<td><h5>일정내용</h5></td>
+														<td style="text-align: right;">
+															<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateCalendar" style="cursor: pointer;"
+																data-bs-title >일정수정
+															</button>
+															<button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="" style="cursor: pointer;">일정삭제</button>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="2">[[${calendar.calContent}]]</td>
+													</tr>
+												</thead>
+											</table>
+										</div>
 									</div>
 								</div>
-							</div>
-						</th:block>
+							</th:block>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<button  class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#insertCalendar" style="cursor: pointer;">일정추가</button>
-	
-	<div id="calendarBox">
-        <div id="calendar"></div>
-    </div>
+    </div> 
 
     <!-- 일정추가 modal  -->
     <div class="modal fade" id="insertCalendar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -101,24 +104,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">일정 추가를 입력하세요.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="taskId" class="col-form-label">일정 제목</label>
-                        <input type="text" class="form-control" id="title" name="title">
-                        <label for="taskId" class="col-form-label">일정 내용</label>
-                        <input type="text" class="form-control" id="calContent" name="calContent">
-                        <label for="taskId" class="col-form-label">시작 날짜</label>
-                        <input type="date" class="form-control" id="startDate" name="startDate">
-                        <label for="taskId" class="col-form-label">종료 날짜</label>
-                        <input type="date" class="form-control" id="endDate" name="endDate">
-                    </div>
-                     <div class="modal-footer">
-		                  <button type="button" class="btn btn-warning" id="" onclick="addSchedule();">추가</button>
-					</div>
+                	<form id="calendarForm" th:action="@{/school/addSchedule}" method="post">
+	                    <div class="form-group">
+	                        <label for="taskId" class="col-form-label">일정 제목</label>
+	                        <input type="text" class="form-control" id="title" name="title">
+	                        <label for="taskId" class="col-form-label">일정 내용</label>
+	                        <input type="text" class="form-control" id="calContent" name="calContent">
+	                        <label for="taskId" class="col-form-label">시작 날짜</label>
+	                        <input type="date" class="form-control" id="startDate" name="startDate">
+	                        <label for="taskId" class="col-form-label">종료 날짜</label>
+	                        <input type="date" class="form-control" id="endDate" name="endDate">
+	                    </div>
+	                     <div class="modal-footer">
+			                  <button type="button" class="btn btn-warning" onclick="addSchedule();">추가</button>
+						</div>
+                	</form>
                 </div>
             </div>
         </div>
@@ -132,27 +135,23 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">추가 일정 수정하세요.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel">일정을 수정하세요.</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-					<form id="calendarForm" th:action="@{/school/addSchedule}" method="post">
-	                    <div class="form-group">
-	                        <label for="taskId" class="col-form-label">일정 제목</label>
-	                        <input type="text" class="form-control" id="title" name="title">
-	                        <label for="taskId" class="col-form-label">일정 내용</label>
-	                        <input type="text" class="form-control" id="calContent" name="calContent">
-	                        <label for="taskId" class="col-form-label">시작 날짜</label>
-	                        <input type="date" class="form-control" id="startDate" name="startDate">
-	                        <label for="taskId" class="col-form-label">종료 날짜</label>
-	                        <input type="date" class="form-control" id="endDate" name="endDate">
-	                    </div>
-	                     <div class="modal-footer">
-			                  <button type="button" class="btn btn-warning" id="" onclick="updateCalendar();">추가</button>
-						</div>
-					</form>
+                    <div class="form-group">
+                        <label for="taskId" class="col-form-label">일정 제목</label>
+                        <input type="text" class="form-control">
+                        <label for="taskId" class="col-form-label">일정 내용</label>
+                        <input type="text" class="form-control">
+                        <label for="taskId" class="col-form-label">시작 날짜</label>
+                        <input type="date" class="form-control">
+                        <label for="taskId" class="col-form-label">종료 날짜</label>
+                        <input type="date" class="form-control">
+                    </div>
+                     <div class="modal-footer">
+		                  <button type="button" class="btn btn-warning" onclick="updateCalendar();">수정</button>
+					</div>
                 </div>
             </div>
         </div>

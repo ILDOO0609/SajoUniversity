@@ -129,6 +129,8 @@ $("input[name='checkPosition']").change(function(){
 		str +=	`<td>전공</td>`;
 		str += `</tr>`;
 		
+		
+		
 		tdTag.insertAdjacentHTML('afterbegin', str);
 		
 		
@@ -140,6 +142,7 @@ $("input[name='checkPosition']").change(function(){
 		$('.form-select').hide()
 		$('#serachPro').hide()
 		$('#serachStf').show()
+		
 		
 		const tdTag = document.querySelector('#proTable > tbody');
 		tdTag.replaceChildren();
@@ -233,7 +236,7 @@ function searchProList(){
 				}
 				else{
 					for(const pro of result){
-						str += `<tr>`;
+						str += `<tr style="cursor: pointer;" onclick="openProModal('${pro.empNo}');">`;
 						str += `<td>${pro.empVO.memNo}</td>`;
 						str += `<td>${pro.memberVO.memRole}</td>`;
 						str += `<td>${pro.memberVO.memName}</td>`;
@@ -305,6 +308,228 @@ function searchStfList(){
 		});
 	//ajax end
 }
+
+
+//학생조회 -> 학생 클릭시 상세창 모달 실행
+function openStuModal(stuNo){
+	console.log(stuNo);
+	
+	//ajax start
+	$.ajax({
+		url: '/school/getStuModalAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'stuNo':stuNo}, //필요한 데이터
+		success: function(result) {
+			console.log(result);
+			
+			const content_div = document.querySelector('#memberModal .modal-body');
+			content_div.replaceChildren();	
+			let str = '';
+			
+			str += `<div class="row">`;
+			str += `<div class="col">`;
+			str += `<table class="table">`;
+			str += `<colgroup>`;
+			str += `<col width="*%">`;
+			str += `<col width="15%">`;
+			str += `<col width="15%">`;
+			str += `<col width="15%">`;
+			str += `<col width="25%">`;
+			str += `</colgroup>`;
+			
+			
+			for(const stu of result){
+				str += `<tr>`;
+				str += `<td colspan="5">학생 기본정보</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td rowspan="7"><img src="'/upload/${stu.memberVO.memImage}" style="width: 100%; height: 100%"></td>`;
+				str += `<td>학생No(ID)</td>`;
+				str += `<td colspan="3">${stu.memNo}</td>`;
+				str += `<tr>`;
+				str += `<td>학생명</td>	`;
+				str += `<td colspan="3">${stu.memberVO.memName}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>생년월일</td>`;
+				str += `<td>${stu.memberVO.memBirthday}</td>`
+				str += `<td style="text-align: center;">성별</td>`;
+				str += `<td>${stu.memberVO.memGender}</td>`
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>신규가입일</td>`;
+				str += `<td colspan="3">${stu.memberVO.regDate}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>이메일</td>`;
+				str += `<td colspan="3">${stu.memberVO.memEmail}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>전화번호</td>`;
+				str += `<td colspan="3">${stu.memberVO.memTell}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>주소</td>`;
+				str += `<td colspan="3">${stu.memberVO.memAddr  + ' ' +  stu.memberVO.memAddrDetail}</td>`;
+				str += `</tr>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td colspan="6">학생 학사정보</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td style="text-align: center;">학년</td>`;
+				str += `<td>${stu.stuYear + ' '+ stu.stuSem}학기</td>`;
+				str += `<td style="text-align: right;">재적상태</td>`;
+				str += `<td></td>`;
+				str += `<td>${stu.stuStatus}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td style="text-align: center;">단과대학</td>`;
+				str += `<td>${stu.colleageVO.collName}</td>`;
+				str += `<td style="text-align: right;">학점</td>`;
+				str += `<td></td>`;
+				str += `<td>???점</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td style="text-align: center;">전공학과</td>`;
+				str += `<td>${stu.deptVO.deptName}</td>`;
+				str += `<td style="text-align: right;">학사경고</td>`;
+				str += `<td></td>`;
+				str += `<td>???회</td>`;
+				str += `</tr>`;
+				
+				
+			}
+			
+			
+			
+			content_div.insertAdjacentHTML('afterbegin', str);
+			
+			const modal = new bootstrap.Modal('#memberModal');
+			modal.show();
+		
+		
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+	
+	
+	
+}
+
+
+//교수/교직원 조회 -> 교수 클릭시 상세창 모달 실행
+function openProModal(empNo){
+	console.log(empNo);
+	
+	//ajax start
+	$.ajax({
+		url: '/school/getProModalAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'empNo':empNo}, //필요한 데이터
+		success: function(result) {
+			console.log(result);
+			
+			const content_div = document.querySelector('#memberModal .modal-body');
+			content_div.replaceChildren();	
+			let str = '';
+			
+			str += `<div class="row">`;
+			str += `<div class="col">`;
+			str += `<table class="table">`;
+			str += `<colgroup>`;
+			str += `<col width="*%">`;
+			str += `<col width="15%">`;
+			str += `<col width="15%">`;
+			str += `<col width="15%">`;
+			str += `<col width="25%">`;
+			str += `</colgroup>`;
+			
+			for(const emp of result){
+				str += `<tr>`;
+				str += `<td colspan="5">교수/교직원 기본정보</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td rowspan="7"><img src="'/upload/${emp.memberVO.memImage}" style="width: 100%; height: 100%"></td>`;
+				str += `<td>No(ID)</td>`;
+				str += `<td colspan="3">${emp.memberVO.memNo}</td>`;
+				str += `<tr>`;
+				str += `<td>교수/교직원명</td>	`;
+				str += `<td colspan="3">${emp.memberVO.memName}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>생년월일</td>`;
+				str += `<td>${emp.memberVO.memBirthday}</td>`
+				str += `<td style="text-align: center;">성별</td>`;
+				str += `<td>${emp.memberVO.memGender}</td>`
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>신규가입일</td>`;
+				str += `<td colspan="3">${emp.memberVO.regDate}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>이메일</td>`;
+				str += `<td colspan="3">${emp.memberVO.memEmail}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>전화번호</td>`;
+				str += `<td colspan="3">${emp.memberVO.memTell}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>주소</td>`;
+				str += `<td colspan="3">${emp.memberVO.memAddr  + ' ' +  emp.memberVO.memAddrDetail}</td>`;
+				str += `</tr>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td colspan="6">교수/교직원 학사정보</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td style="text-align: center;">단과대학</td>`;
+				str += `<td>${emp.colleageVO.collName}</td>`;
+				str += `<td style="text-align: right;">전공학과</td>`;
+				str += `<td colspan="2" style="text-align: center;">${emp.deptVO.deptName}</td>`;
+				str += `</tr>`;
+				
+			}
+			
+			content_div.insertAdjacentHTML('afterbegin', str);
+			
+			const modal = new bootstrap.Modal('#memberModal');
+			modal.show();
+			
+		
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+	
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

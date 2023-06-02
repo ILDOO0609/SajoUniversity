@@ -95,7 +95,7 @@ function approveO(isConfirmed){
 			}
 			else{
 				for(const app of result){
-					str += `<tr>`;
+					str += `<tr style="cursor: pointer;" onclick="openModal('${app.memNo}');">`;
 					str += `<td>${app.memNo}</td>`;
 					str += `<td>${app.memName}</td>`;
 					str += `<td>${app.memRole}</td>`;
@@ -143,7 +143,7 @@ function approveX(isConfirmed){
 			}
 			else{
 				for(const app of result){
-					str += `<tr>`;
+					str += `<tr style="cursor: pointer;" onclick="openModal('${app.memNo}');">`;
 					str += `<td>${app.memNo}</td>`;
 					str += `<td>${app.memName}</td>`;
 					str += `<td>${app.memRole}</td>`;
@@ -169,6 +169,7 @@ function approveX(isConfirmed){
 
 //회원 클릭시 상세창 모달 실행
 function openModal(memNo){
+	console.log(memNo);
 	
 	//ajax start
 	$.ajax({
@@ -198,27 +199,38 @@ function openModal(memNo){
 			
 			result.forEach(function(member, index){
 				str += `<tr>`;
-				str += `<td rowspan="5" ><img th:src="@{'/upload/' + ${member.memImage}}" style="width: 100%; height: 100%"></td>`;
-				str += `<td>성명</td>`;
-				str += `<td>${member.memName}</td>`;
-				str += `<td>학번</td>	`;
-				str += `<td>${member.memNo}</td>`;
+				str += `<td rowspan="8" ><img src="'/upload/${member.memImage}" style="width: 100%; height: 100%"></td>`;
+				str += `<td>회원명</td>`;
+				str += `<td colspan="3">${member.memName}</td>`;
+				str += `<tr>`;
+				str += `<td>회원No(ID)</td>	`;
+				str += `<td colspan="3">${member.memNo}</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td>생년월일</td>`;
-				str += `<td>${member.memBirthday}</td>`;
+				str += `<td>${member.memBirthday}</td>`
+				str += `<td style="text-align: center;">성별</td>`;
+				str += `<td>${member.memGender}</td>`
+				str += `</tr>`;
+				str += `<tr>`;
 				str += `<td>신규가입일</td>`;
-				str += `<td>${member.regDate}</td>`;
+				str += `<td colspan="3">${member.regDate}</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td>이메일</td>`;
-				str += `<td>${member.memEmail}</td>`;
+				str += `<td colspan="3">${member.memEmail}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
 				str += `<td>전화번호</td>`;
-				str += `<td>${member.memTell}</td>`;
+				str += `<td colspan="3">${member.memTell}</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td>주소</td>`;
 				str += `<td colspan="3">${member.memAddr  + ' ' +  member.memAddrDetail}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>신청직책</td>`;
+				str += `<td colspan="3">${member.memRole}</td>`;
 				str += `</tr>`;
 			});
 			

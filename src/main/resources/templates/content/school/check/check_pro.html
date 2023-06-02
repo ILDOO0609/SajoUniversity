@@ -5,91 +5,107 @@
 	layout:decorate="~{fragment/school/school_layout}">
 
 <th:block layout:fragment="content">
-
-<h2>교수/교직원조회</h2>
-<div class="row">
-	<div class="col">
-		<div class="row">
-			<div class="col" style="padding-right: 0px;">
-				<table class="table table-hover" id="proTable">
-					<colgroup>
-						<col width="15%">					
-						<col width="15%">					
-						<col width="15%">					
-						<col width="25%">					
-						<col width="30%">					
-					</colgroup>
-					
-					<thead>
-						<tr style="text-align: left; font-weight: bold;">
-							<td colspan="5">
-								교수/교직원 정보
-							</td>
-						</tr>
+<div class="container">
+	<h2>교수/교직원조회</h2>
+	<div class="row">
+		<div class="col">
+			<div class="row">
+				<div class="col" style="padding-right: 0px;">
+					<table class="table table-hover" id="proTable">
+						<colgroup>
+							<col width="15%">					
+							<col width="15%">					
+							<col width="15%">					
+							<col width="25%">					
+							<col width="30%">					
+						</colgroup>
 						
-						<tr>
-							<td>직책</td>
-							<td>
-								<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교수" checked>
-								<label class="form-check-label" for="gender_male">교수</label>
-							</td>
-							<td>
-								<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교직원">
-								<label class="form-check-label" for="gender_female">교직원</label>
-							</td>
-							<td>교수/교직원 명</td>
-							<td>
-								<input type="text" class="form-control" name="searchValue" id="searchProInput" placeholder="교수&교직원명 입력">
-							</td>
-						</tr>
-						
-						<tr>
-							<td>단과대학</td>
-							<td>
-								<select class="form-select" name="collNo" onchange="changeColl(this);">
-									<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
-								</select>
-							</td>
-							<td>전공학과</td>
-							<td id="deptDiv">
-								<select class="form-select" name="deptNo">
-									<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
-										[[${dept.deptName}]]
-									</option>
-								</select>
-							</td>
-							<td style="text-align: right;">
-								<input type="button" class="btn btn-primary" id="serachPro" value="Search" onclick="searchProList();">
-								<input type="button" class="btn btn-warning" id="serachStf" value="Search" onclick="searchStfList();">
-							</td>
-						</tr>
-						
-						<tr style="text-align: left; font-weight: bold;">
-							<td colspan="5">
-								교수&교직원 전체 조회 및 검색 결과
-							</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>교수번호</td>
-							<td>직책</td>
-							<td>교수명</td>
-							<td>단과대학</td>
-							<td>전공</td>
-						</tr>	
-						<tr th:each="pro : ${proList}">
-							<td>[[${pro.empVO.memNo}]]</td>
-							<td>[[${pro.memberVO.memRole}]]</td>
-							<td>[[${pro.memberVO.memName}]]</td>
-							<td>[[${pro.colleageVO.collName}]]</td>
-							<td>[[${pro.deptVO.deptName}]]</td>
-						</tr>
-					</tbody>	
-				</table>
+						<thead>
+							<tr style="text-align: left; font-weight: bold;">
+								<td colspan="5">
+									교수/교직원 정보
+								</td>
+							</tr>
+							
+							<tr>
+								<td>직책</td>
+								<td>
+									<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교수" checked>
+									<label class="form-check-label" for="gender_male">교수</label>
+								</td>
+								<td>
+									<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교직원">
+									<label class="form-check-label" for="gender_female">교직원</label>
+								</td>
+								<td>교수/교직원 명</td>
+								<td>
+									<input type="text" class="form-control" name="searchValue" id="searchProInput" placeholder="교수&교직원명 입력">
+								</td>
+							</tr>
+							
+							<tr>
+								<td>단과대학</td>
+								<td>
+									<select class="form-select" name="collNo" onchange="changeColl(this);">
+										<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
+									</select>
+								</td>
+								<td>전공학과</td>
+								<td id="deptDiv">
+									<select class="form-select" name="deptNo">
+										<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
+											[[${dept.deptName}]]
+										</option>
+									</select>
+								</td>
+								<td style="text-align: right;">
+									<input type="button" class="btn btn-primary" id="serachPro" value="Search" onclick="searchProList();">
+									<input type="button" class="btn btn-warning" id="serachStf" value="Search" onclick="searchStfList();">
+								</td>
+							</tr>
+							
+							<tr style="text-align: left; font-weight: bold;">
+								<td colspan="2">
+									교수&교직원 전체 조회 및 검색 결과
+								</td>
+								<td colspan="3" style="font-size: 0.8em; color: red;">해당 회원 클릭시 회원상세창이 열립니다.</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>교수번호</td>
+								<td>직책</td>
+								<td>교수명</td>
+								<td>단과대학</td>
+								<td>전공</td>
+							</tr>	
+							<tr th:each="emp : ${proList}" style="cursor: pointer;" th:onclick="openProModal([[${emp.empNo}]]);">
+								<td>[[${emp.empVO.memNo}]]</td>
+								<td>[[${emp.memberVO.memRole}]]</td>
+								<td>[[${emp.memberVO.memName}]]</td>
+								<td>[[${emp.colleageVO.collName}]]</td>
+								<td>[[${emp.deptVO.deptName}]]</td>
+							</tr>
+						</tbody>	
+					</table>
+				</div>
+			</div>
+		</div>	
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade modal-lg" id="memberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">교수/교직원 상세정보</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+			    ...
 			</div>
 		</div>
-	</div>	
+	</div>
 </div>
 
 </th:block>

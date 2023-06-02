@@ -137,9 +137,9 @@
 		WHERE ST.COLL_NO = COLL.COLL_NO
 		AND ST.DEPT_NO = DP.DEPT_NO
 		AND ST.MEM_NO = MEM.MEM_NO
-		<!-- <if test='memberVO.searchValue != null and !memberVO.searchValue.equals("")'>
-		AND UPPER(MEM_NAME) LIKE UPPER('%'||#{searchValue} ||'%')
-		</if> -->
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
 		<if test="collNo != null and collNo != ''">
 		AND COLL.COLL_NO = #{collNo}
 		</if>
@@ -147,8 +147,33 @@
 		AND DP.DEPT_NO = #{deptNo}
 		</if>
 	</select>
-	
-	
+	<!-- 학사조회 -> 학생조회 -> 상세모달창 -->
+	<select id="checkStuModal" resultMap="stuMapper.stu">
+		SELECT STU_NO
+		    , STU_YEAR
+		    , STU_SEM
+		    , DECODE(STU_STATUS, '1', '재학중', '2','휴학중', '3', '제적') STU_STATUS
+		    , ST.MEM_NO
+		    , MEM_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , DP.DEPT_NO
+		    , DEPT_NAME
+		    , DECODE(MEM_GENDER, 'M', '남', 'F', '여') MEM_GENDER
+		    , MEM_TELL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+		    , MEM_EMAIL
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+		    , MEM_IMAGE
+		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM
+		WHERE ST.COLL_NO = COLL.COLL_NO
+		AND ST.DEPT_NO = DP.DEPT_NO
+		AND ST.MEM_NO = MEM.MEM_NO
+		AND STU_NO = #{stuNo}
+	</select>
+
 	<!-- 학사조회 -> 교수 조회 -->
 	<select id="checkProList" resultMap="empMapper.lecture">
 		SELECT EMP_NO
@@ -188,7 +213,31 @@
 		</if>
 	</select>
 	
-	
+	<!-- 학사조회 -> 교수/교직원 -> 상세모달창 -->
+	<select id="checkProModal" resultMap="empMapper.lecture">
+		SELECT EMP_NO
+		    , EMP.MEM_NO
+		    , MEM_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , DP.DEPT_NO
+		    , DEPT_NAME
+		    , DECODE(MEM_GENDER, 'M', '남', 'F', '여') MEM_GENDER
+		    , MEM_TELL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+		    , MEM_EMAIL
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+		    , MEM_IMAGE
+		    , DECODE(MEM_ROLE, 'stf', '교직원', 'pro', '교수') 
+		FROM EMP EMP, COLLEAGE COLL, DEPT DP, MEMBER MEM
+		WHERE EMP.COLL_NO = COLL.COLL_NO
+		AND EMP.DEPT_NO = DP.DEPT_NO
+		AND EMP.MEM_NO = MEM.MEM_NO
+		AND MEM_ROLE != 'stu'
+		AND EMP_NO = #{empNo}
+	</select>
 	
 	
 	
@@ -199,7 +248,7 @@
 		    STATUS_NO
 		    , MB.MEM_NO
 		    , MEM_NAME
-		    , ST.MEM_NO
+		    , ST.STU_NO
 		    , STU_YEAR
 		    , DE.DEPT_NO
 		    , DEPT_NAME
@@ -225,7 +274,7 @@
 		    STATUS_NO
 		    , MB.MEM_NO
 		    , MEM_NAME
-		    , ST.MEM_NO
+		    , ST.STU_NO
 		    , STU_YEAR
 		    , DE.DEPT_NO
 		    , DEPT_NAME
@@ -251,7 +300,7 @@
 		    STATUS_NO
 		    , MB.MEM_NO
 		    , MEM_NAME
-		    , ST.MEM_NO
+		    , ST.STU_NO
 		    , STU_YEAR
 		    , DE.DEPT_NO
 		    , DEPT_NAME
@@ -270,8 +319,6 @@
 		AND AFTER_STATUS = 'E' 
 		AND ING_STATUS = 'R'
 	</select>
-	
-	
 	
 	<!-- 휴학관리 신청회원 조회 -->
 	<select id="updateLeaveSelect" resultType="String">
@@ -312,7 +359,32 @@
 		WHERE STU_NO = #{stuNo}
 	</update>
 	
-
+	<!-- 휴학관리 회원 모달 -->
+	<select id="checkLeaveModal" resultMap="stuMapper.stu">
+		SELECT STU_NO
+		    , STU_YEAR
+		    , STU_SEM
+		    , DECODE(STU_STATUS, '1', '재학중', '2','휴학중', '3', '제적') STU_STATUS
+		    , ST.MEM_NO
+		    , MEM_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , DP.DEPT_NO
+		    , DEPT_NAME
+		    , DECODE(MEM_GENDER, 'M', '남', 'F', '여') MEM_GENDER
+		    , MEM_TELL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+		    , MEM_EMAIL
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+		    , MEM_IMAGE
+		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM
+		WHERE ST.COLL_NO = COLL.COLL_NO
+		AND ST.DEPT_NO = DP.DEPT_NO
+		AND ST.MEM_NO = MEM.MEM_NO
+		AND STU_NO = #{stuNo}
+	</select>
 
 
 
@@ -647,12 +719,12 @@
 			, REG_DATE
 			, TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
 			, MEM_TELL
-			, DECODE(IS_CONFIRMED, 'Y','승인완료', 'N', '승인취소') AS IS_CONFIRMED
+			, DECODE(IS_CONFIRMED, 'Y','승인완료', 'N', '승인취소', 'I', '승인대기') AS IS_CONFIRMED
 			, MEM_IMAGE
 		FROM MEMBER	
 		ORDER BY REG_DATE DESC
 	</select>
-	
+	<!-- 회원메뉴 -> 신규회원 승인/취소 승인완료 조회 -->
 	<select id="selectMemberAddList" resultMap="memberMapper.member">
 		SELECT MEM_NO
 			, MEM_NAME
@@ -662,11 +734,14 @@
 			, MEM_TELL
 			, DECODE(IS_CONFIRMED, 'Y','승인완료', 'N', '승인취소') AS IS_CONFIRMED
 			, MEM_IMAGE
+			, MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , MEM_EMAIL
 		FROM MEMBER	
 		WHERE IS_CONFIRMED = 'Y'
 		ORDER BY REG_DATE DESC
 	</select>
-	
+	<!-- 회원메뉴 -> 신규회원 승인/취소 승인취소 조회 -->
 	<select id="selectMemberDeniedList" resultMap="memberMapper.member">
 		SELECT MEM_NO
 			, MEM_NAME
@@ -683,20 +758,20 @@
 	
 	<!-- 회원클릭시 상세 모달창 -->
 	<select id="getMemberModal" resultMap="memberMapper.member">
-		SELECT MEM.MEM_NO
+		SELECT MEM_NO
 		    , MEM_NAME
-		    , MEM_GENDER
+		    , DECODE(MEM_GENDER, 'M', '남', 'F', '여') MEM_GENDER
 		    , MEM_TELL
 		    , MEM_ADDR
 		    , MEM_ADDR_DETAIL
-		    , MEM_ROLE
+		    , DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
 		    , TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
 		    , MEM_EMAIL
 		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 		    , IS_CONFIRMED
 		    , MEM_IMAGE
-		FROM MEMBER MEM
-		WHERE MEM.MEM_NO = #{memNo}
+		FROM MEMBER
+		WHERE MEM_NO = #{memNo}
 	</select>
 	
 <!-- 	
@@ -723,6 +798,15 @@
 		AND ST.MEM_NO = MEM.MEM_NO
 		AND MEM.MEM_NO = #{memNo}
 	</select> -->
+	
+	
+	
+	<!-- 회원메뉴 -> 회원승인거부처리 -->
+	<update id="updateXPosition">
+		UPDATE MEMBER
+		SET IS_CONFIRMED = 'N'
+		WHERE MEM_NO = ${memNo}
+	</update>
 	
 	
 </mapper>

@@ -61,6 +61,8 @@ public interface SchoolService {
 	List<StuVO> checkStuList(StuVO stuVO);
 	//학생 조회 -> 검색
 	List<StuVO> searchStuListAjax(StuVO stuVO);
+	//학생 조회 -> 회원클릭시 모달창
+	List<StuVO> checkStuModal(String stuNo);
 	
 	//교수 조회
 	List<EmpVO> checkProList(LectureVO lectureVO);
@@ -71,7 +73,9 @@ public interface SchoolService {
 	List<LectureVO> searchProListAjax(LectureVO lectureVO);
 	//교직원 검색
 	List<MemberVO> searchStfListAjax(MemberVO memberVO);
-	
+
+	//교수 조회 -> 클릭시 모달창
+	List<LectureVO> checkProModal(String empNo);
 	
 // -------학적변동------------------------------------------------------	
 	
@@ -133,8 +137,11 @@ public interface SchoolService {
 	//신규회원 업데이트할 회원 조회
 	MemberVO selectMember(String memNo);
 	
-	//신규회원 업데이트
+	//신규회원(승인) 업데이트
 	void updatePosition(String memNo);
+	
+	//신규회원(거절) 업데이트
+	void updateXPosition(String memNo);
 	
 	//신규회원 업데이트 정보인서트 
 	void insertStu(StuVO stuVO);

@@ -18,10 +18,10 @@ public class CalendarServiceImpl implements CalendarService{
 	public void addSchedule(CalendarVO calendarVO) {
 		sqlSession.insert("calendarMapper.addSchedule", calendarVO);
 	}
-
+	//학사일정 전체조회
 	@Override
 	public List<CalendarVO> showSchedule() {
-		return sqlSession.selectList("calendarMapper.showSchedule");
+		return sqlSession.selectList("calendarMapper.calendarList");
 	}
 
 }

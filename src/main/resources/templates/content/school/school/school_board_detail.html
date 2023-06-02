@@ -5,79 +5,80 @@
 	layout:decorate="~{fragment/school/school_layout}">
 
 <th:block layout:fragment="content">
-<h1 style="text-align: center;">학사안내</h1>
-	<table class="table">
-		<th:block th:each="detail : ${detailList}">
-		<input type="hidden" id="schInfoCode" name="schInfoCode" th:value="${detail.schInfoCode}">
-			<thead>
-				<tr>
-					<td style="font-size: 20px;">
-						<span th:text="${detail.schInfoNum}"></span> &nbsp;&nbsp;&nbsp;
-						<span th:text="${detail.schInfoTitle}"></span>
-					</td>
-					<td style="text-align: right;">
-						<span>등록일 : </span><span th:text="${detail.schInfoDate}"></span>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<span>작성자 : </span><span th:text="${detail.schInfoWriter}"></span>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span>조회수 : </span><span th:text="${detail.schInfoReadCnt}"></span>
-					</td>
-					<td style="text-align: right;">
-						<span>기간 : </span><span th:text="${detail.schInfoStartDate}"></span> ~
-						<span th:text="${detail.schInfoEndDate}"></span>
-					</td>
-				</tr>
-			</thead>
-			<tbody >
-				<tr>
-					<td colspan="2">
-						<textarea rows="30" cols="150" class="content" name="schInfoContent" th:text="${detail.schInfoContent}" readonly="readonly"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						이전글 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<th:block th:if="${prevList.schInfoCode} == null">
-							<span>[[${prevList.schInfoTitle}]]</span>
-						</th:block>
-						<th:block th:unless="${prevList.schInfoCode} == null">
-							<span th:onclick="prev([[${detail.schInfoCode}]]);" style="cursor: pointer;">[[${prevList.schInfoTitle}]]</span>
-						</th:block>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						다음글 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<th:block th:if="${nextList.schInfoCode} == null">
-							<span>[[${nextList.schInfoTitle}]]</span>
-						</th:block>
-						<th:block th:unless="${nextList.schInfoCode} == null">
-							<span th:onclick="next([[${detail.schInfoCode}]]);" style="cursor: pointer;">[[${nextList.schInfoTitle}]]</span>
-						</th:block>
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td >
-						<div sec:authorize="isAuthenticated()">
-							<div th:if="${detail.schInfoWriter == #authentication.name or #authorization.expression('hasRole(''ROLE_stf'')')}">
-								<input type="button" class="btn btn-primary" value="수정" th:onclick="|location.href='@{/school/schoolBoardUpdateForm(schInfoCode=${detail.schInfoCode})}'|">
-								<input type="button" class="btn btn-danger" value="삭제" th:onclick="deleteInfo([[${detail.schInfoCode}]]);">
-							</div>
-						</div>	
-					</td>
-					<td style="text-align: right;">
-						<input type="button" class="btn btn-primary" value="목록으로 가기" th:onclick="|location.href='@{/school/info}';|">
-					</td>
-				</tr>
-			</tfoot>
-		</th:block>
-	</table>
-
+	<div class="container">
+		<h1 style="text-align: center;">학사안내</h1>
+		<table class="table">
+			<th:block th:each="detail : ${detailList}">
+			<input type="hidden" id="schInfoCode" name="schInfoCode" th:value="${detail.schInfoCode}">
+				<thead>
+					<tr>
+						<td style="font-size: 20px;">
+							<span th:text="${detail.schInfoNum}"></span> &nbsp;&nbsp;&nbsp;
+							<span th:text="${detail.schInfoTitle}"></span>
+						</td>
+						<td style="text-align: right;">
+							<span>등록일 : </span><span th:text="${detail.schInfoDate}"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span>작성자 : </span><span th:text="${detail.schInfoWriter}"></span>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span>조회수 : </span><span th:text="${detail.schInfoReadCnt}"></span>
+						</td>
+						<td style="text-align: right;">
+							<span>기간 : </span><span th:text="${detail.schInfoStartDate}"></span> ~
+							<span th:text="${detail.schInfoEndDate}"></span>
+						</td>
+					</tr>
+				</thead>
+				<tbody >
+					<tr>
+						<td colspan="2">
+							<textarea rows="30" cols="150" class="content" name="schInfoContent" th:text="${detail.schInfoContent}" readonly="readonly"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							이전글 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<th:block th:if="${prevList.schInfoCode} == null">
+								<span>[[${prevList.schInfoTitle}]]</span>
+							</th:block>
+							<th:block th:unless="${prevList.schInfoCode} == null">
+								<span th:onclick="prev([[${detail.schInfoCode}]]);" style="cursor: pointer;">[[${prevList.schInfoTitle}]]</span>
+							</th:block>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							다음글 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<th:block th:if="${nextList.schInfoCode} == null">
+								<span>[[${nextList.schInfoTitle}]]</span>
+							</th:block>
+							<th:block th:unless="${nextList.schInfoCode} == null">
+								<span th:onclick="next([[${detail.schInfoCode}]]);" style="cursor: pointer;">[[${nextList.schInfoTitle}]]</span>
+							</th:block>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td >
+							<div sec:authorize="isAuthenticated()">
+								<div th:if="${detail.schInfoWriter == #authentication.name or #authorization.expression('hasRole(''ROLE_stf'')')}">
+									<input type="button" class="btn btn-primary" value="수정" th:onclick="|location.href='@{/school/schoolBoardUpdateForm(schInfoCode=${detail.schInfoCode})}'|">
+									<input type="button" class="btn btn-danger" value="삭제" th:onclick="deleteInfo([[${detail.schInfoCode}]]);">
+								</div>
+							</div>	
+						</td>
+						<td style="text-align: right;">
+							<input type="button" class="btn btn-primary" value="목록으로 가기" th:onclick="|location.href='@{/school/info}';|">
+						</td>
+					</tr>
+				</tfoot>
+			</th:block>
+		</table>
+	</div>
 
 </th:block>
 

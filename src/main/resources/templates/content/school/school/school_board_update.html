@@ -5,54 +5,55 @@
 	layout:decorate="~{fragment/school/school_layout}">
 
 <th:block layout:fragment="content">
-<h1 style="text-align: center;">학사안내</h1>
-<form id="schInfoUpdateForm" th:action="@{/school/updateSchoolInfo}" method="post">
-	<table class="table">
-		<th:block th:each="detail : ${detailList}">
-		<input type="hidden" id="schInfoCode" name="schInfoCode" th:value="${detail.schInfoCode}">
-			<thead>
-				<tr>
-					<td style="font-size: 20px;">
-						<span th:text="${detail.schInfoNum}"></span> |
-						<input style="width: 100%;" class="form-control" name="schInfoTitle" th:value="${detail.schInfoTitle}">
-					</td>
-					<td style="text-align: right;">
-						<span>등록일 : </span><span th:text="${detail.schInfoDate}"></span>
-					</td>
-				</tr>	
-				<tr>
-					<td>
-						<span>작성자 : </span><span th:text="${detail.schInfoWriter}"></span>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span>조회수 : </span><span th:text="${detail.schInfoReadCnt}"></span>
-					</td>
-					<td style="text-align: right;">
-						<span>기간 : </span><span th:text="${detail.schInfoStartDate}"></span> ~
-						<span th:text="${detail.schInfoEndDate}"></span>
-					</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td colspan="2">
-						<textarea rows="30" cols="100" class="form-control" name="schInfoContent" th:text="${detail.schInfoContent}"></textarea>
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td>
-						<input type="button" class="btn btn-primary" value="수정완료" onclick="schInfoUpdate();">
-					</td>
-					<td style="text-align: right;">
-						<input type="button" class="btn btn-primary" value="목록으로 가기"  th:onclick="|location.href='@{/school/info}';|">
-					</td>
-				</tr>
-			</tfoot>		
-		</th:block>
-	</table>
-</form>	
-		
+	<div class="container">
+		<h1 style="text-align: center;">학사안내</h1>
+		<form id="schInfoUpdateForm" th:action="@{/school/updateSchoolInfo}" method="post">
+			<table class="table">
+				<th:block th:each="detail : ${detailList}">
+				<input type="hidden" id="schInfoCode" name="schInfoCode" th:value="${detail.schInfoCode}">
+					<thead>
+						<tr>
+							<td style="font-size: 20px;">
+								<span th:text="${detail.schInfoNum}"></span> |
+								<input style="width: 100%;" class="form-control" name="schInfoTitle" th:value="${detail.schInfoTitle}">
+							</td>
+							<td style="text-align: right;">
+								<span>등록일 : </span><span th:text="${detail.schInfoDate}"></span>
+							</td>
+						</tr>	
+						<tr>
+							<td>
+								<span>작성자 : </span><span th:text="${detail.schInfoWriter}"></span>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<span>조회수 : </span><span th:text="${detail.schInfoReadCnt}"></span>
+							</td>
+							<td style="text-align: right;">
+								<span>기간 : </span><span th:text="${detail.schInfoStartDate}"></span> ~
+								<span th:text="${detail.schInfoEndDate}"></span>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="2">
+								<textarea rows="30" cols="100" class="form-control" name="schInfoContent" th:text="${detail.schInfoContent}"></textarea>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td>
+								<input type="button" class="btn btn-primary" value="수정완료" onclick="schInfoUpdate();">
+							</td>
+							<td style="text-align: right;">
+								<input type="button" class="btn btn-primary" value="목록으로 가기"  th:onclick="|location.href='@{/school/info}';|">
+							</td>
+						</tr>
+					</tfoot>		
+				</th:block>
+			</table>
+		</form>	
+	</div>	
 
 </th:block>
 

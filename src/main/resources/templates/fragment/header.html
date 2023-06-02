@@ -34,6 +34,13 @@
       Menu
     </button>
     <a class="navbar-brand" href="/member/main">Sajo University</a>
+    			<span sec:authorize="isAuthenticated()">
+    			<span style="color: white; text-align: right">
+					[[${#authentication.name}]]님 반갑습니다.
+					 <a th:href="@{/member/logout}" class="list-group-item list-group-item-action">LOGOUT</a>
+				</span>
+				</span> 
+    
     <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">학생 메뉴</h5>
@@ -127,6 +134,12 @@
       Menu
     </button>
     <a class="navbar-brand" href="/member/main">Sajo University</a>
+   				<span sec:authorize="isAuthenticated()">
+    			<span style="color: white; text-align: right">
+					[[${#authentication.name}]]님 반갑습니다.
+					 <a th:href="@{/member/logout}" class="list-group-item list-group-item-action">LOGOUT</a>
+				</span>
+				</span>
     <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">교수 메뉴</h5>
@@ -176,17 +189,13 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
               <li><a class="dropdown-item" href="/member/map">지도 및 로드뷰</a></li>
-              <!--<li><a class="dropdown-item" href="#" onclick="openPopup();">길찾기</a></li>  -->
+              <li><a class="dropdown-item" href="#" onclick="openPopup();">오시는 길 찾기</a></li>
             </ul>
             
 			
             
             
           </li>
-        
-        
-       
-     
         </ul>
         <form class="d-flex mt-3" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -207,6 +216,12 @@
       Menu
     </button>
     <a class="navbar-brand" href="/member/main">Sajo University</a>
+    			<span sec:authorize="isAuthenticated()">
+    			<span style="color: white; text-align: right">
+					[[${#authentication.name}]]님 반갑습니다.
+					 <a th:href="@{/member/logout}" class="list-group-item list-group-item-action">LOGOUT</a>
+				</span>
+				</span>
     <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">교직원 메뉴</h5>
@@ -282,7 +297,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
               <li><a class="dropdown-item" href="/member/map">지도 및 로드뷰</a></li>
-              <!--<li><a class="dropdown-item" href="#" onclick="openPopup();">길찾기</a></li>  -->
+              <li><a class="dropdown-item" href="#" onclick="openPopup();">오시는 길 찾기</a></li>
             </ul>
           </li>
         </ul>

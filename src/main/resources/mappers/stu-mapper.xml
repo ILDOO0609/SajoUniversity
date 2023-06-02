@@ -12,6 +12,7 @@
 	<result column="MEM_NO" 		property="memNo"/>
 	<result column="COLL_NO" 		property="collNo"/>
 	<result column="DEPT_NO" 		property="deptNo"/>
+	<result column="SEARCH_VALUE" 		property="searchValue"/>
 	<association property="memberVO" resultMap="memberMapper.member"></association>
 	<association property="colleageVO" resultMap="colleageMapper.colleage"></association>
 	<association property="deptVO" resultMap="colleageMapper.dept"></association>

@@ -12,7 +12,7 @@
 <th:block layout:fragment="content">
 <div class="container">
 정보수정
-<div class="row">
+<div class="row mt-5 mb-5">
 	<div class="col">
 	<form th:action="@{/stu/updateStuInfo}" method="post" id="updateForm">
 		<table class="table">
@@ -35,8 +35,14 @@
 			<tr>
 				<td>주소</td>
 				<td>
-					<input type="text" class="form-control" id="memAddr" name="memAddr" th:value="${memInfo.memAddr}" onclick="searchAddr();">
-					<input type="button" class="btn btn-primary btn-sm" value="Search"> 
+					<div class="row">
+		  			  <div class="col-5">
+		       			 <input type="text" class="form-control align-items-center" id="memAddr" name="memAddr" th:value="${memInfo.memAddr}" onclick="searchAddr();">
+		   			  </div>
+		    		  <div class="col-2 d-flex align-items-center">
+		        		<input type="button" class="btn btn-primary btn-sm" value="Search"> 
+		    		  </div>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -44,7 +50,11 @@
 				<td><input type="text" class="form-control" name="memAddrDetail" th:value="${memInfo.memAddrDetail}"></td>
 			</tr>
 		</table>
-		<input class="btn btn-primary" type="button" value="수정" onclick="updateStuInfo();">
+		<div class="row">
+			<div class="col-3 d-grid offset-4 mb-5 mt-5">
+				<input class="btn btn-primary" type="button" value="수정" onclick="updateStuInfo();">
+			</div>
+		</div>
 	</form>
 	</div>
 </div>

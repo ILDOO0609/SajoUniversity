@@ -10,48 +10,73 @@
 </th:block>
    
 <th:block layout:fragment="content">
-<h2>신규회원 승인/취소 조회</h2>
-	<div class="row">
+	<div class="row top">
 		<div class="col">
-			<table class="table" id="approveTable">
-				<thead>
-					<tr>
-						<td>
-							<div class="d-grid">
-								<button type="button" class="btn btn-primary" id="approveO_btn" onclick="approveO();">승인완료조회</button>
-							</div>
-						</td>
-						<td>
-							<div class="d-grid">
-								<button type="button" class="btn btn-danger" id="approveX_btn" onclick="approveX();">승인취소조회</button>
-							</div>
-						</td>
-						<td colspan="5"></td>
-					</tr>
-					<tr>
-						<td>이미지</td>
-						<td>No(ID)</td>
-						<td>이름</td>
-						<td>신청직책</td>
-						<td>생년월일</td>
-						<td>연락처</td>
-						<td>신청일</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="member : ${memberList}">
-						<td>이미지</td>								
-						<td class="memNo">[[${member.memNo}]]</td>								
-						<td class="memName">[[${member.memName}]]</td>
-						<td class="memRole">[[${member.memRole}]]</td>
-						<td class="memBirthday">[[${member.memBirthday}]]</td>
-						<td class="memTell">[[${member.memTell}]]</td>
-						<td class="regDate">[[${member.regDate}]]</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="row">
+				<div class="col-6">
+					<h2><a href="/school/memberSelectList">신규회원 승인/취소 전체조회</a></h2>
+				</div>
+				<div class="col-3 d-grid">
+					<button type="button" class="btn btn-primary" id="approveO_btn" onclick="approveO('Y');">승인완료 조회</button>
+				</div>
+				<div class="col-3 d-grid">
+					<button type="button" class="btn btn-danger" id="approveX_btn" onclick="approveX('N');">승인취소 조회</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<table class="table table-hover" id="approveTable">
+						<thead>
+							<tr>
+								<td>No(ID)</td>
+								<td>이름</td>
+								<td>신청직책</td>
+								<td>생년월일</td>
+								<td>연락처</td>
+								<td>신청일</td>
+								<td>승인여부</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="member : ${memberList}">
+								<td id="memNo">[[${member.memNo}]]</td>								
+								<td class="memName">[[${member.memName}]]</td>
+								<td class="memRole">[[${member.memRole}]]</td>
+								<td class="memBirthday">[[${member.memBirthday}]]</td>
+								<td class="memTell">
+									<span style="cursor: pointer;" th:onclick="openModal([[${member.memNo}]]);">[[${member.memTell}]]</span>
+								</td>
+								<td class="regDate">[[${member.regDate}]]</td>
+								<td class="isConfirmed">[[${member.isConfirmed}]]</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>			
 		</div>
 	</div>
+	
+	
+	<!-- Modal -->
+	<div class="modal fade modal-lg" id="memberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">회원 상세정보</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+				    ...
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
 	
 </th:block>
 

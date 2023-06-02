@@ -27,6 +27,7 @@ import com.study.test.stu.vo.StuVO;
 import com.study.test.util.TimeTableForTime;
 
 import jakarta.annotation.Resource;
+import lombok.extern.log4j.Log4j2;
 
 @Controller
 @RequestMapping("/stu")
@@ -67,11 +68,14 @@ public class StuController {
 	public String stuGetGrade(Authentication authentication, String stuNo, Model model) {
 		stuNo = stuService.getStuInfo(authentication.getName()).getStuNo();
 		
+		
+		
 		model.addAttribute("gradeList", stuService.getStuGradeForStu(stuNo));
 		model.addAttribute("stuAvg", stuService.getAvg(stuNo));
 		model.addAttribute("totalScoreForStu", stuService.getTotalScore(stuNo));
 		model.addAttribute("sumScoreList", stuService.getSumScoreForStu(stuNo));
 	
+		
 		
 		return "content/stu/stu_get_grade";
 	}
@@ -327,7 +331,6 @@ public class StuController {
         return new TimeTableForTime();
     }
 
-   
 
 
 }

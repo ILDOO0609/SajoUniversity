@@ -88,11 +88,15 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	
 	
+	
+	
+	
+	
 	//학사일정 일정 목록
 	@Override
 	public List<CalendarVO> calendarList() {
 		return sqlSession.selectList("calendarMapper.calendarList");
-		}
+	}
 	
 	
 	
@@ -117,6 +121,13 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<StuVO> searchStuListAjax(StuVO stuVO) {
 		return sqlSession.selectList("schoolMapper.checkStuList", stuVO);
 	}
+	//학생 조회 -> 회원클릭시 모달창
+	@Override
+	public List<StuVO> checkStuModal(String stuNo) {
+		return sqlSession.selectList("schoolMapper.checkStuModal", stuNo);
+	}
+	
+	
 	
 	
 	//교수 조회
@@ -142,7 +153,11 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectList("schoolMapper.checkStfList", memberVO);
 	}
 	
-	
+	//교수 조회 -> 클릭시 모달창
+	@Override
+	public List<LectureVO> checkProModal(String empNo) {
+		return sqlSession.selectList("schoolMapper.checkProModal", empNo);
+	}
 	
 	
 	
@@ -315,6 +330,10 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<MemberVO> getMemberModal(String memNo) {
 		return sqlSession.selectList("schoolMapper.getMemberModal", memNo);
 	}
+
+	
+
+	
 
 	
 

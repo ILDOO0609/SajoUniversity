@@ -24,4 +24,6 @@ public class StuVO {
 	private MemberVO memberVO;
 	private ColleageVO colleageVO;
 	private DeptVO deptVO;
+	
+	private String searchValue;
 }

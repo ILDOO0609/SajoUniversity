@@ -40,89 +40,122 @@
 		 	</div>
 		 	<div class="col-2 d-grid">
 		 		<input type="button" class="btn btn-primary" value="검색" onclick="infoSearchList();">
+	<div class="container">
+		<h1 style="text-align: center;">학사 안내</h1>
+		<form id="schInfoSearchForm" th:action="@{/school/info}" method="post">
+			<div class="row" style="padding-bottom: 15px;">
+			 	<div class="col-3">
+					<select class="form-select" id="schInfoYear" name="schInfoYear" onchange="schInfoYear">
+						<th:block th:each="num : ${#numbers.sequence(thisYear-4, thisYear)}">
+							<option th:selected="${year == num}" th:value="${num}">[[${num}]]년</option>
+						</th:block>
+					</select>
+			 	</div>
+			 	<div class="col-3">
+			 		<select class="form-select" id="schInfoMonth" name="schInfoMonth" onchange="infoSelectMonth();">
+						<option value="allMonth">전체(월)</option>
+						<option value="1">1월</option>
+						<option value="2">2월</option>
+						<option value="3">3월</option>
+						<option value="4">4월</option>
+						<option value="5">5월</option>
+						<option value="6">6월</option>
+						<option value="7">7월</option>
+						<option value="8">8월</option>
+						<option value="9">9월</option>
+						<option value="10">10월</option>
+						<option value="11">11월</option>
+						<option value="12">12월</option>
+					</select>
+			 	</div>
+			 	<div class="col-4">
+			 		<input type="text" class="form-control" id="schInfoSearchInput" placeholder="제목을 입력해 주세요.">
+			 	</div>
+			 	<div class="col-2 d-grid">
+			 		<input type="button" class="btn btn-primary" value="검색" onclick="infoSearchList();">
+			 	</div>
+			 </div>
+	 	</form>
+		 
+		 <div class="row">
+		 	<div class="col">
+		 		<table class="table table-hover text-center align-middle" id="schInfoTable">
+		 			<colgroup>
+		 				<col width="10%">
+		 				<col width="*%">
+		 				<col width="15%">
+		 				<col width="25%">
+		 				<col width="10%">
+		 			</colgroup>
+		 			<thead>
+		 				<tr style="font-size: 20px; font-weight: bold;">
+		 					<td>글 번호</td>
+		 					<td>글 제목</td>
+		 					<td>등록일</td>
+		 					<td>기간</td>
+		 					<td>조회수</td>
+		 				</tr>
+		 			</thead>
+		 			<tbody id="tbodyTag">
+		 				<th:block th:if="${#lists.size(infoList) == 0}">
+		 					<tr>
+		 						<td colspan="4">조회된 안내글이 없습니다.</td>
+		 					</tr>
+		 				</th:block>
+		 				<th:block th:unless="${#lists.size(infoList) == 0}">
+		 					<tr th:each="info : ${infoList}">
+			 					<td>[[${info.schInfoNum}]]</td>
+			 					<td>
+			 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">
+			 							[[${info.schInfoTitle}]]
+			 						</a>
+			 					</td>
+			 					<td>
+			 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">[[${info.schInfoDate}]]</a>
+			 					</td>
+			 					<td>
+			 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">[[${info.schInfoStartDate}]] ~ [[${info.schInfoEndDate}]]</a>
+			 						
+			 					</td>
+			 					<td>
+			 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">[[${info.schInfoReadCnt}]]</a>
+			 					</td>
+			 				</tr>
+		 				</th:block>
+		 			</tbody>
+		 		</table>
 		 	</div>
 		 </div>
- 	</form>
-	 
-	 <div class="row">
-	 	<div class="col">
-	 		<table class="table table-hover text-center align-middle" id="schInfoTable">
-	 			<colgroup>
-	 				<col width="10%">
-	 				<col width="*%">
-	 				<col width="15%">
-	 				<col width="25%">
-	 				<col width="10%">
-	 			</colgroup>
-	 			<thead>
-	 				<tr style="font-size: 20px; font-weight: bold;">
-	 					<td>글 번호</td>
-	 					<td>글 제목</td>
-	 					<td>등록일</td>
-	 					<td>기간</td>
-	 					<td>조회수</td>
-	 				</tr>
-	 			</thead>
-	 			<tbody id="tbodyTag">
-	 				<th:block th:if="${#lists.size(infoList) == 0}">
-	 					<tr>
-	 						<td colspan="4">조회된 안내글이 없습니다.</td>
-	 					</tr>
-	 				</th:block>
-	 				<th:block th:unless="${#lists.size(infoList) == 0}">
-	 					<tr th:each="info : ${infoList}">
-		 					<td>[[${info.schInfoNum}]]</td>
-		 					<td>
-		 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">
-		 							[[${info.schInfoTitle}]]
-		 						</a>
-		 					</td>
-		 					<td>
-		 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">[[${info.schInfoDate}]]</a>
-		 					</td>
-		 					<td>
-		 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">[[${info.schInfoStartDate}]] ~ [[${info.schInfoEndDate}]]</a>
-		 						
-		 					</td>
-		 					<td>
-		 						<a th:href="@{/school/schoolBoardDetail(schInfoCode=${info.schInfoCode})}">[[${info.schInfoReadCnt}]]</a>
-		 					</td>
-		 				</tr>
-	 				</th:block>
-	 			</tbody>
-	 		</table>
-	 	</div>
-	 </div>
-	
- 	<div class="row justify-content-center">
-		<div class="col-3">
-			<nav aria-label="Page navigation example">
-			  <ul class="pagination" >
-			    <li class="page-item">
-			      <a class="page-link" href="javascript:void(0);" th:href="@{/school/info(nowPage=${schoolInfoVO.beginPage-1})}" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
-			    </li>
-			<th:block th:each="pageNum : ${#numbers.sequence(schoolInfoVO.beginPage, schoolInfoVO.endPage)}">
-			    <li class="page-item"><a class="page-link" th:href="@{/school/info(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
-			</th:block>
-			  
-			    <li class="page-item">
-			      <a class="page-link" href="javascript:void(0);" th:href="@{/school/info(nowPage=${schoolInfoVO.endPage+1})}" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
-			    </li>
-			  </ul>
-			</nav>
-		</div>
-	</div> 
-	 
-	<div sec:authorize="isAuthenticated()">
-		<div th:if="${#authorization.expression('hasRole(''ROLE_stf'')')}">
-			<input type="button" class="btn btn-primary" value="글 등록" th:onclick="|location.href='@{/school/regSchoolBoard}';|">
-		</div>
+		
+	 	<div class="row justify-content-center">
+			<div class="col-3">
+				<nav aria-label="Page navigation example">
+				  <ul class="pagination" >
+				    <li class="page-item">
+				      <a class="page-link" href="javascript:void(0);" th:href="@{/school/info(nowPage=${schoolInfoVO.beginPage-1})}" aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+				<th:block th:each="pageNum : ${#numbers.sequence(schoolInfoVO.beginPage, schoolInfoVO.endPage)}">
+				    <li class="page-item"><a class="page-link" th:href="@{/school/info(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
+				</th:block>
+				  
+				    <li class="page-item">
+				      <a class="page-link" href="javascript:void(0);" th:href="@{/school/info(nowPage=${schoolInfoVO.endPage+1})}" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
+			</div>
+		</div> 
+		 
+		<div sec:authorize="isAuthenticated()">
+			<div th:if="${#authorization.expression('hasRole(''ROLE_stf'')')}">
+				<input type="button" class="btn btn-primary" value="글 등록" th:onclick="|location.href='@{/school/regSchoolBoard}';|">
+			</div>
+		</div>		
 	</div>		
-			
 		
 
 </th:block>

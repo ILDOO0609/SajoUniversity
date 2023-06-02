@@ -308,6 +308,11 @@ public class SchoolServiceImpl implements SchoolService{
 	public void updatePosition(String memNo) {
 		sqlSession.update("schoolMapper.updatePosition", memNo);
 	}
+	//등록회원(거절) 업데이트
+	@Override
+	public void updateXPosition(String memNo) {
+		sqlSession.update("schoolMapper.updateXPosition", memNo);
+	}
 	//등록회원 업데이트 학생 정보인서트 
 	@Override
 	public void insertStu(StuVO stuVO) {

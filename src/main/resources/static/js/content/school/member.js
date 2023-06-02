@@ -29,6 +29,37 @@ function updatePosition(memNo) {
 
 	
 }
+// ----------승인 거절---------
+function updateXPosition(memNo) {
+	
+	const deptNo = document.querySelector('#deptNo').value;
+	const collNo = document.querySelector('#collNo').value;
+	const memRole = document.querySelector('#memRole').value;
+	
+	console.log(memRole);
+	
+	//ajax start
+	$.ajax({
+   		url: '/school/updateXPositionAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	   	data: {'memNo':memNo,'deptNo':deptNo, 'collNo':collNo, 'memRole':memRole}, //필요한 데이터
+	   	success: function(result) {
+			swal("거절완료" , "정상 처리되었습니다.", "success", {button: "확인"})
+			.then((result) => {
+				location.href = `/school/memberList`;
+			})
+			
+	   	},
+	   	error: function() {
+	      alert('실패');
+		}
+	});
+	//ajax end
+
+	
+}
 	
 //전공대학 변경시 실행되는 함수
 function changeColl(coll){

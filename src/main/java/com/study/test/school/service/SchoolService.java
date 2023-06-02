@@ -140,8 +140,11 @@ public interface SchoolService {
 	//신규회원 업데이트할 회원 조회
 	MemberVO selectMember(String memNo);
 	
-	//신규회원 업데이트
+	//신규회원(승인) 업데이트
 	void updatePosition(String memNo);
+	
+	//신규회원(거절) 업데이트
+	void updateXPosition(String memNo);
 	
 	//신규회원 업데이트 정보인서트 
 	void insertStu(StuVO stuVO);

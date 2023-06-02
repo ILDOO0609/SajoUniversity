@@ -40,36 +40,65 @@ const ctx = document.getElementById('myChart');
 
   new Chart(ctx, {
     type: 'bar',
-    data: {
-      labels: ['01', '02', '03', '04', '05', '06','07',
-      			'08', '09', '10', '11','12'],
-      datasets: [
-		
-      	
-      	{
-			type:'line',
-	        label: '월별 등록 현황',
-	        data: monthly['cntList'], // data : [2,3,4,5 ...]
-	        borderWidth:5,
-	        yAxisID:'y1'
-      	}
-      ]
-    },
-    options: {
-      scales: {
-       
-        y1: {
-          beginAtZero: true,
-          type:'linear',
-          display:'true',
-          position:'left'
-        }
-      }
-    }
+		data: {
+			labels: [
+				'1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'
+			],
+			datasets: [
+				{
+					label: '월별 재학생수',
+					data: monthly['attendList'],
+					borderWidth: 1,
+					yAxisID: 'y'
+				},
+				{
+					label: '월별 휴학생수',
+					data: monthly['absenceList'],
+					borderWidth: 1,
+					yAxisID: 'y1'
+				},
+				{	
+					type:'line',
+					label: '월별 등록생수',
+					data: monthly['regList'],
+					borderWidth: 1,
+					yAxisID: 'y2'
+				},
+			]
+		},
+		options: {
+			scales: {
+				y: {
+					beginAtZero: true,
+					type: 'linear',
+					display: true,
+					position: 'left',
+					min: 0,
+					max: 10 
+				},
+				y1: {
+					beginAtZero: true,
+					type: 'linear',
+					display: true,
+					position: 'right',
+					min: 0,
+					max: 10 // 휴학생수의 최대 범위를 가정하고 설정한 값
+				},
+				y2: {
+					beginAtZero: true,
+					type: 'linear',
+					display: true,
+					position: 'right',
+					min: 0,
+					max: 10 // 등록생수의 최대 범위를 가정하고 설정한 값
+				}
+			}
+		}
   });
   
   
-} 
+}  
+
   
   
   

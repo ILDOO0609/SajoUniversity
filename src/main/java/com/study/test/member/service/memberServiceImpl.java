@@ -82,43 +82,11 @@ public class memberServiceImpl implements memberService{
 	
 	// 통계 조회
 	@Override
-	public List<Map<String, Integer>> getMonthlyData2(int year) {
+	public List<Map<String, Integer>> getMonthlyData(int year) {
 
-		return sqlSession.selectList("memberMapper.getMonthlyData2", year);
-	}
-	
-	// 통계 조회 노가다
-	@Override
-	public List<StatisticsVO> getMonthlyData(int year) {
-		
 		return sqlSession.selectList("memberMapper.getMonthlyData", year);
 	}
-	// 통계 조회
-	@Override
-	public List<Map<String, Integer>> getMonthlyData_02(int year) {
-		
-		return sqlSession.selectList("memberMapper.getMonthlyData_02", year);
-	}
 	
-	// 통계 조회 노가다
-	@Override
-	public List<StatisticsVO> getMonthlyData_2(int year) {
-		
-		return sqlSession.selectList("memberMapper.getMonthlyData_2", year);
-	}
-	// 통계 조회
-	@Override
-	public List<Map<String, Integer>> getMonthlyData_03(int year) {
-		
-		return sqlSession.selectList("memberMapper.getMonthlyData_03", year);
-	}
-	
-	// 통계 조회 노가다
-	@Override
-	public List<StatisticsVO> getMonthlyData_3(int year) {
-		
-		return sqlSession.selectList("memberMapper.getMonthlyData_3", year);
-	}
 	
 	
 	

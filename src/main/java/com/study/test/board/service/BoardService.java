@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.study.test.board.vo.BoardCategoryVO;
+import com.study.test.board.vo.BoardListSearchVO;
 import com.study.test.board.vo.BoardVO;
 import com.study.test.util.PageVO;
 
 public interface BoardService {
 	//게시글 조회
-	public List<BoardVO> getBoard(HashMap<String, Object>map);
+	public List<BoardVO> getBoard(BoardListSearchVO boardListSearchVO);
 	
 	//게시글 검색후 조회
 	public List<BoardVO> getBoardForSearch(HashMap<String, Object>map);
@@ -33,7 +34,7 @@ public interface BoardService {
 	void updateBoard(BoardVO boardVO);
 	
 	// 전체 데이터 수 조회
-	public int getBoardListCnt();
+	public int getBoardListCnt(BoardListSearchVO boardListSearchVO);
 	
 	//다음에 조회될 게시판번호
 	String getNextBoardNo();

@@ -830,6 +830,15 @@
 	</select> -->
 	
 	
+	
+	<!-- 회원메뉴 -> 회원승인거부처리 -->
+	<update id="updateXPosition">
+		UPDATE MEMBER
+		SET IS_CONFIRMED = 'N'
+		WHERE MEM_NO = ${memNo}
+	</update>
+	
+	
 </mapper>
 
 

@@ -2,6 +2,7 @@ package com.study.test.board.vo;
 
 import java.util.List;
 
+import com.study.test.member.vo.MemberVO;
 import com.study.test.reply.vo.ReplyVO;
 
 import lombok.Getter;
@@ -27,5 +28,7 @@ public class BoardVO {
 	private List<ReplyVO> replyList;
 	private BoardImgVO boardImgVO;
 	private BoardCategoryVO boardCategoryVO;
+	private MemberVO memberVO;
 	private String searchValue;
+	
 }

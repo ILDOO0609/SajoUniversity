@@ -1,32 +1,47 @@
 //강의 폐강버튼 클릭시 실행
 function regClose(lecNo){
 	
-	//체크되있는 강의상태 들고오기
-	const result = confirm('강의를 폐강하시겠습니까?');
-	if(!result){
-		return ;
-	}	
-	//ajax start
-	$.ajax({
-		url: '/emp/regCloseAjax', //요청경로
-		type: 'post',
-		async: true,
-		//contentType : 'application/json; charset=UTF-8',
-		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		data: {'lecNo':lecNo}, //필요한 데이터
-		success: function(result) {
-			if(result){
-				alert('폐강 되었습니다');
-				drawLectureListTable();
-				document.querySelector('#all').checked=true;
+	Swal.fire({
+		title: '강의를 폐강하시겠습니까?',
+		text: '',
+		icon: 'question',
+   
+		showCancelButton: true, 
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: '확인',
+		cancelButtonText: '취소',
+   
+		reverseButtons: false,
+   
+		}).then(result => {
+			if (result.isConfirmed) {
+				// Ajax request
+				$.ajax({
+					url: '/emp/regCloseAjax', //요청경로
+					type: 'post',
+					async: true,
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					data: {'lecNo':lecNo}, //필요한 데이터
+					success: function(result) {
+						if(result){
+							Swal.fire({
+							  icon: 'success',
+							  title: '폐강완료',
+							  text: '폐강 되었습니다.!',
+							});
+							drawLectureListTable();
+							document.querySelector('#all').checked=true;
+						}
+					},
+					error: function() {
+						alert('실패');
+					}
+				});
 			}
-		},
-		error: function() {
-			alert('실패');
-		}
-	});
-//ajax end
+		});	
 }
+
 
 
 //강의 폐강완료시 강의목록테이블 다시그리기
@@ -195,7 +210,7 @@ function getLectureListForUpdateAjax(updateBtn){
 			
 			let str = '';
 			
-	        str += `		<form id="loginForm" action="/emp/lecUpdate" method="post">`;
+	        str += `		<form id="updateForm" action="/emp/lecUpdate" method="post">`;
 			str += `		<input type="hidden" value="${result[0].lecNo}" name="lecNo">`;
 			str += `			강의 수정`;
 			str += `			<table border="1" class="table text-center modalTable">`;
@@ -285,7 +300,7 @@ function getLectureListForUpdateAjax(updateBtn){
 			}
 			str += `			</table>`;
 			str += `		<input type = "button" value = "시간체크" onclick="timeDuplicationCheckAjax();">`;
-			str += `		<input type = "submit" value = "수정" class="regBtn" disabled>`;
+			str += `		<input type = "button" value = "수정" class="regBtn" onclick="lecUpdate();" disabled>`;
 			str += `		</form>`;
 			
 			modal_body.insertAdjacentHTML('afterbegin', str);
@@ -298,4 +313,15 @@ function getLectureListForUpdateAjax(updateBtn){
 //ajax end
 };
 
+function lecUpdate(){
+	Swal.fire({
+        icon: 'success',
+        title: '수정완료',
+        text: '수정 되었습니다.!',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.querySelector('#updateForm').submit();
+        }
+    })
+}
  

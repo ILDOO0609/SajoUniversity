@@ -6,5 +6,5 @@
     color: blue;
 }
 .modalTable tbody tr td:nth-child(odd) {
-        font-weight: bold;
-    }
+    font-weight: bold;
+}

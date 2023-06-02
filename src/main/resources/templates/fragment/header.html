@@ -25,10 +25,6 @@
 		</div>
 </div>
 
-
-
-	
-	
 	
 <!-- 학생 -->
 <div sec:authorize="hasRole('ROLE_stu')">
@@ -102,7 +98,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
               <li><a class="dropdown-item" href="/member/map">지도 및 로드뷰</a></li>
-              <!--<li><a class="dropdown-item" href="#" onclick="openPopup();">길찾기</a></li>  -->
+              <li><a class="dropdown-item" href="#" onclick="openPopup();">오시는 길 찾기</a></li>
             </ul>
             
 			
@@ -256,7 +252,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
               <li><a class="dropdown-item" href="/school/memberList">신규 회원</a></li>
-              <li><a class="dropdown-item" href="/school/memberList">승인/취소 조회</a></li>
+              <li><a class="dropdown-item" href="/school/memberSelectList">승인/취소 조회</a></li>
             </ul>
             
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -326,10 +322,10 @@
 							
 							<div class="row mb-3">
 								<div class="col-6 d-grid">
-									<input type="button" class="btn d-grid mt-3 btn-primary" value="로그인" onclick="login();" id="toastStart">
+									<input type="button" class="btn d-grid mt-3 btn-dark" value="로그인" onclick="login();" id="toastStart">
 								</div>
 								<div class="col-6 d-grid">
-									<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer;" class="btn d-grid mt-3 btn-primary">
+									<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer;" class="btn d-grid mt-3 btn-dark">
 									비밀번호 찾기
 									</span>
 								</div>
@@ -364,9 +360,9 @@
  							<input type="text" class="form-control" id="memNo" name="memNo" placeholder="등록할 학번 및 교번을 숫자로 입력하세요." onkeyup="setDisabled();">
  						</div>
  						
- 						<div class="col-3">
+ 						<div class="col-3 d-grid">
  							<label for="check_id" class="form-label">&nbsp;</label>
- 							<input type="button" class="btn" id="check_id" value="중복 확인" onclick="isDuplicateMemNo();">
+ 							<input type="button" class="btn btn-dark" id="check_id" value="중복 확인" onclick="isDuplicateMemNo();">
  						</div>
  						
  						<div class="col-12">
@@ -466,7 +462,7 @@
 						
 						<div class="col-3 d-grid">
 							<label for="search_btn" class="form-label">&nbsp;</label> <!-- &nbsp; 하면 space처리 됨 -->
-							<input type="button" class="btn btn-primary" id="search_btn" value="Search" onclick="searchAddr();" placeholder="주소는 필수 입력 입니다.">
+							<input type="button" class="btn btn-dark" id="search_btn" value="Search" onclick="searchAddr();" placeholder="주소는 필수 입력 입니다.">
 						</div>
 						
 						<div class="col-12">

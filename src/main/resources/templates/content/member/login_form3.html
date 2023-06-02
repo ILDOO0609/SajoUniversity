@@ -21,8 +21,16 @@
         position: absolute;
         padding-left: 575px;
       }
+      
+      footer.container-fluid.bg-dark.text-light {
+    position: fixed;
+    opacity: 0.8;
+    /* padding: 0; */
+    /* margin: 0; */
+    /* background-color: black; */
+}
     </style>
-
+<div class="aaa">
 	<div class="imgBox">
 		<img class="imgBG" src="https://cdn.pixabay.com/photo/2020/02/06/20/01/university-library-4825366_1280.jpg">
 	</div>
@@ -38,7 +46,7 @@
         <div class="weather_icon"></div>
     </div><br>
 
-    <div style="float : right; margin : -5px 0px 0px 60px; font-size : 11pt; color: black; position: absolute; width: 300px; padding-top: 25px">
+    <div style="float : right; margin : 0px 0px 0px 40px; font-size : 14pt; color: black; position: absolute; width: 300px; padding-top: 25px">
             <div class="temp_min"></div>
             <div class="temp_max"></div>
             <div class="humidity"></div>
@@ -105,7 +113,7 @@
 			<span>COPYRIGHT© SAJO UNIVERSITY</span><br><span style="text-align: center"> ALL RIGHTS RESERVED.</span>
 		</div>
 	</section>
-	
+</div>	
 	
 	
 	<!--비밀번호 찾기 Modal -->
@@ -145,10 +153,10 @@
 							<div class="row mb-3">
 								<div class="col-12 d-grid">
 									
-									<button onclick="findPw(this);" class="btn btn-primary" type="button">
+									<button onclick="findPw(this);" class="btn btn-dark" type="button">
 										<span>비밀번호 찾기</span>
 									</button>
-									<div class="btn btn-primary d-grid mt-3" >
+									<div class="btn btn-dark d-grid mt-3" >
 										<span data-bs-toggle="modal" data-bs-target="#loginModal" style="cursor: pointer;">로그인</span> 
 									</div>
 
@@ -195,10 +203,10 @@
 							<div class="row mb-3">
 								<div class="col-12 d-grid">
 									
-									<button onclick="findNo(this);" class="btn btn-primary" type="button">
+									<button onclick="findNo(this);" class="btn btn-dark" type="button">
 										<span>아이디 찾기</span>
 									</button>
-									<div class="btn btn-primary d-grid mt-3" >
+									<div class="btn btn-dark d-grid mt-3" >
 										<span data-bs-toggle="modal" data-bs-target="#loginModal" style="cursor: pointer;">로그인</span> 
 									</div>
 

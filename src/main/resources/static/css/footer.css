@@ -91,3 +91,8 @@ body {
 .footerContainer {
   flex-grow: 1;
 }
+
+.row.footer-row {
+    margin: 0;
+    background-color: black;
+}

@@ -178,10 +178,103 @@ function click_ok(){
 }
 
 
-//function updateModal(calNo){
-//	const update_modal = new bootstrap.Modal('#updateCalendar');
+// 일정 수정을 위한 조회
+function openUpdateModal(btn, value){
+	const calNo = value;
+	console.log(calNo);
+
+	//ajax start
+	$.ajax({
+		url: '/school/forUpdateCalAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: { 'calNo': calNo }, //필요한 데이터
+		success: function(result) {
+			console.log(result);
+			var titleInput = document.querySelector('#updateTitle');
+			var contentInput = document.querySelector('#updateContent');
+			var startDateInput = document.querySelector('#updateStartDate');
+			var endDateInput = document.querySelector('#updateEndDate');
+			var calNoInput = document.querySelector('#updateCalNo');
+			
+			titleInput.value = result.title;
+			contentInput.value = result.calContent;
+			startDateInput.value = result.startDate;
+			endDateInput.value = result.endDate;
+			calNoInput.value = result.calNo;
+			
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+}
+
+
+// 일정 수정
+function updateCal(){
+	Swal.fire({
+		title: '일정을 수정 하시겠습니까?',
+		text: '',
+		icon: 'question',
+   
+		showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+		confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+		cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+		confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+		cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+   
+		reverseButtons: false, // 버튼 순서 거꾸로
+   
+		}).then(result => {
+   		// 만약 Promise리턴을 받으면,
+			if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+				Swal.fire('일정 수정이 완료되었습니다.', '', 'success').then(() => {
+		        document.querySelector('#updateCalForm').submit();
+		      	});
+   			}
+   
+			else {
+				return;
+   			}
+	});
+}
+
+// 일정 삭제
+function deleteCal(calNo){
+	Swal.fire({
+		title: '일정을 수정 하시겠습니까?',
+		text: '',
+		icon: 'question',
+   
+		showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+		confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+		cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+		confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+		cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+   
+		reverseButtons: false, // 버튼 순서 거꾸로
+   
+		}).then(result => {
+   		// 만약 Promise리턴을 받으면,
+			if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+				Swal.fire('일정 수정이 삭제되었습니다.', '', 'success').then(() => {
+		        document.querySelector('#deleteCal').submit();
+		      	});
+   			}
+   
+			else {
+				return;
+   			}
+	});
 	
-//}
+}
+
+
+
+
 
 
 

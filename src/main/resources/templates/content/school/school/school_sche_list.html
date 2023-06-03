@@ -47,6 +47,8 @@
 					<div class="col">
 						<div class="accordion accordion-flush" id="accordionFlushExample">
 							<th:block th:each="calendar, state : ${calendarList}">
+							<form action="/school/deleteCal" method="post" id="deleteCal">
+							<input type="hidden" name="calNo" class="calNo" th:value="${calendar.calNo}">
 								<div class="accordion-item">
 									<h2 class="accordion-header">
 										<button class="accordion-button collapsed" style="padding: 0px;" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#panel_' + state.count}" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -76,9 +78,10 @@
 														<td><h5>일정내용</h5></td>
 														<td style="text-align: right;">
 															<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateCalendar" style="cursor: pointer;"
-																data-bs-title >일정수정
+																th:value="${calendar.calNo}" onclick="openUpdateModal(this, value);">일정수정 
 															</button>
-															<button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="" style="cursor: pointer;">일정삭제</button>
+															<button class="btn btn-danger" type="button" data-bs-toggle="modal" style="cursor: pointer;"
+															 th:value="${calendar.calNo}" onclick="deleteCal(value);">일정삭제</button>
 														</td>
 													</tr>
 													<tr>
@@ -89,6 +92,7 @@
 										</div>
 									</div>
 								</div>
+								</form>
 							</th:block>
 						</div>
 					</div>
@@ -139,18 +143,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                <form id="updateCalForm" th:action="@{/school/updateCal}" method="post">
                     <div class="form-group">
                         <label for="taskId" class="col-form-label">일정 제목</label>
-                        <input type="text" class="form-control">
+                        <input type="text" name="title" class="form-control" id="updateTitle">
                         <label for="taskId" class="col-form-label">일정 내용</label>
-                        <input type="text" class="form-control">
+                        <input type="text" name="calContent" class="form-control" id="updateContent">
                         <label for="taskId" class="col-form-label">시작 날짜</label>
-                        <input type="date" class="form-control">
+                        <input type="date" name="startDate" class="form-control" id="updateStartDate">
                         <label for="taskId" class="col-form-label">종료 날짜</label>
-                        <input type="date" class="form-control">
+                        <input type="date" name="endDate" class="form-control" id="updateEndDate">
+                        <input type="hidden" name="calNo" id="updateCalNo">
                     </div>
+                </form>
                      <div class="modal-footer">
-		                  <button type="button" class="btn btn-warning" onclick="updateCalendar();">수정</button>
+		                  <button type="button" class="btn btn-warning" onclick="updateCal();">수정</button>
 					</div>
                 </div>
             </div>
@@ -167,6 +174,7 @@
 
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/school/calendar.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </th:block> 
  
  

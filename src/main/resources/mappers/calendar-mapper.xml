@@ -43,6 +43,33 @@
 		)
 	</insert>
 	
+	<!-- 클릭한 학사일정 조회 -->
+	<select id="getCalForUp" resultMap="calendar">
+		SELECT CAL_NO
+			, TITLE
+			, TO_CHAR(START_DATE, 'YYYY-MM-DD') START_DATE
+			, TO_CHAR(END_DATE, 'YYYY-MM-DD') END_DATE
+			, CAL_CONTENT
+		FROM CALLENDAR
+		WHERE CAL_NO = #{calNo}
+	</select>
+	
+	<!-- 학사일정 일정추가 -->
+	<update id="updateCal">
+		UPDATE CALLENDAR
+		SET TITLE = #{title}
+		    , START_DATE = #{startDate}
+		    , END_DATE = #{endDate}
+		    , CAL_CONTENT = #{calContent}
+		WHERE CAL_NO = #{calNo}
+	</update>
+	
+	<!-- 학사일정 삭제 -->
+	<delete id="deleteCal">
+		DELETE CALLENDAR
+		WHERE CAL_NO = #{calNo}
+	</delete>
+	
 </mapper>
 
 

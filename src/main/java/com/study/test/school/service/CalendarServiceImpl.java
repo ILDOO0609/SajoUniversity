@@ -23,5 +23,18 @@ public class CalendarServiceImpl implements CalendarService{
 	public List<CalendarVO> showSchedule() {
 		return sqlSession.selectList("calendarMapper.calendarList");
 	}
+	@Override
+	public void updateCal(CalendarVO calendarVO) {
+		sqlSession.update("calendarMapper.updateCal", calendarVO);
+		
+	}
+	@Override
+	public CalendarVO getCalForUp(String calNo) {
+		return sqlSession.selectOne("calendarMapper.getCalForUp", calNo);
+	}
+	@Override
+	public void deleteCal(String calNo) {
+		sqlSession.delete("calendarMapper.deleteCal", calNo);
+	}
 
 }

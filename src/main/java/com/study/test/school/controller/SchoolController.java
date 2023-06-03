@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -175,13 +176,39 @@ public class SchoolController {
 	@GetMapping("/scheList")
 	public String calendarList(Model model) {
 		model.addAttribute("calendarList", schoolService.calendarList());
+		
 		return "content/school/school/school_sche_list";
 	}
 	//학사메뉴 -> 학사일정 -> 일정추가
 	@PostMapping("/addSchedule")
 	public String addSchedule(CalendarVO calendarVO) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@#" + calendarVO);
 		calendarService.addSchedule(calendarVO);
+		
+		return "redirect:/school/scheList";
+	}
+	
+	// 학사일정 수정을 위해 조회
+	@PostMapping("/forUpdateCalAjax")
+	@ResponseBody
+	public CalendarVO forUpdateCalAjax(@RequestParam String calNo) {
+		System.out.println(calNo);
+	    
+	    return calendarService.getCalForUp(calNo);
+	}
+	
+	// 학사일정 수정
+	@PostMapping("/updateCal")
+	public String updateCal(CalendarVO calendarVO) {
+		calendarService.updateCal(calendarVO);
+		
+		return "redirect:/school/scheList";
+	}
+	
+	// 일정 삭제
+	@PostMapping("/deleteCal")
+	public String deleteCal(String calNo) {
+		calendarService.deleteCal(calNo);
+		
 		return "redirect:/school/scheList";
 	}
 	

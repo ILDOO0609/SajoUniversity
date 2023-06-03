@@ -199,7 +199,12 @@ public class SchoolServiceImpl implements SchoolService{
 		sqlSession.update("schoolMapper.updateLeaveDenied", statusInfoVO);
 		sqlSession.update("schoolMapper.updateLeaveDeniedStu", statusInfoVO);
 	}
-
+	//학적변동 -> 휴학신청 -> 상세모달
+	@Override
+	public List<StuVO> checkLeaveModal(String statusNo) {
+		return sqlSession.selectList("schoolMapper.checkLeaveModal", statusNo);
+	}
+	
 	
 	
 	
@@ -239,6 +244,16 @@ public class SchoolServiceImpl implements SchoolService{
 		sqlSession.update("schoolMapper.updateReturnDenied", statusInfoVO);
 		sqlSession.update("schoolMapper.updateReturnDeniedStu", statusInfoVO);
 	}
+	//학적변동 -> 복학관리 -> 회원클릭시 모달창
+	@Override
+	public List<StuVO> checkReturnModal(String statusNo) {
+		return sqlSession.selectList("schoolMapper.checkReturnModal", statusNo);
+	}
+	
+	
+	
+	
+	
 
 // -------수업메뉴 ------------------------------------------------------	
 
@@ -293,6 +308,11 @@ public class SchoolServiceImpl implements SchoolService{
 	public void updatePosition(String memNo) {
 		sqlSession.update("schoolMapper.updatePosition", memNo);
 	}
+	//등록회원(거절) 업데이트
+	@Override
+	public void updateXPosition(String memNo) {
+		sqlSession.update("schoolMapper.updateXPosition", memNo);
+	}
 	//등록회원 업데이트 학생 정보인서트 
 	@Override
 	public void insertStu(StuVO stuVO) {
@@ -325,6 +345,8 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<MemberVO> getMemberModal(String memNo) {
 		return sqlSession.selectList("schoolMapper.getMemberModal", memNo);
 	}
+
+	
 
 	
 

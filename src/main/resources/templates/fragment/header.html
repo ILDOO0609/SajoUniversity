@@ -34,6 +34,13 @@
       Menu
     </button>
     <a class="navbar-brand" href="/member/main">Sajo University</a>
+    			<span sec:authorize="isAuthenticated()">
+    			<span style="color: white; text-align: right">
+					[[${#authentication.name}]]님 반갑습니다.
+					 <a th:href="@{/member/logout}" class="list-group-item list-group-item-action">LOGOUT</a>
+				</span>
+				</span> 
+    
     <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">학생 메뉴</h5>
@@ -88,7 +95,7 @@
               대학현황
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="/member/stuRegPerMonth">등록학생현황</a></li>
+              <li><a class="dropdown-item" href="/member/stuRegPerMonth">학생현황</a></li>
               <li><a class="dropdown-item" href="/member/stuRegPerMonth2">휴학생현황</a></li>
               <li><a class="dropdown-item" href="/member/stuRegPerMonth3">재학생현황</a></li>
             </ul>
@@ -127,6 +134,12 @@
       Menu
     </button>
     <a class="navbar-brand" href="/member/main">Sajo University</a>
+   				<span sec:authorize="isAuthenticated()">
+    			<span style="color: white; text-align: right">
+					[[${#authentication.name}]]님 반갑습니다.
+					 <a th:href="@{/member/logout}" class="list-group-item list-group-item-action">LOGOUT</a>
+				</span>
+				</span>
     <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">교수 메뉴</h5>
@@ -166,7 +179,7 @@
               대학현황
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="/member/stuRegPerMonth">등록학생현황</a></li>
+              <li><a class="dropdown-item" href="/member/stuRegPerMonth">학생현황</a></li>
               <li><a class="dropdown-item" href="/member/stuRegPerMonth2">휴학생현황</a></li>
               <li><a class="dropdown-item" href="/member/stuRegPerMonth3">재학생현황</a></li>
             </ul>
@@ -176,7 +189,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
               <li><a class="dropdown-item" href="/member/map">지도 및 로드뷰</a></li>
-              <!--<li><a class="dropdown-item" href="#" onclick="openPopup();">길찾기</a></li>  -->
+              <li><a class="dropdown-item" href="#" onclick="openPopup();">오시는 길 찾기</a></li>
             </ul>
             
 			
@@ -203,6 +216,12 @@
       Menu
     </button>
     <a class="navbar-brand" href="/member/main">Sajo University</a>
+    			<span sec:authorize="isAuthenticated()">
+    			<span style="color: white; text-align: right">
+					[[${#authentication.name}]]님 반갑습니다.
+					 <a th:href="@{/member/logout}" class="list-group-item list-group-item-action">LOGOUT</a>
+				</span>
+				</span>
     <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">교직원 메뉴</h5>
@@ -278,7 +297,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
               <li><a class="dropdown-item" href="/member/map">지도 및 로드뷰</a></li>
-              <!--<li><a class="dropdown-item" href="#" onclick="openPopup();">길찾기</a></li>  -->
+              <li><a class="dropdown-item" href="#" onclick="openPopup();">오시는 길 찾기</a></li>
             </ul>
           </li>
         </ul>

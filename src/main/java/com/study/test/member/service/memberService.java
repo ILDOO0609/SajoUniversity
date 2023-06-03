@@ -39,22 +39,6 @@ public interface memberService {
 	String checkMemPw(MemberVO memberVO);
 	
 	// 통계 조회 map
-	List<Map<String, Integer>> getMonthlyData2(int year);
-	
-	// 통계 조회
-	List<StatisticsVO> getMonthlyData(int year);
-	
-	// 통계
-	List<Map<String, Integer>> getMonthlyData_02(int year);
-	
-	//
-	List<StatisticsVO> getMonthlyData_2(int year);
-	
-	// 통계
-	List<Map<String, Integer>> getMonthlyData_03(int year);
-	
-	//
-	List<StatisticsVO> getMonthlyData_3(int year);
-	
+	List<Map<String, Integer>> getMonthlyData(int year);
 	
 }

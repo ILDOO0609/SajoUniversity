@@ -361,6 +361,17 @@ public class SchoolController {
 		schoolService.updateLeaveDenied(statusInfoVO);
 		
 	}
+	//학사조회 -> 휴학관리 -> 상세모달창
+	@ResponseBody
+	@PostMapping("/getLeaveModalAjax")
+	public List<StuVO> getLeaveModalAjax(String statusNo){
+		return schoolService.checkLeaveModal(statusNo);
+	}
+	
+	
+	
+	
+	
 	
 	//학적변동 -> 복학페이지 조회
 	@GetMapping("/acaReturn")
@@ -398,8 +409,16 @@ public class SchoolController {
 		statusInfoVO.setStuNo(stuNo);
 		
 		schoolService.updateReturnDenied(statusInfoVO);
-		
 	}
+	
+	//학사조회 -> 복학관리 -> 상세모달창
+	@ResponseBody
+	@PostMapping("/getReturnModalAjax")
+	public List<StuVO> getReturnModalAjax(String statusNo){
+		return schoolService.checkReturnModal(statusNo);
+	}
+	
+	
 	
 // -------수업메뉴 ------------------------------------------------------	
 
@@ -517,7 +536,18 @@ public class SchoolController {
 	
 	
 	
-	
+	 //회원메뉴 -> 신규회원 -> 승인거절
+	 @ResponseBody
+	 @PostMapping("/updateXPositionAjax") 
+	 public void updateXPosition(String memNo, StuVO stuVO) {
+		MemberVO memberVO = schoolService.selectMember(memNo);
+		
+		stuVO.setMemberVO(memberVO);
+		
+		System.out.println("@##@#################" + stuVO);
+		
+		schoolService.updateXPosition(memNo);
+	 }
 	
 	
 	

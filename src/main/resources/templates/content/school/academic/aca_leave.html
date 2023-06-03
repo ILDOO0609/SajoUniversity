@@ -107,7 +107,7 @@
 						 					</tr>
 						 				</th:block>
 										<th:block th:unless="${#lists.size(statuslist) == 0}">
-											<tr th:each="status : ${statuslist}" style="cursor: pointer;" th:onclick="openStuModal([[${status.stuNo}]]);">
+											<tr th:each="status : ${statuslist}" style="cursor: pointer;" th:onclick="checkLeaveModal([[${status.statusNo}]]);">
 												<td><input type="checkbox" class="form-check-input chk" th:value="${status.statusNo}"></td>
 												<td>[[${status.statusNo}]]</td>
 												<td>[[${status.stuVO.memberVO.memName}]]</td>
@@ -168,7 +168,7 @@
 						 					</tr>
 						 				</th:block>
 										<th:block th:unless="${#lists.size(statusApplist) == 0}">
-											<tr th:each="status, state : ${statusApplist}" style="cursor: pointer;" th:onclick="openStuModal([[${status.stuNo}]]);">
+											<tr th:each="status, state : ${statusApplist}" style="cursor: pointer;" th:onclick="checkLeaveModal([[${status.statusNo}]]);">
 												<td><input type="checkbox" class="form-check-input"></td>
 												<td>[[${status.statusNo}]]</td>
 												<td>[[${status.stuVO.memberVO.memName}]]</td>
@@ -221,7 +221,7 @@
 						 					</tr>
 						 				</th:block>
 										<th:block th:unless="${#lists.size(statusDeniedlist) == 0}">
-											<tr th:each="status, state : ${statusDeniedlist}">
+											<tr th:each="status, state : ${statusDeniedlist}" style="cursor: pointer;" th:onclick="checkLeaveModal([[${status.statusNo}]]);">
 												<td><input type="checkbox" class="form-check-input"></td>
 												<td>[[${status.statusNo}]]</td>
 												<td>[[${status.stuVO.memberVO.memName}]]</td>

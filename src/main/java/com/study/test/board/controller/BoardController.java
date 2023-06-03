@@ -87,39 +87,22 @@ public class BoardController {
 	}
 	
 	//전체 게시판 목록 페이지
-	@GetMapping("/boardList")
-	public String boardList(BoardVO boardVO, Model model, PageVO pageVO) {
-			
+	@RequestMapping("/boardList")
+	public String boardList(BoardVO boardVO, Model model, BoardListSearchVO boardListSearchVO) {
+		System.out.println("@@@@@@@@@@@@@@@@"+boardListSearchVO);
 		// 전체 데이터 수 조회
-		pageVO.setTotalDataCnt(boardService.getBoardListCnt());
-		pageVO.setPageInfo();
-		
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("pageVO", pageVO);
+		boardListSearchVO.setTotalDataCnt(boardService.getBoardListCnt(boardListSearchVO));
+		boardListSearchVO.setPageInfo();
 		
 		//카테고리 목록 조회
 		model.addAttribute("cateList", boardService.getCateList());
 		// 게시글 조회 
-		model.addAttribute("boardList", boardService.getBoard(map));
+		model.addAttribute("boardList", boardService.getBoard(boardListSearchVO));
+		model.addAttribute("boardListSearchVO", boardListSearchVO);
+		System.out.println(boardService.getBoard(boardListSearchVO));
+		System.out.println(boardListSearchVO);
 		return "content/board/board_list";
 	}
-	
-	//게시판 카테고리로 검색
-	@ResponseBody
-	@PostMapping("/cateSearchAjax")
-	public List<BoardVO> boardList(String cateNo, PageVO pageVO){
-		
-		// 전체 데이터 수 조회
-		pageVO.setTotalDataCnt(boardService.getBoardListCnt());
-		pageVO.setPageInfo();
-		
-		HashMap<String, Object> map = new HashMap<>();
-		
-		map.put("pageVO", pageVO);
-		map.put("cateNo", cateNo);
-		return boardService.getBoard(map); 
-	}
-	
 	
 	//게시글 작성 페이지
 	@GetMapping("/boardWriteForm")
@@ -227,6 +210,11 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping("/searchBoardAjax")
 	public List<BoardVO> searchBoardAjax(BoardListSearchVO boardListSearchVO, PageVO pageVO){
+		
+		// 전체 데이터 수 조회
+		pageVO.setTotalDataCnt(boardService.getBoardListCnt(boardListSearchVO));
+		pageVO.setPageInfo();
+		
 		System.out.println(boardListSearchVO);
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("boardListSearchVO", boardListSearchVO);

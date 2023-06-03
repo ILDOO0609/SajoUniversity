@@ -38,7 +38,7 @@ function login() {
                     location.href = '/member/main';
                 });
             } else {
-                // If login fails
+	
                 Toast.fire({
                     icon: 'error',
                     title: '로그인 정보를 확인해주세요.',

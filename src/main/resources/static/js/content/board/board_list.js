@@ -1,28 +1,12 @@
-
 function getBoardListPaging(pageNum){
 	console.log(pageNum);
 	document.querySelector('#nowPage').value=pageNum;
-	categorySearch();
-}
-
-
-//카테고리로 검색
-function categorySearch(){
-	document.querySelector('#cateForm').submit();	
+	searchBoard();
 }
 
 //게시판 검색
 function searchBoard(){
-	//강의검색
-	const cate_no = document.querySelector('#cateSelect option:checked').value;
-	
-	const check = document.querySelector('#searchCheck');
-	check.value = check.checked == true ? 'notSecret' : 'secret';
-	
-	document.querySelector('#cateInput').value = cate_no;
-	
 	document.querySelector('#searchForm').submit();
-	
 }
 
 function showInput(secretBoard) {
@@ -39,9 +23,9 @@ function ok(okBtn, secretPw, boardNo) {
     } 
     else{
 		Swal.fire({
-        icon: 'error',
-        title: '오류',
-        text: '비밀번호가 일치하지 않습니다.',
+	        icon: 'error',
+	        title: '오류',
+	        text: '비밀번호가 일치하지 않습니다.',
         });
     }
 }

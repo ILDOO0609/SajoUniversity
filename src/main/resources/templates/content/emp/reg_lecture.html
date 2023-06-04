@@ -119,16 +119,16 @@
 								시간
 							</div>
 							<div class="col-4 text-start">
-								<select name="firstTime" onchange="setLastTime(this);">
+								<select name="firstTime" class="form-select-sm" onchange="setLastTime(this);">
 									<option th:each="i : ${#numbers.sequence(1,8)}" th:value="${i}">[[${i}]]</option>
 								</select>
 								교시~
-								<select name="lastTime">
+								<select name="lastTime" class="form-select-sm">
 									<option th:each="i : ${#numbers.sequence(1,8)}" th:value="${i}">[[${i}]]</option>
 								</select>
 								교시
-								<input type="button" value="추가" id="addBtn" onclick="add();">
-								<input type="button" value="삭제" id="deleteBtn" style="display: none;" onclick="deleteDay();">
+								<input type="button" value="추가" class="btn btn-primary" id="addBtn" onclick="add();">
+								<input type="button" value="삭제" id="deleteBtn" class="btn btn-primary" style="display: none;" onclick="deleteDay();">
 							</div>
 						</div>
 					</div>

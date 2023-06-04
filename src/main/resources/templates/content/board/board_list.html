@@ -14,24 +14,40 @@
 <div class="container">
 	<div class="row">
 		<div class="col">
-			<div class="row">
+			<div class="row mb-5">
 				<div class="col">
 					<h1 style="text-align:center; font-weight: bold;">BOARD</h1>
 				</div>
 			</div>
-			<div class="row text-end mb-3">
-				<div class="col-2">
-					<form action="/board/boardList" method="post" id="cateForm">
-					<input type="hidden" id="nowPage" name="nowPage" th:value="${boardListSearchVO.nowPage}">
-						<select name="cateNo" class="form-select" id="cateSelect" onchange="categorySearch();">
+			<form action="/board/boardList" method="post" id="searchForm">
+			<input type="hidden" id="nowPage" name="nowPage" th:value="${boardListSearchVO.nowPage}">
+				<div class="row mb-5" id="searchRow">
+				    <div class="input-group">
+				    	<th:block th:if="${boardListSearchVO.checkValue=='notSecret'}">
+			            	<input type="checkbox" class="form-check-input from-check" id="searchCheck" value="notSecret" name="checkValue" checked>
+			            	<span>비밀글 제외</span>
+			            </th:block>
+			            <th:block th:unless="${boardListSearchVO.checkValue=='notSecret'}">
+			            	<input type="checkbox" class="form-check-input from-check" id="searchCheck" value="notSecret" name="checkValue">
+			            	<span>비밀글 제외</span>
+			            </th:block>
+			   			 <select name="cateNo" class="form-select-sm" id="cateSelect">
 							<option value="all" th:if="${boardListSearchVO.cateNo == 'all'}" selected>전체</option>
 							<option value="all" th:unless="${boardListSearchVO.cateNo == 'all'}">전체</option>
 							<option th:each="cate : ${cateList}" th:value="${cate.cateNo}" th:if="${boardListSearchVO.cateNo == cate.cateNo}" selected>[[${cate.cateName}]]</option>
 							<option th:each="cate : ${cateList}" th:value="${cate.cateNo}" th:unless="${boardListSearchVO.cateNo == cate.cateNo}">[[${cate.cateName}]]</option>
 						</select>
-					</form>
+					    <select id="searchSelect" class="form-select-sm" name="selectValue">
+							<option value="title">제목</option>
+							<option value="writer">작성자</option>
+					    </select>
+					    <input type="text" class="form-control-sm" id="searchInput" placeholder="Search" name="inputValue">
+					    <button class="btn btn-outline-dark" id="searchBtn" onclick="searchBoard();">
+						     <i class="fas fa-search"></i>
+				        </button>
+					</div>
 				</div>
-			</div>
+			</form>
 			<div class="row">
 				<div class="col">
 					<table class="table text-center align-middle table-hover">
@@ -54,12 +70,40 @@
 							</tr>
 						</thead>
 						<tbody id="tbodyTag">
-							<tr th:each="board, state : ${boardList}" th:classappend="${board.isNotice=='Y' ? 'active' : ''}">
-								<td th:if="${board.isNotice=='Y'}">
-									<img src="/img/notice.png" width="35px;">
-									공지
-								</td>
-								<td th:if="${board.isNotice=='N'}">[[${boardList.size()-state.index}]]</td>
+<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ공지사항 게시글들 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+							<tr th:each="notice : ${noticeList}" class="active">
+							    <td>
+							        <img src="/img/notice.png" width="35px;">
+							        공지
+							    </td>
+							    <td>[[${notice.boardCategoryVO.cateName}]]</td>
+							    <td>
+							        <div class="board-title">
+						                <a th:href="@{/board/boardDetail(boardNo=${notice.boardNo})}">
+						                    <span>[[${notice.boardTitle}]]</span>
+						                </a>
+							        </div>
+							        <div class="inputArea" style="display:none;">
+							            <div class="row">
+							                <div class="col-6">
+							                     <input type="password" oninput="maxLengthCheck(this)" id="passwordInput" class="form-control">
+							                </div>
+							                <div class="col-3">
+							                    <button th:onclick="ok(this,[[${notice.secretPw}]], [[${notice.boardNo}]])" class="btn btn-primary">확인</button>
+							                </div>
+							                <div class="col-3">
+							                    <button onclick="cancel(this)" class="btn btn-danger">취소</button>
+							                </div>
+							            </div>
+							        </div>
+							    </td>
+							    <td>[[${notice.memberVO.memName}]]</td>
+							    <td>[[${notice.boardCreateDate}]]</td>
+							    <td>[[${notice.boardReadCnt}]]</td>
+							</tr>
+<!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ  공지사항 제외한 게시글들ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
+							<tr th:each="board, state : ${boardList}">
+								<td>[[${boardList.size()-state.index}]]</td>
 								<td>[[${board.boardCategoryVO.cateName}]]</td>
 								<td> 
 									<div class="board-title">
@@ -109,21 +153,19 @@
 			<div class="row justify-content-center">
 				<div class="col-2">
 					<nav aria-label="Page navigation example">
-					  <ul class="pagination" >
+					  <ul class="pagination">
 					    <li class="page-item" th:classappend="${boardListSearchVO.prev ? '':'disabled'}">
-					      <a class="page-link" href="javascript:void(0)" th:onclick="getBoardListPaging([[${boardListSearchVO.beginPage-1}]])" aria-label="Previous">
+					      <a class="page-link" href="javascript:void(0)" th:onclick="getBoardListPaging([[${boardListSearchVO.beginPage-1}]])">
 					        <span aria-hidden="true">&laquo;</span>
 					      </a>
 					    </li>
-						<th:block th:each="pageNum : ${#numbers.sequence(boardListSearchVO.beginPage, boardListSearchVO.endPage)}">
-						    <li class="page-item">
-						    	<a class="page-link" href="javascript:void(0)" th:onclick="getBoardListPaging([[${pageNum}]])" th:classappend="${boardListSearchVO.nowPage == pageNum ? 'active' : ''}">
-						    		<span th:text="${pageNum}"></span>
-						    	</a>
-						    </li>
-						</th:block>
+					    <li class="page-item" th:each="pageNum : ${#numbers.sequence(boardListSearchVO.beginPage, boardListSearchVO.endPage)}">
+					    	<a class="page-link" href="javascript:void(0)" th:onclick="getBoardListPaging([[${pageNum}]])" th:classappend="${boardListSearchVO.nowPage == pageNum ? 'active' : ''}">
+					    		<span th:text="${pageNum}"></span>
+					    	</a>
+					    </li>
 					    <li class="page-item" th:classappend="${boardListSearchVO.next ? '':'disabled'}">
-					      <a class="page-link" href="javascript:void(0)" th:onclick="getBoardListPaging([[${boardListSearchVO.endPage+1}]])" aria-label="Next">
+					      <a class="page-link" href="javascript:void(0)" th:onclick="getBoardListPaging([[${boardListSearchVO.endPage+1}]])">
 					        <span aria-hidden="true">&raquo;</span>
 					      </a>
 					    </li>
@@ -131,31 +173,6 @@
 					</nav>
 				</div>
 			</div>
-			<form action="/board/boardList" method="post" id="searchForm">
-			<input type="hidden" name="cateNo" id="cateInput">
-			<input type="hidden" id="nowPage" name="nowPage" th:value="${boardListSearchVO.nowPage}">
-			<div class="row" id="searchRow">
-				<div class="col-2 d-flex align-items-center justify-content-center">
-					<th:block th:if="${boardListSearchVO.checkValue=='notSecret'}">
-		            	<input type="checkbox" class="form-check-input from-check" id="searchCheck" value="notSecret" name="checkValue"  checked>비밀글 제외
-		            </th:block>
-		            <th:block th:unless="${boardListSearchVO.checkValue=='notSecret'}">
-		            	<input type="checkbox" class="form-check-input from-check" id="searchCheck" value="notSecret" name="checkValue">비밀글 제외
-		            </th:block>
-			    </div>
-			    <div class="col-10 input-group" style="width: 60%;">
-				    <select id="searchSelect" class="form-select-sm" name="selectValue">
-						<option value="title">제목</option>
-						<option value="writer">작성자</option>
-				    </select>
-				    <input type="text" class="form-control-sm" id="searchInput" placeholder="Search" name="inputValue">
-				    <button class="btn btn-outline-dark" id="searchBtn" onclick="searchBoard();">
-					     <i class="fas fa-search"></i>
-				     </button>
-				</div>
-			</div>
-			</form>
-			
 		</div>
 	</div>
 </div>

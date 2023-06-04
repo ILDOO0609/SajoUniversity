@@ -75,6 +75,26 @@
 		DELETE BOARD_CATEGORY
 		WHERE CATE_NO = #{cateNo}
 	</delete>
+	
+	<select id="getNotice" resultMap="board">
+		SELECT BOARD_NO
+		    , BOARD_TITLE
+		    , BOARD_WRITER
+		    , MEM_NAME
+		    , TO_CHAR(BOARD_CREATE_DATE, 'YYYY-MM-DD') AS BOARD_CREATE_DATE
+		    , BOARD_READ_CNT
+		    , REPLY_CNT
+		    , IS_SECRET
+		    , IS_NOTICE
+		    , BOARD.CATE_NO
+		    , CATE_NAME
+		    , SECRET_PW
+		FROM BOARD, BOARD_CATEGORY CATE, MEMBER
+		WHERE BOARD.CATE_NO = CATE.CATE_NO
+		AND MEMBER.MEM_NO = BOARD.BOARD_WRITER
+		AND IS_NOTICE = 'Y'
+		ORDER BY BOARD_NO DESC
+	</select>
 
 	<select id="getBoard" resultMap="board">
 		SELECT BOARD_NO
@@ -92,6 +112,7 @@
 		FROM BOARD, BOARD_CATEGORY CATE, MEMBER
 		WHERE BOARD.CATE_NO = CATE.CATE_NO
 		AND MEMBER.MEM_NO = BOARD.BOARD_WRITER
+		AND IS_NOTICE = 'N'
 		<if test="cateNo != null and cateNo != 'all'">
 		AND BOARD.CATE_NO = #{cateNo}
 		</if>

@@ -107,5 +107,10 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardVO> getBoardForSearch(HashMap<String, Object> map) {
 		return sqlSession.selectList("boardMapper.getBoardForSearch", map);
 	}
+
+	@Override
+	public List<BoardVO> getNotice() {
+		return sqlSession.selectList("boardMapper.getNotice");
+	}
 	
 }

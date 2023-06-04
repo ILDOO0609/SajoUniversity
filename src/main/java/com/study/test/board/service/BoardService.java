@@ -12,6 +12,9 @@ public interface BoardService {
 	//게시글 조회
 	public List<BoardVO> getBoard(BoardListSearchVO boardListSearchVO);
 	
+	//공지사항만 가져오기
+	public List<BoardVO> getNotice();
+	
 	//게시글 검색후 조회
 	public List<BoardVO> getBoardForSearch(HashMap<String, Object>map);
 	

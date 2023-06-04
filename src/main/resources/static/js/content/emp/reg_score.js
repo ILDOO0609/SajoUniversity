@@ -69,7 +69,7 @@ function getStuEnrList(lecNo, semNo){
 				str +=`  <td>${stu['MEM_NO']}</td>`;
 				str +=`  <td>${stu['MEM_NAME']}</td>`;
 				str +=`  <td><span class="regScore">${stu['GRADE']}</span>`;
-				str +=`		<select name="grade" class="gradeSelect" style="display: none;">`;
+				str +=`		<select name="grade" class="gradeSelect form-select-sm" style="display: none;">`;
 				for(const grade of result['gradeList']){
 					if(stu['GRADE']==grade.grade){
 						str +=`	<option value="${grade.grade}" selected>${grade.grade}</option>`;

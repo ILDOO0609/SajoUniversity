@@ -99,8 +99,10 @@ public class BoardController {
 		// 게시글 조회 
 		model.addAttribute("boardList", boardService.getBoard(boardListSearchVO));
 		model.addAttribute("boardListSearchVO", boardListSearchVO);
-		System.out.println(boardService.getBoard(boardListSearchVO));
-		System.out.println(boardListSearchVO);
+		
+		// 공지사항 추가
+		model.addAttribute("noticeList", boardService.getNotice());
+		
 		return "content/board/board_list";
 	}
 	

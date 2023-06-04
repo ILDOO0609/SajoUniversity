@@ -6,9 +6,9 @@
     margin: 0px;
     padding: 0px;
 }
-h{
-	text-align: center;
-	font-weight: bold;
+.input-group{
+	width: 100%;
+    margin-left: 50px;
 }
 #searchRow{
 	margin: 0 auto; 
@@ -17,6 +17,7 @@ h{
 #searchCheck{
 	margin-right: 5px; 
 	margin-bottom: 5px;
+	margin-top: 10px;
 }
 #searchSelect{
 	width: 130px;
@@ -30,4 +31,13 @@ h{
 #searchBtn{
 	border: 1px solid rgba(0, 0, 0, 0.5); 
 	border-radius: 0px;
+}
+#cateSelect{
+	width: 130px;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	border-radius: 0px;
+}
+span{
+	margin-top: 8px; 
+	margin-right: 10px;
 }

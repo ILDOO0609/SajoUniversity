@@ -17,6 +17,7 @@
 		<result column="SCH_INFO_Month" 	property="schInfoMonth"/>
 	</resultMap>
 	
+	<!-- 학사안내 글등록 -->
 	<insert id="insertSchoolInfo">
 		INSERT INTO SCHOOL_INFORMATION (
 			SCH_INFO_CODE
@@ -38,7 +39,7 @@
          	FROM SCHOOL_INFORMATION)
 		)
 	</insert>
-	
+	<!-- 학사안내 글 조회 -->
 	<select id="getSchoolInfo" resultMap="school">
 		SELECT SCH_INFO_CODE
 			, SCH_INFO_TITLE
@@ -56,7 +57,7 @@
 		ORDER BY SCH_INFO_NUM DESC
 		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
-	
+	<!-- 학사안내 월 변경시 실행되는 쿼리 -->
 	<select id="schInfoMonthAjax" resultMap="school">
 	    SELECT SCH_INFO_CODE
 	        , SCH_INFO_TITLE
@@ -71,7 +72,7 @@
 	    ORDER BY SCH_INFO_STARTDATE
 	</select>
 	
-	<!-- 상세조회 -->
+	<!-- 학사안내 -> 상세조회 -->
 	<select id="schoolBoardDetail" resultMap="school">
 		SELECT SCH_INFO_CODE
 			, SCH_INFO_TITLE
@@ -570,6 +571,7 @@
 			, DEPT.DEPT_NAME
 			, MEM_NAME
 			, STU.MEM_NO
+			, APPLY_REASON
 		FROM DEPT_MANAGE, STU, COLLEAGE COLL, DEPT, MEMBER MEM
 		WHERE PROCESS_STATUS = 'I'
 		AND MEM.MEM_NO = STU.MEM_NO
@@ -649,8 +651,37 @@
 		WHERE APPLY_NO = #{applyNo}
 	</update>
 	
-	
-	
+	<!-- 복수전공관리 회원모달창 -->
+	<select id="checkDoubleModal" resultMap="stuMapper.deptManage">
+		SELECT ST.STU_NO
+		    , ST.STU_YEAR
+		    , ST.STU_SEM
+		    , DECODE(STU_STATUS, '1', '재학중', '2','휴학중', '3', '제적') STU_STATUS
+		    , ST.MEM_NO
+		    , MEM_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , DP.DEPT_NO
+		    , DEPT_NAME
+		    , DECODE(MEM_GENDER, 'M', '남', 'F', '여') MEM_GENDER
+		    , MEM_TELL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+		    , MEM_EMAIL
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+		    , MEM_IMAGE
+            , APPLY_REASON
+            , APPLY_NO
+            , MULTI_MAJOR_COLL
+            , MULTI_MAJOR_DEPT
+		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM, DEPT_MANAGE DM
+		WHERE ST.COLL_NO = COLL.COLL_NO
+        AND ST.STU_NO = DM.STU_NO
+		AND ST.DEPT_NO = DP.DEPT_NO
+		AND ST.MEM_NO = MEM.MEM_NO
+		AND APPLY_NO = #{applyNo}
+	</select>
 	
 	
 	

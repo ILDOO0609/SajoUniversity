@@ -130,7 +130,8 @@ public interface SchoolService {
 	void updateDoubleApp(DeptManageVO deptManageVO);
 	//수업메뉴 -> 복수전공관리 ->복수신청 승인취소
 	void updateDoubleDenied(DeptManageVO deptManageVO);
-	
+	//수업메뉴 -> 복수전공관리 ->회원클릭시 모달창
+	List<DeptManageVO> checkDoubleModal(String applyNo);
 	
 	
 // -------회원메뉴 회원조회------------------------------------------------------

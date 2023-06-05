@@ -290,6 +290,11 @@ public class SchoolServiceImpl implements SchoolService{
 		sqlSession.update("schoolMapper.updateDoubleDenied", deptManageVO);
 	}
 	
+	//수업메뉴 -> 복수전공관리 ->회원클릭시 모달창
+	@Override
+	public List<DeptManageVO> checkDoubleModal(String applyNo) {
+		return sqlSession.selectList("schoolMapper.checkDoubleModal", applyNo);
+	}
 	
 // -------회원메뉴 ------------------------------------------------------
 	//등록회원 전체조회
@@ -345,6 +350,8 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<MemberVO> getMemberModal(String memNo) {
 		return sqlSession.selectList("schoolMapper.getMemberModal", memNo);
 	}
+
+	
 
 	
 

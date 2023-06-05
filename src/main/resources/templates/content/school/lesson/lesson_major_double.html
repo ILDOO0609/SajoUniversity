@@ -107,14 +107,14 @@
 						 					</tr>
 						 				</th:block>
 										<th:block th:unless="${#lists.size(majorList) == 0}">
-											<tr th:each="major : ${majorList}">
+											<tr th:each="major : ${majorList}" style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">
 												<td><input type="checkbox" class="form-check-input chk" th:value="${major.applyNo}"></td>
-												<td >[[${major.applyNo}]]</td>
+												<td>[[${major.applyNo}]]</td>
 												<td>[[${major.stuVO.memberVO.memNo}]]</td>
 												<td>[[${major.stuVO.stuYear}]]</td>
 												<td>[[${major.stuVO.memberVO.memName}]]</td>
-												<td th:value="${major.multiMajorColl}">[[${major.colleageVO.collName}]]</td>
-												<td th:value="${major.multiMajorDept}">[[${major.deptVO.deptName}]]</td>
+												<td>[[${major.colleageVO.collName}]]</td>
+												<td>[[${major.deptVO.deptName}]]</td>
 												<td>[[${major.applyDate}]]</td>
 												<td>[[${major.processStatus}]]</td>
 											</tr>
@@ -168,14 +168,14 @@
 						 					</tr>
 						 				</th:block>
 										<th:block th:unless="${#lists.size(majorAppList) == 0}">
-											<tr th:each="major : ${majorAppList}">
+											<tr th:each="major : ${majorAppList}" style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">
 												<td><input type="checkbox" class="form-check-input chk" th:value="${major.applyNo}"></td>
-												<td >[[${major.applyNo}]]</td>
+												<td>[[${major.applyNo}]]</td>
 												<td>[[${major.stuVO.memberVO.memNo}]]</td>
 												<td>[[${major.stuVO.stuYear}]]</td>
 												<td>[[${major.stuVO.memberVO.memName}]]</td>
-												<td th:value="${major.multiMajorColl}">[[${major.colleageVO.collName}]]</td>
-												<td th:value="${major.multiMajorDept}">[[${major.deptVO.deptName}]]</td>
+												<td>[[${major.colleageVO.collName}]]</td>
+												<td>[[${major.deptVO.deptName}]]</td>
 												<td>[[${major.applyDate}]]</td>
 												<td style="color: blue;">[[${major.processStatus}]]</td>
 											</tr>
@@ -221,14 +221,14 @@
 						 					</tr>
 						 				</th:block>
 										<th:block th:unless="${#lists.size(majorDeniedList) == 0}">
-											<tr th:each="major : ${majorDeniedList}">
+											<tr th:each="major : ${majorDeniedList}" style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">
 												<td><input type="checkbox" class="form-check-input chk" th:value="${major.applyNo}"></td>
-												<td >[[${major.applyNo}]]</td>
+												<td>[[${major.applyNo}]]</td>
 												<td>[[${major.stuVO.memberVO.memNo}]]</td>
 												<td>[[${major.stuVO.stuYear}]]</td>
 												<td>[[${major.stuVO.memberVO.memName}]]</td>
-												<td th:value="${major.multiMajorColl}">[[${major.colleageVO.collName}]]</td>
-												<td th:value="${major.multiMajorDept}">[[${major.deptVO.deptName}]]</td>
+												<td>[[${major.colleageVO.collName}]]</td>
+												<td>[[${major.deptVO.deptName}]]</td>
 												<td>[[${major.applyDate}]]</td>
 												<td style="color: red;">[[${major.processStatus}]]</td>
 											</tr>
@@ -242,6 +242,22 @@
 			</div>			
 		</div>
 	</div>
+	
+<!-- Modal -->
+<div class="modal fade modal-lg" id="memberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">학생 상세정보</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+			    ...
+			</div>
+		</div>
+	</div>
+</div>	
+	
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->

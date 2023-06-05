@@ -5,14 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -461,6 +459,16 @@ public class SchoolController {
 		deptManageVO.setStuNo(stuNo);
 		schoolService.updateDoubleDenied(deptManageVO);
 	}
+	//수업메뉴 -> 복수전공관리 -> 상세모달창
+	@ResponseBody
+	@PostMapping("/getDoubleModalAjax")
+	public List<DeptManageVO> getDoubleModalAjax(String applyNo){
+		return schoolService.checkDoubleModal(applyNo);
+	}
+	
+	
+	
+	
 	
 	//수업 -> 학사경고관리 페이지
 	@GetMapping("/lessonWarning")

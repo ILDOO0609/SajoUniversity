@@ -256,7 +256,7 @@ function checkLeaveModal(statusNo){
 				str += `<tr>`;
 				str += `<td colspan="6">학생 휴학사유</td>`;
 				str += `</tr>`;
-				str += `<td colspan="5">${status.statusContent}</td>`;
+				str += `<td colspan="5" style="text-align: center;">${status.statusContent}</td>`;
 				
 			}
 			

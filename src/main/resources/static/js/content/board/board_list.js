@@ -1,11 +1,7 @@
 function getBoardListPaging(pageNum){
-	console.log(pageNum);
 	document.querySelector('#nowPage').value=pageNum;
-	searchBoard();
-}
-
-//게시판 검색
-function searchBoard(){
+	
+	//검색
 	document.querySelector('#searchForm').submit();
 }
 

@@ -93,6 +93,18 @@
 		WHERE BOARD.CATE_NO = CATE.CATE_NO
 		AND MEMBER.MEM_NO = BOARD.BOARD_WRITER
 		AND IS_NOTICE = 'Y'
+		<if test="cateNo != null and cateNo != 'all'">
+		AND BOARD.CATE_NO = #{cateNo}
+		</if>
+		<if test="selectValue!=null and selectValue =='title'">
+		AND UPPER(BOARD_TITLE) LIKE '%'||UPPER(#{inputValue})||'%'
+		</if>
+		<if test="selectValue!=null and selectValue == 'writer'">
+		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{inputValue})||'%'
+		</if>
+		<if test="checkValue !=null and checkValue =='notSecret'">
+		AND IS_SECRET = 'N'
+		</if>
 		ORDER BY BOARD_NO DESC
 	</select>
 
@@ -125,7 +137,7 @@
 		<if test="checkValue !=null and checkValue =='notSecret'">
 		AND IS_SECRET = 'N'
 		</if>
-		ORDER BY IS_NOTICE DESC, BOARD_NO DESC
+		ORDER BY BOARD_NO DESC
 		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	
@@ -220,6 +232,7 @@
 		SELECT COUNT(BOARD_NO)
 		FROM BOARD, MEMBER
 		WHERE BOARD.BOARD_WRITER = MEMBER.MEM_NO
+		AND IS_NOTICE = 'N'
 		<if test="cateNo != null and cateNo != 'all'">
 		AND BOARD.CATE_NO = #{cateNo}
 		</if>

@@ -83,19 +83,6 @@
 						                    <span>[[${notice.boardTitle}]]</span>
 						                </a>
 							        </div>
-							        <div class="inputArea" style="display:none;">
-							            <div class="row">
-							                <div class="col-6">
-							                     <input type="password" oninput="maxLengthCheck(this)" id="passwordInput" class="form-control">
-							                </div>
-							                <div class="col-3">
-							                    <button th:onclick="ok(this,[[${notice.secretPw}]], [[${notice.boardNo}]])" class="btn btn-primary">확인</button>
-							                </div>
-							                <div class="col-3">
-							                    <button onclick="cancel(this)" class="btn btn-danger">취소</button>
-							                </div>
-							            </div>
-							        </div>
 							    </td>
 							    <td>[[${notice.memberVO.memName}]]</td>
 							    <td>[[${notice.boardCreateDate}]]</td>
@@ -156,17 +143,17 @@
 					  <ul class="pagination">
 					    <li class="page-item" th:classappend="${boardListSearchVO.prev ? '':'disabled'}">
 					      <a class="page-link" href="javascript:void(0)" th:onclick="getBoardListPaging([[${boardListSearchVO.beginPage-1}]])">
-					        <span aria-hidden="true">&laquo;</span>
+					        &laquo;
 					      </a>
 					    </li>
 					    <li class="page-item" th:each="pageNum : ${#numbers.sequence(boardListSearchVO.beginPage, boardListSearchVO.endPage)}">
 					    	<a class="page-link" href="javascript:void(0)" th:onclick="getBoardListPaging([[${pageNum}]])" th:classappend="${boardListSearchVO.nowPage == pageNum ? 'active' : ''}">
-					    		<span th:text="${pageNum}"></span>
+					    		[[${pageNum}]]
 					    	</a>
 					    </li>
 					    <li class="page-item" th:classappend="${boardListSearchVO.next ? '':'disabled'}">
 					      <a class="page-link" href="javascript:void(0)" th:onclick="getBoardListPaging([[${boardListSearchVO.endPage+1}]])">
-					        <span aria-hidden="true">&raquo;</span>
+					       &raquo;
 					      </a>
 					    </li>
 					  </ul>

@@ -28,6 +28,7 @@ import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 import com.study.test.util.DateUtill;
+import com.study.test.util.PageVO;
 
 import jakarta.annotation.Resource;
 
@@ -67,6 +68,7 @@ public class SchoolController {
 		//전체 데이터 수 조회
 		schoolInfoVO.setTotalDataCnt(schoolService.schInfoListCnt());
 		schoolInfoVO.setPageInfo();
+		schoolInfoVO.setDisplayCnt(10);
 		
 		//게시글 조회
 		model.addAttribute("infoList", schoolService.getSchoolInfoList(schoolInfoVO));
@@ -516,23 +518,41 @@ public class SchoolController {
 	
 	//회원메뉴 -> 승인/취소 전체조회 페이지
 	@GetMapping("/memberSelectList")
-	public String memberSelectList(Model model) {
-		model.addAttribute("memberList", schoolService.selectMemberTotalList());
+	public String memberSelectList(Model model, MemberVO memberVO) {
+		//전체 데이터 수 조회
+		memberVO.setDisplayCnt(10);
+		memberVO.setTotalDataCnt(schoolService.getMemberListCnt());
+		memberVO.setPageInfo();
+		model.addAttribute("memberList", schoolService.selectMemberTotalList(memberVO));
 		return "content/school/member/member_select_list";
 	}
 	//회원메뉴 -> 승인/취소 승인조회
 	@ResponseBody
-	@PostMapping("/approveOAjax")
-	public List<MemberVO> approveO(String isConfirmed) {
-		return schoolService.selectMemberAddList(isConfirmed);
+	@RequestMapping("/approveOAjax")
+	public Map<String, Object> approveO(String isConfirmed, MemberVO memberVO) {
+		
+		memberVO.setIsConfirmed(isConfirmed);
+		memberVO.setDisplayCnt(10);
+		int totalDateCnt = schoolService.getMemberAddListCnt();
+		memberVO.setTotalDataCnt(totalDateCnt);
+		memberVO.setPageInfo();
+		System.out.println("@#@#@#@#@#@#@#@#@#@#@#"+memberVO);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberVO", memberVO);
+		map.put("addList", schoolService.selectMemberAddList(memberVO));
+		
+		return map;
+		
 	}
+
+	
 	//회원메뉴 -> 승인/취소 취소조회
 	@ResponseBody
 	@PostMapping("/approveXAjax")
 	public List<MemberVO> approveX(String isConfirmed) {
 		return schoolService.selectMemberDeniedList(isConfirmed);
 	}
-	
 	
 	//회원메뉴 -> 회원상세 모달창
 	@ResponseBody

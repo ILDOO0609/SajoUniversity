@@ -100,7 +100,6 @@ function drawDeptSelectbox(deptList){
 	dept_div.insertAdjacentHTML('afterbegin',str);
 }
 
-
 //회원메뉴 -> 승인/취소조회 -> 승인완료 조회
 function approveO(isConfirmed){
 	console.log(isConfirmed);
@@ -114,6 +113,12 @@ function approveO(isConfirmed){
 		data: {'isConfirmed': isConfirmed}, //필요한 데이터
 		success: function(result) {
 			console.log(result);
+			
+			const memberVO = result['memberVO'];
+			result = result['addList'];
+		
+			
+			
 			const tbodyTag = document.querySelector('#approveTable > tbody');
 			tbodyTag.replaceChildren();
 			
@@ -121,7 +126,7 @@ function approveO(isConfirmed){
 			
 			if(result.length == 0){
 					str += `<tr>`;
-					str += `<td colspan="6">조회된 회원이 없습니다.</td>`;
+					str += `<td colspan="7">조회된 회원이 없습니다.</td>`;
 					str += `</tr>`;
 			}
 			else{
@@ -136,10 +141,40 @@ function approveO(isConfirmed){
 					str += `<td>${app.isConfirmed}</td>`;
 					str += `</tr>`;
 				}
-				
+			
+			const pagingTag = document.querySelector('#paging');
+			pagingTag.replaceChildren();
+			
+			
+			str += `<div class="row justify-content-center">`;
+			str += `<div class="col-3">`;
+			str += `<nav aria-label="Page navigation example">`;
+			str += `<ul class="pagination" >`;
+			str += `<li class="page-item">`;
+			str += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.beginPage-1}" aria-label="Previous">`;
+			str += `<span aria-hidden="true">&laquo;</span>`;
+			str += `</a>`;
+			str += `</li>`;
+			
+			for(let i = memberVO.beginPage ; i <= memberVO.endPage ; i++){
+				str += `<li class="page-item"><a class="page-link" href="/school/approveOAjax?nowPage=${i}"><span>${i}</span></a></li>`;
+			}
+			str += `<li class="page-item">`;
+			str += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.endPage+1}" aria-label="Next">`;
+			str += `<span aria-hidden="true">&raquo;</span>`;
+			str += `</a>`;
+			str += `</li>`;
+			str += `</ul>`;
+			str += `</nav>`;
+			str += `</div>`;
+			str += `</div>`;
+			
+			
+			
+			
+			
 			}
 			tbodyTag.insertAdjacentHTML('afterbegin', str);
-			
 			
 		},
 		error: function() {
@@ -169,7 +204,7 @@ function approveX(isConfirmed){
 			
 			if(result.length == 0){
 					str += `<tr>`;
-					str += `<td colspan="6">조회된 회원이 없습니다.</td>`;
+					str += `<td colspan="7">조회된 회원이 없습니다.</td>`;
 					str += `</tr>`;
 			}
 			else{

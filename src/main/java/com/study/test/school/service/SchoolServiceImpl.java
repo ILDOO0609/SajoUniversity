@@ -331,13 +331,13 @@ public class SchoolServiceImpl implements SchoolService{
 	
 	//승인/취소 전체조회
 	@Override
-	public List<MemberVO> selectMemberTotalList() {
-		return sqlSession.selectList("schoolMapper.selectMemberTotalList");
+	public List<MemberVO> selectMemberTotalList(MemberVO memberVO) {
+		return sqlSession.selectList("schoolMapper.selectMemberTotalList", memberVO);
 	}
 	//승인/취소 조회 -> 승인완료 조회
 	@Override
-	public List<MemberVO> selectMemberAddList(String isConfirmed) {
-		return sqlSession.selectList("schoolMapper.selectMemberAddList", isConfirmed);
+	public List<MemberVO> selectMemberAddList(MemberVO memberVO) {
+		return sqlSession.selectList("schoolMapper.selectMemberAddList", memberVO);
 	}
 	//승인/취소 조회 -> 승인취소 조회
 	@Override
@@ -349,6 +349,16 @@ public class SchoolServiceImpl implements SchoolService{
 	@Override
 	public List<MemberVO> getMemberModal(String memNo) {
 		return sqlSession.selectList("schoolMapper.getMemberModal", memNo);
+	}
+	//승인/취소 전체 데이터 조회 -> 페이징
+	@Override
+	public int getMemberListCnt() {
+		return sqlSession.selectOne("schoolMapper.getMemberListCnt");
+	}
+	//승인/취소 승인완료 데이터 조회 -> 페이징
+	@Override
+	public int getMemberAddListCnt() {
+		return sqlSession.selectOne("schoolMapper.getMemberAddListCnt");
 	}
 
 	

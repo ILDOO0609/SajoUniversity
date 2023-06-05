@@ -772,7 +772,7 @@
 		)
 	</insert>	
 	
-	<!-- 회원메뉴 -> 신규회원 승인/취소 조회 -->
+	<!-- 회원메뉴 -> 신규회원 승인/취소 전체조회 -->
 	<select id="selectMemberTotalList" resultMap="memberMapper.member">
 		SELECT MEM_NO
 			, MEM_NAME
@@ -784,6 +784,7 @@
 			, MEM_IMAGE
 		FROM MEMBER	
 		ORDER BY REG_DATE DESC
+		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	<!-- 회원메뉴 -> 신규회원 승인/취소 승인완료 조회 -->
 	<select id="selectMemberAddList" resultMap="memberMapper.member">
@@ -801,6 +802,7 @@
 		FROM MEMBER	
 		WHERE IS_CONFIRMED = 'Y'
 		ORDER BY REG_DATE DESC
+		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	<!-- 회원메뉴 -> 신규회원 승인/취소 승인취소 조회 -->
 	<select id="selectMemberDeniedList" resultMap="memberMapper.member">
@@ -835,32 +837,24 @@
 		WHERE MEM_NO = #{memNo}
 	</select>
 	
-<!-- 	
-	<select id="getMemberModal" resultMap="memberMapper.member">
-		SELECT MEM.MEM_NO
-		    , MEM_NAME
-		    , MEM_GENDER
-		    , MEM_TELL
-		    , MEM_ADDR
-		    , MEM_ADDR_DETAIL
-		    , MEM_ROLE
-		    , MEM_BIRTHDAY
-		    , MEM_EMAIL
-		    , REG_DATE
-		    , IS_CONFIRMED
-		    , MEM_IMAGE
-		    , ST.COLL_NO
-		    , COLL_NAME
-		    , ST.DEPT_NO
-		    , DEPT_NAME
-		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM
-		WHERE ST.COLL_NO = COLL.COLL_NO
-		AND ST.DEPT_NO = DP.DEPT_NO
-		AND ST.MEM_NO = MEM.MEM_NO
-		AND MEM.MEM_NO = #{memNo}
+	<!-- 회원메뉴 승인/취소 전체 데이터 수 조회 -->
+	<select id="getMemberListCnt" resultType="int">
+		SELECT COUNT(MEM_NO)
+		FROM MEMBER
+	</select>
+	<!-- 회원메뉴 승인/취소 승인완료 데이터 수 조회 -->
+ 	<select id="getMemberAddListCnt" resultType="int">
+		SELECT COUNT(IS_CONFIRMED)
+		FROM MEMBER
+		WHERE IS_CONFIRMED = 'Y'
+	</select>
+	<!-- 회원메뉴 승인/취소 승인완료 데이터 수 조회 -->
+<!-- 	<select id="getMemberDeniedListCnt" resultMap="int">
+		SELECT COUNT(IS_CONFIRMED)
+		FROM MEMBER
+		WHERE IS_CONFIRMED = 'N'
 	</select> -->
-	
-	
+
 	
 	<!-- 회원메뉴 -> 회원승인거부처리 -->
 	<update id="updateXPosition">

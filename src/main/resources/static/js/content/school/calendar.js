@@ -122,14 +122,20 @@ function addSchedule(){
 	
 	if(title == ''){
 		alert('제목은 필수 입력입니다.')
+		return;
 	}else if(calContent == ''){
 		alert('일정내용은 필수 입력입니다.')
+		return;
 	}else if(startDate == ''){
-		alert('시작일정은 필수 입력입니다.')	
+		alert('시작일정은 필수 입력입니다.')
+		return;
+			
 	}else if(endDate == ''){
 		alert('종료일정은 필수 입력입니다.')
+		return;
 	}else if(new Date(endDate) - new Date(startDate) < 0){
 		alert('종료일이 시작일보다 앞섭니다.')
+		return;
 	}
 	
 	document.querySelector('#calendarForm').submit();
@@ -245,7 +251,7 @@ function updateCal(){
 // 일정 삭제
 function deleteCal(calNo){
 	Swal.fire({
-		title: '일정을 수정 하시겠습니까?',
+		title: '일정을 삭제 하시겠습니까?',
 		text: '',
 		icon: 'question',
    
@@ -260,7 +266,7 @@ function deleteCal(calNo){
 		}).then(result => {
    		// 만약 Promise리턴을 받으면,
 			if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
-				Swal.fire('일정 수정이 삭제되었습니다.', '', 'success').then(() => {
+				Swal.fire('일정이 삭제되었습니다.', '', 'success').then(() => {
 		        document.querySelector('#deleteCal').submit();
 		      	});
    			}

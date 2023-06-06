@@ -21,11 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     		list : '주간일정표'
     	},
 	    initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-<<<<<<< HEAD
-	    //initialDate: '2023-05-24', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
-=======
-	    initialDate: '2023-06-05', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
->>>>>>> d81e8e6b5e769b4f5885a8138a7d1242e7b57e85
+	    //initialDate: '2023-06-05', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
 	    navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
 	    editable: true, // 수정 가능?
 	    selectable: true, // 달력 일자 드래그 설정가능
@@ -59,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //   			}
 //   		},
    		
-<<<<<<< HEAD
+
 		events: (() => {
       const events = [];
 
@@ -74,29 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return events;
     })(),
   });
-=======
-		events: [
-			
-			{	
-					
-				title : 'test',
-				start : '2023-06-27',
-				end : '2023-06-30',
-				content : 'test'
-			},
-			{	
-					
-				title : 'test',
-				start : '2023-06-04',
-				end : '2023-06-08',
-				content : 'test'
-			},
-		
-			
-		] 
-      
-	});
->>>>>>> d81e8e6b5e769b4f5885a8138a7d1242e7b57e85
+
 
 	calendar.render();
 });

@@ -58,6 +58,30 @@
 			</div>
 		</div>
 		
+		<div id="paging">
+			<div class="row justify-content-center">
+				<div class="col-3">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination" >
+							<li class="page-item">
+								<a class="page-link" href="javascript:void(0);" th:href="@{/school/memberSelectList(nowPage=${memberVO.beginPage-1})}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<th:block th:each="pageNum : ${#numbers.sequence(memberVO.beginPage, memberVO.endPage)}">
+								<li class="page-item"><a class="page-link" th:href="@{/school/memberSelectList(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
+							</th:block>
+							<li class="page-item">
+								<a class="page-link" href="javascript:void(0);" th:href="@{/school/memberSelectList(nowPage=${memberVO.endPage+1})}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div> 
+		</div>	
+		
 		
 		<!-- Modal -->
 		<div class="modal fade modal-lg" id="memberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

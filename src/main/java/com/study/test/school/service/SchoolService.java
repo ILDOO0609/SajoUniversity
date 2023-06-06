@@ -152,12 +152,15 @@ public interface SchoolService {
 	void insertEmp(StuVO stuVO);
 	
 	//승인/취소 전체조회
-	List<MemberVO> selectMemberTotalList();
+	List<MemberVO> selectMemberTotalList(MemberVO memberVO);
 	//승인/취소 조회 -> 승인완료 조회
-	List<MemberVO> selectMemberAddList(String isConfirmed);
+	List<MemberVO> selectMemberAddList(MemberVO memberVO);
 	//승인/취소 조회 -> 승인취소 조회
 	List<MemberVO> selectMemberDeniedList(String isConfirmed);
-	
+	//승인/취소 전체 데이터 조회 -> 페이징
+	int getMemberListCnt();
+	//승인완료 전체 데이터 조회 -> 페이징
+	int getMemberAddListCnt();
 	
 	//회원클릭시 회원상에 모달창
 	List<MemberVO> getMemberModal(String memNo);

@@ -8,7 +8,7 @@
 <th:block layout:fragment="content_css">
 	<link href='/fullcalendar-5.11.5/lib/main.css' rel='stylesheet' />
 </th:block>
-<meta charset='utf-8' />
+<meta charset='utf-8'/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 </head>
@@ -62,9 +62,9 @@
 												<tbody style="border-style: hidden;">
 													<tr>
 														<td>[[${calendar.regDate}]]</td>
-														<td>[[${calendar.title}]]</td>
-														<td>[[${calendar.startDate}]]</td>
-														<td>[[${calendar.endDate}]]</td>
+														<td class="drawTitle">[[${calendar.title}]]</td>
+														<td class="drawStartDate">[[${calendar.startDate}]]</td>
+														<td class="drawEndDate">[[${calendar.endDate}]]</td>
 													</tr>
 												</tbody>
 											</table>

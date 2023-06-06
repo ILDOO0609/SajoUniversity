@@ -1,4 +1,9 @@
+
 document.addEventListener('DOMContentLoaded', function() {
+	const titleForCal = document.querySelectorAll('.drawTitle');
+	const startDateForCal = document.querySelectorAll('.drawStartDate');
+	const endDateForCal = document.querySelectorAll('.drawEndDate');
+	
 	var calendarEl = document.getElementById('calendar');
 
 	var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -16,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     		list : '주간일정표'
     	},
 	    initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-	    initialDate: '2023-05-24', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
+	    //initialDate: '2023-05-24', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
 	    navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
 	    editable: true, // 수정 가능?
 	    selectable: true, // 달력 일자 드래그 설정가능
@@ -87,27 +92,20 @@ document.addEventListener('DOMContentLoaded', function() {
 //   			}
 //   		},
    		
-		events: [
-			
-			{	
-					
-				title : 'test',
-				start : '2023-05-27',
-				end : '2023-05-30',
-				content : 'test'
-			},
-			{	
-					
-				title : 'test',
-				start : '2023-05-04',
-				end : '2023-05-08',
-				content : 'test'
-			},
-		
-			
-		] 
-      
-	});
+		events: (() => {
+      const events = [];
+
+      for (let i = 0; i < titleForCal.length; i++) {
+        events.push({
+          title: titleForCal[i].innerText,
+          start: startDateForCal[i].innerText,
+          end: endDateForCal[i].innerText,
+        });
+      }
+
+      return events;
+    })(),
+  });
 
 	calendar.render();
 });

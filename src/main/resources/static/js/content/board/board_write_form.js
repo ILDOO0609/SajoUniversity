@@ -32,7 +32,7 @@ function secret(){
       object.value = object.value.slice(0, 4);
  }
  
- //게시글 등록
+	// 게시글 등록
 async function regBoard(){
 	if(document.querySelector('#boardTitle').value=='' || document.querySelector('#boardContent').value ==''){
 		

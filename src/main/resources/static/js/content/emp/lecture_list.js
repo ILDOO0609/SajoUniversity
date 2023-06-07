@@ -97,10 +97,10 @@ function drawLectureListTable(){
 						}
 						str += `	<td>`;
 						if(lec.lecStatus == '폐강'){
-							str += `	<input type="button" value="폐강" onclick="regClose('${lec.lecNo}');" disabled>`;
+							str += `	<input type="button" value="폐강" class="btn btn-danger" onclick="regClose('${lec.lecNo}');" disabled>`;
 						}
 						else{
-							str += `	<input type="button" value="폐강" onclick="regClose('${lec.lecNo}');">`;
+							str += `	<input type="button" value="폐강" class="btn btn-danger" onclick="regClose('${lec.lecNo}');">`;
 						}
 						str += `	</td>`;
 						str += `</tr>`;
@@ -168,10 +168,10 @@ function searchLecture(){
 						}
 						str += `	<td>`;
 						if(lec.lecStatus == '폐강'){
-							str += `	<input type="button" value="폐강" onclick="regClose('${lec.lecNo}', this);" disabled>`;
+							str += `	<input type="button" value="폐강" class="btn btn-danger" onclick="regClose('${lec.lecNo}', this);" disabled>`;
 						}
 						else{
-							str += `	<input type="button" value="폐강" onclick="regClose('${lec.lecNo}', this);">`;
+							str += `	<input type="button" value="폐강" class="btn btn-danger" onclick="regClose('${lec.lecNo}', this);">`;
 						}
 						str += `	</td>`;
 						str += `</tr>`;

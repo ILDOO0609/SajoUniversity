@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-   layout:decorate="~{fragment/emp_layout}">
+   layout:decorate="~{fragment/layout}">
    
 <!-- 연결해야 할 외부 css 파일 -->
 <th:block layout:fragment="content_css">
@@ -16,8 +16,8 @@
 		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 			<div class="row">
 				<div class="col">
-					<div class="row">
-						<div class="col">
+					<div class="row mb-1">
+						<div class="col" style="font-weight: bold;">
 							강의 조회
 						</div>
 					</div>
@@ -35,7 +35,7 @@
 			<div class="row mb-3">
 				<div class="col">
 					<div class="row">
-						<div class="col">
+						<div class="col" style="font-weight: bold;">
 							강의 목록
 						</div>
 					</div>
@@ -71,7 +71,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="row">
-						<div class="col">
+						<div class="col" style="font-weight: bold;">
 							수강 학생
 						</div>
 					</div>

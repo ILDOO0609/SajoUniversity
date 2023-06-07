@@ -58,9 +58,9 @@ function setLastTime(firstTimeSelect) {
 // 추가버튼 클릭시 실행되는 함수
 function add() {
 	
-    if(document.querySelectorAll('#container #day').length < 5) {
+    if(document.querySelectorAll('#dayContainer #day').length < 5) {
 		
-        let originDiv = document.querySelector('#container #day');
+        let originDiv = document.querySelector('#dayContainer #day');
         let newDiv = originDiv.cloneNode(true); // 'day' div 복사
 
         // 새로운 div에서 'firstTime' select box에 setLastTime 함수 연결
@@ -75,8 +75,8 @@ function add() {
             lastTimeSelect.appendChild(option);
         }
 
-        // 새로운 div를 'container' div 바로 아래에 추가
-        document.querySelector('#container').appendChild(newDiv);
+        // 새로운 div를 'dayContainer' div 바로 아래에 추가
+        document.querySelector('#dayContainer').appendChild(newDiv);
 
         // 새로운 div에서 'addBtn'과 'deleteBtn' 삭제
         let buttons = newDiv.querySelectorAll('input[type="button"]');
@@ -97,7 +97,7 @@ function add() {
 function deleteDay() {
 	
 	//day div 모두 가져오기
-    const days = document.querySelectorAll('#container #day');
+    const days = document.querySelectorAll('#dayContainer #day');
     
     //day div하나씩 제거
     if(days.length > 1) {
@@ -105,7 +105,7 @@ function deleteDay() {
     }
     
     // day div가 1개가 되면 삭제버튼 display속성 none
-    if(document.querySelectorAll('#container #day').length == 1) {
+    if(document.querySelectorAll('#dayContainer #day').length == 1) {
         document.querySelector('#deleteBtn').style.display = 'none';
     }
 }

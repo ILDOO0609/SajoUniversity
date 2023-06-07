@@ -54,7 +54,7 @@
 		WHERE CAL_NO = #{calNo}
 	</select>
 	
-	<!-- 학사일정 일정추가 -->
+	<!-- 학사일정 일정 수정 -->
 	<update id="updateCal">
 		UPDATE CALLENDAR
 		SET TITLE = #{title}

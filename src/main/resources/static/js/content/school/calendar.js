@@ -1,4 +1,9 @@
+
 document.addEventListener('DOMContentLoaded', function() {
+	const titleForCal = document.querySelectorAll('.drawTitle');
+	const startDateForCal = document.querySelectorAll('.drawStartDate');
+	const endDateForCal = document.querySelectorAll('.drawEndDate');
+	
 	var calendarEl = document.getElementById('calendar');
 
 	var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -16,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     		list : '주간일정표'
     	},
 	    initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-	    initialDate: '2023-05-24', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
+	    //initialDate: '2023-06-05', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
 	    navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
 	    editable: true, // 수정 가능?
 	    selectable: true, // 달력 일자 드래그 설정가능
@@ -26,44 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	    eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
 	      console.log(obj);
 	    },
-	    customButtons:{
-			addEvenButton:{
-				text : "일정추가",
-				click : function(){
-					$("#calendarModal").modal("show");
-					$("#addCalendar").on("click",function(){
-						var title = $("#calendar_title").val();
-						var content = $("#calendar_content").val();
-						var start_date = $("#calendar_start_date").val();
-						var end_date = $("calendar_end_date").val();
-						
-						if(title == null || title == ''){
-							alert('제목을 입력하세요')
-						}else if(content == null || content == ''){
-							alert('내용을 입력하세요.')		
-						}else if(start_date == '' || end_date == ''){
-							alert('날짜를 입력하세요.')
-						}else if(new Date(end_date) - new Date(start_date) < 0){
-							alert('종료일이 시작일보다 앞섭니다.')
-						}else{
-							var obj = {
-								"title" : title,
-								"content" : content,
-								"start" : start_date,
-								"end" : end_date								
-							}
-							
-							console.log(obj);
-							
-						}
-						
-					});
-				}
-			}
-		
-		},
-	    
-	    
+		    
 //    	select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
 //        	var title = prompt('일정추가');
 //        	if (title) {
@@ -87,27 +55,22 @@ document.addEventListener('DOMContentLoaded', function() {
 //   			}
 //   		},
    		
-		events: [
-			
-			{	
-					
-				title : 'test',
-				start : '2023-05-27',
-				end : '2023-05-30',
-				content : 'test'
-			},
-			{	
-					
-				title : 'test',
-				start : '2023-05-04',
-				end : '2023-05-08',
-				content : 'test'
-			},
-		
-			
-		] 
-      
-	});
+
+		events: (() => {
+      const events = [];
+
+      for (let i = 0; i < titleForCal.length; i++) {
+        events.push({
+          title: titleForCal[i].innerText,
+          start: startDateForCal[i].innerText,
+          end: endDateForCal[i].innerText,
+        });
+      }
+
+      return events;
+    })(),
+  });
+
 
 	calendar.render();
 });
@@ -122,14 +85,20 @@ function addSchedule(){
 	
 	if(title == ''){
 		alert('제목은 필수 입력입니다.')
+		return;
 	}else if(calContent == ''){
 		alert('일정내용은 필수 입력입니다.')
+		return;
 	}else if(startDate == ''){
-		alert('시작일정은 필수 입력입니다.')	
+		alert('시작일정은 필수 입력입니다.')
+		return;
+			
 	}else if(endDate == ''){
 		alert('종료일정은 필수 입력입니다.')
+		return;
 	}else if(new Date(endDate) - new Date(startDate) < 0){
 		alert('종료일이 시작일보다 앞섭니다.')
+		return;
 	}
 	
 	document.querySelector('#calendarForm').submit();
@@ -146,36 +115,6 @@ function addSchedule(){
 //				},
 //			}
 
-
-
-
-
-
-
-
-
-function click_ok(){
-	var scheduleDate = JSON.stringify($('form#scheduleDate').serializeObject());
-
-	//ajax start
-	$.ajax({
-	   url: '/school/addSchedule', //요청경로
-	   type: 'post',
-	   data: {'scheduleDate':scheduleDate}, //필요한 데이터
-	   contentType: 'application/json; charset=UTF-8',
-	   success: function(result) {
-			console.log(result)
-			opener.parent.location.reload();
-			window.close();
-
-	   },
-	   error: function() {
-	      alert('실패');
-	   }
-	});
-	//ajax end
-
-}
 
 
 // 일정 수정을 위한 조회
@@ -245,7 +184,7 @@ function updateCal(){
 // 일정 삭제
 function deleteCal(calNo){
 	Swal.fire({
-		title: '일정을 수정 하시겠습니까?',
+		title: '일정을 삭제 하시겠습니까?',
 		text: '',
 		icon: 'question',
    
@@ -260,7 +199,7 @@ function deleteCal(calNo){
 		}).then(result => {
    		// 만약 Promise리턴을 받으면,
 			if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
-				Swal.fire('일정 수정이 삭제되었습니다.', '', 'success').then(() => {
+				Swal.fire('일정이 삭제되었습니다.', '', 'success').then(() => {
 		        document.querySelector('#deleteCal').submit();
 		      	});
    			}

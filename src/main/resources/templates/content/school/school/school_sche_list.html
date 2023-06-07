@@ -8,7 +8,7 @@
 <th:block layout:fragment="content_css">
 	<link href='/fullcalendar-5.11.5/lib/main.css' rel='stylesheet' />
 </th:block>
-<meta charset='utf-8' />
+<meta charset='utf-8'/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 </head>
@@ -47,9 +47,9 @@
 					<div class="col">
 						<div class="accordion accordion-flush" id="accordionFlushExample">
 							<th:block th:each="calendar, state : ${calendarList}">
+								<div class="accordion-item">
 							<form action="/school/deleteCal" method="post" id="deleteCal">
 							<input type="hidden" name="calNo" class="calNo" th:value="${calendar.calNo}">
-								<div class="accordion-item">
 									<h2 class="accordion-header">
 										<button class="accordion-button collapsed" style="padding: 0px;" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#panel_' + state.count}" aria-expanded="false" aria-controls="flush-collapseOne">
 											<table class="table table-hover" id="calendarTable">
@@ -62,14 +62,15 @@
 												<tbody style="border-style: hidden;">
 													<tr>
 														<td>[[${calendar.regDate}]]</td>
-														<td>[[${calendar.title}]]</td>
-														<td>[[${calendar.startDate}]]</td>
-														<td>[[${calendar.endDate}]]</td>
+														<td class="drawTitle">[[${calendar.title}]]</td>
+														<td class="drawStartDate">[[${calendar.startDate}]]</td>
+														<td class="drawEndDate">[[${calendar.endDate}]]</td>
 													</tr>
 												</tbody>
 											</table>
 										</button>
 									</h2>
+								</form>
 									<div th:id="${'panel_' + state.count}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
 										<div class="accordion-body">
 											<table class="table">
@@ -77,10 +78,10 @@
 													<tr>
 														<td><h5>일정내용</h5></td>
 														<td style="text-align: right;">
-															<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateCalendar" style="cursor: pointer;"
-																th:value="${calendar.calNo}" onclick="openUpdateModal(this, value);">일정수정 
+															<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateCalendarForUp" style="cursor: pointer;"
+																th:value="${calendar.calNo}" onclick="openUpdateModal(this, value)">일정수정 
 															</button>
-															<button class="btn btn-danger" type="button" data-bs-toggle="modal" style="cursor: pointer;"
+															<button class="btn btn-danger" type="button" style="cursor: pointer;"
 															 th:value="${calendar.calNo}" onclick="deleteCal(value);">일정삭제</button>
 														</td>
 													</tr>
@@ -92,7 +93,6 @@
 										</div>
 									</div>
 								</div>
-								</form>
 							</th:block>
 						</div>
 					</div>
@@ -134,12 +134,12 @@
     
     
     <!-- 일정수정 modal -->
-    <div class="modal fade" id="updateCalendar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="updateCalendarForUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">일정을 수정하세요.</h5>
+                    <h5 class="modal-title">일정을 수정하세요.</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

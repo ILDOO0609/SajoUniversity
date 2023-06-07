@@ -32,22 +32,40 @@ function secret(){
       object.value = object.value.slice(0, 4);
  }
  
- //게시글 등록
- function regBoard(){
-	
-	if(document.querySelector('#secretChk').checked && document.querySelector('#secretNum').value == ''){
-		alert('비밀글 암호를 입력해주세요');
-		return;
+	// 게시글 등록
+async function regBoard(){
+	if(document.querySelector('#boardTitle').value=='' || document.querySelector('#boardContent').value ==''){
+		
+		const result = await Swal.fire({
+        icon: 'error',
+        title: '등록불가',
+        text: '제목 및 내용은 필수입력입니다.!',
+   		});
+    	if (result.isConfirmed) {
+			return;
+        }
 	}
 	
-	Swal.fire({
+	if(document.querySelector('#secretChk').checked && document.querySelector('#secretNum').value == ''){
+		const result = await Swal.fire({
+        icon: 'error',
+        title: '등록불가',
+        text: '비밀글 암호를 입력해주세요.!',
+   		});
+    	if (result.isConfirmed) {
+			return;
+        }
+	}
+	
+	const result = await Swal.fire({
         icon: 'success',
         title: '등록완료',
         text: '글이 등록 되었습니다.!',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            document.querySelector('#formTag').submit();
-        }
-    })
+    });
+    
+    if (result.isConfirmed) {
+        document.querySelector('#formTag').submit();
+    }
 }
+
  

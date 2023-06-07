@@ -12,7 +12,7 @@
 			<div class="row">
 				<div class="col" style="padding-right: 0px;">
 					<form id="searchForm" th:action="@{/school/lessonWarning}" method="post">
-						<table class="table table-hover">
+						<table class="table table-hover" id="warningTable">
 							<colgroup>
 								<col width="15%">					
 								<col width="15%">					
@@ -29,7 +29,7 @@
 									</td>
 								</tr> 
 		
-								<tr>
+								<tr style="text-align: center;">
 									<td>단과대학</td>
 									<td>
 										<select class="form-select" name="collNo" onchange="changeColl(this);">
@@ -67,7 +67,7 @@
 									<td>학년</td>
 									<td>학기</td>
 									<td colspan="2">징계사유</td>
-									<td>재적상태</td>
+									<td style="text-align: center;">상태</td>
 								</tr>	
 							</thead>
 							<tbody>

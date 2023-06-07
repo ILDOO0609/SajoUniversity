@@ -201,8 +201,8 @@ function searchProbList(){
 	   data: {'searchValue':searchValue, 'collNo' : collNo, 'deptNo' : deptNo}, //필요한 데이터
 	   success: function(result) {
 			console.log(result)
-			const tbodyTag = document.querySelector('#stuTable > tbody');
-			tbodyTag.replaceChildren();
+			const stuProbListTag = document.querySelector('.stuProbListTag');
+			stuProbListTag.replaceChildren();
 			
 			let str = '';
 			
@@ -214,16 +214,16 @@ function searchProbList(){
 			else{
 				for(const stu of result){
 					str += `<tr>`;
-					str += `<td>${stu.memNo}</td>`;
-					str += `<td>${stu.colleageVO.collName}</td>`;
+					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.memNo}</td>`;
 					str += `<td>${stu.memberVO.memName}</td>`;
-					str += `<td colspan="2">${stu.deptVO.deptName}</td>`;
 					str += `<td>${stu.stuYear}</td>`;
-					str += `<td>${stu.stuStatus}</td>`;
+					str += `<td>${stu.stuSem}학기</td>`;
+					str += `<td colspan="2">${stu.deptVO.deptName}</td>`;
+					str += `<td>${stu.colleageVO.collName}</td>`;
 					str += `</tr>`;
 				}
 			}
-			tbodyTag.insertAdjacentHTML('afterbegin', str);
+			stuProbListTag.insertAdjacentHTML('afterbegin', str);
 
 	   },
 	   error: function() {
@@ -236,22 +236,19 @@ function searchProbList(){
 }
 
 
-
-
-
-
 //학사징계 관리 회원 모달창
-function checkWarningModal(){
-	console.log();
+function openWarningModal(stuNo){
+	
+	console.log(stuNo);
 	
 	
 	//ajax start
 	$.ajax({
-		url: '/school/getDoubleModalAjax', //요청경로
+		url: '/school/getWarningModalAjax', //요청경로
 		type: 'post',
 		async: true,
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		data: {'applyNo':applyNo}, //필요한 데이터
+		data: {'stuNo':stuNo}, //필요한 데이터
 		success: function(result) {
 			console.log(result);
 			

@@ -11,7 +11,7 @@
 		<div class="col mb-3" >
 			<div class="row">
 				<div class="col" style="padding-right: 0px;">
-						<table class="table table-hover" id="warningTable">
+						<table class="table" id="warningTable">
 							<colgroup>
 								<col width="15%">					
 								<col width="15%">					
@@ -60,27 +60,27 @@
 										</span>
 									</td>
 								</tr>
-								<tr>
+								<tr style="text-align: center;">
 									<td>학번</td>
 									<td>학생명</td>
 									<td>학년</td>
 									<td>학기</td>
-									<td colspan="2">징계사유</td>
-									<td style="text-align: center;">상태</td>
+									<td colspan="2">단과대학</td>
+									<td>전공학과</td>
 								</tr>	
 							</thead>
 							<tbody>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td colspan="2">
-										<select class="form-select">
-											<option th:each="prob : ${ProbList}" th:value="${prob.probStatusCode}">[[${prob.probStatusName}]]</option>
+								<tr class="stuProbListTag" style="text-align: center;">
+									<td colspan="7">학생을 검색하세요.</td>
+								</tr>
+								<tr style="text-align: center;">
+									<td style="vertical-align: middle;">징계사유 : </td>
+									<td colspan="4" style="text-align: center;">
+										<select class="form-select text-center">
+											 <option th:each="prob : ${ProbList}" th:value="${prob.probStatusCode}">[[${prob.probStatusName}]]</option>
 										</select>
 									</td>
-									<td style="text-align: center;">
+									<td colspan="2">
 										<button class="btn btn-primary" type="button" style="cursor: pointer;">학사경고</button>
 										<button class="btn btn-danger" type="button" style="cursor: pointer;">제적</button>
 									</td>

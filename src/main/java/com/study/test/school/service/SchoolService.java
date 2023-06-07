@@ -63,6 +63,8 @@ public interface SchoolService {
 	List<StuVO> searchStuListAjax(StuVO stuVO);
 	//학생 조회 -> 회원클릭시 모달창
 	List<StuVO> checkStuModal(String stuNo);
+	//학생 수 조회
+	int getStuListCnt();
 	
 	//교수 조회
 	List<EmpVO> checkProList(LectureVO lectureVO);
@@ -156,11 +158,13 @@ public interface SchoolService {
 	//승인/취소 조회 -> 승인완료 조회
 	List<MemberVO> selectMemberAddList(MemberVO memberVO);
 	//승인/취소 조회 -> 승인취소 조회
-	List<MemberVO> selectMemberDeniedList(String isConfirmed);
+	List<MemberVO> selectMemberDeniedList(MemberVO memberVO);
 	//승인/취소 전체 데이터 조회 -> 페이징
 	int getMemberListCnt();
 	//승인완료 전체 데이터 조회 -> 페이징
 	int getMemberAddListCnt();
+	//승인취소 전체 데이터 조회 -> 페이징
+	int getMemberDeniedListCnt();
 	
 	//회원클릭시 회원상에 모달창
 	List<MemberVO> getMemberModal(String memNo);

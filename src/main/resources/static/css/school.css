@@ -41,3 +41,7 @@ a {
 .content:focus {
 	outline: none;
 }
+#warningTable > thead > tr{
+	vertical-align: middle;	
+	align-items: center;
+}

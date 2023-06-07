@@ -235,13 +235,16 @@ public class SchoolController {
 	
 	//학사조회 -> 학생조회 페이지
 	@RequestMapping("/checkStu")
-	public String checkStu(Model model) {
+	public String checkStu(Model model, StuVO stuVO) {
 		//단과대학 정보 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		//전공학과 정보 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
+		//학생 수 조회
+		stuVO.setTotalDataCnt(schoolService.getStuListCnt());
+		stuVO.setDisplayCnt(15);
+		stuVO.setPageInfo();
 		//학생조회
-		StuVO stuVO = new StuVO();
 		model.addAttribute("stuList", schoolService.checkStuList(stuVO));
 		return "content/school/check/check_stu";
 	}
@@ -250,6 +253,9 @@ public class SchoolController {
 	@PostMapping("/searchStuListAjax")
 	public List<StuVO> searchStuListAjax(StuVO stuVO, MemberVO memberVO){
 		stuVO.setMemberVO(memberVO);
+		stuVO.setTotalDataCnt(schoolService.getStuListCnt());
+		stuVO.setDisplayCnt(15);
+		stuVO.setPageInfo();
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2" + stuVO);
 		return schoolService.searchStuListAjax(stuVO);
 	}
@@ -259,8 +265,6 @@ public class SchoolController {
 	public List<StuVO> getStuModalAjax(String stuNo){
 		return schoolService.checkStuModal(stuNo);
 	}
-	
-	
 	
 	
 	//학사조회 -> 교수&교직원 조회 페이지
@@ -474,7 +478,13 @@ public class SchoolController {
 	
 	//수업 -> 학사경고관리 페이지
 	@GetMapping("/lessonWarning")
-	public String lessonWarning() {
+	public String lessonWarning(Model model, StuVO stuVO) {
+		//단과대학 정보 조회
+		model.addAttribute("colleageList", colleageService.getColleageList());
+		//전공학과 정보 조회
+		model.addAttribute("deptList", colleageService.getDeptList());
+		//학생 조회
+		model.addAttribute("stuList", schoolService.checkStuList(stuVO));
 		return "content/school/lesson/lesson_warning";
 	}
 
@@ -515,12 +525,28 @@ public class SchoolController {
 		
 		schoolService.updatePosition(memNo);
 	 }
+	 
+	//회원메뉴 -> 신규회원 -> 승인취소
+	 @ResponseBody
+	 @PostMapping("/updateXPositionAjax") 
+	 public void updateXPosition(String memNo, StuVO stuVO) {
+		MemberVO memberVO = schoolService.selectMember(memNo);
+		
+		stuVO.setMemberVO(memberVO);
+		
+		System.out.println("@##@#################" + stuVO);
+		
+		schoolService.updateXPosition(memNo);
+	 }
+	 
+	 
+	 
 	
 	//회원메뉴 -> 승인/취소 전체조회 페이지
 	@GetMapping("/memberSelectList")
 	public String memberSelectList(Model model, MemberVO memberVO) {
 		//전체 데이터 수 조회
-		memberVO.setDisplayCnt(10);
+		memberVO.setDisplayCnt(15);
 		memberVO.setTotalDataCnt(schoolService.getMemberListCnt());
 		memberVO.setPageInfo();
 		model.addAttribute("memberList", schoolService.selectMemberTotalList(memberVO));
@@ -532,7 +558,7 @@ public class SchoolController {
 	public Map<String, Object> approveO(String isConfirmed, MemberVO memberVO) {
 		
 		memberVO.setIsConfirmed(isConfirmed);
-		memberVO.setDisplayCnt(10);
+		memberVO.setDisplayCnt(15);
 		int totalDateCnt = schoolService.getMemberAddListCnt();
 		memberVO.setTotalDataCnt(totalDateCnt);
 		memberVO.setPageInfo();
@@ -545,13 +571,23 @@ public class SchoolController {
 		return map;
 		
 	}
-
-	
 	//회원메뉴 -> 승인/취소 취소조회
 	@ResponseBody
 	@PostMapping("/approveXAjax")
-	public List<MemberVO> approveX(String isConfirmed) {
-		return schoolService.selectMemberDeniedList(isConfirmed);
+	public Map<String, Object> approveX(String isConfirmed, MemberVO memberVO) {
+		memberVO.setIsConfirmed(isConfirmed);
+		memberVO.setDisplayCnt(15);
+		int totalDateCnt = schoolService.getMemberDeniedListCnt();
+		memberVO.setTotalDataCnt(totalDateCnt);
+		memberVO.setPageInfo();
+		
+		System.out.println("@#@#@#@#@#@#@#@#@#@#@#"+memberVO);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberVO", memberVO);
+		map.put("deniedList", schoolService.selectMemberDeniedList(memberVO));
+		
+		return map;
 	}
 	
 	//회원메뉴 -> 회원상세 모달창
@@ -564,18 +600,7 @@ public class SchoolController {
 	
 	
 	
-	 //회원메뉴 -> 신규회원 -> 승인거절
-	 @ResponseBody
-	 @PostMapping("/updateXPositionAjax") 
-	 public void updateXPosition(String memNo, StuVO stuVO) {
-		MemberVO memberVO = schoolService.selectMember(memNo);
-		
-		stuVO.setMemberVO(memberVO);
-		
-		System.out.println("@##@#################" + stuVO);
-		
-		schoolService.updateXPosition(memNo);
-	 }
+	 
 	
 	
 	

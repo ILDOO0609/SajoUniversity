@@ -8,21 +8,22 @@
 <div class="container">
 	<h2>학생조회</h2>
 	<div class="row">
-		<div class="col">
+		<div class="col mb-3" >
 			<div class="row">
 				<div class="col" style="padding-right: 0px;">
 					<table class="table table-hover" id="stuTable">
 						<colgroup>
 							<col width="15%">					
 							<col width="15%">					
-							<col width="20%">					
-							<col width="20%">					
+							<col width="15%">					
+							<col width="15%">					
 							<col width="10%">					
-							<col width="20%">					
+							<col width="15%">					
+							<col width="15%">					
 						</colgroup>
 						<thead>
 							<tr style="text-align: left; font-weight: bold;">
-								<td colspan="6">
+								<td colspan="7">
 									학생 정보
 								</td>
 							</tr> 
@@ -43,35 +44,16 @@
 									</select>
 								</td>
 								<td>학생명</td>							
-								<td><input type="text" class="form-control" id="searchStuInput" name="searchValue" placeholder="학생명 입력"></td>							
-							</tr>
-							
-							<tr>
-								<td>재적상태</td>
+								<td><input type="text" class="form-control" id="searchStuInput" name="searchValue" placeholder="학생명 입력"></td>		
 								<td>
-									<select class="form-select" name="searchKeyword">
-										<option>전체</option>
-										<option>재학</option>
-										<option>휴학</option>
-									</select>
-								</td>
-								<td>학년</td>							
-								<td>
-									<select class="form-select" name="searchKeyword">
-										<option>전체</option>
-										<option>1학년</option>
-										<option>2학년</option>
-										<option>3학년</option>
-										<option>4학년</option>
-									</select>
-								</td>
-								<td colspan="2" style="text-align: right;">
-									<input type="button" class="btn btn-primary" value="Search" onclick="searchStuList();">
-								</td>							
+									<div class="d-grid">
+										<input type="button" class="btn btn-primary" value="Search" onclick="searchStuList();">
+									</div>
+								</td>					
 							</tr>
 							
 							<tr style="text-align: left; font-weight: bold;">
-								<td colspan="6">
+								<td colspan="7">
 									학생 전체 조회 및 검색 결과
 									<span style="font-size: 0.6em; color: red;">
 										해당 학생 클릭시 학생정보 상세창이 열립니다.
@@ -82,7 +64,7 @@
 								<td>학번</td>
 								<td>학생명</td>
 								<td>단과대학</td>
-								<td>전공학과</td>
+								<td colspan="2">전공학과</td>
 								<td>학년</td>
 								<td>재적상태</td>
 							</tr>	
@@ -92,7 +74,7 @@
 								<td>[[${stu.memNo}]]</td>
 								<td>[[${stu.memberVO.memName}]]</td>
 								<td>[[${stu.colleageVO.collName}]]</td>
-								<td>[[${stu.deptVO.deptName}]]</td>
+								<td colspan="2">[[${stu.deptVO.deptName}]]</td>
 								<td>[[${stu.stuYear}]]</td>
 								<td>[[${stu.stuStatus}]]</td>
 							</tr>	
@@ -101,8 +83,45 @@
 				</div>
 			</div>
 		</div>	
+		
+		<div id="paging">
+			<div class="row justify-content-center">
+				<div class="col-3">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination" >
+							<li class="page-item" th:classappend="${stuVO.prev ? '' : 'disabled'}">
+								<a class="page-link" href="javascript:void(0);" th:href="@{/school/checkStu(nowPage=${stuVO.beginPage-1})}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<th:block th:each="pageNum : ${#numbers.sequence(stuVO.beginPage, stuVO.endPage)}">
+								<li class="page-item"><a th:classappend="${stuVO.nowPage == pageNum ? 'active' : ''}" class="page-link" th:href="@{/school/mcheckStu(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
+							</th:block>
+							<li class="page-item" th:classappend="${stuVO.next ? '' : 'disabled'}">
+								<a class="page-link" href="javascript:void(0);" th:href="@{/school/checkStu(nowPage=${stuVO.endPage+1})}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div> 
+		</div>	
+	
 	</div>
 </div>	
+	
+	
+
+
+
+
+
+
+
+
+
+	
 <!-- Modal -->
 <div class="modal fade modal-lg" id="memberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog">

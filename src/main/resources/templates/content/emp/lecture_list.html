@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-   layout:decorate="~{fragment/emp_layout}">
+   layout:decorate="~{fragment/layout}">
    
 <!-- 연결해야 할 외부 css 파일 -->
 <th:block layout:fragment="content_css">
@@ -108,17 +108,17 @@
 									<input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary">
 								</td>
 								<td th:if="${lecture.lecStatus == '폐강'}">
-									<input type="button" value="폐강" th:onclick="regClose([[${lecture.lecNo}]]);" disabled>
+									<input type="button" value="폐강" class="btn btn-danger" th:onclick="regClose([[${lecture.lecNo}]]);" disabled>
 								</td>
 								<td th:unless="${lecture.lecStatus == '폐강'}">
-									<input type="button" value="폐강" th:onclick="regClose([[${lecture.lecNo}]]);">
+									<input type="button" value="폐강" class="btn btn-danger" th:onclick="regClose([[${lecture.lecNo}]]);">
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<div class="modal fade" id="updateModal" data-bs-keyboard="false"
+			<div class="modal fade" id="updateModal" data-bs-keyboard="false"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 				tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">

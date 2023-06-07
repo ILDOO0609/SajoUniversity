@@ -46,7 +46,7 @@ function updateXPosition(memNo) {
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'memNo':memNo,'deptNo':deptNo, 'collNo':collNo, 'memRole':memRole}, //필요한 데이터
 	   	success: function(result) {
-			swal("거절완료" , "정상 처리되었습니다.", "success", {button: "확인"})
+			swal("승인취소" , "정상 처리되었습니다.", "success", {button: "확인"})
 			.then((result) => {
 				location.href = `/school/memberList`;
 			})
@@ -150,7 +150,7 @@ function approveO(isConfirmed){
 			str += `<div class="col-3">`;
 			str += `<nav aria-label="Page navigation example">`;
 			str += `<ul class="pagination" >`;
-			str += `<li class="page-item">`;
+			str += `<li class="page-item" classappend="${memberVO.prev ? '' : 'disabled'}">`;
 			str += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.beginPage-1}" aria-label="Previous">`;
 			str += `<span aria-hidden="true">&laquo;</span>`;
 			str += `</a>`;
@@ -159,7 +159,7 @@ function approveO(isConfirmed){
 			for(let i = memberVO.beginPage ; i <= memberVO.endPage ; i++){
 				str += `<li class="page-item"><a class="page-link" href="/school/approveOAjax?nowPage=${i}"><span>${i}</span></a></li>`;
 			}
-			str += `<li class="page-item">`;
+			str += `<li class="page-item" classappend="${memberVO.next ? '' : 'disabled'}">`;
 			str += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.endPage+1}" aria-label="Next">`;
 			str += `<span aria-hidden="true">&raquo;</span>`;
 			str += `</a>`;
@@ -200,6 +200,10 @@ function approveX(isConfirmed){
 			const tbodyTag = document.querySelector('#approveTable > tbody');
 			tbodyTag.replaceChildren();
 			
+			const memberVO = result['memberVO'];
+			result = result['deniedList'];
+			
+			
 			let str = '';
 			
 			if(result.length == 0){
@@ -220,7 +224,35 @@ function approveX(isConfirmed){
 					str += `</tr>`;
 				}
 				
+			const pagingTag = document.querySelector('#paging');
+			pagingTag.replaceChildren();
+			
+			
+			str += `<div class="row justify-content-center">`;
+			str += `<div class="col-3">`;
+			str += `<nav aria-label="Page navigation example">`;
+			str += `<ul class="pagination" >`;
+			str += `<li class="page-item" classappend="${memberVO.prev ? '' : 'disabled'}">`;
+			str += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.beginPage-1}" aria-label="Previous">`;
+			str += `<span aria-hidden="true">&laquo;</span>`;
+			str += `</a>`;
+			str += `</li>`;
+			
+			for(let i = memberVO.beginPage ; i <= memberVO.endPage ; i++){
+				str += `<li class="page-item"><a class="page-link" href="/school/approveOAjax?nowPage=${i}"><span>${i}</span></a></li>`;
 			}
+			str += `<li class="page-item" classappend="${memberVO.next ? '' : 'disabled'}">`;
+			str += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.endPage+1}" aria-label="Next">`;
+			str += `<span aria-hidden="true">&raquo;</span>`;
+			str += `</a>`;
+			str += `</li>`;
+			str += `</ul>`;
+			str += `</nav>`;
+			str += `</div>`;
+			str += `</div>`;
+				
+			}
+			
 			tbodyTag.insertAdjacentHTML('afterbegin', str);
 			
 			
@@ -318,10 +350,6 @@ function openModal(memNo){
 	
 	
 }
-
-
-
-
 
 
 

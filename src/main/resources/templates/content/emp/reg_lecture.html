@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-   layout:decorate="~{fragment/emp_layout}">
+   layout:decorate="~{fragment/layout}">
    
 <!-- 연결해야 할 외부 css 파일 -->
 <th:block layout:fragment="content_css">
@@ -16,23 +16,23 @@
 		<form action="/emp/regLecture" method="post" id="regForm" enctype="multipart/form-data">
 		<input type="hidden" name="semNo" value="SEM_0101">
 		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 등록 ROW ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-			<div class="row mb-5">
+			<div class="row mb-3">
 				<div class="col text-start">
-					<h4>강의 등록</h4>
+					<h3>강의 등록</h3>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
-					<div class="row mb-3">
-						<div class="offset-2 col-2">
+					<div class="row mb-3  align-items-center">
+						<div class="offset-1 col-2">
 							강의명
 						</div>
 						<div class="col-4">
 							<input type="text" class="form-control" name="lecName">
 						</div>
 					</div>
-					<div class="row mb-3">
-						<div class="offset-2 col-2">
+					<div class="row mb-3  align-items-center">
+						<div class="offset-1 col-2">
 							강의학점 
 						</div>
 						<div class="col-4">
@@ -40,21 +40,19 @@
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
 							</select>
 						</div>
 					</div>
-					<div class="row mb-3">
-						<div class="offset-2 col-2">
+					<div class="row mb-3  align-items-center">
+						<div class="offset-1 col-2">
 							강의학기 
 						</div>
 						<div class="col-4">
 							2023년 1학기
 						</div>
 					</div>
-					<div class="row mb-3">
-						<div class="offset-2 col-2">
+					<div class="row mb-3  align-items-center">
+						<div class="offset-1 col-2">
 							단과대학 
 						</div>
 						<div class="col-4">
@@ -63,8 +61,8 @@
 							</select>
 						</div>
 					</div>
-					<div class="row mb-3">
-						<div class="offset-2 col-2">
+					<div class="row mb-3  align-items-center">
+						<div class="offset-1 col-2">
 							소속학과 
 						</div>
 						<div class="col-4" id="deptDiv">
@@ -75,8 +73,8 @@
 							</select>
 						</div>
 					</div>
-					<div class="row mb-3">
-						<div class="offset-2 col-2">
+					<div class="row mb-3 align-items-center">
+						<div class="offset-1 col-2">
 							최대 수강신청 인원
 						</div>
 						<div class="col-4">
@@ -86,24 +84,30 @@
 				</div>
 			</div>
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ강의 상세 등록 ROW ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-			<div class="row mb-5">
+			<div class="row mb-3">
 				<div class="col text-start">
-					<h4>강의 상세 등록</h4>
+					<h3>강의 상세 등록</h3>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
-					<div class="row mb-3">
-						<div class="offset-2 col-2">
+					<div class="row mb-3 align-items-center">
+						<div class="offset-1 col-2">
 							강의 자료 등록 
 						</div>
 						<div class="col-4">
 							<input type="file" class="form-control" name="pdfFile" id="pdfFile"> 
 						</div>
 					</div>
+<<<<<<< HEAD
 					<div id="container">
 						<div class="row mb-3 align-items-center" id="day">
 							<div class="col-2 text-end">
+=======
+					<div id="dayContainer">
+						<div class="row mb-3 align-items-center" id="day">
+							<div class="offset-1 col-2">
+>>>>>>> dc635fa42fa27406292b624f778d8d5bc17f4fa6
 								요일
 							</div>
 							<div class="col-4">
@@ -115,7 +119,7 @@
 									<option value="금">금</option>
 								</select>
 							</div>
-							<div class="col-2 text-end">
+							<div class="col-1">
 								시간
 							</div>
 							<div class="col-4 text-start">
@@ -128,7 +132,7 @@
 								</select>
 								교시
 								<input type="button" value="추가" class="btn btn-primary" id="addBtn" onclick="add();">
-								<input type="button" value="삭제" id="deleteBtn" class="btn btn-primary" style="display: none;" onclick="deleteDay();">
+								<input type="button" value="삭제" id="deleteBtn" class="btn btn-danger" style="display: none;" onclick="deleteDay();">
 							</div>
 						</div>
 					</div>

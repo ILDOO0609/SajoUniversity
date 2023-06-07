@@ -68,7 +68,7 @@ function searchStuList(){
 			
 			if(result.length == 0){
 					str += `<tr>`;
-					str += `<td colspan="6">조회된 회원이 없습니다.</td>`;
+					str += `<td colspan="7">조회된 회원이 없습니다.</td>`;
 					str += `</tr>`;
 			}
 			else{
@@ -77,7 +77,7 @@ function searchStuList(){
 					str += `<td>${stu.memNo}</td>`;
 					str += `<td>${stu.colleageVO.collName}</td>`;
 					str += `<td>${stu.memberVO.memName}</td>`;
-					str += `<td>${stu.deptVO.deptName}</td>`;
+					str += `<td colspan="2">${stu.deptVO.deptName}</td>`;
 					str += `<td>${stu.stuYear}</td>`;
 					str += `<td>${stu.stuStatus}</td>`;
 					str += `</tr>`;

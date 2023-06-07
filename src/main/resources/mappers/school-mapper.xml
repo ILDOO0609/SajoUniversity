@@ -147,7 +147,27 @@
 		<if test="deptNo != null and deptNo != ''">
 		AND DP.DEPT_NO = #{deptNo}
 		</if>
+		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
+	<!-- 학생수 데이터 조회 -->
+	<select id="getStuListCnt" resultType="int">
+		SELECT COUNT(STU_NO)
+		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM
+		WHERE ST.COLL_NO = COLL.COLL_NO
+		AND ST.DEPT_NO = DP.DEPT_NO
+		AND ST.MEM_NO = MEM.MEM_NO
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		<if test="collNo != null and collNo != ''">
+		AND COLL.COLL_NO = #{collNo}
+		</if>
+		<if test="deptNo != null and deptNo != ''">
+		AND DP.DEPT_NO = #{deptNo}
+		</if>
+	</select>
+	
+	
 	<!-- 학사조회 -> 학생조회 -> 상세모달창 -->
 	<select id="checkStuModal" resultMap="stuMapper.stu">
 		SELECT STU_NO
@@ -736,6 +756,12 @@
 		SET IS_CONFIRMED = 'Y'
 		WHERE MEM_NO = ${memNo}
 	</update>
+	<!-- 회원메뉴 -> 회원승인취소처리 -->
+	<update id="updateXPosition">
+		UPDATE MEMBER
+		SET IS_CONFIRMED = 'N'
+		WHERE MEM_NO = ${memNo}
+	</update>
 	
 	<insert id="insertStu">
 		INSERT INTO STU (
@@ -817,6 +843,7 @@
 		FROM MEMBER	
 		WHERE IS_CONFIRMED = 'N'
 		ORDER BY REG_DATE DESC
+		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	
 	<!-- 회원클릭시 상세 모달창 -->
@@ -849,19 +876,13 @@
 		WHERE IS_CONFIRMED = 'Y'
 	</select>
 	<!-- 회원메뉴 승인/취소 승인완료 데이터 수 조회 -->
-<!-- 	<select id="getMemberDeniedListCnt" resultMap="int">
+	<select id="getMemberDeniedListCnt" resultType="int">
 		SELECT COUNT(IS_CONFIRMED)
 		FROM MEMBER
 		WHERE IS_CONFIRMED = 'N'
-	</select> -->
+	</select> 
 
 	
-	<!-- 회원메뉴 -> 회원승인거부처리 -->
-	<update id="updateXPosition">
-		UPDATE MEMBER
-		SET IS_CONFIRMED = 'N'
-		WHERE MEM_NO = ${memNo}
-	</update>
 	
 	
 </mapper>

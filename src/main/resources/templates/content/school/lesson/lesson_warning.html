@@ -5,7 +5,108 @@
 	layout:decorate="~{fragment/school/school_layout}">
 
 <th:block layout:fragment="content">
-<h2>학사경고 관리</h2>
+<div class="container">	
+	<h2>학사징계 관리</h2>	
+	<div class="row">
+		<div class="col mb-3" >
+			<div class="row">
+				<div class="col" style="padding-right: 0px;">
+					<form id="searchForm" th:action="@{/school/lessonWarning}" method="post">
+						<table class="table table-hover">
+							<colgroup>
+								<col width="15%">					
+								<col width="15%">					
+								<col width="15%">					
+								<col width="15%">					
+								<col width="10%">					
+								<col width="15%">					
+								<col width="15%">					
+							</colgroup>
+							<thead>
+								<tr style="text-align: left; font-weight: bold;">
+									<td colspan="7">
+										학생 정보
+									</td>
+								</tr> 
+		
+								<tr>
+									<td>단과대학</td>
+									<td>
+										<select class="form-select" name="collNo" onchange="changeColl(this);">
+											<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
+										</select>
+									</td>
+									<td>전공학과</td>							
+									<td id="deptDiv">
+										<select class="form-select" name="deptNo">
+											<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
+												[[${dept.deptName}]]
+											</option>
+										</select>
+									</td>
+									<td>학생명</td>							
+									<td><input type="text" class="form-control" id="searchStuInput" name="searchValue" placeholder="학생명 입력"></td>		
+									<td>
+										<div class="d-grid">
+											<input type="button" class="btn btn-primary" value="Search" onclick="searchStuList();">
+										</div>
+									</td>					
+								</tr>
+								
+								<tr style="text-align: left; font-weight: bold;">
+									<td colspan="7">
+										학생 검색 결과
+										<span style="font-size: 0.6em; color: red;">
+											해당 학생 클릭시 학생정보 상세창이 열립니다.
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<td>학번</td>
+									<td>학생명</td>
+									<td>학년</td>
+									<td>학기</td>
+									<td colspan="2">징계사유</td>
+									<td>재적상태</td>
+								</tr>	
+							</thead>
+							<tbody>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td colspan="2"></td>
+									<td style="text-align: center;">
+										<button class="btn btn-primary" style="cursor: pointer;">학사경고</button>
+										<button class="btn btn-danger" type="button" style="cursor: pointer;">제적</button>
+									</td>
+								</tr>	
+							</tbody>	
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>			
+	
+<!-- Modal -->
+<div class="modal fade modal-lg" id="memberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">학생 상세정보</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+			    ...
+			</div>
+		</div>
+	</div>
+</div>	
+	
+</th:block>
 
 </th:block>
 

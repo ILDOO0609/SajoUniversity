@@ -126,6 +126,12 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<StuVO> checkStuModal(String stuNo) {
 		return sqlSession.selectList("schoolMapper.checkStuModal", stuNo);
 	}
+	//학생 수 조회
+	@Override
+	public int getStuListCnt() {
+		return sqlSession.selectOne("schoolMapper.getStuListCnt");
+	}
+
 	
 	
 	
@@ -341,8 +347,8 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	//승인/취소 조회 -> 승인취소 조회
 	@Override
-	public List<MemberVO> selectMemberDeniedList(String isConfirmed) {
-		return sqlSession.selectList("schoolMapper.selectMemberDeniedList", isConfirmed);
+	public List<MemberVO> selectMemberDeniedList(MemberVO memberVO) {
+		return sqlSession.selectList("schoolMapper.selectMemberDeniedList", memberVO);
 	}
 	
 	//회원클릭시 회원상에 모달창
@@ -360,6 +366,12 @@ public class SchoolServiceImpl implements SchoolService{
 	public int getMemberAddListCnt() {
 		return sqlSession.selectOne("schoolMapper.getMemberAddListCnt");
 	}
+	//승인취소 전체 데이터 조회 -> 페이징
+	@Override
+	public int getMemberDeniedListCnt() {
+		return sqlSession.selectOne("schoolMapper.getMemberDeniedListCnt");
+	}
+
 
 	
 

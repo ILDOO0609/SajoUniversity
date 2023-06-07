@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-  	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragment/layout}">
+  	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout2"
+      layout:decorate="~{fragment/layout2}">
 
 
 <!-- 연결해야 할 외부 css 파일 -->
@@ -22,15 +22,8 @@
         padding-left: 575px;
       }
       
-      footer.container-fluid.bg-dark.text-light {
-    position: fixed;
-    opacity: 0.8;
-    /* padding: 0; */
-    /* margin: 0; */
-    /* background-color: black; */
-	}
     </style>
-<div class="aaa">
+
 	<div class="imgBox">
 		<img class="imgBG" src="https://cdn.pixabay.com/photo/2020/02/06/20/01/university-library-4825366_1280.jpg">
 	</div>
@@ -41,7 +34,7 @@
 	
 	<div class="weather" style="position: absolute;">
 		
-		<div style="padding : 40px;color : #fff; height : 220px; color: black">
+	<div style="padding : 40px;color : #fff; height : 220px; color: black">
     <div style="float : left;">
         <div class="weather_icon"></div>
     </div><br>
@@ -58,62 +51,294 @@
         <div class="weather_description" style="font-size : 20pt"></div>
         <div class="city" style="font-size : 13pt"></div>
     </div>
-</div>
 		
 		
+	</div>
 	</div>
 	
 	<!-- 로그인 섹션 -->
 	<section class="loginSec">
-		<div class="login-inputBox">
-			<div style="text-align: center; font-size: 33px; margin-bottom: 5px; font-style: italic;">사조 대학에 오신걸 환영합니다</div>
-			
-			<!-- 로그인 버튼 -->
-			<span data-bs-toggle="modal" data-bs-target="#loginModal"class="btn btn-dark mb-3" style="cursor: pointer;">LOGIN</span> 
-			
-			
-			<!-- 회원가입 버튼 -->
-			<span data-bs-toggle="modal" data-bs-target="#joinModal"class="btn btn-dark" style="cursor: pointer;">회원가입</span> 
+		<div>
+			<img src="https://upload.wikimedia.org/wikipedia/ko/thumb/a/ae/Chelsea_FC_Logo.svg/2048px-Chelsea_FC_Logo.svg.png" />
+			<div class="login-inputBox">
+				<div style="text-align: center; font-size: 33px; margin-bottom: 5px; font-style: italic;">사조 대학에 오신걸 환영합니다</div>
+				
+				<!-- 로그인 버튼 -->
+				<span data-bs-toggle="modal" data-bs-target="#loginModal"class="btn btn-dark mb-3" style="cursor: pointer;">LOGIN</span> 
+				
+				
+				<!-- 회원가입 버튼 -->
+				<span data-bs-toggle="modal" data-bs-target="#joinModal"class="btn btn-dark" style="cursor: pointer;">회원가입</span> 
+						
+				
+				<!-- ID/ PW 찾기 기능 -->
+				<div class="findFnc">
+					<span data-bs-toggle="modal" data-bs-target="#findNoModal" style="cursor: pointer; margin: 5px;" class="mt-3 mb-3 btn btn-dark" >
+										아이디찾기 
+					</span>
 					
-			
-			<!-- ID/ PW 찾기 기능 -->
-			<div class="findFnc">
-				<span data-bs-toggle="modal" data-bs-target="#findNoModal" style="cursor: pointer; margin: 5px;" class="mt-3 mb-3 btn btn-dark" >
-									아이디찾기 
-				</span>
+					<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer; margin: 5px;" class="mt-3 mb-3 btn btn-dark">
+										비밀번호 찾기
+					</span>
+					
+					
+					
+				</div>
 				
-				<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer; margin: 5px;" class="mt-3 mb-3 btn btn-dark">
-									비밀번호 찾기
-				</span>
-				
-				
-				
+				<div>
+					<p>
+						<a href="/member/pop1" target="_blank" rel="noopener noreferrer"><strong
+							style="color: #294798">개인정보 처리방침</strong></a> <a
+							onclick="openPopupWindow(event, this.href);"
+							title="Rejection of unauthorized e-mail collection opens in a new window"
+							href="/member/pop2">이메일무단수집거부</a>
+					</p>
+	
+	
+					<!-- 이메일무단수집거부 클릭시 팝업창 띄우기 -->
+					<script>
+						function openPopupWindow(event, url) {
+							event.preventDefault();
+							window
+									.open(url, '',
+											'left=100,top=100,width=710,height=480,scrollbars=yes');
+						}
+					</script>
+				</div>
+				<span>COPYRIGHT© SAJO UNIVERSITY</span><br><span style="text-align: center"> ALL RIGHTS RESERVED.</span>
 			</div>
-			
-			<div>
-				<p>
-					<a href="/member/pop1" target="_blank" rel="noopener noreferrer"><strong
-						style="color: #294798">개인정보 처리방침</strong></a> <a
-						onclick="openPopupWindow(event, this.href);"
-						title="Rejection of unauthorized e-mail collection opens in a new window"
-						href="/member/pop2">이메일무단수집거부</a>
-				</p>
-
-
-				<!-- 이메일무단수집거부 클릭시 팝업창 띄우기 -->
-				<script>
-					function openPopupWindow(event, url) {
-						event.preventDefault();
-						window
-								.open(url, '',
-										'left=100,top=100,width=710,height=480,scrollbars=yes');
-					}
-				</script>
-			</div>
-			<span>COPYRIGHT© SAJO UNIVERSITY</span><br><span style="text-align: center"> ALL RIGHTS RESERVED.</span>
 		</div>
 	</section>
-</div>	
+	
+ <!--LOGIN Modal -->
+	<div class="modal fade" id="loginModal" 
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			
+			
+				<div class="modal-body">
+					<form id="loginForm" method="post">
+						<div class="row mb-3">
+							
+							<div class="col-12" style="text-align: center; font-size: 24px;">
+								<strong>사조대학</strong>
+							</div>
+							
+							<div class="col-12 mb-3">
+								<input type="text" class="form-control" placeholder="회원번호를 입력하세요." name="memNo" id="memNo">
+							</div>
+							<div class="col-12">
+								<input type="password" class="form-control" placeholder="비밀번호 입력해주세요." name="memPw" id="memPw">
+							</div>
+							
+							<div class="row mb-3">
+								<div class="col-6 d-grid">
+									<input type="button" class="btn d-grid mt-3 btn-dark" value="로그인" onclick="login();" id="toastStart">
+								</div>
+								<div class="col-6 d-grid">
+									<span data-bs-toggle="modal" data-bs-target="#findPwModal" style="cursor: pointer;" class="btn d-grid mt-3 btn-dark">
+									비밀번호 찾기
+									</span>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+ 
+ 
+			</div>
+		</div>
+	</div>
+ 
+ 
+ 
+ <!-- JOIN Modal -->
+	<div class="modal fade" id="joinModal" 
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+ 
+ 				<div class="modal-body">
+ 					<form class="row g-3" id="joinForm" th:action="@{/member/join}" method="post">
+ 						
+ 							<div class="col-12" style="text-align: center; font-size: 24px;">
+								<strong>사조대학</strong>
+							</div>
+ 						
+ 						<div class="col-9">
+ 							<label for="memId" class="form-label">학번 및 교번</label>
+ 							<input type="text" class="form-control" id="memNo" name="memNo" placeholder="등록할 학번 및 교번을 숫자로 입력하세요." onkeyup="setDisabled();">
+ 						</div>
+ 						
+ 						<div class="col-3 d-grid">
+ 							<label for="check_id" class="form-label">&nbsp;</label>
+ 							<input type="button" class="btn btn-dark" id="check_id" value="중복 확인" onclick="isDuplicateMemNo();">
+ 						</div>
+ 						
+ 						<div class="col-12">
+							<label for="memPw" class="form-label">비 밀 번 호</label> 
+							<input type="password" class="form-control" id="memPw" name="memPw" placeholder="숫자와 문자 포함 형태의 6~12자리 이내의 암호이여야 합니다.">
+						</div>
+						
+ 						<div class="col-12">
+							<label for="memQuest" class="form-label">좋아하는 숫자</label> 
+							<input type="password" class="form-control" id="memQuest" name="memQuest" placeholder="비밀번호찾기시 사용됩니다.">
+						</div>
+						
+						<div class="col-12">
+							<label for="memName" class="form-label">이름</label> 
+							<input type="text" class="form-control" id="memName" name="memName" placeholder="이름 입력은 필수입니다.">
+						</div>
+						
+						<div class="col-3">
+							<div class="form-check">
+								<input class="form-check-input" value="M" type="radio" id="gender_male" name="memGender" checked>
+								<label class="form-check-label" for="gender_male">Male</label>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="form-check">
+								<input class="form-check-input" value="F" type="radio" id="gender_female" name="memGender">
+								<label class="form-check-label" for="gender_female">FeMale</label>
+							</div>
+						</div>
+						
+						<div class="col-6"></div>
+						
+						<div class="col-12 d-grid">
+							<label class="form-date-label" for="mem_birthday">생년월일</label>
+							<input type="date" class="form-control" id="memBirthday" name="memBirthday">
+							<!-- 현재 날짜 이하만 고를수 있도록 설정 -->
+							<script>
+							  const memBirthdayInput = document.getElementById('memBirthday');
+							  memBirthdayInput.min = '0000-01-01';
+							  const currentDate = new Date().toISOString().split('T')[0];
+							  memBirthdayInput.max = currentDate;
+							</script>
+						</div>
+						
+						<div class="col-4">
+							<label for="tell_1" class="form-label">연락처</label> 
+								<select id="tell_1" name="memTells"class="form-select">
+									<option value="010">010</option>
+									<option value="011">011</option>
+									<option value="012">012</option>
+								</select>
+						</div>
+						
+						<div class="col-4">
+							<label for="tell_2" class="form-label">&nbsp;</label> 
+							<input
+								type="text" class="form-control" id="tell_2" name="memTells">
+						</div>
+						
+						<div class="col-4">
+							<label for="tell_3" class="form-label">&nbsp;</label> 
+							<input type="text" class="form-control" id="tell_3" name="memTells">
+						</div>
+						
+						<div class="col-12">
+							<label for="mem_email" class="form-label">&nbsp; 이메일</label> 
+						</div>
+						
+						<div class="col-12">
+							<input type="text" class="form-control" id="memEmail" name="memEmail" placeholder="이메일 필수사항.">
+						</div>
+						
+						<div class="col-12">
+						    <label for="btn-auth" class="form-label">&nbsp;</label> 
+						    <input type="button" class="form-control" id="btn-auth" name="btn-auth" value="인증번호받기" onclick="authenMail();">
+						</div>
+						
+						<div class="col-12">
+						    <label for="auth_mail" class="form-label">&nbsp;</label> 
+						    <input type="text" class="form-control" id="auth_mail" name="auth_mail">
+						</div>
+						<div class="col-12">
+						    <label for="time-remaining" class="form-label">&nbsp;</label> 
+						    <input type="text" class="form-control" id="time-remaining" name="time-remaining" value="남은시간">
+						    
+						</div>
+						<div class="col-12">
+						    <label for="confirmation" class="form-label">&nbsp;</label> 
+						    <input type="button" class="form-control" id="confirmation" name="confirmation" value="확인" onclick="checkVerificationCode();">
+						</div>
+						
+						
+						<div class="col-9">
+							<label for="memAddr" class="form-label">주소</label> 
+							<input type="text" class="form-control" id="memAddr" name="memAddr" onclick="searchAddr();">
+						</div>
+						
+						<div class="col-3 d-grid">
+							<label for="search_btn" class="form-label">&nbsp;</label> <!-- &nbsp; 하면 space처리 됨 -->
+							<input type="button" class="btn btn-dark" id="search_btn" value="Search" onclick="searchAddr();" placeholder="주소는 필수 입력 입니다.">
+						</div>
+						
+						<div class="col-12">
+							<input type="text" class="form-control" id="memAddrDetail" name="memAddrDetail" placeholder="상세 주소는 필수사항.">
+						</div>
+						
+						<div class="col-12">
+							<label for="" class="form-label">이미지 등록</label> 
+							<input type="file" class="form-control" id="memImage" name="memImage">
+						</div>
+						
+						
+						<div class="col-12 d-grid">
+							<div>
+								<strong>권한설정(필수)</strong>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="form-check">
+								<input class="form-check-input" value="stu" type="radio" id="role_stu" name="memRole" checked>
+								<label class="form-check-label" for="role_stu">학생</label>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="form-check">
+								<input class="form-check-input" value="pro" type="radio" id="role_professor" name="memRole">
+								<label class="form-check-label" for="role_professor">교수</label>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="form-check">
+								<input class="form-check-input" value="stf" type="radio" id="role_staff" name="memRole">
+								<label class="form-check-label" for="role_staff">교직원</label>
+							</div>
+						</div>
+					
+						<div class="col-12 d-grid">
+							<button id="joinBtn" onclick="join();" type="button" class="btn" disabled>회 원 등 록</button>
+						</div>
+ 						
+ 						
+ 						
+ 					</form>
+ 				</div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 			</div>
+		</div>
+	</div>
+ 
+<script>
+        function openPopup() {
+            var link = "https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C524447%2C1082335&rt1=&rt2=%EC%B9%B4%EC%B9%B4%EC%98%A4&rtIds=%2C&rtTypes=%2C";
+            window.open(link, "_blank", "width=600, height=400");
+        }
+</script>	
+	
+	
 	
 	
 	<!--비밀번호 찾기 Modal -->

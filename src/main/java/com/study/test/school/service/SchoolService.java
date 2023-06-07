@@ -7,6 +7,8 @@ import com.study.test.emp.vo.EmpVO;
 import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.CalendarVO;
+import com.study.test.school.vo.ProbationStatusVO;
+import com.study.test.school.vo.ProbationVO;
 import com.study.test.school.vo.SchoolInfoVO;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
@@ -134,6 +136,11 @@ public interface SchoolService {
 	void updateDoubleDenied(DeptManageVO deptManageVO);
 	//수업메뉴 -> 복수전공관리 ->회원클릭시 모달창
 	List<DeptManageVO> checkDoubleModal(String applyNo);
+	
+	//수업메뉴 -> 학사징계관리 -> 징계사유 조회
+	List<ProbationStatusVO> getProbStatusList();
+	//수업메뉴 -> 학사징계관리 -> 학생검색
+	List<StuVO> searchProbStuList(StuVO stuVO);
 	
 	
 // -------회원메뉴 회원조회------------------------------------------------------

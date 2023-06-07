@@ -11,7 +11,6 @@
 		<div class="col mb-3" >
 			<div class="row">
 				<div class="col" style="padding-right: 0px;">
-					<form id="searchForm" th:action="@{/school/lessonWarning}" method="post">
 						<table class="table table-hover" id="warningTable">
 							<colgroup>
 								<col width="15%">					
@@ -48,7 +47,7 @@
 									<td><input type="text" class="form-control" id="searchStuInput" name="searchValue" placeholder="학생명 입력"></td>		
 									<td>
 										<div class="d-grid">
-											<input type="button" class="btn btn-primary" value="Search" onclick="searchStuList();">
+											<input type="button" class="btn btn-primary" value="Search" onclick="searchProbList();">
 										</div>
 									</td>					
 								</tr>
@@ -76,15 +75,18 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									<td colspan="2"></td>
+									<td colspan="2">
+										<select class="form-select">
+											<option th:each="prob : ${ProbList}" th:value="${prob.probStatusCode}">[[${prob.probStatusName}]]</option>
+										</select>
+									</td>
 									<td style="text-align: center;">
-										<button class="btn btn-primary" style="cursor: pointer;">학사경고</button>
+										<button class="btn btn-primary" type="button" style="cursor: pointer;">학사경고</button>
 										<button class="btn btn-danger" type="button" style="cursor: pointer;">제적</button>
 									</td>
 								</tr>	
 							</tbody>	
 						</table>
-					</form>
 				</div>
 			</div>
 		</div>
@@ -112,7 +114,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/content/admin/cate_manage.js"></script> -->
+	<script type="text/javascript" src="/js/content/school/lesson.js"></script>
 </th:block>
 
 </html>

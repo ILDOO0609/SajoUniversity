@@ -12,11 +12,15 @@ import com.study.test.emp.vo.EmpVO;
 import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.CalendarVO;
+import com.study.test.school.vo.ProbationStatusVO;
+import com.study.test.school.vo.ProbationVO;
 import com.study.test.school.vo.SchoolInfoVO;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 import com.study.test.util.PageVO;
+
+import groovyjarjarpicocli.CommandLine.Help.Ansi.Style;
 
 @Service("schoolService")
 public class SchoolServiceImpl implements SchoolService{
@@ -302,6 +306,23 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectList("schoolMapper.checkDoubleModal", applyNo);
 	}
 	
+	//수업메뉴 -> 학사징계관리 -> 징계사유 조회
+	@Override
+	public List<ProbationStatusVO> getProbStatusList() {
+		return sqlSession.selectList("schoolMapper.getProbStatusList");
+	}
+	//수업메뉴 -> 학사징계관리 -> 학생검색
+	@Override
+	public List<StuVO> searchProbStuList(StuVO stuVO) {
+		return sqlSession.selectList("schoolMapper.searchProbStuList", stuVO);
+	}
+	
+	
+	
+	
+	
+	
+	
 // -------회원메뉴 ------------------------------------------------------
 	//등록회원 전체조회
 	@Override
@@ -371,6 +392,10 @@ public class SchoolServiceImpl implements SchoolService{
 	public int getMemberDeniedListCnt() {
 		return sqlSession.selectOne("schoolMapper.getMemberDeniedListCnt");
 	}
+
+	
+
+
 
 
 	

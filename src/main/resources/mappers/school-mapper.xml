@@ -961,7 +961,11 @@
 		FROM MEMBER
 		WHERE IS_CONFIRMED = 'N'
 	</select> 
-
+	
+	<!-- 휴학 신청 승인대기중인 학생수 조회 -->
+	<select id="getStatusCntForI" resultType="int">
+		SELECT COUNT(STATUS_NO) FROM STATUS_INFO WHERE ING_STATUS = 'I'
+	</select>
 	
 	
 	

@@ -33,39 +33,25 @@ function secret(){
  }
  
 	// 게시글 등록
-async function regBoard(){
+function regBoard(){
 	if(document.querySelector('#boardTitle').value=='' || document.querySelector('#boardContent').value ==''){
-		
-		const result = await Swal.fire({
-        icon: 'error',
-        title: '등록불가',
-        text: '제목 및 내용은 필수입력입니다.!',
-   		});
-    	if (result.isConfirmed) {
-			return;
-        }
+		Swal.fire('제목 및 내용은 필수입력입니다.', '', 'error');
+        return;
 	}
 	
 	if(document.querySelector('#secretChk').checked && document.querySelector('#secretNum').value == ''){
-		const result = await Swal.fire({
-        icon: 'error',
-        title: '등록불가',
-        text: '비밀글 암호를 입력해주세요.!',
-   		});
-    	if (result.isConfirmed) {
-			return;
-        }
+		Swal.fire('비밀글 암호를 입력해주세요.', '', 'error');
+        return;
 	}
 	
-	const result = await Swal.fire({
-        icon: 'success',
-        title: '등록완료',
-        text: '글이 등록 되었습니다.!',
-    });
-    
-    if (result.isConfirmed) {
-        document.querySelector('#formTag').submit();
-    }
+	Swal.fire({
+    icon: 'success',
+    title: '등록 성공',
+    text: '글이 등록 되었습니다!',
+	}).then((result) => {
+	    document.querySelector('#formTag').submit();
+	});
+
 }
 
  

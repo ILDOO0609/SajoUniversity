@@ -1,6 +1,7 @@
 package com.study.test.library.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
@@ -24,15 +25,23 @@ public class LibraryController {
 	
 	@GetMapping("/libMain")
 	public String libMain(Authentication authentication, Model model, LibraryVO libraryVO) {
-		// 열람실 좌석 정보 조회
-		model.addAttribute("libInfo", libraryService.getLibInfo(authentication.getName()));
-		
-		// 사용중인 좌석 조회
-		model.addAttribute("seatInfo", libraryService.getSeatInfo());
-	
-		model.addAttribute("idx", libraryService.getCountSeat());
-		
-		return "content/library/lib_main";
+	    // Query reading room seat information
+	    model.addAttribute("libInfo", libraryService.getLibInfo(authentication.getName()));
+
+	    // look up seats in use
+	    List<LibraryVO> seatInfo = libraryService.getSeatInfo();
+	    
+	    List<Integer>seatNoArr = new ArrayList<>();
+	    
+	    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+seatInfo);
+	    
+	    for(LibraryVO seat : seatInfo) {
+	    	seatNoArr.add(seat.getSeatNo());
+	    }
+	    
+	    model.addAttribute("seatNoArr", seatNoArr);
+
+	    return "content/library/lib_main";
 	}
 	
 	@PostMapping("getSeatInfoAjax")
@@ -40,5 +49,4 @@ public class LibraryController {
 		
 		
 	}
-
 }

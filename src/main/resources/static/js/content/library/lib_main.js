@@ -1,5 +1,4 @@
 
-
 // 도서관 자리 클릭시 자리예약을 위한 함수
 function regSeat(btn, seatNum){
 	const seatNo = seatNum;

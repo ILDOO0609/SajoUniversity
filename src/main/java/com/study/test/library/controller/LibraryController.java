@@ -25,13 +25,13 @@ public class LibraryController {
 	
 	@GetMapping("/libMain")
 	public String libMain(Authentication authentication, Model model, LibraryVO libraryVO) {
-	    // Query reading room seat information
-	    model.addAttribute("libInfo", libraryService.getLibInfo(authentication.getName()));
-
-	    // look up seats in use
+		// 열람실 좌석 정보 조회
+		model.addAttribute("libInfo", libraryService.getLibInfo(authentication.getName()));
+		
+		// 사용중인 좌석 조회
 	    List<LibraryVO> seatInfo = libraryService.getSeatInfo();
 	    
-	    List<Integer>seatNoArr = new ArrayList<>();
+	    List<Integer> seatNoArr = new ArrayList<>();
 	    
 	    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+seatInfo);
 	    
@@ -42,11 +42,7 @@ public class LibraryController {
 	    model.addAttribute("seatNoArr", seatNoArr);
 
 	    return "content/library/lib_main";
-	}
+		}
 	
-	@PostMapping("getSeatInfoAjax")
-	public void getSeatInfoAjax(Model model) {
-		
-		
-	}
+	
 }

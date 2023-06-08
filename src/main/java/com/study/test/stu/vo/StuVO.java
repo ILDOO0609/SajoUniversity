@@ -28,4 +28,5 @@ public class StuVO extends PageVO{
 	private DeptVO deptVO;
 	
 	private String searchValue;
+	private ProbationVO probationVO;
 }

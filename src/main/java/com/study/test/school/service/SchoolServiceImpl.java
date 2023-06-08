@@ -319,8 +319,10 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	//수업메뉴 -> 학사징계관리 -> 학사경고 인서트
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void insertProbation(ProbationVO probationVO) {
 		sqlSession.insert("schoolMapper.insertProbation", probationVO);
+		sqlSession.update("schoolMapper.updateProbation", probationVO);
 	}
 	//수업메뉴 -> 학사징계관리 -> 학생상세모달
 	@Override
@@ -407,6 +409,7 @@ public class SchoolServiceImpl implements SchoolService{
 	public int getStatusCntForI() {
 		return 0;
 	}
+
 
 	
 

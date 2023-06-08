@@ -246,6 +246,7 @@ function stuProb(){
 		
 		return
 	}
+	
 	const stuNo = document.querySelector(".chk:checked").value;
 	const semNo = document.querySelector("#semNo").value;
 	const memNo = document.querySelector(".chk:checked").parentElement.nextElementSibling.textContent;
@@ -371,13 +372,8 @@ function openWarningModal(stuNo){
 				str += `<tr>`;
 				str += `<td colspan="5">학사징계 목록</td>`;
 				str += `</tr>`;
-				str += `<tr style="text-align: center;">`;
-				str += `<td>2023-06-08</td>`;
-				str += `<td colspan="4">휴학기간이 만료된 후 기간 내 미복학</td>`;
-				str += `</tr>`;
-				
-			}
 			
+			}
 			
 			content_div.insertAdjacentHTML('afterbegin', str);
 			

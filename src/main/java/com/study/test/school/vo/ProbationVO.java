@@ -18,10 +18,10 @@ public class ProbationVO {
 	private String stuNo;
 	private String semNo;
 	private String probStatusCode;
+	private String probCnt;
 	
 	private ProbationStatusVO probationStatusVO;
 	private MemberVO memberVO;
-	private StuVO stuVO;
 	private SemesterVO semesterVO;
 	
 }

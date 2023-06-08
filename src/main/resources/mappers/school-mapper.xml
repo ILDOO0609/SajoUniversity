@@ -24,9 +24,9 @@
 		<result column="STU_NO" property="stuNo"/>
 		<result column="SEM_NO" property="semNo"/>
 		<result column="PROB_STATUS_CODE" property="probStatusCode"/>
+		<result column="PROB_CNT" property="probCnt"/>
 		<association property="probationStatusVO" resultMap="probationStatus"></association>
 		<association property="memberVO" resultMap="memberMapper.member"></association>
-		<association property="stuVO" 	resultMap="stuMapper.stu"></association>
 		<association property="semesterVO" 	resultMap="empMapper.semester"></association>
 	</resultMap>
 	
@@ -781,12 +781,17 @@
          	, #{probStatusCode}
 		)
 	</insert>
+	<update id="updateProbation">
+		UPDATE PROBATION
+		SET PROB_CNT = +1
+		WHERE STU_NO = #{stuNo}
+	</update>
 	
 	
 	
 	<!-- 수업메뉴 -> 학사징계관리 -> 상세모달창 -->
 	<select id="getProbStuModal" resultMap="stuMapper.stu">
-		SELECT STU_NO
+		SELECT ST.STU_NO
 		    , STU_YEAR
 		    , STU_SEM
 		    , DECODE(STU_STATUS, '1', '재학중', '2','휴학중', '3', '제적') STU_STATUS
@@ -808,7 +813,7 @@
 		WHERE ST.COLL_NO = COLL.COLL_NO
 		AND ST.DEPT_NO = DP.DEPT_NO
 		AND ST.MEM_NO = MEM.MEM_NO
-		AND STU_NO = #{stuNo}
+		AND ST.STU_NO = #{stuNo}
 	</select>
 	
 	

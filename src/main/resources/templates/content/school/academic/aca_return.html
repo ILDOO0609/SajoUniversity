@@ -69,7 +69,6 @@
 								</td>
 							</tr>
 						</table>
-					승인대기 목록
 						<div class="row">
 							<div class="col">
 								<table class="table table-hover text-center">
@@ -85,6 +84,9 @@
 										<col width="15%">
 									</colgroup>
 									<thead style="height: 50px">
+										<tr>
+											<td colspan="9" style="text-align: left;">승인대기 목록</td>
+										</tr>
 										<tr>
 											<td><input type="checkbox" class="form-check-input"></td>
 											<td>No</td>
@@ -129,12 +131,10 @@
 							</div>
 						</div>
 	
-					승인완료 목록
 						<div class="row">
 							<div class="col">
 								<table class="table table-hover text-center">
 									<colgroup>
-										<col width="5%">
 										<col width="5%">
 										<col width="10%">
 										<col width="10%">
@@ -146,7 +146,9 @@
 									</colgroup>
 									<thead style="height: 50px">
 										<tr>
-											<td><input type="checkbox" class="form-check-input"></td>
+											<td colspan="9" style="text-align: left;">승인완료 목록</td>
+										</tr>
+										<tr>
 											<td>No</td>
 											<td>학생이름</td>
 											<td>학생학번</td>
@@ -165,7 +167,6 @@
 						 				</th:block>
 										<th:block th:unless="${#lists.size(returnAppList) == 0}">
 											<tr th:each="status : ${returnAppList}"  style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">
-												<td><input type="checkbox" class="form-check-input"></td>
 												<td>[[${status.statusNo}]]</td>
 												<td>[[${status.stuVO.memberVO.memName}]]</td>
 												<td>[[${status.stuVO.memberVO.memNo}]]</td>
@@ -182,12 +183,10 @@
 						</div>
 					
 	
-					승인취소 목록
 						<div class="row">
 							<div class="col">
 								<table class="table table-hover text-center">
 									<colgroup>
-										<col width="5%">
 										<col width="5%">
 										<col width="10%">
 										<col width="10%">
@@ -199,7 +198,9 @@
 									</colgroup>
 									<thead style="height: 50px">
 										<tr>
-											<td><input type="checkbox" class="form-check-input"></td>
+											<td colspan="9" style="text-align: left;">승인취소 목록</td>
+										</tr>
+										<tr>
 											<td>No</td>
 											<td>학생이름</td>
 											<td>학생학번</td>
@@ -218,7 +219,6 @@
 						 				</th:block>
 										<th:block th:unless="${#lists.size(returnDeniedList) == 0}">
 											<tr th:each="status : ${returnDeniedList}"  style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">
-												<td><input type="checkbox" class="form-check-input"></td>
 												<td>[[${status.statusNo}]]</td>
 												<td>[[${status.stuVO.memberVO.memName}]]</td>
 												<td>[[${status.stuVO.memberVO.memNo}]]</td>

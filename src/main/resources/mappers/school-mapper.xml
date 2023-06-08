@@ -17,6 +17,23 @@
 		<result column="SCH_INFO_Month" 	property="schInfoMonth"/>
 	</resultMap>
 	
+	<resultMap type="com.study.test.school.vo.ProbationVO" id="probation">
+		<id 	column="PROB_NO" property="probNo"/>
+		<result column="PROB_DATE" property="probDate"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="STU_NO" property="stuNo"/>
+		<result column="SEM_NO" property="semNo"/>
+		<result column="PROB_STATUS_CODE" property=""/>
+		<association property="probationStatusVO" resultMap="probationStatus"></association>
+		<association property="memberVO" resultMap="memberMapper.member"></association>
+		<association property="stuVO" 	resultMap="stuMapper.stu"></association>
+	</resultMap>
+	
+	<resultMap type="com.study.test.school.vo.ProbationStatusVO" id="probationStatus">
+		<id		column="PROB_STATUS_CODE" property="probStatusCode"/>
+		<result column="PROB_STATUS_NAME" property="probStatusName"/>
+	</resultMap>
+	
 	<!-- 학사안내 글등록 -->
 	<insert id="insertSchoolInfo">
 		INSERT INTO SCHOOL_INFORMATION (
@@ -115,8 +132,6 @@
 		FROM SCHOOL_INFORMATION
 	</select>
 
-	
-	
 	
 	
 	
@@ -703,12 +718,77 @@
 		AND APPLY_NO = #{applyNo}
 	</select>
 	
+	<!-- 학사징계관리 -> 징계사유 조회 -->
+	<select id="getProbStatusList" resultMap="probationStatus">
+		SELECT PROB_STATUS_CODE
+			, PROB_STATUS_NAME
+		FROM PROBATION_STATUS
+	</select>
+	
+	<!-- 학사징계관리 -> 학년 학기 조회 -->
+	<select id="getStuYearSem" resultMap="empMapper.semester">
+		SELECT SEM_NO
+			, SEM_YEAR
+			, SEMESTER
+		FROM SEMESTER	
+	</select>
+	
+	<!-- 학사징계관리 학생 조회 -->
+	<select id="searchProbStuList" resultMap="stuMapper.stu">
+		SELECT STU_NO
+		    , STU_YEAR
+		    , STU_SEM
+		    , DECODE(STU_STATUS, '1', '재학중', '2','휴학중', '3', '제적') STU_STATUS
+		    , ST.MEM_NO
+		    , MEM_NAME
+		    , COLL.COLL_NO
+		    , COLL_NAME
+		    , DP.DEPT_NO
+		    , DEPT_NAME
+		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM
+		WHERE ST.COLL_NO = COLL.COLL_NO
+		AND ST.DEPT_NO = DP.DEPT_NO
+		AND ST.MEM_NO = MEM.MEM_NO
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		<if test="collNo != null and collNo != ''">
+		AND COLL.COLL_NO = #{collNo}
+		</if>
+		<if test="deptNo != null and deptNo != ''">
+		AND DP.DEPT_NO = #{deptNo}
+		</if>
+	</select>
 	
 	
-	
-	
-	
-	
+	<!-- <select id="searchProbStuListAjax" resultMap="probation">
+		SELECT PRO.PROB_NO 
+			, PRO.MEM_NO
+			, PRO.STU_NO
+			, MEM_NAME
+			, PRO.PROB_STATUS_CODE
+			, PROB_STATUS_NAME
+			, PROB_DATE
+			, STU.COLL_NO
+			, STU.DEPT_NO
+			, COLL_NAME
+			, DEPT_NAME
+		FROM PROBATION PRO, STU STU, MEMBER MEM, PROBATION_STATUS PS, COLLEAGE COLL, DEPT DP
+		WHERE PRO.STU_NO = STU.STU_NO
+		AND PRO.MEM_NO = MEM.MEM_NO
+		AND PRO.PROB_STATUS_CODE = PS.PROB_STATUS_CODE
+		AND STU.COLL_NO = COLL.COLL_NO
+		AND STU.DEPT_NO = DP.DEPT_NO
+		<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		<if test="collNo != null and collNo != ''">
+		AND COLL.COLL_NO = #{collNo}
+		</if>
+		<if test="deptNo != null and deptNo != ''">
+		AND DP.DEPT_NO = #{deptNo}
+		</if>
+	</select> -->
 	
 	
 	
@@ -881,7 +961,11 @@
 		FROM MEMBER
 		WHERE IS_CONFIRMED = 'N'
 	</select> 
-
+	
+	<!-- 휴학 신청 승인대기중인 학생수 조회 -->
+	<select id="getStatusCntForI" resultType="int">
+		SELECT COUNT(STATUS_NO) FROM STATUS_INFO WHERE ING_STATUS = 'I'
+	</select>
 	
 	
 	

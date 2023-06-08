@@ -189,11 +189,53 @@ function checkDoubleModal(applyNo){
 }
 
 //학사징계 관리 검색
-function searchStuList(){
-	const search_form = document.querySelector('#searchForm');
+function searchProbList(){
+	const searchValue = document.querySelector('#searchStuInput').value;
+	const collNo = document.querySelector('select[name="collNo"]').value;
+	const deptNo = document.querySelector('select[name="deptNo"]').value;
+
+	//ajax start
+	$.ajax({
+	   url: '/school/searchProbStuListAjax', //요청경로
+	   type: 'post',
+	   data: {'searchValue':searchValue, 'collNo' : collNo, 'deptNo' : deptNo}, //필요한 데이터
+	   success: function(result) {
+			console.log(result)
+			const tbodyTag = document.querySelector('#stuTable > tbody');
+			tbodyTag.replaceChildren();
+			
+			let str = '';
+			
+			if(result.length == 0){
+					str += `<tr>`;
+					str += `<td colspan="7">조회된 회원이 없습니다.</td>`;
+					str += `</tr>`;
+			}
+			else{
+				for(const stu of result){
+					str += `<tr>`;
+					str += `<td>${stu.memNo}</td>`;
+					str += `<td>${stu.colleageVO.collName}</td>`;
+					str += `<td>${stu.memberVO.memName}</td>`;
+					str += `<td colspan="2">${stu.deptVO.deptName}</td>`;
+					str += `<td>${stu.stuYear}</td>`;
+					str += `<td>${stu.stuStatus}</td>`;
+					str += `</tr>`;
+				}
+			}
+			tbodyTag.insertAdjacentHTML('afterbegin', str);
+
+	   },
+	   error: function() {
+	      alert('실패');
+	   }
+	});
+	//ajax end
 	
-	search_form.submit();	
+	
 }
+
+
 
 
 

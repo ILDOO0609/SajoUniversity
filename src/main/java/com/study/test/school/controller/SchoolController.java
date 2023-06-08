@@ -23,6 +23,7 @@ import com.study.test.member.vo.MemberVO;
 import com.study.test.school.service.CalendarService;
 import com.study.test.school.service.SchoolService;
 import com.study.test.school.vo.CalendarVO;
+import com.study.test.school.vo.ProbationVO;
 import com.study.test.school.vo.SchoolInfoVO;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
@@ -329,13 +330,15 @@ public class SchoolController {
 	
 	//학적변동 -> 휴학페이지 조회
 	@GetMapping("/acaLeave")
-	public String acaLeave(Model model) {
+	public String acaLeave(Model model, PageVO pageVO) {
 		//승인대기조회
 		model.addAttribute("statuslist", schoolService.getStatusInfoList());
 		//승인완료조회
 		model.addAttribute("statusApplist", schoolService.getStatusInfoAppList());
 		//승인취소조회
 		model.addAttribute("statusDeniedlist", schoolService.getStatusInfoDeniedList());
+		//페이지
+		model.addAttribute("pageVO", pageVO);
 		
 		return "content/school/academic/aca_leave";
 	}
@@ -483,11 +486,18 @@ public class SchoolController {
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		//전공학과 정보 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
-		//학생 조회
-		model.addAttribute("stuList", schoolService.checkStuList(stuVO));
+		//학사징계 사유 조회
+		model.addAttribute("ProbList", schoolService.getProbStatusList());
 		return "content/school/lesson/lesson_warning";
 	}
-
+	
+	//수업 -> 학사경고관리 검색
+	@ResponseBody
+	@PostMapping("/searchProbStuListAjax")
+	public List<StuVO> searchProbStuListAjax(StuVO stuVO){
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+stuVO);
+		return schoolService.searchProbStuList(stuVO);
+	}
 	
 	
 	

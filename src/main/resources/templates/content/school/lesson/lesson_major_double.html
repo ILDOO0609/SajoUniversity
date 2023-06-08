@@ -72,7 +72,7 @@
 							</table>
 						</form>	
 					
-					승인대기 목록
+				
 						<div class="row">
 							<div class="col">
 								<table class="table table-hover text-center">
@@ -88,6 +88,9 @@
 										<col width="*">
 									</colgroup>
 									<thead style="height: 50px">
+										<tr>
+											<td colspan="9" style="text-align: left;">승인대기 목록</td>
+										</tr>
 										<tr>
 											<td><input type="checkbox" class="form-check-input"></td>
 											<td>No</td>
@@ -133,12 +136,11 @@
 						</div>
 					
 					
-					승인완료 목록
+					
 						<div class="row">
 							<div class="col">
 								<table class="table table-hover text-center">
 									<colgroup>
-										<col width="5%">
 										<col width="5%">
 										<col width="10%">
 										<col width="15%">
@@ -150,7 +152,9 @@
 									</colgroup>
 									<thead style="height: 50px">
 										<tr>
-											<td><input type="checkbox" class="form-check-input"></td>
+											<td colspan="8" style="text-align: left;">승인완료 목록</td>
+										</tr>
+										<tr>
 											<td>No</td>
 											<td>학생학번</td>
 											<td>학생학년</td>
@@ -169,7 +173,6 @@
 						 				</th:block>
 										<th:block th:unless="${#lists.size(majorAppList) == 0}">
 											<tr th:each="major : ${majorAppList}" style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">
-												<td><input type="checkbox" class="form-check-input chk" th:value="${major.applyNo}"></td>
 												<td>[[${major.applyNo}]]</td>
 												<td>[[${major.stuVO.memberVO.memNo}]]</td>
 												<td>[[${major.stuVO.stuYear}]]</td>
@@ -186,12 +189,11 @@
 						</div>
 					
 	
-					승인취소 목록
+					
 						<div class="row">
 							<div class="col">
 								<table class="table table-hover text-center">
 									<colgroup>
-										<col width="5%">
 										<col width="5%">
 										<col width="10%">
 										<col width="15%">
@@ -203,7 +205,9 @@
 									</colgroup>
 									<thead style="height: 50px">
 										<tr>
-											<td><input type="checkbox" class="form-check-input"></td>
+											<td colspan="8" style="text-align: left;">승인취소 목록</td>
+										</tr>
+										<tr>
 											<td>No</td>
 											<td>학생학번</td>
 											<td>학생학년</td>
@@ -222,7 +226,6 @@
 						 				</th:block>
 										<th:block th:unless="${#lists.size(majorDeniedList) == 0}">
 											<tr th:each="major : ${majorDeniedList}" style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">
-												<td><input type="checkbox" class="form-check-input chk" th:value="${major.applyNo}"></td>
 												<td>[[${major.applyNo}]]</td>
 												<td>[[${major.stuVO.memberVO.memNo}]]</td>
 												<td>[[${major.stuVO.stuYear}]]</td>

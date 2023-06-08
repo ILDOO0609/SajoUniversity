@@ -317,13 +317,15 @@ public class SchoolController {
 	
 	//학적변동 -> 휴학페이지 조회
 	@GetMapping("/acaLeave")
-	public String acaLeave(Model model) {
+	public String acaLeave(Model model, PageVO pageVO) {
 		//승인대기조회
 		model.addAttribute("statuslist", schoolService.getStatusInfoList());
 		//승인완료조회
 		model.addAttribute("statusApplist", schoolService.getStatusInfoAppList());
 		//승인취소조회
 		model.addAttribute("statusDeniedlist", schoolService.getStatusInfoDeniedList());
+		//페이지
+		model.addAttribute("pageVO", pageVO);
 		
 		return "content/school/academic/aca_leave";
 	}

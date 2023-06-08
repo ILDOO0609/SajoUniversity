@@ -41,4 +41,7 @@ public interface memberService {
 	// 통계 조회 map
 	List<Map<String, Integer>> getMonthlyData(int year);
 	
+	// 통계 조회 pie
+	List<Map<String, Object>> getMonthlyDataPie();
+	
 }

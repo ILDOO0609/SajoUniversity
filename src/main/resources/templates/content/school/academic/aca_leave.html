@@ -9,234 +9,248 @@
 	<h2>휴학 관리</h2>	
 		<div class="row">
 			<div class="col">
-				<div class="row">
-					<div class="col">
-						<form id="searchForm" th:achtion="@{/school/checkStu}" method="post"> 
-							<table class="table align-middle">
-								<colgroup>
-									<col width="10%">								
-									<col width="*">								
-									<col width="15%">								
-								</colgroup>
-								<tr>
-									<td class="text-center">승인상태</td>
-									<td>
-										<div class="form-check form-check-inline">
-											<input type="checkbox" class="form-check-input" value="" checked onclick="setSearchCheckbox(this);">
-											<label class="form-check-label">전체</label>
-											<label class="form-check-label">승인대기</label>
-											<label class="form-check-label">승인완료</label>
-											<label class="form-check-label">승인취소</label>
-										</div>
-									</td>
-									<td>
-										<div class="row">
-											<div class="col d-grid">
-												<input type="button" class="btn btn-primary" value="Search" onclick="">
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td class="text-center">신청일</td>
-									<td colspan="2">
-										<div class="row">
-											<div class="col-3">
-												<div class="input-group">
-													<span class="input-group-text">from</span>
-													<input type="date" class="form-control" name="searchFromDate">
-												</div>
-											</div>
-											<div class="col-3">
-												<div class="input-group">
-													<span class="input-group-text">to</span>
-													<input type="date" class="form-control" name="searchToDate" >
-												</div>
-											</div>
-											<div class="col-2">
-												<select class="form-select" name="searchKeyword">
-													<option >학생이름</option>
-													<option >학생학번</option>
-													<option >소속대학</option>
-												</select>												
-											</div>
-											<div class="col-4">
-												<input type="text" class="form-control" name="searchValue" >
-											</div>
-										</div>
-										<div class="row">
-											<div class="col"></div>
-										</div>
-									</td>
-								</tr>
-							</table>
-						</form>	
-					
-						<div class="row">
-							<div class="col">
-								<table class="table table-hover text-center">
-									<colgroup>
-										<col width="5%">
-										<col width="5%">
-										<col width="10%">
-										<col width="10%">
-										<col width="10%">
-										<col width="15%">
-										<col width="15%">
-										<col width="15%">
-										<col width="15%">
-									</colgroup>
-									<thead style="height: 50px">
-										<tr>
-											<td colspan="9" style="text-align: left;">승인대기 목록</td>
-										</tr>
-										<tr>
-											<td><input type="checkbox" class="form-check-input"></td>
-											<td>No</td>
-											<td>학생이름</td>
-											<td>학생학번</td>
-											<td>학생학년</td>
-											<td>소속대학</td>
-											<td>학과</td>
-											<td>신청일</td>
-											<td>승인여부</td>
-										</tr>
-									</thead>
-									<tbody id="leaveTable">
-										<th:block th:if="${#lists.size(statuslist) == 0}">
-						 					<tr>
-						 						<td colspan="9">조회된 회원이 없습니다.</td>
-						 					</tr>
-						 				</th:block>
-										<th:block th:unless="${#lists.size(statuslist) == 0}">
-											<tr th:each="status : ${statuslist}" style="cursor: pointer;" th:onclick="checkLeaveModal([[${status.statusNo}]]);">
-												<td><input type="checkbox" class="form-check-input chk" th:value="${status.statusNo}"></td>
-												<td>[[${status.statusNo}]]</td>
-												<td>[[${status.stuVO.memberVO.memName}]]</td>
-												<td>[[${status.stuVO.memberVO.memNo}]]</td>
-												<td>[[${status.stuVO.stuYear}]]</td>
-												<td>[[${status.stuVO.colleageVO.collName}]]</td>
-												<td>[[${status.stuVO.deptVO.deptName}]]</td>
-												<td>[[${status.applyDate}]]</td>
-												<td>[[${status.ingStatus}]]</td>
-											</tr>
-										</th:block>	
-									</tbody>
-								</table>
-								<div class="row" style="padding-right: 12px;">
-									<div class="col-1 offset-10 d-grid">
-										<input type="button" class="btn btn-primary" th:onclick="updateLeaveApp();" value="승인완료">
-									</div>
-									<div class="col-1 d-grid">
-										<input type="button" class="btn btn-danger" th:onclick="updateLeaveDenied();" value="승인취소">
+				<form id="searchForm" th:achtion="@{/school/checkStu}" method="post"> 
+					<table class="table align-middle">
+						<colgroup>
+							<col width="10%">								
+							<col width="*">								
+							<col width="15%">								
+						</colgroup>
+						<tr>
+							<td class="text-center">승인상태</td>
+							<td>
+								<div class="form-check form-check-inline">
+									<input type="checkbox" class="form-check-input" value="" checked onclick="setSearchCheckbox(this);">
+									<label class="form-check-label">전체</label>
+									<label class="form-check-label">승인대기</label>
+									<label class="form-check-label">승인완료</label>
+									<label class="form-check-label">승인취소</label>
+								</div>
+							</td>
+							<td>
+								<div class="row">
+									<div class="col d-grid">
+										<input type="button" class="btn btn-primary" value="Search" onclick="">
 									</div>
 								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">신청일</td>
+							<td colspan="2">
+								<div class="row">
+									<div class="col-3">
+										<div class="input-group">
+											<span class="input-group-text">from</span>
+											<input type="date" class="form-control" name="searchFromDate">
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="input-group">
+											<span class="input-group-text">to</span>
+											<input type="date" class="form-control" name="searchToDate" >
+										</div>
+									</div>
+									<div class="col-2">
+										<select class="form-select" name="searchKeyword">
+											<option >학생이름</option>
+											<option >학생학번</option>
+											<option >소속대학</option>
+										</select>												
+									</div>
+									<div class="col-4">
+										<input type="text" class="form-control" name="searchValue" >
+									</div>
+								</div>
+								<div class="row">
+									<div class="col"></div>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>	
+			
+				<div class="row">
+					<div class="col">
+						<table class="table table-hover text-center">
+							<colgroup>
+								<col width="5%">
+								<col width="5%">
+								<col width="10%">
+								<col width="10%">
+								<col width="10%">
+								<col width="15%">
+								<col width="15%">
+								<col width="15%">
+								<col width="15%">
+							</colgroup>
+							<thead style="height: 50px">
+								<tr>
+									<td colspan="9" style="text-align: left;">승인대기 목록</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" class="form-check-input"></td>
+									<td>No</td>
+									<td>학생이름</td>
+									<td>학생학번</td>
+									<td>학생학년</td>
+									<td>소속대학</td>
+									<td>학과</td>
+									<td>신청일</td>
+									<td>승인여부</td>
+								</tr>
+							</thead>
+							<tbody id="leaveTable">
+								<th:block th:if="${#lists.size(statuslist) == 0}">
+				 					<tr>
+				 						<td colspan="9">조회된 회원이 없습니다.</td>
+				 					</tr>
+				 				</th:block>
+								<th:block th:unless="${#lists.size(statuslist) == 0}">
+									<tr th:each="status : ${statuslist}" style="cursor: pointer;" th:onclick="checkLeaveModal([[${status.statusNo}]]);">
+										<td><input type="checkbox" class="form-check-input chk" th:value="${status.statusNo}"></td>
+										<td>[[${status.statusNo}]]</td>
+										<td>[[${status.stuVO.memberVO.memName}]]</td>
+										<td>[[${status.stuVO.memberVO.memNo}]]</td>
+										<td>[[${status.stuVO.stuYear}]]</td>
+										<td>[[${status.stuVO.colleageVO.collName}]]</td>
+										<td>[[${status.stuVO.deptVO.deptName}]]</td>
+										<td>[[${status.applyDate}]]</td>
+										<td>[[${status.ingStatus}]]</td>
+									</tr>
+								</th:block>	
+							</tbody>
+						</table>
+						<div class="row justify-content-center">
+							<div class="col-2">
+								<nav aria-label="Page navigation example">
+								  <ul class="pagination">
+								    <li class="page-item">
+								      <a class="page-link" href="javascript:void(0)">
+								        &laquo;
+								      </a>
+								    </li>
+								    <li class="page-item">
+								      <a class="page-link" href="javascript:void(0)">
+								       &raquo;
+								      </a>
+								    </li>
+								  </ul>
+								</nav>
 							</div>
 						</div>
-					
-					
-						<div class="row">
-							<div class="col">
-								<table class="table table-hover text-center">
-									<colgroup>
-										<col width="5%">
-										<col width="10%">
-										<col width="10%">
-										<col width="10%">
-										<col width="15%">
-										<col width="15%">
-										<col width="15%">
-										<col width="15%">
-									</colgroup>
-									<thead style="height: 50px">
-										<tr>
-											<td colspan="8" style="text-align: left;">승인완료 목록</td>
-										</tr>
-										<tr>
-											<td>No</td>
-											<td>학생이름</td>
-											<td>학생학번</td>
-											<td>학생학년</td>
-											<td>소속대학</td>
-											<td>학과</td>
-											<td>신청일</td>
-											<td>승인여부</td>
-										</tr>
-									</thead>
-									<tbody>
-										<th:block th:if="${#lists.size(statusApplist) == 0}">
-						 					<tr>
-						 						<td colspan="9">조회된 회원이 없습니다.</td>
-						 					</tr>
-						 				</th:block>
-										<th:block th:unless="${#lists.size(statusApplist) == 0}">
-											<tr th:each="status, state : ${statusApplist}" style="cursor: pointer;" th:onclick="checkLeaveModal([[${status.statusNo}]]);">
-												<td>[[${status.statusNo}]]</td>
-												<td>[[${status.stuVO.memberVO.memName}]]</td>
-												<td>[[${status.stuVO.memberVO.memNo}]]</td>
-												<td>[[${status.stuVO.stuYear}]]</td>
-												<td>[[${status.stuVO.colleageVO.collName}]]</td>
-												<td>[[${status.stuVO.deptVO.deptName}]]</td>
-												<td>[[${status.applyDate}]]</td>
-												<td style="color: blue; font-weight: bold;">[[${status.ingStatus}]]</td>
-											</tr>
-										</th:block>	
-									</tbody>
-								</table>
+						<div class="row" style="padding-right: 12px;">
+							<div class="col-1 offset-10 d-grid">
+								<input type="button" class="btn btn-primary" th:onclick="updateLeaveApp();" value="승인완료">
+							</div>
+							<div class="col-1 d-grid">
+								<input type="button" class="btn btn-danger" th:onclick="updateLeaveDenied();" value="승인취소">
 							</div>
 						</div>
-					
-	
-						<div class="row">
-							<div class="col">
-								<table class="table table-hover text-center">
-									<colgroup>
-										<col width="5%">
-										<col width="10%">
-										<col width="10%">
-										<col width="10%">
-										<col width="15%">
-										<col width="15%">
-										<col width="15%">
-										<col width="15%">
-									</colgroup>
-									<thead style="height: 50px">
-										<tr>
-											<td colspan="8" style="text-align: left;">승인취소 목록</td>
-										</tr>
-										<tr>
-											<td>No</td>
-											<td>학생이름</td>
-											<td>학생학번</td>
-											<td>학생학년</td>
-											<td>소속대학</td>
-											<td>학과</td>
-											<td>신청일</td>
-											<td>승인여부</td>
-										</tr>
-									</thead>
-									<tbody>
-										<th:block th:if="${#lists.size(statusDeniedlist) == 0}">
-						 					<tr>
-						 						<td colspan="9">조회된 회원이 없습니다.</td>
-						 					</tr>
-						 				</th:block>
-										<th:block th:unless="${#lists.size(statusDeniedlist) == 0}">
-											<tr th:each="status, state : ${statusDeniedlist}" style="cursor: pointer;" th:onclick="checkLeaveModal([[${status.statusNo}]]);">
-												<td>[[${status.statusNo}]]</td>
-												<td>[[${status.stuVO.memberVO.memName}]]</td>
-												<td>[[${status.stuVO.memberVO.memNo}]]</td>
-												<td>[[${status.stuVO.stuYear}]]</td>
-												<td>[[${status.stuVO.colleageVO.collName}]]</td>
-												<td>[[${status.stuVO.deptVO.deptName}]]</td>
-												<td>[[${status.applyDate}]]</td>
-												<td style="color: red; font-weight: bold;">[[${status.ingStatus}]]</td>
-											</tr>
-										</th:block>	
-									</tbody>
-								</table>
-							</div>
-						</div>
+					</div>
+				</div>
+			
+			
+				<div class="row">
+					<div class="col">
+						<table class="table table-hover text-center">
+							<colgroup>
+								<col width="5%">
+								<col width="10%">
+								<col width="10%">
+								<col width="10%">
+								<col width="15%">
+								<col width="15%">
+								<col width="15%">
+								<col width="15%">
+							</colgroup>
+							<thead style="height: 50px">
+								<tr>
+									<td colspan="8" style="text-align: left;">승인완료 목록</td>
+								</tr>
+								<tr>
+									<td>No</td>
+									<td>학생이름</td>
+									<td>학생학번</td>
+									<td>학생학년</td>
+									<td>소속대학</td>
+									<td>학과</td>
+									<td>신청일</td>
+									<td>승인여부</td>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:if="${#lists.size(statusApplist) == 0}">
+				 					<tr>
+				 						<td colspan="9">조회된 회원이 없습니다.</td>
+				 					</tr>
+				 				</th:block>
+								<th:block th:unless="${#lists.size(statusApplist) == 0}">
+									<tr th:each="status, state : ${statusApplist}" style="cursor: pointer;" th:onclick="checkLeaveModal([[${status.statusNo}]]);">
+										<td>[[${status.statusNo}]]</td>
+										<td>[[${status.stuVO.memberVO.memName}]]</td>
+										<td>[[${status.stuVO.memberVO.memNo}]]</td>
+										<td>[[${status.stuVO.stuYear}]]</td>
+										<td>[[${status.stuVO.colleageVO.collName}]]</td>
+										<td>[[${status.stuVO.deptVO.deptName}]]</td>
+										<td>[[${status.applyDate}]]</td>
+										<td style="color: blue; font-weight: bold;">[[${status.ingStatus}]]</td>
+									</tr>
+								</th:block>	
+							</tbody>
+						</table>
+					</div>
+				</div>
+			
+
+				<div class="row">
+					<div class="col">
+						<table class="table table-hover text-center">
+							<colgroup>
+								<col width="5%">
+								<col width="10%">
+								<col width="10%">
+								<col width="10%">
+								<col width="15%">
+								<col width="15%">
+								<col width="15%">
+								<col width="15%">
+							</colgroup>
+							<thead style="height: 50px">
+								<tr>
+									<td colspan="8" style="text-align: left;">승인취소 목록</td>
+								</tr>
+								<tr>
+									<td>No</td>
+									<td>학생이름</td>
+									<td>학생학번</td>
+									<td>학생학년</td>
+									<td>소속대학</td>
+									<td>학과</td>
+									<td>신청일</td>
+									<td>승인여부</td>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:if="${#lists.size(statusDeniedlist) == 0}">
+				 					<tr>
+				 						<td colspan="9">조회된 회원이 없습니다.</td>
+				 					</tr>
+				 				</th:block>
+								<th:block th:unless="${#lists.size(statusDeniedlist) == 0}">
+									<tr th:each="status, state : ${statusDeniedlist}" style="cursor: pointer;" th:onclick="checkLeaveModal([[${status.statusNo}]]);">
+										<td>[[${status.statusNo}]]</td>
+										<td>[[${status.stuVO.memberVO.memName}]]</td>
+										<td>[[${status.stuVO.memberVO.memNo}]]</td>
+										<td>[[${status.stuVO.stuYear}]]</td>
+										<td>[[${status.stuVO.colleageVO.collName}]]</td>
+										<td>[[${status.stuVO.deptVO.deptName}]]</td>
+										<td>[[${status.applyDate}]]</td>
+										<td style="color: red; font-weight: bold;">[[${status.ingStatus}]]</td>
+									</tr>
+								</th:block>	
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>			

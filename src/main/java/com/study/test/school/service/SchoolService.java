@@ -180,5 +180,6 @@ public interface SchoolService {
 	//회원클릭시 회원상에 모달창
 	List<MemberVO> getMemberModal(String memNo);
 	
-	
+	// -------페이지 처리위한 데이터개수 조회------------------------------------------------------//
+	int getStatusCntForI();
 }

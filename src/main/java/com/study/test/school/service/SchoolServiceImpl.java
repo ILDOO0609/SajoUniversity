@@ -403,6 +403,11 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectOne("schoolMapper.getMemberDeniedListCnt");
 	}
 
+	@Override
+	public int getStatusCntForI() {
+		return 0;
+	}
+
 	
 
 	

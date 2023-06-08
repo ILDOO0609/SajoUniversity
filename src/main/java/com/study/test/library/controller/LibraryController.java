@@ -35,10 +35,6 @@ public class LibraryController {
 		return "content/library/lib_main";
 	}
 	
-	@PostMapping("getSeatInfoAjax")
-	public void getSeatInfoAjax(Model model) {
-		
-		
-	}
+
 
 }

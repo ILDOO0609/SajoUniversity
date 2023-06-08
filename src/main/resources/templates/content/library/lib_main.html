@@ -23,13 +23,6 @@
 				<div class="card-body">
 					<table class="table table-bordered text-center">
 						<tbody>
-							<tr th:each="row, sta : ${#numbers.sequence(0, 9)}">
-		                        <td th:each="col, state : ${#numbers.sequence(0, 8)}">
-		                              <button class="btn" onclick="regSeat(this, value);" th:value="${row * 9 + col + 1}">
-		                                 <span th:text="${row * 9 + col + 1}"></span>
-		                              </button>
-		                        </td>
-		                     </tr>
 							<tr th:each="row, state : ${#numbers. sequence(0, 9)}">
 								<td th:each="col : ${#numbers. sequence(0, 8)}">
 									<button th:classappend="${seatNoArr.contains(row * 9 + col + 1)} ? 'graySeat' : '' " class="btn" onclick="regSeat(this, value);" th:value="${row * 9 + col + 1}">

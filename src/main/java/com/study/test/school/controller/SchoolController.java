@@ -84,7 +84,7 @@ public class SchoolController {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+schoolService.searchInfoListAjax(schoolInfoVO));
 		return schoolService.searchInfoListAjax(schoolInfoVO);
 	}
-	//학사메뉴 -> 학사안내 -> 월 셀렉박스 변경시, ajax로 조회
+	//학사메뉴 -> 학사안내 -> 월 변경
 	@ResponseBody
 	@PostMapping("/schInfoMonthAjax")
 	public List<SchoolInfoVO> schInfoMonthAjax(int schInfoMonth){
@@ -305,19 +305,6 @@ public class SchoolController {
 	}
 	
 	
-	
-	
-	//학사조회 -> 강의및학점 페이지
-	@GetMapping("/checkLec")
-	public String checkLec() {
-		return "content/school/check/check_lec";
-	}
-	
-	
-	
-	
-	
-	
 //-------------------------------학적변동--------------------------------------------
 		
 	
@@ -486,18 +473,30 @@ public class SchoolController {
 		model.addAttribute("deptList", colleageService.getDeptList());
 		//학사징계 사유 조회
 		model.addAttribute("ProbList", schoolService.getProbStatusList());
+		//학사징계 학기학년 조회
+		model.addAttribute("semList", schoolService.getStuYearSem());
 		return "content/school/lesson/lesson_warning";
 	}
 	
-	//수업 -> 학사경고관리 검색
+	//수업메뉴 -> 학사징계관리 -> 학생검색
 	@ResponseBody
 	@PostMapping("/searchProbStuListAjax")
 	public List<StuVO> searchProbStuListAjax(StuVO stuVO){
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+stuVO);
 		return schoolService.searchProbStuList(stuVO);
 	}
-	
-	
+	//수업메뉴 -> 학사징계관리 -> 학사경고 인서트
+	@ResponseBody
+	@PostMapping("/insertProbAppAjax")
+	public void insertProbation(ProbationVO probationVO) {
+		schoolService.insertProbation(probationVO);
+	}
+	//수업메뉴 -> 학사징계관리 -> 학생모달창
+	@ResponseBody
+	@PostMapping("/getWarningModalAjax")
+	public List<StuVO> getProbStuModal(String stuNo){
+		return schoolService.getProbStuModal(stuNo);
+	}
 	
 	
 //-------------------------------회원메뉴--------------------------------------------
@@ -547,9 +546,6 @@ public class SchoolController {
 		schoolService.updateXPosition(memNo);
 	 }
 	 
-	 
-	 
-	
 	//회원메뉴 -> 승인/취소 전체조회 페이지
 	@GetMapping("/memberSelectList")
 	public String memberSelectList(Model model, MemberVO memberVO) {

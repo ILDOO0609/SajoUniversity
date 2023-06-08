@@ -15,10 +15,10 @@ function updatePosition(memNo) {
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'memNo':memNo,'deptNo':deptNo, 'collNo':collNo, 'memRole':memRole}, //필요한 데이터
 	   	success: function(result) {
-			swal("승인완료" , "정상 처리되었습니다.", "success", {button: "확인"})
-			.then((result) => {
-				location.href = `/school/memberList`;
-			})
+			Swal.fire('승인 완료', '승인완료 되었습니다.', 'success').then(() => {
+		        location.href = `/school/memberList`;
+		    });
+			
 			
 	   	},
 	   	error: function() {
@@ -46,10 +46,9 @@ function updateXPosition(memNo) {
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'memNo':memNo,'deptNo':deptNo, 'collNo':collNo, 'memRole':memRole}, //필요한 데이터
 	   	success: function(result) {
-			swal("승인취소" , "정상 처리되었습니다.", "success", {button: "확인"})
-			.then((result) => {
-				location.href = `/school/memberList`;
-			})
+			Swal.fire('승인 취소', '승인취소 되었습니다.', 'success').then(() => {
+		        location.href = `/school/memberList`;
+		    });
 			
 	   	},
 	   	error: function() {

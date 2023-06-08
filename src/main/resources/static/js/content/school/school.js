@@ -58,10 +58,11 @@ function infoSearchList(){
 	const schInfoSearch = document.querySelector('#schInfoSearchInput').value;
 	
 	if(schInfoSearch == ''){
-		
-		swal("검색 실패", "검색할 제목을 입력하세요.", "error", {button: "확인"})
-		.then((result) => {
+		Swal.fire('검색 실패', '검색할 제목을 입력하세요.', 'error')
+		.then(() => {
+		        
 		})
+		
 		
 		return;
 	}
@@ -116,27 +117,34 @@ function infoSearchList(){
 function regSchInfo(){
 	const schInfoTitle_tag = document.querySelector('#schInfoTitle').value;
 	if(schInfoTitle_tag == ''){
-		swal("등록 실패", "제목은 필수 입력입니다.", "error");
+		
+		Swal.fire('등록 실패', '제목은 필수 입력입니다.', 'error').then(() => {
+      	});
+		
 		return;
 	}
-	swal("등록 완료", "글 등록이 완료되었습니다.", "success",{button: "확인"})
-	.then((result) => {
-		document.querySelector('#regSchInfoForm').submit();	
-	})
+	
+	Swal.fire('등록 완료', '글 등록이 완료되었습니다.', 'success').then(() => {
+    	document.querySelector('#regSchInfoForm').submit();
+    });
 }
 //학사안내 글삭제
 function deleteInfo(schInfoCode){
-	swal("삭제 완료", "글 삭제가 완료되었습니다.", "error", {button: "확인"})
-	.then((result) => {
-		location.href = `/school/deleteSchoolInfo?schInfoCode=${schInfoCode}`;	
-	})
+	
+	Swal.fire('삭제 완료', '글 삭제가 완료되었습니다.', 'error').then(() => {
+     
+    	location.href = `/school/deleteSchoolInfo?schInfoCode=${schInfoCode}`; 
+    });
+	
+
 }
 //학사안내 글수정
 function schInfoUpdate(){
-	swal("수정 완료" , "글 수정이 완료되었습니다.", "success", {button: "확인"})
-	.then((result) => {
-		document.querySelector('#schInfoUpdateForm').submit();
-	})
+	
+	Swal.fire('수정 완료', '글 수정이 완료되었습니다.', 'success').then(() => {
+    	document.querySelector('#schInfoUpdateForm').submit();
+    });
+	
 }
 
 

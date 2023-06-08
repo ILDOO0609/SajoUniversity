@@ -1,5 +1,6 @@
 package com.study.test.school.vo;
 
+import com.study.test.colleage.vo.SemesterVO;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.stu.vo.StuVO;
 
@@ -21,4 +22,6 @@ public class ProbationVO {
 	private ProbationStatusVO probationStatusVO;
 	private MemberVO memberVO;
 	private StuVO stuVO;
+	private SemesterVO semesterVO;
+	
 }

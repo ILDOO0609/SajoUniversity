@@ -3,6 +3,7 @@ package com.study.test.stu.vo;
 import com.study.test.colleage.vo.ColleageVO;
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.member.vo.MemberVO;
+import com.study.test.school.vo.ProbationVO;
 import com.study.test.util.PageVO;
 
 import lombok.Getter;

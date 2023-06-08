@@ -100,3 +100,7 @@ a {
 .modal-backdrop {
 	z-index: 4;
 }
+
+.graySeat {
+	background-color: gray;
+}

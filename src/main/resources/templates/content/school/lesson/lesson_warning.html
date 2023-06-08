@@ -3,6 +3,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/school/school_layout}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <th:block layout:fragment="content">
 <div class="container">	
@@ -89,6 +90,9 @@
 			</div>
 		</div>
 	</div>
+	
+	<input type="button" onClick="sendLinkCustom();" value="" style="padding-left: 19px; background-image: url('https://cdn-icons-png.flaticon.com/512/2111/2111466.png'); background-repeat: no-repeat; background-position: left center; background-size: 24px 24px;" />
+
 </div>			
 	
 <!-- Modal -->
@@ -105,6 +109,61 @@
 		</div>
 	</div>
 </div>	
+
+
+
+<script type="text/javascript">
+    function sendLinkCustom() {
+        Kakao.init("3be5177cdde915136b2812ede4a4434d");
+        Kakao.Link.sendCustom({
+            templateId: 94718
+        });
+    }
+</script>
+
+<script>
+try {
+  function sendLinkDefault() {
+    Kakao.init('3be5177cdde915136b2812ede4a4434d')
+    Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '사조 대학 학사경고',
+        description: '#학사경고',
+        imageUrl:
+          'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+        link: {
+          mobileWebUrl: 'https://developers.kakao.com',
+          webUrl: 'https://developers.kakao.com',
+        },
+      },
+      social: {
+        likeCount: 286,
+        commentCount: 45,
+        sharedCount: 845,
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com',
+          },
+        },
+        {
+          title: '앱으로 보기',
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com',
+          },
+        },
+      ],
+    })
+  }
+; window.kakaoDemoCallback && window.kakaoDemoCallback() }
+catch(e) { window.kakaoDemoException && window.kakaoDemoException(e) }
+</script>
+
 	
 </th:block>
 
@@ -113,6 +172,7 @@
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
 	<!-- <script type="text/javascript" src="/js/content/admin/cate_manage.js"></script> -->
+	<script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 </th:block>
 
 </html>

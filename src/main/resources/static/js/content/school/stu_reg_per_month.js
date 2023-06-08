@@ -1,6 +1,6 @@
 
 get_chart_date_ajax();
-
+get_chart_date_pie_ajax();
 
 
 // -- 함수 선언 -- //
@@ -25,6 +25,31 @@ function get_chart_date_ajax(){
 		},
 		error: function() {
 			alert('실패');
+		}
+	});
+//ajax end
+
+
+}
+// 원 차트
+function get_chart_date_pie_ajax(){
+	
+	//ajax start
+	$.ajax({
+		url: '/member/getChartDataPieAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		data: {}, //필요한 데이터
+		success: function(result) {
+			console.log(result);
+			// 차트 그리기
+			draw_chart2(result);
+			drawTable(result);
+			
+		},
+		error: function() {
+			alert('실패123');
 		}
 	});
 //ajax end
@@ -102,16 +127,53 @@ const ctx = document.getElementById('myChart');
   
   
   
-// select box 값 변경 시 시랭 
+// select box 값 변경 시 실행 
 function getStatistics(){
 	const year = document.querySelector('#yearSelect').value;
 	location.href = `/member/stuRegPerMonth?year=${year}`;
 }
   
   
-  
-  
-  
+ // 파이 차트
+function draw_chart2(data) {
+  const gender_arr = [];
+  const sum_gender_cnt_arr = [];
+
+  data.forEach(function(item, index) {
+    gender_arr[index] = item['GENDER'];
+    sum_gender_cnt_arr[index] = item['COUNT'];
+  });
+
+  const ctx = document.getElementById('categoryPieChart');
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: gender_arr,
+      datasets: [
+        {
+          label: 'gender',
+          data: sum_gender_cnt_arr,
+          backgroundColor: ['lightgreen', 'pink'] 
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+        title: {
+          display: true,
+          color: 'purple',
+          text: '사조대학교 학생 성비 데이터'
+        }
+      }
+    }
+  });
+}
+
   
   
   

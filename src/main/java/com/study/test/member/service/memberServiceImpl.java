@@ -86,6 +86,12 @@ public class memberServiceImpl implements memberService{
 
 		return sqlSession.selectList("memberMapper.getMonthlyData", year);
 	}
+
+	@Override
+	public List<Map<String, Object>> getMonthlyDataPie() {
+		
+		return sqlSession.selectList("memberMapper.getMonthlyDataPie");
+	}
 	
 	
 	

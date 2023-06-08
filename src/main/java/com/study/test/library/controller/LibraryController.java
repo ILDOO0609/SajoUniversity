@@ -31,7 +31,7 @@ public class LibraryController {
 	    // look up seats in use
 	    List<LibraryVO> seatInfo = libraryService.getSeatInfo();
 	    
-	    List<Integer>seatNoArr = new ArrayList<>();
+	    List<Integer> seatNoArr = new ArrayList<>();
 	    
 	    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+seatInfo);
 	    
@@ -44,9 +44,5 @@ public class LibraryController {
 	    return "content/library/lib_main";
 	}
 	
-	@PostMapping("getSeatInfoAjax")
-	public void getSeatInfoAjax(Model model) {
-		
-		
-	}
+	
 }

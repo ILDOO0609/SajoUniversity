@@ -1,5 +1,4 @@
 //--------------회원메뉴--------------------------------------------------------------
-<<<<<<< HEAD
 function updatePosition(memNo) {
 	
 	const collNo = document.querySelector('select[name="collNo"]').value;
@@ -64,8 +63,6 @@ function updateXPosition(memNo) {
 	
 }
 	
-=======
->>>>>>> e7fe6d219d0d199cf63b894603a38a531d7ce27b
 //전공대학 변경시 실행되는 함수
 function changeColl(coll){
 	const coll_no = coll.value;

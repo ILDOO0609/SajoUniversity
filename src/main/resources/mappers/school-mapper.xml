@@ -781,6 +781,12 @@
          	, #{probStatusCode}
 		)
 	</insert>
+	<select id="getStuProbCnt" resultType="int">
+		SELECT COUNT(PROB_NO)
+		FROM PROBATION
+		WHERE STU_NO = #{stuNo}
+	</select>
+	
 	<update id="updateProbation">
 		UPDATE PROBATION
 		SET PROB_CNT = +1

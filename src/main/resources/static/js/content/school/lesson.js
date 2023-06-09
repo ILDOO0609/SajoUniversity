@@ -248,9 +248,9 @@ function stuProb(){
 	}
 	
 	const stuNo = document.querySelector(".chk:checked").value;
-	const semNo = document.querySelector("#semNo").value;
+	const semNo = document.querySelector('select[name="semNo"]').value;
 	const memNo = document.querySelector(".chk:checked").parentElement.nextElementSibling.textContent;
-	const probStatusCode = document.querySelector("#probStatusCode").value;
+	const probStatusCode = document.querySelector('select[name="probStatusCode"]').value;
 	console.log(stuNo);
 	console.log(semNo);
 	console.log(memNo);

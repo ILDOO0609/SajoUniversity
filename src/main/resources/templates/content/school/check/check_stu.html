@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{fragment/school/school_layout}">
+	layout:decorate="~{fragment/layout}">
 
 <th:block layout:fragment="content">
 <div class="container">
@@ -28,7 +28,7 @@
 								</td>
 							</tr> 
 	
-							<tr>
+							<tr style="vertical-align: middle; text-align: center;">
 								<td>단과대학</td>
 								<td>
 									<select class="form-select" name="collNo" onchange="changeColl(this);">
@@ -60,7 +60,7 @@
 									</span>
 								</td>
 							</tr>
-							<tr>
+							<tr style="text-align: center;">
 								<td>학번</td>
 								<td>학생명</td>
 								<td>단과대학</td>
@@ -69,7 +69,7 @@
 								<td>재적상태</td>
 							</tr>	
 						</thead>
-						<tbody>
+						<tbody style="text-align: center;">
 							<tr th:each="stu : ${stuList}" style="cursor: pointer;" th:onclick="openStuModal([[${stu.stuNo}]]);">
 								<td>[[${stu.memNo}]]</td>
 								<td>[[${stu.memberVO.memName}]]</td>

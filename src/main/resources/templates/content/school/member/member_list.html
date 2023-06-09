@@ -29,7 +29,7 @@
 		 					</tr>
 		 				</th:block>
 		 				<th:block th:unless="${#lists.size(memberList) == 0}">
-							<tr th:each="member : ${memberList}">
+							<tr th:each="member : ${memberList}" style="vertical-align: middle;">
 								<td style="cursor: pointer;" th:onclick="openModal([[${member.memNo}]]);">
 									[[${member.memNo}]]
 									<input type="hidden" id="memNo" th:value="${member.memNo}">

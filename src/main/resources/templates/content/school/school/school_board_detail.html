@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{fragment/school/school_layout}">
+	layout:decorate="~{fragment/layout}">
 
 <th:block layout:fragment="content">
 	<div class="container">
@@ -35,7 +35,7 @@
 				<tbody >
 					<tr>
 						<td colspan="2">
-							<textarea rows="30" cols="150" class="content" name="schInfoContent" th:text="${detail.schInfoContent}" readonly="readonly"></textarea>
+							<textarea rows="30" cols="100" class="schInfocontent" name="schInfoContent" th:text="${detail.schInfoContent}" readonly="readonly"></textarea>
 						</td>
 					</tr>
 					<tr>

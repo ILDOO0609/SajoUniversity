@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{fragment/school/school_layout}">
+	layout:decorate="~{fragment/layout}">
 
 <th:block layout:fragment="content">
 <div class="container">
@@ -27,7 +27,7 @@
 								</td>
 							</tr>
 							
-							<tr>
+							<tr style="vertical-align: middle; text-align: center;">
 								<td>직책</td>
 								<td>
 									<input class="form-check-input" type="radio" id="checkPosition" name="checkPosition" value="교수" checked>
@@ -43,7 +43,7 @@
 								</td>
 							</tr>
 							
-							<tr>
+							<tr style="vertical-align: middle; text-align: center;">
 								<td>단과대학</td>
 								<td>
 									<select class="form-select" name="collNo" onchange="changeColl(this);">
@@ -71,7 +71,7 @@
 								<td colspan="3" style="font-size: 0.8em; color: red;">해당 회원 클릭시 회원상세창이 열립니다.</td>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody style="text-align: center;">
 							<tr>
 								<td>교수번호</td>
 								<td>직책</td>

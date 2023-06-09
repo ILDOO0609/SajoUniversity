@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.study.test.colleage.vo.DeptVO;
+import com.study.test.colleage.vo.SemesterVO;
 import com.study.test.emp.vo.EmpVO;
 import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.vo.MemberVO;
@@ -91,20 +92,11 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectOne("schoolMapper.schInfoListCnt");
 	}
 	
-	
-	
-	
-	
-	
 	//학사일정 일정 목록
 	@Override
 	public List<CalendarVO> calendarList() {
 		return sqlSession.selectList("calendarMapper.calendarList");
 	}
-	
-	
-	
-	
 	
 	
 //-------------------학사조회-----------------------------------------------------------
@@ -306,17 +298,37 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectList("schoolMapper.checkDoubleModal", applyNo);
 	}
 	
+	
+	
+	
 	//수업메뉴 -> 학사징계관리 -> 징계사유 조회
 	@Override
 	public List<ProbationStatusVO> getProbStatusList() {
 		return sqlSession.selectList("schoolMapper.getProbStatusList");
 	}
+	//수업메뉴 -> 학사징계관리 -> 학년학기 조회
+	@Override
+	public List<SemesterVO> getStuYearSem() {
+		return sqlSession.selectList("schoolMapper.getStuYearSem");
+	}
+	
 	//수업메뉴 -> 학사징계관리 -> 학생검색
 	@Override
 	public List<StuVO> searchProbStuList(StuVO stuVO) {
 		return sqlSession.selectList("schoolMapper.searchProbStuList", stuVO);
 	}
-	
+	//수업메뉴 -> 학사징계관리 -> 학사경고 인서트
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void insertProbation(ProbationVO probationVO) {
+		sqlSession.insert("schoolMapper.insertProbation", probationVO);
+		sqlSession.update("schoolMapper.updateProbation", probationVO);
+	}
+	//수업메뉴 -> 학사징계관리 -> 학생상세모달
+	@Override
+	public List<StuVO> getProbStuModal(String stuNo) {
+		return sqlSession.selectList("schoolMapper.getProbStuModal", stuNo);
+	}
 	
 	
 	
@@ -397,6 +409,13 @@ public class SchoolServiceImpl implements SchoolService{
 	public int getStatusCntForI() {
 		return 0;
 	}
+
+
+	
+
+	
+
+
 
 	
 

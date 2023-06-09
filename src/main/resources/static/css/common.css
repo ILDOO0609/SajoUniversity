@@ -101,6 +101,16 @@ a {
 	z-index: 4;
 }
 
+<<<<<<< HEAD
+/* 학사안내 */
+.schInfocontent{
+	border: none;
+	resize: none;
+}
+.schInfocontent:focus{
+	outline: none;
+=======
 .graySeat {
 	background-color: gray;
+>>>>>>> d45ea894b3e46c21386a6ee66f7ce7faa3a8ba45
 }

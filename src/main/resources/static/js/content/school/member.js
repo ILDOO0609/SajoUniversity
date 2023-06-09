@@ -1,10 +1,12 @@
 //--------------회원메뉴--------------------------------------------------------------
 function updatePosition(memNo) {
 	
-	const deptNo = document.querySelector('#deptNo').value;
-	const collNo = document.querySelector('#collNo').value;
+	const collNo = document.querySelector('select[name="collNo"]').value;
+	const deptNo = document.querySelector('select[name="deptNo"]').value;
 	const memRole = document.querySelector('#memRole').value;
 	
+	console.log(collNo);
+	console.log(deptNo);
 	console.log(memRole);
 	
 	//ajax start
@@ -32,8 +34,8 @@ function updatePosition(memNo) {
 // ----------승인 거절---------
 function updateXPosition(memNo) {
 	
-	const deptNo = document.querySelector('#deptNo').value;
-	const collNo = document.querySelector('#collNo').value;
+	const collNo = document.querySelector('select[name="collNo"]').value;
+	const deptNo = document.querySelector('select[name="deptNo"]').value;
 	const memRole = document.querySelector('#memRole').value;
 	
 	console.log(memRole);

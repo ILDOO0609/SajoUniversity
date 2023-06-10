@@ -22,7 +22,7 @@ public class LibraryController {
 	@Resource(name="libraryService")
 	private LibraryService libraryService;
 	
-	
+	// 열람실 좌석 페이지
 	@GetMapping("/libMain")
 	public String libMain(Authentication authentication, Model model, LibraryVO libraryVO) {
 		// 열람실 좌석 정보 조회
@@ -33,8 +33,6 @@ public class LibraryController {
 	    
 	    List<Integer> seatNoArr = new ArrayList<>();
 	    
-	    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+seatInfo);
-	    
 	    for(LibraryVO seat : seatInfo) {
 	    	seatNoArr.add(seat.getSeatNo());
 	    }
@@ -44,5 +42,23 @@ public class LibraryController {
 	    return "content/library/lib_main";
 		}
 	
+	// 열람실 좌석 등록
+	@PostMapping("/regLibSeat")
+	public String regLibSeat(Authentication authentication, LibraryVO libraryVO) {
+		libraryVO.setMemNo(authentication.getName());
+		
+		// 좌석 배정
+		libraryService.regLibSeat(libraryVO);
+		
+		return "redirect:/lib/libMain";
+	}
 	
+	// 열람실 좌석 반납
+	@PostMapping("/deleteLibSeat")
+	public String deleteLibSeat(Authentication authentication) {
+		// 좌석 반납
+		libraryService.deleteLibSeat(authentication.getName());
+		
+		return "redirect:/lib/libMain";
+	}
 }

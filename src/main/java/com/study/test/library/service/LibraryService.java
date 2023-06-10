@@ -16,4 +16,7 @@ public interface LibraryService {
 	
 	// 이용중 좌석 숫자 조회
 	int getCountSeat();
+	
+	// 좌석 반납
+	void deleteLibSeat(String memNo);
 }

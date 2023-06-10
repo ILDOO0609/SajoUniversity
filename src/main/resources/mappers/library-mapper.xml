@@ -28,7 +28,7 @@ AND MEMBER.MEM_NO = #{memNo}
 </select>
 
 <insert id="regLibSeat">
-INSERT INTO (
+INSERT INTO LIBRARY (
 	LIB_NO
 	, MEM_NO
 	, LIB_IS_USE
@@ -52,6 +52,11 @@ WHERE LIB_IS_USE = 'Y'
 SELECT COUNT(LIB_NO)
 FROM LIBRARY
 </select>
+
+<delete id="deleteLibSeat">
+DELETE LIBRARY
+WHERE MEM_NO = #{memNo}
+</delete>
 
 </mapper>
 

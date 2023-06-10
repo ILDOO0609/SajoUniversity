@@ -21,7 +21,7 @@ public class LibraryServiceImpl implements LibraryService{
 
 	@Override
 	public void regLibSeat(LibraryVO libraryVO) {
-		sqlSession.insert("libraryMapper.regLibInfo", libraryVO);
+		sqlSession.insert("libraryMapper.regLibSeat", libraryVO);
 		
 	}
 
@@ -33,6 +33,12 @@ public class LibraryServiceImpl implements LibraryService{
 	@Override
 	public int getCountSeat() {
 		return sqlSession.selectOne("libraryMapper.getCountSeat");
+	}
+
+	@Override
+	public void deleteLibSeat(String memNo) {
+		sqlSession.delete("libraryMapper.deleteLibSeat" , memNo);
+		
 	}
 	
 

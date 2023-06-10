@@ -26,7 +26,8 @@
 							<tr th:each="row, state : ${#numbers. sequence(0, 9)}">
 								<td th:each="col : ${#numbers. sequence(0, 8)}">
 									<button th:classappend="${seatNoArr.contains(row * 9 + col + 1)} ? 'graySeat' : '' " class="btn" onclick="regSeat(this, value);" th:value="${row * 9 + col + 1}">
-										<span th:text="${row * 9 + col + 1}"></span>
+										<span th:text="${row * 9 + col + 1}">
+										</span>
 									</button>
 								</td>
 							</tr>
@@ -35,13 +36,15 @@
 				</div>
 			</div>
 		</div>
+		
+		
 		<div class="col-6">
 			<div class="card">
 				<div class="card-body">
 					<table class="table table-bordered text-center">
 						<thead style="background-color: #eee;">
 							<tr>
-								<td colspan="4">좌석 사용 현황</td>
+								<td colspan="4">내 좌석 사용 현황</td>
 							</tr>
 							<tr>
 								<td>좌석번호</td>
@@ -58,7 +61,10 @@
 								<td>[[${libInfo.seatNo}]]</td>
 								<td>[[${libInfo.memberVO.memName}]]</td>
 								<td>[[${libInfo.startTime}]]</td>
-								<td>[[${libInfo.endTime}]]</td>
+								<td>
+									[[${libInfo.endTime}]]
+									<input type="hidden" class="isNull" th:value="${libInfo.memberVO.memName}">
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -67,8 +73,10 @@
 		</div>
 	</div>
 </div>
-
-
+<form action="/lib/regLibSeat" id="regLibSeat" method="post">
+	<input type="hidden" name="seatNo" class="seatNo">
+</form>
+<form action="/lib/deleteLibSeat" id="deleteSeat" method="post"></form>
 
 
 </th:block>

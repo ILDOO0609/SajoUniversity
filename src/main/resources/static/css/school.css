@@ -1,0 +1,16 @@
+.my-scroll{
+	max-height:13rem;
+	overflow-y: auto;
+}
+.my-scroll::-webkit-scrollbar {
+        width: 8px;  /* 스크롤바의 너비 */
+}
+.my-scroll::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #b7b7b7; /* 스크롤바의 색상 */
+  border-radius: 10px;
+}
+
+.my-scroll::-webkit-scrollbar-track {
+  background: #84848447;  /*스크롤바 뒷 배경 색상*/
+}

@@ -1,3 +1,18 @@
+//휴학페이지 페이징
+function leavePaging(pageNum){
+	document.querySelector('#nowPageForLeave').value=pageNum;
+	//검색
+	document.querySelector('#searchFormForLeave').submit();
+}
+
+//복학페이지 페이징
+function returnPaging(pageNum){
+	document.querySelector('#nowPageForReturn').value=pageNum;
+	//검색
+	document.querySelector('#searchFormForReturn').submit();
+}
+
+
 //검색버튼 클릭시 실행
 function searchOrderList(){
 	const search_form = document.querySelector('#searchForm');

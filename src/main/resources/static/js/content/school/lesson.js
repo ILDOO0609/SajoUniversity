@@ -1,3 +1,10 @@
+//복수전공 페이지 페이징
+function deptPaging(pageNum){
+	document.querySelector('#nowPage').value=pageNum;
+	//검색
+	document.querySelector('#searchForm').submit();
+}
+
 //복수전공신청 승인완료 클릭시 실행
 function updateDoubleApp(){
 	const check_box = document.querySelector('#dobleTable');

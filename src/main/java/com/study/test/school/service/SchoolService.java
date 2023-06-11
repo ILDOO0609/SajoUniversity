@@ -11,6 +11,7 @@ import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.ProbationStatusVO;
 import com.study.test.school.vo.ProbationVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.school.vo.SearchVO;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
@@ -84,7 +85,7 @@ public interface SchoolService {
 // -------학적변동------------------------------------------------------	
 	
 	//학적변동 -> 휴학관리 대기조회
-	List<StatusInfoVO> getStatusInfoList();
+	List<StatusInfoVO> getStatusInfoList(SearchVO searchVO);
 	//학적변동 -> 휴학 승인완료조회
 	List<StatusInfoVO> getStatusInfoAppList();
 	//학적변동 -> 휴학 승인취소조회
@@ -101,7 +102,7 @@ public interface SchoolService {
 	
 	
 	//학적변동 -> 복학관리 대기조회
-	List<StatusInfoVO> getStatusReturnList();
+	List<StatusInfoVO> getStatusReturnList(SearchVO searchVO);
 	//학적변동 -> 복학관리 승인완료조회
 	List<StatusInfoVO> getStatusReturnAppList();
 	//학적변동 -> 복학관리 승인취소조회
@@ -120,7 +121,7 @@ public interface SchoolService {
 // -------수업메뉴 ------------------------------------------------------	
 
 	//수업메뉴 -> 복수전공관리 -> 승인대기 및 전체조회
-	List<DeptManageVO> getDeptManageList();
+	List<DeptManageVO> getDeptManageList(SearchVO searchVO);
 	//수업메뉴 -> 복수전공관리 -> 승인완료 조회
 	List<DeptManageVO> getDeptManageAppList();
 	//수업메뉴 -> 복수전공관리 -> 승인취소 조회
@@ -181,5 +182,8 @@ public interface SchoolService {
 	List<MemberVO> getMemberModal(String memNo);
 	
 	// -------페이지 처리위한 데이터개수 조회------------------------------------------------------//
-	int getStatusCntForI();
+	int getStatusCntForLeave(SearchVO searchVO);
+	int getStatusCntForReturn(SearchVO searchVO);
+	int getStatusCntForDeptManage(SearchVO searchVO);
+	
 }

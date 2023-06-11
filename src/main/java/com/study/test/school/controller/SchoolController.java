@@ -25,6 +25,7 @@ import com.study.test.school.service.SchoolService;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.ProbationVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.school.vo.SearchVO;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
@@ -237,6 +238,7 @@ public class SchoolController {
 	//학사조회 -> 학생조회 페이지
 	@RequestMapping("/checkStu")
 	public String checkStu(Model model, StuVO stuVO) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@");
 		//단과대학 정보 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		//전공학과 정보 조회
@@ -316,16 +318,23 @@ public class SchoolController {
 	}
 	
 	//학적변동 -> 휴학페이지 조회
-	@GetMapping("/acaLeave")
-	public String acaLeave(Model model, PageVO pageVO) {
+	@RequestMapping("/acaLeave")
+	public String acaLeave(Model model, SearchVO searchVO) {
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!"+searchVO);
+		
+		//승인대기중인 학생 수 조회
+		searchVO.setTotalDataCnt(schoolService.getStatusCntForLeave(searchVO));
+		searchVO.setPageInfo();
+		
+		model.addAttribute("searchVO", searchVO);
+		
 		//승인대기조회
-		model.addAttribute("statuslist", schoolService.getStatusInfoList());
+		model.addAttribute("statuslist", schoolService.getStatusInfoList(searchVO));
 		//승인완료조회
 		model.addAttribute("statusApplist", schoolService.getStatusInfoAppList());
 		//승인취소조회
 		model.addAttribute("statusDeniedlist", schoolService.getStatusInfoDeniedList());
 		//페이지
-		model.addAttribute("pageVO", pageVO);
 		
 		return "content/school/academic/aca_leave";
 	}
@@ -368,10 +377,17 @@ public class SchoolController {
 	
 	
 	//학적변동 -> 복학페이지 조회
-	@GetMapping("/acaReturn")
-	public String acaReturn(Model model) {
+	@RequestMapping("/acaReturn")
+	public String acaReturn(Model model, SearchVO searchVO) {
+		
+		//승인대기중인 학생 수 조회
+		searchVO.setTotalDataCnt(schoolService.getStatusCntForReturn(searchVO));
+		searchVO.setPageInfo();
+		
+		model.addAttribute("searchVO", searchVO);
 		//승인대기조회
-		model.addAttribute("returnList", schoolService.getStatusReturnList());
+		
+		model.addAttribute("returnList", schoolService.getStatusReturnList(searchVO));
 		//승인완료조회
 		model.addAttribute("returnAppList", schoolService.getStatusReturnAppList());
 		//승인취소조회
@@ -424,10 +440,15 @@ public class SchoolController {
 	}
 	
 	//수업메뉴 -> 복수전공관리 -> 승인대기 및 전체조회
-	@GetMapping("/lessonMajorDouble")
-	public String lessonMajorDouble(Model model) {
+	@RequestMapping("/lessonMajorDouble")
+	public String lessonMajorDouble(Model model, SearchVO searchVO) {
+		//승인대기중인 학생 수 조회
+		searchVO.setTotalDataCnt(schoolService.getStatusCntForDeptManage(searchVO));
+		searchVO.setPageInfo();
+		
+		model.addAttribute("searchVO", searchVO);
 		//승인대기조회
-		model.addAttribute("majorList", schoolService.getDeptManageList());
+		model.addAttribute("majorList", schoolService.getDeptManageList(searchVO));
 		//승인완료조회
 		model.addAttribute("majorAppList", schoolService.getDeptManageAppList());
 		//승인취소조회

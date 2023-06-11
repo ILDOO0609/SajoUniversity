@@ -303,6 +303,17 @@
 		AND NOW_STATUS = 'E'
 		AND AFTER_STATUS ='A'
 		AND ING_STATUS = 'I'
+		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
+		</if>
+		<if test='searchFromDate!=null and !searchToDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		ORDER BY STATUS_NO DESC
+		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	
 	<!-- 휴학관리 승인 조회-->
@@ -455,6 +466,17 @@
 		AND NOW_STATUS = 'A'
 		AND AFTER_STATUS = 'E'
 		AND ING_STATUS = 'I'
+		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
+		</if>
+		<if test='searchFromDate!=null and !searchToDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		ORDER BY STATUS_NO DESC
+		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	
 	
@@ -614,6 +636,17 @@
 		AND STU.STU_NO = DEPT_MANAGE.STU_NO
 		AND COLL.COLL_NO = DEPT_MANAGE.MULTI_MAJOR_COLL
 		AND DEPT.DEPT_NO = DEPT_MANAGE.MULTI_MAJOR_DEPT
+		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
+		</if>
+		<if test='searchFromDate!=null and !searchToDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		ORDER BY APPLY_NO DESC
+		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	<!-- 수업메뉴 -> 복수전공 관리 -> 승인완료조회 -->
 	<select id="getDeptManageAppList" resultMap="stuMapper.deptManage">
@@ -996,9 +1029,57 @@
 	</select> 
 	
 	<!-- 휴학 신청 승인대기중인 학생수 조회 -->
-	<select id="getStatusCntForI" resultType="int">
-		SELECT COUNT(STATUS_NO) FROM STATUS_INFO WHERE ING_STATUS = 'I'
+	<select id="getStatusCntForLeave" resultType="int">
+		SELECT COUNT(STATUS_NO) FROM STATUS_INFO SI, MEMBER MB, STU, COLLEAGE COLL WHERE MB.MEM_NO = STU.MEM_NO
+		AND STU.STU_NO = SI.STU_NO
+		AND STU.COLL_NO = COLL.COLL_NO
+		AND ING_STATUS = 'I' AND NOW_STATUS = 'E'
+		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
+		</if>
+		<if test='searchFromDate!=null and !searchToDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
 	</select>
+	
+	<!-- 복학 신청 승인대기중인 학생수 조회 -->
+	<select id="getStatusCntForReturn" resultType="int">
+		SELECT COUNT(STATUS_NO) FROM STATUS_INFO SI, MEMBER MB, STU, DEPT WHERE MB.MEM_NO = STU.MEM_NO
+		AND STU.STU_NO = SI.STU_NO
+		AND STU.DEPT_NO = DEPT.DEPT_NO
+		AND ING_STATUS = 'I' AND NOW_STATUS = 'A'
+		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
+		</if>
+		<if test='searchFromDate!=null and !searchToDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+	</select>
+	
+	<!-- 복수전공 신청 승인대기중인 학생수 조회 -->
+	<select id="getStatusCntForDeptManage" resultType="int">
+		SELECT COUNT(APPLY_NO) FROM DEPT_MANAGE DM, MEMBER MB, STU, COLLEAGE COLL WHERE MB.MEM_NO = STU.MEM_NO
+		AND STU.STU_NO = DM.STU_NO
+		AND STU.COLL_NO = COLL.COLL_NO
+		AND PROCESS_STATUS = 'I'
+		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
+		</if>
+		<if test='searchFromDate!=null and !searchToDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+	</select>
+	
+	
 	
 	
 	

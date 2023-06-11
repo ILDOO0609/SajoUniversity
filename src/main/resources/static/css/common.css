@@ -100,3 +100,16 @@ a {
 .modal-backdrop {
 	z-index: 4;
 }
+
+/* 학사안내 */
+.schInfocontent{
+	border: none;
+	resize: none;
+}
+.schInfocontent:focus{
+	outline: none;
+}
+
+.graySeat {
+	background-color: gray;
+}

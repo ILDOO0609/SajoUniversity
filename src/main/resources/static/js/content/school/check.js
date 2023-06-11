@@ -107,7 +107,9 @@ function searchStuList(){
 //교수 교직원 라디오 버튼 클릭시 실행
 $("input[name='checkPosition']").change(function(){
 	var name = $("input[name='checkPosition']:checked").val();
-	swal(name , "선택이(가) 완료되었습니다.", "success");
+	Swal.fire(name, '선택이(가) 완료되었습니다.', 'success').then(() => {
+	});
+	
 	
 	//교수 클릭시
 	if($("input[name='checkPosition']:checked").val() == '교수'){

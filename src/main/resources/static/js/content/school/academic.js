@@ -1,3 +1,18 @@
+//휴학페이지 페이징
+function leavePaging(pageNum){
+	document.querySelector('#nowPageForLeave').value=pageNum;
+	//검색
+	document.querySelector('#searchFormForLeave').submit();
+}
+
+//복학페이지 페이징
+function returnPaging(pageNum){
+	document.querySelector('#nowPageForReturn').value=pageNum;
+	//검색
+	document.querySelector('#searchFormForReturn').submit();
+}
+
+
 //검색버튼 클릭시 실행
 function searchOrderList(){
 	const search_form = document.querySelector('#searchForm');
@@ -11,9 +26,10 @@ function updateLeaveApp(){
 	const check_box = document.querySelector('#leaveTable');
 	const checked_box = check_box.querySelectorAll('input[type="checkbox"]:checked').length;
 	if(checked_box == 0){
-		swal("대상 선택", "최소 1명의 학생을 선택해야합니다.", "error", {button: "확인"})
-		.then((result) => {
-		})
+		Swal.fire('대상 선택', '최소 1명의 학생을 선택해야합니다.', 'error').then(() => {
+		        
+		      	});
+				
 		
 		return
 	}
@@ -29,10 +45,10 @@ function updateLeaveApp(){
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'statusNo': statusNo}, //필요한 데이터
 	   	success: function(result) {
-			swal("승인 완료", "승인완료 되었습니다.", "success",{button: "확인"})
-			.then((result) => {
-				location.href = `/school/acaLeave`;
-			})
+			Swal.fire('승인 완료', '승인완료 되었습니다.', 'success').then(() => {
+		        location.href = `/school/acaLeave`;
+		    });
+					
 			
 	   	},
 	   	error: function() {
@@ -49,9 +65,9 @@ function updateLeaveDenied(){
 	const checked_box = check_box.querySelectorAll('input[type="checkbox"]:checked').length;
 	
 	if(checked_box == 0){
-		swal("대상 선택", "최소 1명의 학생을 선택해야합니다.", "error", {button: "확인"})
-		.then((result) => {
-		})
+		Swal.fire('대상 선택', '최소 1명의 학생을 선택해야합니다.', 'error').then(() => {
+		        
+		});
 		
 		return
 	}
@@ -65,11 +81,9 @@ function updateLeaveDenied(){
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'statusNo': statusNo}, //필요한 데이터
 	   	success: function(result) {
-		
-			swal("승인 취소", "승인취소 되었습니다.", "success",{button: "확인"})
-			.then((result) => {
-				location.href = `/school/acaLeave`;
-			})
+			Swal.fire('승인 취소', '승인취소 되었습니다.', 'success').then(() => {
+		        location.href = `/school/acaLeave`;
+		    });
 			
 	   	},
 	   	error: function() {
@@ -92,9 +106,9 @@ function updateReturnApp(){
 	const checked_box = check_box.querySelectorAll('input[type="checkbox"]:checked').length;
 	
 	if(checked_box == 0){
-		swal("대상 선택", "최소 1명의 학생을 선택해야합니다.", "error", {button: "확인"})
-		.then((result) => {
-		})
+		Swal.fire('대상 선택', '최소 1명의 학생을 선택해야합니다.', 'error').then(() => {
+		        
+		});
 		
 		return
 	}
@@ -110,10 +124,9 @@ function updateReturnApp(){
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'statusNo': statusNo}, //필요한 데이터
 	   	success: function(result) {
-			swal("승인 완료", "승인완료 되었습니다.", "success",{button: "확인"})
-			.then((result) => {
-				location.href = `/school/acaReturn`;
-			})
+			Swal.fire('승인 완료', '승인완료 되었습니다.', 'success').then(() => {
+		        location.href = `/school/acaReturn`;
+		    });
 			
 	   	},
 	   	error: function() {
@@ -130,9 +143,9 @@ function updateReturnDenied(){
 	const checked_box = check_box.querySelectorAll('input[type="checkbox"]:checked').length;
 	
 	if(checked_box == 0){
-		swal("대상 선택", "최소 1명의 학생을 선택해야합니다.", "error", {button: "확인"})
-		.then((result) => {
-		})
+		Swal.fire('대상 선택', '최소 1명의 학생을 선택해야합니다.', 'error').then(() => {
+		        
+		});
 		
 		return
 	}
@@ -147,11 +160,9 @@ function updateReturnDenied(){
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'statusNo': statusNo}, //필요한 데이터
 	   	success: function(result) {
-		
-			swal("승인 취소", "승인취소 되었습니다.", "success",{button: "확인"})
-			.then((result) => {
-				location.href = `/school/acaReturn`;
-			})
+			Swal.fire('승인 취소', '승인취소 되었습니다.', 'success').then(() => {
+		        location.href = `/school/acaReturn`;
+		    });
 			
 	   	},
 	   	error: function() {

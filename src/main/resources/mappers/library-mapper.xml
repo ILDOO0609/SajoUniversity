@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="libraryMapper">
+	
+<resultMap type="com.study.test.library.vo.LibraryVO" id="library">
+	<id		column="LIB_NO" 		property="libNo"/>
+	<result column="MEM_NO"			property="memNo"/>
+	<result column="LIB_IS_USE"		property="libIsUse"/>
+	<result column="SEAT_NO" 		property="seatNo"/>
+	<result column="START_TIME" 	property="startTime"/>
+	<result column="END_TIME" 		property="endTime"/>
+	<association property="memberVO" resultMap="memberMapper.member"></association>
+</resultMap>
+
+<select id="getLibInfo" resultMap="library">
+SELECT LIB_NO
+	, MEMBER.MEM_NO
+	, MEM_NAME
+	, LIB_IS_USE
+	, SEAT_NO
+	, TO_CHAR(START_TIME, 'HH24:MI') START_TIME
+	, TO_CHAR(END_TIME, 'HH24:MI') END_TIME
+FROM LIBRARY, MEMBER
+WHERE MEMBER.MEM_NO = LIBRARY.MEM_NO
+AND MEMBER.MEM_NO = #{memNo}
+</select>
+
+<insert id="regLibSeat">
+INSERT INTO LIBRARY (
+	LIB_NO
+	, MEM_NO
+	, LIB_IS_USE
+	, SEAT_NO
+) VALUES (
+	(SELECT 'LIB_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LIB_NO, 5))), 0) + 1, 3, '0') 
+    FROM LIBRARY)
+    , #{memNo}
+    , 'Y'
+    , #{seatNo}
+)
+</insert>
+
+<select id="getSeatInfo" resultMap="library">
+SELECT SEAT_NO
+FROM LIBRARY
+WHERE LIB_IS_USE = 'Y'
+</select>
+
+<select id="getCountSeat" resultType="int">
+SELECT COUNT(LIB_NO)
+FROM LIBRARY
+</select>
+
+<delete id="deleteLibSeat">
+DELETE LIBRARY
+WHERE MEM_NO = #{memNo}
+</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

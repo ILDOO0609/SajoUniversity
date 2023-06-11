@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.study.test.colleage.vo.DeptVO;
+import com.study.test.colleage.vo.SemesterVO;
 import com.study.test.emp.vo.EmpVO;
 import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.vo.MemberVO;
@@ -15,6 +16,7 @@ import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.ProbationStatusVO;
 import com.study.test.school.vo.ProbationVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.school.vo.SearchVO;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
@@ -91,20 +93,11 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectOne("schoolMapper.schInfoListCnt");
 	}
 	
-	
-	
-	
-	
-	
 	//학사일정 일정 목록
 	@Override
 	public List<CalendarVO> calendarList() {
 		return sqlSession.selectList("calendarMapper.calendarList");
 	}
-	
-	
-	
-	
 	
 	
 //-------------------학사조회-----------------------------------------------------------
@@ -175,8 +168,8 @@ public class SchoolServiceImpl implements SchoolService{
 // -------학적변동------------------------------------------------------	
 	//학적변동 -> 휴학관리 대기조회
 	@Override
-	public List<StatusInfoVO> getStatusInfoList() {
-		return sqlSession.selectList("schoolMapper.getStatusInfoList");
+	public List<StatusInfoVO> getStatusInfoList(SearchVO searchVO) {
+		return sqlSession.selectList("schoolMapper.getStatusInfoList", searchVO);
 	}
 	//학적변동 -> 휴학승인 승인완료조회
 	@Override
@@ -221,8 +214,8 @@ public class SchoolServiceImpl implements SchoolService{
 	
 	//학적변동 -> 복학관리 대기조회
 	@Override
-	public List<StatusInfoVO> getStatusReturnList() {
-		return sqlSession.selectList("schoolMapper.getStatusReturnList");
+	public List<StatusInfoVO> getStatusReturnList(SearchVO searchVO) {
+		return sqlSession.selectList("schoolMapper.getStatusReturnList", searchVO);
 	}
 	//학적변동 -> 복학관리 승인완료조회
 	@Override
@@ -269,8 +262,8 @@ public class SchoolServiceImpl implements SchoolService{
 
 	//수업메뉴 -> 복수전공관리 -> 승인대기 및 전체조회
 	@Override
-	public List<DeptManageVO> getDeptManageList() {
-		return sqlSession.selectList("schoolMapper.getDeptManageList");
+	public List<DeptManageVO> getDeptManageList(SearchVO searchVO) {
+		return sqlSession.selectList("schoolMapper.getDeptManageList", searchVO);
 	}
 	//수업메뉴 -> 복수전공관리 -> 승인완료 조회
 	@Override
@@ -306,17 +299,37 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectList("schoolMapper.checkDoubleModal", applyNo);
 	}
 	
+	
+	
+	
 	//수업메뉴 -> 학사징계관리 -> 징계사유 조회
 	@Override
 	public List<ProbationStatusVO> getProbStatusList() {
 		return sqlSession.selectList("schoolMapper.getProbStatusList");
 	}
+	//수업메뉴 -> 학사징계관리 -> 학년학기 조회
+	@Override
+	public List<SemesterVO> getStuYearSem() {
+		return sqlSession.selectList("schoolMapper.getStuYearSem");
+	}
+	
 	//수업메뉴 -> 학사징계관리 -> 학생검색
 	@Override
 	public List<StuVO> searchProbStuList(StuVO stuVO) {
 		return sqlSession.selectList("schoolMapper.searchProbStuList", stuVO);
 	}
-	
+	//수업메뉴 -> 학사징계관리 -> 학사경고 인서트
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void insertProbation(ProbationVO probationVO) {
+		sqlSession.insert("schoolMapper.insertProbation", probationVO);
+		sqlSession.update("schoolMapper.updateProbation", probationVO);
+	}
+	//수업메뉴 -> 학사징계관리 -> 학생상세모달
+	@Override
+	public List<StuVO> getProbStuModal(String stuNo) {
+		return sqlSession.selectList("schoolMapper.getProbStuModal", stuNo);
+	}
 	
 	
 	
@@ -392,60 +405,82 @@ public class SchoolServiceImpl implements SchoolService{
 	public int getMemberDeniedListCnt() {
 		return sqlSession.selectOne("schoolMapper.getMemberDeniedListCnt");
 	}
-
 	
+	// -------페이지 처리위한 데이터개수 조회------------------------------------------------------//
+	@Override
+	public int getStatusCntForLeave(SearchVO searchVO) {
+		return sqlSession.selectOne("schoolMapper.getStatusCntForLeave", searchVO);
+	}
+	@Override
+	public int getStatusCntForReturn(SearchVO searchVO) {
+		return sqlSession.selectOne("schoolMapper.getStatusCntForReturn", searchVO);
+	}
+	@Override
+	public int getStatusCntForDeptManage(SearchVO searchVO) {
+		return sqlSession.selectOne("schoolMapper.getStatusCntForDeptManage", searchVO);
+	}
 
-
-
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-	
-
-
-	
-
-	
-
-
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-
-	
-
-
-
-	
-
-	
-
-
-
-
-
-
-	
-	
 }
+
+	
+
+	
+
+
+
+	
+
+
+
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+	
+
+
+	
+
+	
+
+
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+
+	
+
+
+
+	
+
+	
+
+
+
+
+
+
+	
+	
+

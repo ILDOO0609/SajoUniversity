@@ -1,10 +1,13 @@
 //--------------회원메뉴--------------------------------------------------------------
+//회원메뉴 -> 신규회원 승인완료
 function updatePosition(memNo) {
 	
-	const deptNo = document.querySelector('#deptNo').value;
-	const collNo = document.querySelector('#collNo').value;
+	const collNo = document.querySelector('select[name="collNo"]').value;
+	const deptNo = document.querySelector('select[name="deptNo"]').value;
 	const memRole = document.querySelector('#memRole').value;
 	
+	console.log(collNo);
+	console.log(deptNo);
 	console.log(memRole);
 	
 	//ajax start
@@ -15,10 +18,10 @@ function updatePosition(memNo) {
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'memNo':memNo,'deptNo':deptNo, 'collNo':collNo, 'memRole':memRole}, //필요한 데이터
 	   	success: function(result) {
-			swal("승인완료" , "정상 처리되었습니다.", "success", {button: "확인"})
-			.then((result) => {
-				location.href = `/school/memberList`;
-			})
+			Swal.fire('승인 완료', '승인완료 되었습니다.', 'success').then(() => {
+		        location.href = `/school/memberList`;
+		    });
+			
 			
 	   	},
 	   	error: function() {
@@ -29,11 +32,11 @@ function updatePosition(memNo) {
 
 	
 }
-// ----------승인 거절---------
+//회원메뉴 ->  신규회원 승인거절
 function updateXPosition(memNo) {
 	
-	const deptNo = document.querySelector('#deptNo').value;
-	const collNo = document.querySelector('#collNo').value;
+	const collNo = document.querySelector('select[name="collNo"]').value;
+	const deptNo = document.querySelector('select[name="deptNo"]').value;
 	const memRole = document.querySelector('#memRole').value;
 	
 	console.log(memRole);
@@ -46,10 +49,11 @@ function updateXPosition(memNo) {
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'memNo':memNo,'deptNo':deptNo, 'collNo':collNo, 'memRole':memRole}, //필요한 데이터
 	   	success: function(result) {
-			swal("승인취소" , "정상 처리되었습니다.", "success", {button: "확인"})
-			.then((result) => {
-				location.href = `/school/memberList`;
-			})
+			Swal.fire('승인 취소', '승인완료 되었습니다.', 'success').then(() => {
+		        location.href = `/school/memberList`;
+		    });
+			
+			
 			
 	   	},
 	   	error: function() {
@@ -99,6 +103,8 @@ function drawDeptSelectbox(deptList){
 	
 	dept_div.insertAdjacentHTML('afterbegin',str);
 }
+
+
 
 //회원메뉴 -> 승인/취소조회 -> 승인완료 조회
 function approveO(isConfirmed){

@@ -29,7 +29,7 @@
 		 					</tr>
 		 				</th:block>
 		 				<th:block th:unless="${#lists.size(memberList) == 0}">
-							<tr th:each="member : ${memberList}">
+							<tr th:each="member : ${memberList}" style="vertical-align: middle;">
 								<td style="cursor: pointer;" th:onclick="openModal([[${member.memNo}]]);">
 									[[${member.memNo}]]
 									<input type="hidden" id="memNo" th:value="${member.memNo}">
@@ -37,12 +37,12 @@
 								<td style="cursor: pointer;" th:onclick="openModal([[${member.memNo}]]);">[[${member.memName}]]</td>
 								<td style="cursor: pointer;" th:onclick="openModal([[${member.memNo}]]);">[[${member.regDate}]]</td>
 								<td>
-									<select class="form-select" name="collNo" id="collNo" onchange="changeColl(this);">
+									<select class="form-select" name="collNo" onchange="changeColl(this);">
 											<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
 									</select>
 								</td>
 								<td id="deptDiv">
-									<select class="form-select" name="deptNo" id="deptNo">
+									<select class="form-select" name="deptNo" >
 										<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
 											[[${dept.deptName}]]
 										</option>

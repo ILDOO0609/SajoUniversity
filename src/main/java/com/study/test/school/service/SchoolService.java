@@ -3,6 +3,7 @@ package com.study.test.school.service;
 import java.util.List;
 
 import com.study.test.colleage.vo.DeptVO;
+import com.study.test.colleage.vo.SemesterVO;
 import com.study.test.emp.vo.EmpVO;
 import com.study.test.emp.vo.LectureVO;
 import com.study.test.member.vo.MemberVO;
@@ -10,10 +11,10 @@ import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.ProbationStatusVO;
 import com.study.test.school.vo.ProbationVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.school.vo.SearchVO;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
-import com.study.test.util.PageVO;
 
 public interface SchoolService {
 
@@ -84,7 +85,7 @@ public interface SchoolService {
 // -------학적변동------------------------------------------------------	
 	
 	//학적변동 -> 휴학관리 대기조회
-	List<StatusInfoVO> getStatusInfoList();
+	List<StatusInfoVO> getStatusInfoList(SearchVO searchVO);
 	//학적변동 -> 휴학 승인완료조회
 	List<StatusInfoVO> getStatusInfoAppList();
 	//학적변동 -> 휴학 승인취소조회
@@ -96,18 +97,16 @@ public interface SchoolService {
 	void updateLeaveApp(StatusInfoVO statusInfoVO);
 	//학적변동 -> 휴학신청 승인취소
 	void updateLeaveDenied(StatusInfoVO statusInfoVO);
-	
 	//학적변동 -> 휴학신청 -> 상세모달
 	List<StuVO> checkLeaveModal(String statusNo);
 	
 	
 	//학적변동 -> 복학관리 대기조회
-	List<StatusInfoVO> getStatusReturnList();
+	List<StatusInfoVO> getStatusReturnList(SearchVO searchVO);
 	//학적변동 -> 복학관리 승인완료조회
 	List<StatusInfoVO> getStatusReturnAppList();
 	//학적변동 -> 복학관리 승인취소조회
 	List<StatusInfoVO> getStatusReturnDeniedList();
-	
 	
 	//학적변동 -> 복학신청 회원조회
 	String updateReturnSelect(String statusNo);
@@ -122,7 +121,7 @@ public interface SchoolService {
 // -------수업메뉴 ------------------------------------------------------	
 
 	//수업메뉴 -> 복수전공관리 -> 승인대기 및 전체조회
-	List<DeptManageVO> getDeptManageList();
+	List<DeptManageVO> getDeptManageList(SearchVO searchVO);
 	//수업메뉴 -> 복수전공관리 -> 승인완료 조회
 	List<DeptManageVO> getDeptManageAppList();
 	//수업메뉴 -> 복수전공관리 -> 승인취소 조회
@@ -139,8 +138,14 @@ public interface SchoolService {
 	
 	//수업메뉴 -> 학사징계관리 -> 징계사유 조회
 	List<ProbationStatusVO> getProbStatusList();
+	//수업메뉴 -> 학사징계관리 -> 학년학기 조회
+	List<SemesterVO> getStuYearSem();
 	//수업메뉴 -> 학사징계관리 -> 학생검색
 	List<StuVO> searchProbStuList(StuVO stuVO);
+	//수업메뉴 -> 학사징계관리 -> 학사경고 인서트
+	void insertProbation(ProbationVO probationVO);
+	//수업메뉴 -> 학사징계관리 -> 학생상세모달
+	List<StuVO> getProbStuModal(String stuNo);
 	
 	
 // -------회원메뉴 회원조회------------------------------------------------------
@@ -176,5 +181,9 @@ public interface SchoolService {
 	//회원클릭시 회원상에 모달창
 	List<MemberVO> getMemberModal(String memNo);
 	
+	// -------페이지 처리위한 데이터개수 조회------------------------------------------------------//
+	int getStatusCntForLeave(SearchVO searchVO);
+	int getStatusCntForReturn(SearchVO searchVO);
+	int getStatusCntForDeptManage(SearchVO searchVO);
 	
 }

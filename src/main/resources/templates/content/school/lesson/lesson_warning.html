@@ -2,7 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{fragment/school/school_layout}">
+	layout:decorate="~{fragment/layout}">
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
 
 <th:block layout:fragment="content">
 <div class="container">	
@@ -11,6 +15,7 @@
 		<div class="col mb-3" >
 			<div class="row">
 				<div class="col" style="padding-right: 0px;">
+<<<<<<< HEAD
 						<table class="table" id="warningTable">
 							<colgroup>
 								<col width="15%">					
@@ -87,10 +92,102 @@
 								</tr>	
 							</tbody>	
 						</table>
+=======
+					<table class="table" id="warningTable">
+						<colgroup>
+							<col width="5%">					
+							<col width="15%">					
+							<col width="15%">					
+							<col width="15%">					
+							<col width="15%">					
+							<col width="10%">					
+							<col width="15%">					
+							<col width="15%">					
+						</colgroup>
+						<thead>
+							<tr style="text-align: left; font-weight: bold;">
+								<td colspan="8">
+									학생 정보
+								</td>
+							</tr> 
+	
+							<tr style="vertical-align: middle; text-align: center;">
+								<td></td>
+								<td>단과대학</td>
+								<td>
+									<select class="form-select" name="collNo" onchange="changeColl(this);">
+										<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
+									</select>
+								</td>
+								<td>전공학과</td>							
+								<td id="deptDiv">
+									<select class="form-select" name="deptNo">
+										<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
+											[[${dept.deptName}]]
+										</option>
+									</select>
+								</td>
+								<td>학생명</td>							
+								<td><input type="text" class="form-control" id="searchStuInput" name="searchValue" placeholder="학생명 입력"></td>		
+								<td>
+									<div class="d-grid">
+										<input type="button" class="btn btn-primary" value="Search" onclick="searchProbList();">
+									</div>
+								</td>					
+							</tr>
+							
+							<tr style="text-align: left; font-weight: bold;">
+								<td colspan="8">
+									학생 검색 결과
+									<span style="font-size: 0.6em; color: red;">
+										해당 학생 클릭시 학생정보 상세창이 열립니다.
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>학번</td>
+								<td>학생명</td>
+								<td>학년</td>
+								<td>학기</td>
+								<td colspan="2">단과대학</td>
+								<td>전공학과</td>
+							</tr>	
+						</thead>
+						<tbody>
+							<tr style="text-align: center;">
+								<td colspan="8">학생을 검색하세요.</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr style="text-align: center;">
+								<td></td>
+								<td style="vertical-align: middle;">해당학기 :</td>
+								<td>
+									<select class="form-select text-center" name="semNo">
+										 <option th:each="sem : ${semList}" id="semNo" th:value="${sem.semNo}">[[${sem.semYear}]][[${sem.semester}]]학기</option>
+									</select>
+								</td>
+								<td style="vertical-align: middle;">징계사유 : </td>
+								<td colspan="3" style="text-align: center;">
+									<select class="form-select text-center" name="probStatusCode">
+										 <option th:each="prob : ${ProbList}" id="probStatusCode" th:value="${prob.probStatusCode}">[[${prob.probStatusName}]]</option>
+									</select>
+								</td>
+								<td>
+									<button class="btn btn-primary" id="memNo" type="button" th:onclick="stuProb();">학사경고</button>
+								</td>
+							</tr>	
+						</tfoot>	
+					</table>
+>>>>>>> 09771f826aae6772dea2fddb2f77daa5cbad69e0
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<input type="button" onClick="sendLinkCustom();" value="" style="padding-left: 25px; background-image: url('https://cdn-icons-png.flaticon.com/512/2111/2111466.png'); background-repeat: no-repeat; background-position: left center; background-size: 24px;" />
+
 </div>			
 	
 <!-- Modal -->
@@ -107,6 +204,61 @@
 		</div>
 	</div>
 </div>	
+
+
+
+<script type="text/javascript">
+    function sendLinkCustom() {
+        Kakao.init("3be5177cdde915136b2812ede4a4434d");
+        Kakao.Link.sendCustom({
+            templateId: 94718
+        });
+    }
+</script>
+
+<script>
+try {
+  function sendLinkDefault() {
+    Kakao.init('3be5177cdde915136b2812ede4a4434d')
+    Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '사조 대학 학사경고',
+        description: '#학사경고',
+        imageUrl:
+          'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+        link: {
+          mobileWebUrl: 'https://developers.kakao.com',
+          webUrl: 'https://developers.kakao.com',
+        },
+      },
+      social: {
+        likeCount: 286,
+        commentCount: 45,
+        sharedCount: 845,
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com',
+          },
+        },
+        {
+          title: '앱으로 보기',
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com',
+          },
+        },
+      ],
+    })
+  }
+; window.kakaoDemoCallback && window.kakaoDemoCallback() }
+catch(e) { window.kakaoDemoException && window.kakaoDemoException(e) }
+</script>
+
 	
 </th:block>
 
@@ -114,7 +266,12 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
+<<<<<<< HEAD
+	<!-- <script type="text/javascript" src="/js/content/admin/cate_manage.js"></script> -->
+	<script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+=======
 	<script type="text/javascript" src="/js/content/school/lesson.js"></script>
+>>>>>>> 5d49b1a2190f2b2ce4a1cb07971fd29cb4a86a30
 </th:block>
 
 </html>

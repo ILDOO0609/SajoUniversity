@@ -25,6 +25,7 @@ import com.study.test.school.service.SchoolService;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.ProbationVO;
 import com.study.test.school.vo.SchoolInfoVO;
+import com.study.test.school.vo.SearchVO;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
@@ -84,7 +85,7 @@ public class SchoolController {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+schoolService.searchInfoListAjax(schoolInfoVO));
 		return schoolService.searchInfoListAjax(schoolInfoVO);
 	}
-	//학사메뉴 -> 학사안내 -> 월 셀렉박스 변경시, ajax로 조회
+	//학사메뉴 -> 학사안내 -> 월 변경
 	@ResponseBody
 	@PostMapping("/schInfoMonthAjax")
 	public List<SchoolInfoVO> schInfoMonthAjax(int schInfoMonth){
@@ -237,6 +238,7 @@ public class SchoolController {
 	//학사조회 -> 학생조회 페이지
 	@RequestMapping("/checkStu")
 	public String checkStu(Model model, StuVO stuVO) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@");
 		//단과대학 정보 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		//전공학과 정보 조회
@@ -305,19 +307,6 @@ public class SchoolController {
 	}
 	
 	
-	
-	
-	//학사조회 -> 강의및학점 페이지
-	@GetMapping("/checkLec")
-	public String checkLec() {
-		return "content/school/check/check_lec";
-	}
-	
-	
-	
-	
-	
-	
 //-------------------------------학적변동--------------------------------------------
 		
 	
@@ -329,14 +318,23 @@ public class SchoolController {
 	}
 	
 	//학적변동 -> 휴학페이지 조회
-	@GetMapping("/acaLeave")
-	public String acaLeave(Model model) {
+	@RequestMapping("/acaLeave")
+	public String acaLeave(Model model, SearchVO searchVO) {
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!"+searchVO);
+		
+		//승인대기중인 학생 수 조회
+		searchVO.setTotalDataCnt(schoolService.getStatusCntForLeave(searchVO));
+		searchVO.setPageInfo();
+		
+		model.addAttribute("searchVO", searchVO);
+		
 		//승인대기조회
-		model.addAttribute("statuslist", schoolService.getStatusInfoList());
+		model.addAttribute("statuslist", schoolService.getStatusInfoList(searchVO));
 		//승인완료조회
 		model.addAttribute("statusApplist", schoolService.getStatusInfoAppList());
 		//승인취소조회
 		model.addAttribute("statusDeniedlist", schoolService.getStatusInfoDeniedList());
+		//페이지
 		
 		return "content/school/academic/aca_leave";
 	}
@@ -379,10 +377,17 @@ public class SchoolController {
 	
 	
 	//학적변동 -> 복학페이지 조회
-	@GetMapping("/acaReturn")
-	public String acaReturn(Model model) {
+	@RequestMapping("/acaReturn")
+	public String acaReturn(Model model, SearchVO searchVO) {
+		
+		//승인대기중인 학생 수 조회
+		searchVO.setTotalDataCnt(schoolService.getStatusCntForReturn(searchVO));
+		searchVO.setPageInfo();
+		
+		model.addAttribute("searchVO", searchVO);
 		//승인대기조회
-		model.addAttribute("returnList", schoolService.getStatusReturnList());
+		
+		model.addAttribute("returnList", schoolService.getStatusReturnList(searchVO));
 		//승인완료조회
 		model.addAttribute("returnAppList", schoolService.getStatusReturnAppList());
 		//승인취소조회
@@ -435,10 +440,15 @@ public class SchoolController {
 	}
 	
 	//수업메뉴 -> 복수전공관리 -> 승인대기 및 전체조회
-	@GetMapping("/lessonMajorDouble")
-	public String lessonMajorDouble(Model model) {
+	@RequestMapping("/lessonMajorDouble")
+	public String lessonMajorDouble(Model model, SearchVO searchVO) {
+		//승인대기중인 학생 수 조회
+		searchVO.setTotalDataCnt(schoolService.getStatusCntForDeptManage(searchVO));
+		searchVO.setPageInfo();
+		
+		model.addAttribute("searchVO", searchVO);
 		//승인대기조회
-		model.addAttribute("majorList", schoolService.getDeptManageList());
+		model.addAttribute("majorList", schoolService.getDeptManageList(searchVO));
 		//승인완료조회
 		model.addAttribute("majorAppList", schoolService.getDeptManageAppList());
 		//승인취소조회
@@ -486,18 +496,30 @@ public class SchoolController {
 		model.addAttribute("deptList", colleageService.getDeptList());
 		//학사징계 사유 조회
 		model.addAttribute("ProbList", schoolService.getProbStatusList());
+		//학사징계 학기학년 조회
+		model.addAttribute("semList", schoolService.getStuYearSem());
 		return "content/school/lesson/lesson_warning";
 	}
 	
-	//수업 -> 학사경고관리 검색
+	//수업메뉴 -> 학사징계관리 -> 학생검색
 	@ResponseBody
 	@PostMapping("/searchProbStuListAjax")
 	public List<StuVO> searchProbStuListAjax(StuVO stuVO){
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+stuVO);
 		return schoolService.searchProbStuList(stuVO);
 	}
-	
-	
+	//수업메뉴 -> 학사징계관리 -> 학사경고 인서트
+	@ResponseBody
+	@PostMapping("/insertProbAppAjax")
+	public void insertProbation(ProbationVO probationVO) {
+		schoolService.insertProbation(probationVO);
+	}
+	//수업메뉴 -> 학사징계관리 -> 학생모달창
+	@ResponseBody
+	@PostMapping("/getWarningModalAjax")
+	public List<StuVO> getProbStuModal(String stuNo){
+		return schoolService.getProbStuModal(stuNo);
+	}
 	
 	
 //-------------------------------회원메뉴--------------------------------------------
@@ -547,9 +569,6 @@ public class SchoolController {
 		schoolService.updateXPosition(memNo);
 	 }
 	 
-	 
-	 
-	
 	//회원메뉴 -> 승인/취소 전체조회 페이지
 	@GetMapping("/memberSelectList")
 	public String memberSelectList(Model model, MemberVO memberVO) {

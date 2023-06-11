@@ -1,7 +1,9 @@
 package com.study.test.member.controller;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -54,11 +56,7 @@ public class MemberController {
 		return "main";
 	}
 	
-	// footer 확인용
-	@GetMapping("/footer")
-	public String footer() {
-		return "fragment/footer";
-	}
+	
 	// 채팅방 확인용
 	@GetMapping("/chat")
 	public String chat() {
@@ -322,9 +320,26 @@ public class MemberController {
 			System.out.println();
 
 		}
+		
+		List<Map<String, Object>> mapList2 = memberService.getMonthlyDataPie();
+		List<Map<String, Object>> resuList2 = new ArrayList<>();
+		
+		for(Map<String, Object> map : mapList2) {
+			Map<String, Object> map2 = new TreeMap<>(map);
+			resuList2.add(map2);
+			
+			Set<String> keySet2 = map2.keySet();
+			
+			for (String key2 : keySet2) {
+				System.out.println("파이 : " + key2 + " / value = " + map2.get(key2));
+			}
+			System.out.println();
+		}
 
 		model.addAttribute("mapList", resultList);
+		model.addAttribute("mapList2", resuList2);
 		System.out.println("@@@@@@@@@@"+resultList);
+		System.out.println("@@@@@@@@@@"+resuList2);
 		// year라는 이름으로 맨처음엔 올해년도를 넘기고, ajax를 타고 오면 해당연도를 넘긴다.
 		model.addAttribute("year", year);
 
@@ -348,6 +363,9 @@ public class MemberController {
 			
 			resultList.add(map1);
 		}
+		
+		
+		
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+resultList);
 		
 		List<Object> attendList = new ArrayList<>();
@@ -379,6 +397,30 @@ public class MemberController {
 		map.put("absenceList", absenceList);
 		
 		return map;
+	}
+	
+	// 월별통계 - 파이
+	@ResponseBody
+	@RequestMapping("/getChartDataPieAjax")
+	public List<Map<String, Object>> getChartDataPieAjax() {
+	
+	List<Map<String, Object>> mapList = memberService.getMonthlyDataPie();
+	
+	System.out.println("@!@!@!@!@!@!@!@!@!@!!@" + mapList);
+	
+	List<Map<String, Object>>genderList = new ArrayList<>();
+	
+	for(Map<String, Object> map : mapList) {
+		Map<String, Object> map1 = new TreeMap<>(map);
+		
+		genderList.add(map1);
+	}
+	
+	System.out.println(genderList + "@@@@@@@@@@@#@#@#^&*^&*^@#^");
+	
+	
+	return genderList;
+	
 	}
 	
 	

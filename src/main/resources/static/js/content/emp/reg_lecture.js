@@ -58,9 +58,9 @@ function setLastTime(firstTimeSelect) {
 // 추가버튼 클릭시 실행되는 함수
 function add() {
 	
-    if(document.querySelectorAll('#dayContainer #day').length < 5) {
+    if(document.querySelectorAll('.dayContainer #day').length < 5) {
 		
-        let originDiv = document.querySelector('#dayContainer #day');
+        let originDiv = document.querySelector('.dayContainer #day');
         let newDiv = originDiv.cloneNode(true); // 'day' div 복사
 
         // 새로운 div에서 'firstTime' select box에 setLastTime 함수 연결
@@ -76,7 +76,7 @@ function add() {
         }
 
         // 새로운 div를 'dayContainer' div 바로 아래에 추가
-        document.querySelector('#dayContainer').appendChild(newDiv);
+        document.querySelector('.dayContainer').appendChild(newDiv);
 
         // 새로운 div에서 'addBtn'과 'deleteBtn' 삭제
         let buttons = newDiv.querySelectorAll('input[type="button"]');
@@ -97,7 +97,7 @@ function add() {
 function deleteDay() {
 	
 	//day div 모두 가져오기
-    const days = document.querySelectorAll('#dayContainer #day');
+    const days = document.querySelectorAll('.dayContainer #day');
     
     //day div하나씩 제거
     if(days.length > 1) {
@@ -105,7 +105,7 @@ function deleteDay() {
     }
     
     // day div가 1개가 되면 삭제버튼 display속성 none
-    if(document.querySelectorAll('#dayContainer #day').length == 1) {
+    if(document.querySelectorAll('.dayContainer #day').length == 1) {
         document.querySelector('#deleteBtn').style.display = 'none';
     }
 }
@@ -169,15 +169,33 @@ function timeDuplicationCheckAjax(){
 				  title: '등록불가',
 				  text: '해당 시간이 이미 등록되어있습니다.!',
 				});
+				
 			 }
 			 else{
+				const reg_btn = document.querySelector('.regBtn');
+				reg_btn.disabled = false;
 				document.querySelector('.regBtn').disabled=false;
+				
 				Swal.fire({
 				  icon: 'success',
 				  title: '시간 체크',
 				  text: '등록 가능한 시간입니다.',
 				});
 				
+				//dayContainer안의 select박스의 값이 변경되면 등록버튼 비활성화
+				const dayContainer = document.querySelector('.dayContainer');
+				
+				dayContainer.addEventListener('change', function(e) {
+				    if(e.target.tagName == 'SELECT' && e.target.name != 'lecScore'){
+				        reg_btn.disabled = true;
+				    }
+				});
+				
+				//추가버튼을 클릭시 등록버튼 비활성화
+				document.querySelector('#addBtn').addEventListener('click', function() {
+				    reg_btn.disabled = true;
+				});
+
 			}
 	      },
 	      error: function() {

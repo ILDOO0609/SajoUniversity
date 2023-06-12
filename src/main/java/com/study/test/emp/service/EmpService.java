@@ -11,7 +11,10 @@ import com.study.test.emp.vo.StuGradeVO;
 public interface EmpService {
 	//접속해 있는 교수의 EMP_NO조회
 	String getNowEmpNo(String memNo);
-		
+	
+	//접속해 있는 교수의 이름 조회
+	String getNowEmpName(String memNo);
+	
 	//강의 등록
 	void insertLecture(HashMap<String, Object>map);
 	
@@ -50,4 +53,6 @@ public interface EmpService {
 	
 	//학생 성적 변경
 	boolean updateStuGrade(StuGradeVO stuGradeVO);
+	
+	
 }

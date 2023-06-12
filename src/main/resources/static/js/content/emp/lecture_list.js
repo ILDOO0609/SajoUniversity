@@ -64,7 +64,7 @@ function drawLectureListTable(){
 				
 				if(result.size == 0){
 					str += `<tr>`;
-					str += `	<td colspan="11">등록된 강의가 없습니다.</td>`;
+					str += `	<td colspan="12">등록된 강의가 없습니다.</td>`;
 					str += `</tr>`;
 				}
 				else{
@@ -128,14 +128,15 @@ function searchLecture(){
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: {'lecStatus':lec_status, 'searchValue':search_value}, //필요한 데이터
 		success: function(result) {
+			console.log(result);
 			const tbodyTag = document.querySelector('#tbodyTag');
 				tbodyTag.replaceChildren();
 				
 				let str = '';
 				
-				if(result.size == 0){
+				if(result.length == 0){
 					str += `<tr>`;
-					str += `	<td colspan="11">등록된 강의가 없습니다.</td>`;
+					str += `	<td colspan="12">조회된 강의가 없습니다.</td>`;
 					str += `</tr>`;
 				}
 				else{
@@ -159,7 +160,7 @@ function searchLecture(){
 							}
 						}
 						str += `	</td>`;
-						str += `	<td>${lec.lecStatus}1</td>`;
+						str += `	<td>${lec.lecStatus}</td>`;
 						if(lec.lecStatus == '폐강'){
 						str += `	<td> <input data-bs-toggle="modal" data-bs-target="#updateModal" type="submit" value="수정" onclick="getLectureListForUpdateAjax(this);" class="btn btn-primary" disabled> </td>`;
 						}
@@ -213,7 +214,7 @@ function getLectureListForUpdateAjax(updateBtn){
 	        str += `		<form id="updateForm" action="/emp/lecUpdate" method="post">`;
 			str += `		<input type="hidden" value="${result[0].lecNo}" name="lecNo">`;
 			str += `			강의 수정`;
-			str += `			<table border="1" class="table text-center modalTable">`;
+			str += `			<table border="1" class="table text-center modalTable dayContainer">`;
 			str += `			<colgroup>`;
 			str += `				<col width="25%">`;
 			str += `				<col width="25%">`;
@@ -299,8 +300,8 @@ function getLectureListForUpdateAjax(updateBtn){
 				str += `				</tr>`;
 			}
 			str += `			</table>`;
-			str += `		<input type = "button" value = "시간체크" onclick="timeDuplicationCheckAjax();">`;
-			str += `		<input type = "button" value = "수정" class="regBtn" onclick="lecUpdate();" disabled>`;
+			str += `		<input type = "button" value = "시간체크" class="btn btn-success" onclick="timeDuplicationCheckAjax();">`;
+			str += `		<input type = "button" value = "수정" class="btn btn-primary regBtn" onclick="lecUpdate();" disabled>`;
 			str += `		</form>`;
 			
 			modal_body.insertAdjacentHTML('afterbegin', str);

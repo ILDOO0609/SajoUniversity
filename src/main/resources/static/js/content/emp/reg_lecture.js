@@ -258,7 +258,7 @@ function regLecture(){
 		return ;
 	}
 	
-	//회원가입 진행
+	//강의등록 진행
 	document.querySelector('#regForm').submit();
 }
 

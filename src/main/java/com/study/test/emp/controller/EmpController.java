@@ -133,6 +133,7 @@ public class EmpController {
 		//--파일 첨부--//
 		//pdf파일 업로드
 		lecturePDFVO = UploadUtil.uploadPdfFile(pdfFile);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+lecturePDFVO);
 		
 		//LectureTimeVO를 여러개 담는 lecTimeList통 생성
 		List<LectureTimeVO> lecTimeList = new ArrayList<>();

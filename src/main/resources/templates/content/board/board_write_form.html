@@ -19,15 +19,15 @@
 </style>
 <div class="container">
 	<div class="row">
-		<div class="offset-2 col-8">
+		<div class="col">
 			<form action="/board/regBoard" method="post" id="formTag" enctype="multipart/form-data">
-				<div class="row mb-3 text-center">
-					<div class="col">
-						<h3>게시글 작성</h3>
-					</div>
-				</div>
+				<div class="row">
+			      <div class="col">
+			         <h1 class="title1">게시글 작성</h1>
+			      </div>
+			    </div>
 				<div class="row mb-3">
-					<div class="col">
+					<div class="offset-2 col-8">
 						<select name="boardCategoryVO.cateNo" class="form-select">
 						    <option th:each="cate : ${cateList}" th:value="${cate.cateNo}"
 						        th:unless="${(#authorization.expression('hasRole(''ROLE_pro'')') or #authorization.expression('hasRole(''ROLE_stu'')'))
@@ -38,12 +38,12 @@
 					</div>
 				</div>
 				<div class="row mb-3">
-					<div class="col">
+					<div class="offset-2 col-8">
 						<input type="text" class="form-control" name="boardTitle" id="boardTitle" placeholder="제목을 입력해주세요.">
 					</div>
 				</div>
 				<div class="row mb-3">
-					<div class="col form-floating">
+					<div class="offset-2 col-8 form-floating">
 						<textarea class="form-control" name="boardContent" id="boardContent" placeholder="내용을 입력해주세요." style="height: 350px; resize: none;"></textarea>
 					</div>
 				</div>

@@ -14,22 +14,22 @@
 <div class="container">
 	<div class="row">
 		<div class="col">
-			<div class="row mb-5">
-				<div class="col">
-					<h1 style="text-align:center; font-weight: bold;">BOARD</h1>
-				</div>
-			</div>
+			<div class="row">
+		      <div class="col">
+		         <h1 class="title1">게시판</h1>
+		      </div>
+		   </div>
 			<form action="/board/boardList" method="post" id="searchForm">
 			<input type="hidden" id="nowPage" name="nowPage" th:value="${boardListSearchVO.nowPage}">
-				<div class="row mb-5" id="searchRow">
+				<div class="row mb-3" id="searchRow">
 				    <div class="input-group">
 				    	<th:block th:if="${boardListSearchVO.checkValue=='notSecret'}">
 			            	<input type="checkbox" class="form-check-input from-check" id="searchCheck" value="notSecret" name="checkValue" checked>
-			            	<span>비밀글 제외</span>
+			            	<span class="secretSpan">비밀글 제외</span>
 			            </th:block>
 			            <th:block th:unless="${boardListSearchVO.checkValue=='notSecret'}">
 			            	<input type="checkbox" class="form-check-input from-check" id="searchCheck" value="notSecret" name="checkValue">
-			            	<span>비밀글 제외</span>
+			            	<span class="secretSpan">비밀글 제외</span>
 			            </th:block>
 			   			 <select name="cateNo" class="form-select-sm" id="cateSelect">
 							<option value="all" th:if="${boardListSearchVO.cateNo == 'all'}" selected>전체</option>

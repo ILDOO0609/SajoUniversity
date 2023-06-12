@@ -302,6 +302,9 @@ function openWarningModal(stuNo){
 		success: function(result) {
 			console.log(result);
 			
+			const probCnt = result['probCnt'];
+			result = result['stuList'];
+			
 			const content_div = document.querySelector('#memberModal .modal-body');
 			content_div.replaceChildren();	
 			let str = '';
@@ -373,8 +376,8 @@ function openWarningModal(stuNo){
 				str += `<td style="text-align: center;">전공학과</td>`;
 				str += `<td>${status.deptVO.deptName}</td>`;
 				str += `<td style="text-align: right;">학사경고</td>`;
+				str += `<td style="text-align: center;">${probCnt}회</td>`;
 				str += `<td></td>`;
-				str += `<td>???회</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td colspan="5">학사징계 목록</td>`;

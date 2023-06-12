@@ -265,8 +265,11 @@ public class SchoolController {
 	//학사조회 -> 학생조회 -> 상세모달창
 	@ResponseBody
 	@PostMapping("/getStuModalAjax")
-	public List<StuVO> getStuModalAjax(String stuNo){
-		return schoolService.checkStuModal(stuNo);
+	public Map<String, Object> getStuModalAjax(String stuNo){
+		Map<String, Object> map = new HashMap<>();
+		map.put("probCnt", schoolService.getStuProbCnt(stuNo));
+		map.put("stuList", schoolService.checkStuModal(stuNo));
+		return map;
 	}
 	
 	
@@ -368,6 +371,7 @@ public class SchoolController {
 	@ResponseBody
 	@PostMapping("/getLeaveModalAjax")
 	public List<StuVO> getLeaveModalAjax(String statusNo){
+		System.out.println("@#@#@#@#@#@#@#@#" + statusNo);
 		return schoolService.checkLeaveModal(statusNo);
 	}
 	
@@ -517,8 +521,11 @@ public class SchoolController {
 	//수업메뉴 -> 학사징계관리 -> 학생모달창
 	@ResponseBody
 	@PostMapping("/getWarningModalAjax")
-	public List<StuVO> getProbStuModal(String stuNo){
-		return schoolService.getProbStuModal(stuNo);
+	public Map<String, Object> getProbStuModal(String stuNo){
+		Map<String, Object> map = new HashMap<>();
+		map.put("probCnt", schoolService.getStuProbCnt(stuNo));
+		map.put("stuList", schoolService.getProbStuModal(stuNo));
+		return map;
 	}
 	
 	

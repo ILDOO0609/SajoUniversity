@@ -330,7 +330,11 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<StuVO> getProbStuModal(String stuNo) {
 		return sqlSession.selectList("schoolMapper.getProbStuModal", stuNo);
 	}
-	
+	//수업메뉴 -> 학사징계관리 -> 징계카운터조회
+	@Override
+	public int getStuProbCnt(String stuNo) {
+		return sqlSession.selectOne("schoolMapper.getStuProbCnt", stuNo);
+	}
 	
 	
 	
@@ -419,6 +423,8 @@ public class SchoolServiceImpl implements SchoolService{
 	public int getStatusCntForDeptManage(SearchVO searchVO) {
 		return sqlSession.selectOne("schoolMapper.getStatusCntForDeptManage", searchVO);
 	}
+
+
 
 }
 

@@ -436,12 +436,7 @@
 		AND ST.MEM_NO = MEM.MEM_NO
 		AND STATUS_NO = #{statusNo}
 	</select>
-
-
-
-
-
-	
+		
 	<!-- 복학관리 전체 조회 -->
 	<select id="getStatusReturnList" resultMap="stuMapper.status">
 		SELECT

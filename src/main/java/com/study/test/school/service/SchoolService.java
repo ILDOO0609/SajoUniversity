@@ -127,13 +127,13 @@ public interface SchoolService {
 	//수업메뉴 -> 복수전공관리 -> 승인취소 조회
 	List<DeptManageVO> getDeptManageDeniedList();
 	
-	//수업메뉴 -> 복수전공관리 ->복수신청 회원조회
+	//수업메뉴 -> 복수전공관리 -> 복수신청 회원조회
 	String updateDoubleSelect(String applyNo);
-	//수업메뉴 -> 복수전공관리 ->복수신청 승인완료
+	//수업메뉴 -> 복수전공관리 -> 복수신청 승인완료
 	void updateDoubleApp(DeptManageVO deptManageVO);
-	//수업메뉴 -> 복수전공관리 ->복수신청 승인취소
+	//수업메뉴 -> 복수전공관리 -> 복수신청 승인취소
 	void updateDoubleDenied(DeptManageVO deptManageVO);
-	//수업메뉴 -> 복수전공관리 ->회원클릭시 모달창
+	//수업메뉴 -> 복수전공관리 -> 회원클릭시 모달창
 	List<DeptManageVO> checkDoubleModal(String applyNo);
 	
 	//수업메뉴 -> 학사징계관리 -> 징계사유 조회
@@ -146,6 +146,8 @@ public interface SchoolService {
 	void insertProbation(ProbationVO probationVO);
 	//수업메뉴 -> 학사징계관리 -> 학생상세모달
 	List<StuVO> getProbStuModal(String stuNo);
+	//수업메뉴 -> 학사징계관리 -> 징계카운터조회
+	int getStuProbCnt(String stuNo);
 	
 	
 // -------회원메뉴 회원조회------------------------------------------------------

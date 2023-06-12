@@ -189,6 +189,7 @@ function checkLeaveModal(statusNo){
 		success: function(result) {
 			console.log(result);
 			
+			
 			const content_div = document.querySelector('#memberModal .modal-body');
 			content_div.replaceChildren();	
 			let str = '';
@@ -262,7 +263,7 @@ function checkLeaveModal(statusNo){
 				str += `<td>${status.stuVO.deptVO.deptName}</td>`;
 				str += `<td style="text-align: right;">학사경고</td>`;
 				str += `<td></td>`;
-				str += `<td>???회</td>`;
+				str += `<td>????회</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td colspan="6">학생 휴학사유</td>`;

@@ -232,14 +232,16 @@ public class EmpController {
 	
 	//강의 시간표
 	@GetMapping("/lecSchedule")
-	public String lecSchedule() {
+	public String lecSchedule(Authentication authentication, Model model) {
+		User user = (User)authentication.getPrincipal();
+		model.addAttribute("empName", empService.getNowEmpName(user.getUsername()));
 		return "content/emp/lec_schedule";
 	}
 	
 	//강의 시간표
 	@ResponseBody
 	@PostMapping("/lecScheduleAjax")
-	public List<Map<String, Object>> lecSchedule(Authentication authentication) {
+	public List<Map<String, Object>> lecScheduleAjax(Authentication authentication) {
 		return empService.getLectureListForSchedule(getNowEmpNo(authentication));
 	}
 	

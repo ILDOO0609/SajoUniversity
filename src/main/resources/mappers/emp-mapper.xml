@@ -86,6 +86,13 @@
 		WHERE MEM_NO = #{memNo}
 	</select>
 	
+	<!-- 접속해있는 교수의 이름 조회  -->
+	<select id="getNowEmpName" resultType="String">
+		SELECT MEM_NAME
+		FROM MEMBER
+		WHERE MEM_NO = #{memNo}
+	</select>
+	
 	<!-- 다음에 들어갈 LEC_NO 조회 -->
 	<select id="getNextLecNo" resultType="String">
 		SELECT 'LEC_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LEC_NO, 5))), 0) +1,3,0) FROM LECTURE

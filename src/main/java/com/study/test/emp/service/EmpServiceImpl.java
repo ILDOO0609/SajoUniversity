@@ -27,6 +27,12 @@ public class EmpServiceImpl implements EmpService{
 		return sqlSession.selectOne("empMapper.getNowEmpNo", memNo);
 	}
 	
+	//접속해 있는 교수의 이름 조회
+	@Override
+	public String getNowEmpName(String memNo) {
+		return sqlSession.selectOne("empMapper.getNowEmpName", memNo);
+	}
+	
 	//강의 및 강의시간 및 강의자료 등록 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -112,6 +118,8 @@ public class EmpServiceImpl implements EmpService{
 	public boolean updateStuGrade(StuGradeVO stuGradeVO) {
 		return sqlSession.update("empMapper.updateStuGrade", stuGradeVO) == 1 ? true : false;
 	}
+
+	
 
 	
 

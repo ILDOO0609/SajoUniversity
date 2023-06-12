@@ -1,55 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/main.css" rel="stylesheet">
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="/js/fragment/chat.js"></script>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/layout}">
 
-<noscript><h2 style="color: #ff0000"></h2></noscript>
 
-<div id="main-content" class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="connect"></label>
-                    <button id="connect" class="btn btn-default" type="submit">입장</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">나가기
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="name"> : </label>
-                    <input type="text" id="name" class="form-control" placeholder="소통해요~">
-                </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>대화내용</th>
-                </tr>
-                </thead>
-                <tbody id="greetings">
-                </tbody>
-            </table>
-        </div>
-    </div>
+
+
+<!-- 연결해야 할 외부 css 파일 -->
+<!-- layout에 css 적용 -->
+<th:block layout:fragment="content_css">
+	<!-- <link rel="stylesheet" href="/css/test.css"> -->
+				<!-- 사용 시 위의 경로 수정-->
+</th:block>
+
+<!-- layout에 content 구문에 적용 -->
+<th:block layout:fragment="content">
+
+<style>
+	.imgWarn{
+		width: 100%;
+    height: 70%;
+    transform: rotateZ(-16deg);
+    margin: 0 25px;
+    margin-top: 50px;
+	}
+</style>
+
+<div class="content-row">
+	<div class="col">
+		<div class="container">			
+			<div class="row" style="background-image: linear-gradient(7deg, steelblue, oldlace);">
+			
+			<div class="col-3">
+				<span style="text-align: center; font-weight: bold; font-size: x-large; color: mintcream; "> 사조대학 오픈채팅방 입니다.</span>
+				<span><img src="https://dszw1qtcnsa5e.cloudfront.net/community/20200602/882309d4-3417-42c1-9f66-f0a94ef1aee3/KM0602%EB%A7%A4%EB%84%88%EC%B1%84%ED%8C%85%EC%BA%A0%ED%8E%98%EC%9D%B8%EA%B2%8C%EC%8B%9C%EA%B8%802.png" class="imgWarn"></span>
+				
+			</div>
+			<div class="col-9">
+				<div id="tlkio" data-channel="SajoChat2" data-theme="theme--day" style="width:100%;height:400px; padding-left: 100px;"></div>
+			</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-</body>
+
+
+			
+			
+
+
+</th:block>
+
+<!-- 연결해야 할 외부 js 파일 -->
+<!-- layout에서 자바스크립트 실행 -->
+<th:block layout:fragment="content_js">
+	<!-- <script type="text/javascript" src="/js/test.js"></script> -->
+	<script async src="http://tlk.io/embed.js" type="text/javascript"></script>
+</th:block>
+
+
 </html>

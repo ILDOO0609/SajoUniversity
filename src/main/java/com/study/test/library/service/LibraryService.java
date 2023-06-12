@@ -19,4 +19,7 @@ public interface LibraryService {
 	
 	// 좌석 반납
 	void deleteLibSeat(String memNo);
+	
+	// 좌석 자동 반납을 위한 조회
+	List<LibraryVO> getEndTime();
 }

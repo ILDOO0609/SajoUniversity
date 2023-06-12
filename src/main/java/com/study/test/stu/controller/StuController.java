@@ -22,6 +22,7 @@ import com.study.test.member.service.memberService;
 import com.study.test.member.vo.MemberVO;
 import com.study.test.stu.service.StuService;
 import com.study.test.stu.vo.DeptManageVO;
+import com.study.test.stu.vo.EnrollSearchListVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 import com.study.test.util.TimeTableForTime;
@@ -149,13 +150,14 @@ public class StuController {
 	
 	// 수강신청
 	@RequestMapping("/stuSemEnroll")
-	public String stuSemEnroll(Model model, LectureVO lectureVO, Authentication authentication, MemberVO memberVO, StuVO stuVO, EnrollmentVO enrollmentVO, String stuNo) {
+	public String stuSemEnroll(Model model, LectureVO lectureVO, Authentication authentication, MemberVO memberVO, StuVO stuVO, EnrollmentVO enrollmentVO, String stuNo, EnrollSearchListVO enrollSearchListVO) {
 		// 단과대학 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		// 소속학과 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
 		// 강의 조회
-		model.addAttribute("lecList", stuService.getLectureForStu(lectureVO));
+		model.addAttribute("lecList", stuService.getLectureForStu(enrollSearchListVO));
+		
 		
 		return "content/stu/stu_sem_enroll";
 		
@@ -192,9 +194,9 @@ public class StuController {
 	// 수강신청 시 검색 버튼 클릭 시 실행 되는 Ajax
 	@ResponseBody
 	@PostMapping("/searchEnrollAjax")
-	public List<LectureVO> searchEnrollAjax(LectureVO lectureVO) {
+	public List<LectureVO> searchEnrollAjax(EnrollSearchListVO enrollSearchListVO) {
 		
-		return stuService.getLectureForStu(lectureVO);
+		return stuService.getLectureForStu(enrollSearchListVO);
 	}
 	
 	// 수강신청 버튼 클릭 시 실행되는 Ajax

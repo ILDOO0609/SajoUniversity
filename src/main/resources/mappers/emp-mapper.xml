@@ -371,6 +371,7 @@
 		<if test="deptNo != null and deptNo != ''">
 		AND DEPT.DEPT_NO = #{deptNo}
 		</if>
+		ORDER BY COLL.COLL_NO DESC
 	</select>
 	
 	<!-- 수강신청 DB에 INSERT -->
@@ -531,6 +532,23 @@
 		AND STU_GRADE.STU_NO = #{stuNo}
 		GROUP BY SEM_YEAR, SEMESTER
 		ORDER BY SEM_YEAR
+	</select>
+	
+	<!-- 강의 전체 데이터 수 조회 -->
+	<select id="getLecListCntForEnroll" resultType="int">
+		SELECT COUNT(LEC_NO)
+			FROM LECTURE, EMP
+			WHERE EMP.EMP_NO = LECTURE.EMP_NO
+	<if test='searchValue != null and !searchValue.equals("")'>
+		AND UPPER(LEC_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
+	</if>
+	<if test="collNo != null and collNo != ''">
+		AND COLL.COLL_NO = #{collNo}
+	</if>
+	<if test="deptNo != null and deptNo != ''">
+		AND DEPT.DEPT_NO = #{deptNo}
+	</if>
+	
 	</select>
 
 </mapper>

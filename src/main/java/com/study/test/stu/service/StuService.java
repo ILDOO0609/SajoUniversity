@@ -7,6 +7,7 @@ import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.vo.EnrollmentVO;
 import com.study.test.emp.vo.LectureVO;
 import com.study.test.stu.vo.DeptManageVO;
+import com.study.test.stu.vo.EnrollSearchListVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 
@@ -21,7 +22,7 @@ public interface StuService {
 	DeptVO getDeptName(String memNo);
 	
 	// 수강신청용 강의 조회
-	List<LectureVO> getLectureForStu(LectureVO lectureVO);
+	List<LectureVO> getLectureForStu(EnrollSearchListVO enrollSearchListVO);
 	
 	// 수강신청
 	int insertEnrollment(EnrollmentVO enrollmentVO);
@@ -78,5 +79,7 @@ public interface StuService {
 	int getTotalScore(String stuNo);
 	
 	List<LectureVO> getSumScoreForStu(String stuNo);
+	
+	int getLecListCntForEnroll(EnrollSearchListVO enrollSearchListVO);
 	
 }

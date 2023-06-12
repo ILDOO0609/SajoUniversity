@@ -1,9 +1,13 @@
 package com.study.test.library.controller;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +21,7 @@ import com.study.test.library.vo.LibraryVO;
 import jakarta.annotation.Resource;
 
 @Controller
+@EnableScheduling
 @RequestMapping("/lib")
 public class LibraryController {
 	@Resource(name="libraryService")
@@ -61,4 +66,6 @@ public class LibraryController {
 		
 		return "redirect:/lib/libMain";
 	}
+	
+
 }

@@ -74,37 +74,44 @@
 			</tr>
 		</table>
 		<div class="searchDiv">
-		<table class="table text-center table-striped">
-		<colgroup>
-			<col width="5%">
-			<col width="10%">
-			<col width="5%">
-			<col width="10%">
-			<col width="10%">
-			<col width="10%">
-			<col width="15%">
-			<col width="10%">
-			<col width="10%">
-			<col width="*">
-		</colgroup>
-			<tr class="align-middle" th:each="lec, state : ${lecList}">
-				<td>[[${state.count}]]</td>
-				<td>[[${lec.lecName}]]</td>
-				<td>[[${lec.lecScore}]]</td>
-				<td>[[${lec.colleageVO.collName}]]</td>
-				<td>[[${lec.deptVO.deptName}]]</td>
-				<td>[[${lec.memberVO.memName}]]</td>
-				<td>[[${lec.lectureTimeList[0].lecDay}]]/[[${lec.lectureTimeList[0].firstTime}]]~[[${lec.lectureTimeList[0].lastTime}]]</td>
-				<td>[[${lec.nowNum}]]</td>
-				<td>[[${lec.maxNum}]]</td>
-				<td>
-					<input type="button" th:classappend="${lec.nowNum} >= ${lec.maxNum} ? 'disabled' : ''" class="btn btn-primary forCheckEnr" value="수강신청" th:onclick="applyEnrollment([[${lec.lecNo}]],[[${lec.semNo}]], this);">
-				</td>
-			</tr>
-		</table>
+			<div class="scrollable-tobdy custom-scrollbar">
+				<table class="table text-center table-striped">
+				<colgroup>
+					<col width="5%">
+					<col width="10%">
+					<col width="5%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="15%">
+					<col width="10%">
+					<col width="10%">
+					<col width="*">
+				</colgroup>
+				<tbody>
+					<tr class="align-middle" th:each="lec, state : ${lecList}">
+						<td>[[${state.count}]]</td>
+						<td>[[${lec.lecName}]]</td>
+						<td>[[${lec.lecScore}]]</td>
+						<td>[[${lec.colleageVO.collName}]]</td>
+						<td>[[${lec.deptVO.deptName}]]</td>
+						<td>[[${lec.memberVO.memName}]]</td>
+						<td>[[${lec.lectureTimeList[0].lecDay}]]/[[${lec.lectureTimeList[0].firstTime}]]~[[${lec.lectureTimeList[0].lastTime}]]</td>
+						<td>[[${lec.nowNum}]]</td>
+						<td>[[${lec.maxNum}]]</td>
+						<td>
+							<input type="button" th:classappend="${lec.nowNum} >= ${lec.maxNum} ? 'disabled' : ''" class="btn btn-primary forCheckEnr" value="수강신청" th:onclick="applyEnrollment([[${lec.lecNo}]],[[${lec.semNo}]], this);">
+						</td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
+
+
+
 </form>
 </div>
 </th:block>

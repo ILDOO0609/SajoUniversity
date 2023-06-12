@@ -40,6 +40,11 @@ public class LibraryServiceImpl implements LibraryService{
 		sqlSession.delete("libraryMapper.deleteLibSeat" , memNo);
 		
 	}
+
+	@Override
+	public List<LibraryVO> getEndTime() {
+		return sqlSession.selectList("libraryMapper.getEndTime");
+	}
 	
 
 }

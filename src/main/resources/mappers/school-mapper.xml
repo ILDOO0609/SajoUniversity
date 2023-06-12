@@ -824,7 +824,7 @@
 	
 	
 	<!-- 수업메뉴 -> 학사징계관리 -> 상세모달창 -->
-	<select id="getProbStuModal" resultMap="stuMapper.stu">
+	<select id="getProbStuModal" resultType="HashMap">
 		SELECT ST.STU_NO
 		    , STU_YEAR
 		    , STU_SEM
@@ -843,16 +843,35 @@
 		    , MEM_EMAIL
 		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 		    , MEM_IMAGE
-		FROM STU ST, COLLEAGE COLL, DEPT DP, MEMBER MEM
+		    , NVL(PROB.PROB_NO, '미등록') AS PROB_NO
+		    , NVL(TO_CHAR(PROB_DATE, 'YYYY-MM-DD'), '9999-12-31') AS PROB_DATE
+		    , NVL(PROB.SEM_NO, '미등록') AS SEM_NO
+		    , NVL(PROB.PROB_STATUS_CODE, '미등록') AS PROB_STATUS_CODE
+		    , NVL(PS.PROB_STATUS_NAME, '미등록') AS PROB_STATUS_NAME
+		FROM STU ST
+		LEFT OUTER JOIN PROBATION PROB ON ST.STU_NO = PROB.STU_NO
+		LEFT OUTER JOIN PROBATION_STATUS PS ON PROB.PROB_STATUS_CODE = PS.PROB_STATUS_CODE
+		, COLLEAGE COLL
+		, DEPT DP
+		, MEMBER MEM
 		WHERE ST.COLL_NO = COLL.COLL_NO
 		AND ST.DEPT_NO = DP.DEPT_NO
 		AND ST.MEM_NO = MEM.MEM_NO
 		AND ST.STU_NO = #{stuNo}
 	</select>
 	
-	
-	
-	
+	<!-- 수업메뉴 -> 학사징계관리 -> 제적처리1 -->
+	<update id="updateStuInfoProbAjax">
+		UPDATE STATUS_INFO
+		SET NOW_STATUS = 'R'
+		WHERE STU_NO = #{stuNo}	
+	</update>
+	<!-- 수업메뉴 -> 학사징계관리 -> 제적처리2 -->
+	<update id="updateStuProbAjax">
+		UPDATE STU
+		SET STU_STATUS = '3'
+		WHERE STU_NO = #{stuNo}	
+	</update>
 	
 	
 	

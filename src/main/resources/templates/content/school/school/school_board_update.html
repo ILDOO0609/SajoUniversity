@@ -6,7 +6,12 @@
 
 <th:block layout:fragment="content">
 	<div class="container">
-		<h1 style="text-align: center;">학사안내</h1>
+		<div class="row">
+			<div class="col">
+				<h1 class="title1">학사안내</h1>
+			</div>
+		</div>		
+		
 		<form id="schInfoUpdateForm" th:action="@{/school/updateSchoolInfo}" method="post">
 			<table class="table">
 				<th:block th:each="detail : ${detailList}">

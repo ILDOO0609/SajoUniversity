@@ -6,7 +6,11 @@
 
 <th:block layout:fragment="content">
 	<div class="container">
-		<h1 style="text-align: center;">학사 안내</h1>
+	<div class="row">
+		<div class="col">
+			<h1 class="title1">학사 안내</h1>
+		</div>
+	</div>
 		<form id="schInfoSearchForm" th:action="@{/school/info}" method="post">
 			<div class="row" style="padding-bottom: 15px;">
 			 	<div class="col-3">

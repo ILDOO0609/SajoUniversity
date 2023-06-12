@@ -10,7 +10,11 @@
 
 <th:block layout:fragment="content">
 	<div class="container">
-	<h2>휴학 관리</h2>	
+		<div class="row">
+			<div class="col">
+				<h1 class="title1">휴학 관리</h1>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col">
 				<form id="searchFormForLeave" th:achtion="@{/school/acaLeave}" method="post"> 
@@ -21,18 +25,6 @@
 							<col width="*">								
 							<col width="15%">								
 						</colgroup>
-						<tr>
-							<td class="text-center"></td>
-							<td>
-							</td>
-							<td>
-								<div class="row">
-									<div class="col d-grid">
-										<input type="submit" class="btn btn-primary" value="Search">
-									</div>
-								</div>
-							</td>
-						</tr>
 						<tr>
 							<td class="text-center">신청일</td>
 							<td colspan="2">
@@ -56,12 +48,14 @@
 											<option value="COLL_NAME" th:selected="${searchVO.searchKeyword == 'COLL_NAME'}">소속대학</option>
 										</select>												
 									</div>
-									<div class="col-4">
+									<div class="col-2">
 										<input type="text" class="form-control" name="searchValue" th:value="${searchVO.searchValue}">
 									</div>
-								</div>
-								<div class="row">
-									<div class="col"></div>
+									<div class="col-2">
+										<div class="col d-grid">
+											<input type="submit" class="btn btn-primary" value="Search">
+										</div>
+									</div>
 								</div>
 							</td>
 						</tr>

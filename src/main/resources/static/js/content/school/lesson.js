@@ -303,7 +303,7 @@ function openWarningModal(stuNo){
 			console.log(result);
 			
 			const probCnt = result['probCnt'];
-			result = result['stuList'];
+			const stuList = result['stuList'];
 			
 			const content_div = document.querySelector('#memberModal .modal-body');
 			content_div.replaceChildren();	
@@ -320,67 +320,80 @@ function openWarningModal(stuNo){
 			str += `<col width="25%">`;
 			str += `</colgroup>`;
 			
-			for(const status of result){
-				str += `<tr>`;
-				str += `<td colspan="5">학생 기본정보</td>`;
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td rowspan="7"><img src="'/upload/${status.memberVO.memImage}" style="width: 100%; height: 100%"></td>`;
-				str += `<td>학생No(ID)</td>`;
-				str += `<td colspan="3">${status.memberVO.memNo}</td>`;
-				str += `<tr>`;
-				str += `<td>학생명</td>	`;
-				str += `<td colspan="3">${status.memberVO.memName}</td>`;
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td>생년월일</td>`;
-				str += `<td>${status.memberVO.memBirthday}</td>`
-				str += `<td style="text-align: center;">성별</td>`;
-				str += `<td>${status.memberVO.memGender}</td>`
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td>신규가입일</td>`;
-				str += `<td colspan="3">${status.memberVO.regDate}</td>`;
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td>이메일</td>`;
-				str += `<td colspan="3">${status.memberVO.memEmail}</td>`;
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td>전화번호</td>`;
-				str += `<td colspan="3">${status.memberVO.memTell}</td>`;
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td>주소</td>`;
-				str += `<td colspan="3">${status.memberVO.memAddr  + ' ' +  status.memberVO.memAddrDetail}</td>`;
-				str += `</tr>`;
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td colspan="6">학생 학사정보</td>`;
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td style="text-align: center;">학년</td>`;
-				str += `<td>${status.stuYear + ' '+ status.stuSem}학기</td>`;
-				str += `<td style="text-align: right;">재적상태</td>`;
-				str += `<td></td>`;
-				str += `<td>${status.stuStatus}</td>`;
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td style="text-align: center;">단과대학</td>`;
-				str += `<td>${status.colleageVO.collName}</td>`;
-				str += `<td style="text-align: right;">학점</td>`;
-				str += `<td></td>`;
-				str += `<td>???점</td>`;
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td style="text-align: center;">전공학과</td>`;
-				str += `<td>${status.deptVO.deptName}</td>`;
-				str += `<td style="text-align: right;">학사경고</td>`;
+			
+			str += `<tr>`;
+			str += `<td colspan="5">학생 기본정보</td>`;
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td rowspan="7"><img src="'/upload/${stuList[0]['MEM_IMAGE']}" style="width: 100%; height: 100%"></td>`;
+			str += `<td>학생No(ID)</td>`;
+			str += `<td colspan="3">${stuList[0]['MEM_NO']}</td>`;
+			str += `<tr>`;
+			str += `<td>학생명</td>	`;
+			str += `<td colspan="3">${stuList[0]['MEM_NAME']}</td>`;
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td>생년월일</td>`;
+			str += `<td>${stuList[0]['MEM_BIRTHDAY']}</td>`
+			str += `<td style="text-align: center;">성별</td>`;
+			str += `<td>${stuList[0]['MEM_GENDER']}</td>`
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td>신규가입일</td>`;
+			str += `<td colspan="3">${stuList[0]['REG_DATE']}</td>`;
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td>이메일</td>`;
+			str += `<td colspan="3">${stuList[0]['MEM_EMAIL']}</td>`;
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td>전화번호</td>`;
+			str += `<td colspan="3">${stuList[0]['MEM_TELL']}</td>`;
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td>주소</td>`;
+			str += `<td colspan="3">${stuList[0]['MEM_ADDR']  + ' ' +  stuList[0]['MEM_ADDR_DETAIL']}</td>`;
+			str += `</tr>`;
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td colspan="6">학생 학사정보</td>`;
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td style="text-align: center;">학년</td>`;
+			str += `<td>${stuList[0]['STU_YEAR'] + ' '+ stuList[0]['STU_SEM']}학기</td>`;
+			str += `<td style="text-align: right;">재적상태</td>`;
+			str += `<td></td>`;
+			str += `<td>${stuList[0]['STU_STATUS']}</td>`;
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td style="text-align: center;">단과대학</td>`;
+			str += `<td>${stuList[0]['COLL_NAME']}</td>`;
+			str += `<td style="text-align: right;">학점</td>`;
+			str += `<td></td>`;
+			str += `<td>???점</td>`;
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td style="text-align: center;">전공학과</td>`;
+			str += `<td>${stuList[0]['DEPT_NAME']}</td>`;
+			str += `<td style="text-align: right;">학사경고</td>`;
+			if(probCnt == 3){
 				str += `<td style="text-align: center;">${probCnt}회</td>`;
+				str += `<td style="vertical-align: middle;"><button class="btn btn-danger" id="probAppro" value="${stuList[0]['STU_NO']}" onclick="probAppro('${stuList[0]['STU_NO']}');">제적처리</button></td>`;
+			}
+			else{
 				str += `<td></td>`;
-				str += `</tr>`;
+				str += `<td>${probCnt}회</td>`;
+			}
+			str += `</tr>`;
+			str += `<tr>`;
+			str += `<td colspan="5">학사징계 목록</td>`;
+			str += `</tr>`;
+			
+			for(const status of stuList){
 				str += `<tr>`;
-				str += `<td colspan="5">학사징계 목록</td>`;
+				str += `<td style="text-align: center;">${status['PROB_DATE']}</td>`;
+				str += `<td>${status['SEM_NO']}</td>`;
+				str += `<td colspan="3" style="text-align: center;">${status['PROB_STATUS_NAME']}</td>`;
 				str += `</tr>`;
 			
 			}
@@ -400,7 +413,34 @@ function openWarningModal(stuNo){
 	
 	
 }
+//제적버튼 클릭시 실행
+function probAppro(stuNo){
+	const stu_No = document.querySelector('#probAppro').value;
+	console.log(stu_No);
+	
+		//ajax start
+	$.ajax({
+   		url: '/school/updateStuProbAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	   	data: {'stuNo' : stu_No}, //필요한 데이터
+	   	success: function(result) {
+	      Swal.fire('제적 완료', '제적 처리되었습니다.', 'success').then(() => {
+		        location.href = `/school/lessonWarning`;
+		  });
+	   	},
+	   	error: function() {
+	      alert('실패');
+		}
+	});
+	//ajax end
+	
 
+	
+
+	
+}
 
 
 

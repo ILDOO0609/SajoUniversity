@@ -1,6 +1,7 @@
 package com.study.test.school.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -327,17 +328,26 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	//수업메뉴 -> 학사징계관리 -> 학생상세모달
 	@Override
-	public List<StuVO> getProbStuModal(String stuNo) {
+	public List<Map<String, Object>> getProbStuModal(String stuNo) {
 		return sqlSession.selectList("schoolMapper.getProbStuModal", stuNo);
+	}
+	//수업메뉴 -> 학사징계관리 -> 징계데이터조회
+	@Override
+	public List<ProbationVO> getProbReasonListModal(String stuNo) {
+		return sqlSession.selectList("schoolMapper.getProbReasonListModal", stuNo);
 	}
 	//수업메뉴 -> 학사징계관리 -> 징계카운터조회
 	@Override
 	public int getStuProbCnt(String stuNo) {
 		return sqlSession.selectOne("schoolMapper.getStuProbCnt", stuNo);
 	}
-	
-	
-	
+	//수업메뉴 -> 학사징계관리 -> 제적처리
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void updateStuProbAjax(String stuNo) {
+		sqlSession.update("schoolMapper.updateStuProbAjax", stuNo);
+		sqlSession.update("schoolMapper.updateStuInfoProbAjax", stuNo);
+	}
 	
 	
 // -------회원메뉴 ------------------------------------------------------
@@ -423,6 +433,10 @@ public class SchoolServiceImpl implements SchoolService{
 	public int getStatusCntForDeptManage(SearchVO searchVO) {
 		return sqlSession.selectOne("schoolMapper.getStatusCntForDeptManage", searchVO);
 	}
+
+
+
+	
 
 
 

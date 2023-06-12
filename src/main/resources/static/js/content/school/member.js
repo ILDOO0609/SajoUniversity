@@ -152,7 +152,7 @@ function approveO(isConfirmed){
 			pagingTag.replaceChildren();
 			
 			
-			str += `<div class="row justify-content-center">`;
+			str += `<div class='row justify-content-center'>`;
 			str += `<div class="col-3">`;
 			str += `<nav aria-label="Page navigation example">`;
 			str += `<ul class="pagination" >`;

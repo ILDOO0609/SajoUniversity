@@ -1,6 +1,7 @@
 package com.study.test.school.controller;
 
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ import com.study.test.util.DateUtill;
 import com.study.test.util.PageVO;
 
 import jakarta.annotation.Resource;
+import oracle.net.aso.m;
 
 
 @Controller
@@ -523,9 +525,18 @@ public class SchoolController {
 	@PostMapping("/getWarningModalAjax")
 	public Map<String, Object> getProbStuModal(String stuNo){
 		Map<String, Object> map = new HashMap<>();
+		List<Map<String, Object>>mapList = schoolService.getProbStuModal(stuNo);
+		
+		map.put("stuList", mapList);
 		map.put("probCnt", schoolService.getStuProbCnt(stuNo));
-		map.put("stuList", schoolService.getProbStuModal(stuNo));
+		System.out.println("@#@#@#@#@#@#@#@#"+map);
 		return map;
+	}
+	//수업메뉴 -> 학사징계관리 -> 제적처리
+	@ResponseBody
+	@PostMapping("/updateStuProbAjax")
+	public void updateStuProbAjsax(String stuNo) {
+		schoolService.updateStuProbAjax(stuNo);
 	}
 	
 	

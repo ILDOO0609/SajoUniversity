@@ -1,6 +1,7 @@
 package com.study.test.school.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.study.test.colleage.vo.DeptVO;
 import com.study.test.colleage.vo.SemesterVO;
@@ -145,9 +146,13 @@ public interface SchoolService {
 	//수업메뉴 -> 학사징계관리 -> 학사경고 인서트
 	void insertProbation(ProbationVO probationVO);
 	//수업메뉴 -> 학사징계관리 -> 학생상세모달
-	List<StuVO> getProbStuModal(String stuNo);
+	List<Map<String, Object>> getProbStuModal(String stuNo);
+	//수업메뉴 -> 학사징계관리 -> 징계데이터조회
+	List<ProbationVO> getProbReasonListModal(String stuNo);
 	//수업메뉴 -> 학사징계관리 -> 징계카운터조회
 	int getStuProbCnt(String stuNo);
+	//수업메뉴 -> 학사징계관리 -> 제적처리
+	void updateStuProbAjax(String stuNo);
 	
 	
 // -------회원메뉴 회원조회------------------------------------------------------

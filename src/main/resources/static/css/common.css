@@ -113,3 +113,53 @@ a {
 .graySeat {
 	background-color: gray;
 }
+
+.scrollable-tobdy {
+	max-height: 400px; /* 스크롤을 추가할 최대 높이 설정 */
+	overflow-y: scroll; /* 세로 스크롤 추가 */
+}
+
+.thead-fixed {
+	position: sticky;
+	top: 0;
+	background-color: #fff;
+}
+
+.custom-scrollbar {
+  max-height: 550px;
+  overflow-y: scroll;
+  scrollbar-width: thin; /* 스크롤바의 너비를 조정합니다. thin, auto, 등을 사용할 수 있습니다. */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px; /* 웹킷 브라우저에서 스크롤바의 너비를 조정합니다. */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888; /* 스크롤바의 색상을 지정합니다. */
+  border-radius: 3px; /* 스크롤바의 모서리를 둥글게 만듭니다. */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* 스크롤바의 트랙(바깥 부분) 색상을 지정합니다. */
+}
+
+.title1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.title1::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background-color: #333;
+}

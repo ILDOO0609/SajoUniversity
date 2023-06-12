@@ -12,6 +12,7 @@ import com.study.test.colleage.vo.DeptVO;
 import com.study.test.emp.vo.EnrollmentVO;
 import com.study.test.emp.vo.LectureVO;
 import com.study.test.stu.vo.DeptManageVO;
+import com.study.test.stu.vo.EnrollSearchListVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 
@@ -36,8 +37,8 @@ public class StuServiceImpl implements StuService{
 	}
 
 	@Override
-	public List<LectureVO> getLectureForStu(LectureVO lectureVO) {
-		return sqlSession.selectList("empMapper.getLectureForStu", lectureVO);
+	public List<LectureVO> getLectureForStu(EnrollSearchListVO enrollSearchListVO) {
+		return sqlSession.selectList("empMapper.getLectureForStu", enrollSearchListVO);
 	}
 
 	@Override
@@ -142,6 +143,11 @@ public class StuServiceImpl implements StuService{
 	@Override
 	public List<LectureVO> getSumScoreForStu(String stuNo) {
 		return sqlSession.selectList("empMapper.getSumScoreForStu", stuNo);
+	}
+
+	@Override
+	public int getLecListCntForEnroll(EnrollSearchListVO enrollSearchListVO) {
+		return sqlSession.selectOne("empMapper.getLecListCntForEnroll", enrollSearchListVO);
 	}
 	
 	

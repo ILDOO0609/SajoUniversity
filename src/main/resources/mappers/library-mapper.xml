@@ -58,6 +58,14 @@ DELETE LIBRARY
 WHERE MEM_NO = #{memNo}
 </delete>
 
+<select id="getEndTime" resultMap="library">
+SELECT LIB_NO
+	, MEM_NO
+	, START_TIME
+	, END_TIME
+FROM LIBRARY
+</select>
+
 </mapper>
 
 

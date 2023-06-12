@@ -11,59 +11,78 @@
 
 <th:block layout:fragment="content">
 <div class="container">
-수강 신청 현황
+	<div class="row">
+		<div class="col">
+			<h1 class="title1">수강 신청 현황</h1>
+		</div>
+	</div>
 <div class="row">
 	<div class="col">
-		<table class="table text-center table-striped">
-			<colgroup>
-				<col width="5%">
-				<col width="10%">
-				<col width="5%">
-				<col width="10%">
-				<col width="10%">
-				<col width="10%">
-				<col width="15%">
-				<col width="7%">
-				<col width="7%">
-				<col width="10%">
-				<col width="*">
-			</colgroup>
-			<thead>
-				<tr>
-					<td>No.</td>
-					<td>강의명</td>
-					<td>학점</td>
-					<td>단과대학</td>
-					<td>학과</td>
-					<td>교수</td>
-					<td>강의요일/시간</td>
-					<td>신청인원</td>
-					<td>최대인원</td>
-					<td>학년/학기</td>
-					<td>취소</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="enr, state : ${enrList}" class="align-middle">
-					<td>[[${state.count}]]</td>
-					<td>[[${enr.lecName}]]</td>
-					<td>[[${enr.lecScore}]]</td>
-					<td>[[${enr.colleageVO.collName}]]</td>
-					<td>[[${enr.deptVO.deptName}]]</td>
-					<td>[[${enr.memberVO.memName}]]</td>
-					<td>[[${enr.lectureTimeList[0].lecDay}]]/[[${enr.lectureTimeList[0].firstTime}]]~[[${enr.lectureTimeList[0].lastTime}]]</td>
-					<td>[[${enr.nowNum}]]</td>
-					<td>[[${enr.maxNum}]]</td>
-					<td>[[${enr.semesterVO.semYear}]]/[[${enr.semesterVO.semester}]]학기</td>
-					<td>
-					<form id="deleteEnr[[${state.count}]]" th:action="@{/stu/stuSemEnrollNowForDelete}" method="post">
-						<input type="hidden" name="lecNo" th:value="${enr.lecNo}">
-						<input class="btn btn-danger" type="button" value="취소" th:onclick="deleteEnr(this);">
-					</form>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+			<table class="table text-center table-striped">
+				<colgroup>
+					<col width="5%">
+					<col width="10%">
+					<col width="5%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="15%">
+					<col width="7%">
+					<col width="7%">
+					<col width="10%">
+					<col width="*">
+				</colgroup>
+					<tr>
+						<td>No.</td>
+						<td>강의명</td>
+						<td>학점</td>
+						<td>단과대학</td>
+						<td>학과</td>
+						<td>교수</td>
+						<td>강의요일/시간</td>
+						<td>신청인원</td>
+						<td>최대인원</td>
+						<td>학년/학기</td>
+						<td>취소</td>
+					</tr>
+			</table>
+		<div class="scrollable-tobdy custom-scrollbar">
+			<table class="table text-center table-striped">
+				<colgroup>
+						<col width="5%">
+						<col width="10%">
+						<col width="5%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="15%">
+						<col width="7%">
+						<col width="7%">
+						<col width="10%">
+						<col width="*">
+				</colgroup>
+				<tbody>
+					<tr th:each="enr, state : ${enrList}" class="align-middle">
+						<td>[[${state.count}]]</td>
+						<td>[[${enr.lecName}]]</td>
+						<td>[[${enr.lecScore}]]</td>
+						<td>[[${enr.colleageVO.collName}]]</td>
+						<td>[[${enr.deptVO.deptName}]]</td>
+						<td>[[${enr.memberVO.memName}]]</td>
+						<td>[[${enr.lectureTimeList[0].lecDay}]]/[[${enr.lectureTimeList[0].firstTime}]]~[[${enr.lectureTimeList[0].lastTime}]]</td>
+						<td>[[${enr.nowNum}]]</td>
+						<td>[[${enr.maxNum}]]</td>
+						<td>[[${enr.semesterVO.semYear}]]/[[${enr.semesterVO.semester}]]학기</td>
+						<td>
+						<form id="deleteEnr[[${state.count}]]" th:action="@{/stu/stuSemEnrollNowForDelete}" method="post">
+							<input type="hidden" name="lecNo" th:value="${enr.lecNo}">
+							<input class="btn btn-danger" type="button" value="취소" th:onclick="deleteEnr(this);">
+						</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 </div>

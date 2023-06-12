@@ -166,3 +166,12 @@ function checkEnrollment(lecNo, semNo){
 		});
 	
 }
+
+
+
+
+
+
+
+
+

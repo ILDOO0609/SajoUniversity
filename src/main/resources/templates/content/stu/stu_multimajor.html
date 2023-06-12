@@ -11,7 +11,11 @@
 
 <th:block layout:fragment="content">
 <div class="container">
-복수전공신청
+	<div class="row">
+		<div class="col">
+			<h1 class="title1">복수 전공 신청</h1>
+		</div>
+	</div>
 <form id="formTag" action="/stu/confirmMulti" method="post">
 <input type="hidden" name="stuYear" th:value="${stuInfo.stuYear}">
 <input type="hidden" name="stuSem" th:value="${stuInfo.stuSem}">

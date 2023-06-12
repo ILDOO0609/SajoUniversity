@@ -59,14 +59,15 @@ function searchLecture(){
 				searchDiv.replaceChildren();
 								
 				let str = '';
-				
+					
+					str += `<div class="scrollable-tobdy custom-scrollbar">`;
 					str += `<table class="table text-center table-striped">`;
 					str += `<colgroup>`;
 					str += `<col width="5%">`;
 					str += `<col width="10%">`;
 					str += `<col width="5%">`;
-					str += `<col width="10%">`;
-					str += `<col width="10%">`;
+					str += `<col width="13%">`;
+					str += `<col width="13%">`;
 					str += `<col width="10%">`;
 					str += `<col width="15%">`;
 					str += `<col width="10%">`;
@@ -89,6 +90,7 @@ function searchLecture(){
 						str += `</tr>`;
 					}
 					str += `</table>`;
+					str += `</div>`;
 					searchDiv.insertAdjacentHTML('afterbegin', str);
 				
 			},

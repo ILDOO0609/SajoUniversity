@@ -156,16 +156,9 @@ function checkDoubleModal(applyNo){
 				str += `<tr>`;
 				str += `<td style="text-align: center;">단과대학</td>`;
 				str += `<td>${status.stuVO.colleageVO.collName}</td>`;
-				str += `<td style="text-align: right;">학점</td>`;
+				str += `<td style="text-align: right;">전공학과</td>`;
 				str += `<td></td>`;
-				str += `<td>???점</td>`;
-				str += `</tr>`;
-				str += `<tr>`;
-				str += `<td style="text-align: center;">전공학과</td>`;
 				str += `<td>${status.stuVO.deptVO.deptName}</td>`;
-				str += `<td style="text-align: right;">학사경고</td>`;
-				str += `<td></td>`;
-				str += `<td>???회</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td colspan="5">복수전공/과 사유</td>`;
@@ -219,14 +212,14 @@ function searchProbList(){
 			}
 			else{
 				for(const stu of result){
-					str += `<tr>`;
+					str += `<tr style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">`;
 					str += `<td><input type="checkbox" class="form-check-input chk" id="stuNo" value="${stu.stuNo}"></td>`;
-					str += `<td style="cursor: pointer;" id="memNo" value="${stu.memNo}" onclick="openWarningModal('${stu.stuNo}');">${stu.memNo}</td>`;
+					str += `<td id="memNo" value="${stu.memNo}">${stu.memNo}</td>`;
 					str += `<td>${stu.memberVO.memName}</td>`;
 					str += `<td>${stu.stuYear}</td>`;
 					str += `<td>${stu.stuSem}학기</td>`;
-					str += `<td colspan="2">${stu.deptVO.deptName}</td>`;
 					str += `<td>${stu.colleageVO.collName}</td>`;
+					str += `<td colspan="2" style="text-align: center;">${stu.deptVO.deptName}</td>`;
 					str += `</tr>`;
 				}
 			}
@@ -320,7 +313,6 @@ function openWarningModal(stuNo){
 			str += `<col width="25%">`;
 			str += `</colgroup>`;
 			
-			
 			str += `<tr>`;
 			str += `<td colspan="5">학생 기본정보</td>`;
 			str += `</tr>`;
@@ -361,28 +353,28 @@ function openWarningModal(stuNo){
 			str += `<tr>`;
 			str += `<td style="text-align: center;">학년</td>`;
 			str += `<td>${stuList[0]['STU_YEAR'] + ' '+ stuList[0]['STU_SEM']}학기</td>`;
-			str += `<td style="text-align: right;">재적상태</td>`;
+			str += `<td style="text-align: right;">학적상태</td>`;
 			str += `<td></td>`;
 			str += `<td>${stuList[0]['STU_STATUS']}</td>`;
 			str += `</tr>`;
 			str += `<tr>`;
 			str += `<td style="text-align: center;">단과대학</td>`;
 			str += `<td>${stuList[0]['COLL_NAME']}</td>`;
-			str += `<td style="text-align: right;">학점</td>`;
+			str += `<td style="text-align: right;">전공학과</td>`;
 			str += `<td></td>`;
-			str += `<td>???점</td>`;
-			str += `</tr>`;
-			str += `<tr>`;
-			str += `<td style="text-align: center;">전공학과</td>`;
 			str += `<td>${stuList[0]['DEPT_NAME']}</td>`;
-			str += `<td style="text-align: right;">학사경고</td>`;
+			str += `</tr>`;
+			str += `<tr style="vertical-align: middle;">`;
+			str += `<td style="text-align: center;">학사경고</td>`;
 			if(probCnt == 3){
-				str += `<td style="text-align: center;">${probCnt}회</td>`;
-				str += `<td style="vertical-align: middle;"><button class="btn btn-danger" id="probAppro" value="${stuList[0]['STU_NO']}" onclick="probAppro('${stuList[0]['STU_NO']}');">제적처리</button></td>`;
+				str += `<td>${probCnt}회</td>`;
+				str += `<td></td>`;
+				str += `<td colspan="2" style="text-align: center;"><button class="btn btn-danger" id="probAppro" value="${stuList[0]['STU_NO']}" onclick="probAppro('${stuList[0]['STU_NO']}');">제적처리</button></td>`;
 			}
 			else{
-				str += `<td></td>`;
 				str += `<td>${probCnt}회</td>`;
+				str += `<td></td>`;
+				str += `<td colspan="3"></td>`;
 			}
 			str += `</tr>`;
 			str += `<tr>`;
@@ -392,7 +384,7 @@ function openWarningModal(stuNo){
 			for(const status of stuList){
 				str += `<tr>`;
 				str += `<td style="text-align: center;">${status['PROB_DATE']}</td>`;
-				str += `<td>${status['SEM_NO']}</td>`;
+				str += `<td>${status['SEM_YEAR']+status['SEMESTER']+'학기'}</td>`;
 				str += `<td colspan="3" style="text-align: center;">${status['PROB_STATUS_NAME']}</td>`;
 				str += `</tr>`;
 			

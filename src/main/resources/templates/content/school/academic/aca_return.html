@@ -19,49 +19,49 @@
 			<div class="col">
 				<form id="searchFormForReturn" th:achtion="@{/school/acaReturn}" method="post"> 
 				<input type="hidden" name="nowPage" th:value="${searchVO.nowPage}" id="nowPageForReturn">
-				<table class="table align-middle">
-					<colgroup>
-						<col width="10%">								
-						<col width="*">								
-						<col width="15%">								
-					</colgroup>
-					<tr>
-						<td class="text-center">신청일</td>
-						<td colspan="2">
-							<div class="row">
-								<div class="col-3">
-									<div class="input-group">
-										<span class="input-group-text">from</span>
-										<input type="date" class="form-control" name="searchFromDate" th:value="${searchVO.searchFromDate}">
+					<table class="table align-middle">
+						<colgroup>
+							<col width="10%">								
+							<col width="*">								
+							<col width="15%">								
+						</colgroup>
+						<tr>
+							<td class="text-center">신청일</td>
+							<td colspan="2">
+								<div class="row">
+									<div class="col-3">
+										<div class="input-group">
+											<span class="input-group-text">from</span>
+											<input type="date" class="form-control" name="searchFromDate" th:value="${searchVO.searchFromDate}">
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="input-group">
+											<span class="input-group-text">to</span>
+											<input type="date" class="form-control" name="searchToDate" th:value="${searchVO.searchToDate}">
+										</div>
+									</div>
+									<div class="col-2">
+										<select class="form-select" name="searchKeyword">
+											<option value="MEM_NAME" th:selected="${searchVO.searchKeyword == 'MEM_NAME'}">학생이름</option>
+											<option value="MB.MEM_NO" th:selected="${searchVO.searchKeyword == 'MB.MEM_NO'}">학생학번</option>
+											<option value="DEPT_NAME" th:selected="${searchVO.searchKeyword == 'DEPT_NAME'}">소속학과</option>
+										</select>												
+									</div>
+									<div class="col-2">
+										<input type="text" class="form-control" name="searchValue" th:value="${searchVO.searchValue}">
+									</div>
+									<div class="col-2">
+										<div class="col d-grid">
+											<input type="submit" class="btn btn-primary" value="Search">
+										</div>
 									</div>
 								</div>
-								<div class="col-3">
-									<div class="input-group">
-										<span class="input-group-text">to</span>
-										<input type="date" class="form-control" name="searchToDate" th:value="${searchVO.searchToDate}">
-									</div>
-								</div>
-								<div class="col-2">
-									<select class="form-select" name="searchKeyword">
-										<option value="MEM_NAME" th:selected="${searchVO.searchKeyword == 'MEM_NAME'}">학생이름</option>
-										<option value="MB.MEM_NO" th:selected="${searchVO.searchKeyword == 'MB.MEM_NO'}">학생학번</option>
-										<option value="DEPT_NAME" th:selected="${searchVO.searchKeyword == 'DEPT_NAME'}">소속학과</option>
-									</select>												
-								</div>
-								<div class="col-2">
-									<input type="text" class="form-control" name="searchValue" th:value="${searchVO.searchValue}">
-								</div>
-								<div class="col-2">
-									<div class="col d-grid">
-										<input type="submit" class="btn btn-primary" value="Search">
-									</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-				</table>
+							</td>
+						</tr>
+					</table>
 				</form>
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<table class="table table-hover text-center">
 							<colgroup>
@@ -146,7 +146,7 @@
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="row mb-5">
 					<div class="col-12 my-scroll" style="padding-right: 0px;">
 						<table class="table table-hover text-center">
 							<colgroup>
@@ -198,7 +198,7 @@
 				</div>
 			
 
-				<div class="row">
+				<div class="row mb-5">
 					<div class="col-12 my-scroll" style="padding-right: 0px;">
 						<table class="table table-hover text-center">
 							<colgroup>

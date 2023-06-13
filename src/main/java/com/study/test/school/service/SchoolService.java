@@ -82,6 +82,8 @@ public interface SchoolService {
 
 	//교수 조회 -> 클릭시 모달창
 	List<LectureVO> checkProModal(String empNo);
+	//교직원 조회 -> 클릭시 모달창
+	List<MemberVO> checkStfModal(String memNo);
 	
 // -------학적변동------------------------------------------------------	
 	

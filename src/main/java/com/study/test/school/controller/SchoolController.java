@@ -304,13 +304,18 @@ public class SchoolController {
 		System.out.println("@#@#@#@@@@@@@@@@@@@@#@#@##" + memberVO);
 		return schoolService.searchStfListAjax(memberVO);
 	}
-	//학사조회 -> 교수&교직원 조회 -> 교수/교직원 모달
+	//학사조회 -> 교수&교직원 조회 -> 교수 모달
 	@ResponseBody
 	@PostMapping("/getProModalAjax")
 	public List<LectureVO> checkProModal(String empNo){
 		return schoolService.checkProModal(empNo);
 	}
-	
+	//학사조회 -> 교수&교직원 조회 -> 교수 모달
+	@ResponseBody
+	@PostMapping("/getStfModalAjax")
+	public List<MemberVO> checkStfModal(String memNo){
+		return schoolService.checkStfModal(memNo);
+	}
 	
 //-------------------------------학적변동--------------------------------------------
 		

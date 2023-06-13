@@ -73,7 +73,7 @@ function searchStuList(){
 			}
 			else{
 				for(const stu of result){
-					str += `<tr>`;
+					str += `<tr style="cursor: pointer;" onclick="openStuModal('${stu.stuNo}');">`;
 					str += `<td>${stu.memNo}</td>`;
 					str += `<td>${stu.colleageVO.collName}</td>`;
 					str += `<td>${stu.memberVO.memName}</td>`;
@@ -169,14 +169,14 @@ function openStuModal(stuNo){
 				str += `<tr>`;
 				str += `<td style="text-align: center;">학년</td>`;
 				str += `<td>${stu.stuYear + ' '+ stu.stuSem}학기</td>`;
-				str += `<td style="text-align: right;">재적상태</td>`;
+				str += `<td style="text-align: right;">학적상태</td>`;
 				str += `<td></td>`;
 				str += `<td>${stu.stuStatus}</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td style="text-align: center;">단과대학</td>`;
 				str += `<td>${stu.colleageVO.collName}</td>`;
-				str += `<td style="text-align: right;">학점</td>`;
+				str += `<td style="text-align: right;">취득학점</td>`;
 				str += `<td></td>`;
 				str += `<td>--점</td>`;
 				str += `</tr>`;
@@ -404,7 +404,7 @@ function searchStfList(){
 				}
 				else{
 					for(const stf of result){
-						str += `<tr>`;
+						str += `<tr style="cursor: pointer;" onclick="openStfModal('${stf.memNo}');">`;
 						str += `<td>${stf.memNo}</td>`;
 						str += `<td>${stf.memRole}</td>`;
 						str += `<td>${stf.memName}</td>`;
@@ -521,7 +521,87 @@ function openProModal(empNo){
 	
 }
 
+function openStfModal(memNo){
 
+//ajax start
+	$.ajax({
+		url: '/school/getStfModalAjax', //요청경로
+		type: 'post',
+		async: true,
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'memNo':memNo}, //필요한 데이터
+		success: function(result) {
+			console.log(result);
+			
+			const content_div = document.querySelector('#memberModal .modal-body');
+			content_div.replaceChildren();	
+			let str = '';
+			
+			str += `<div class="row">`;
+			str += `<div class="col">`;
+			str += `<table class="table">`;
+			str += `<colgroup>`;
+			str += `<col width="*%">`;
+			str += `<col width="15%">`;
+			str += `<col width="15%">`;
+			str += `<col width="15%">`;
+			str += `<col width="25%">`;
+			str += `</colgroup>`;
+			
+			for(const stf of result){
+				str += `<tr>`;
+				str += `<td colspan="5">교수/교직원 기본정보</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td rowspan="7"><img src="'/upload/${stf.memImage}" style="width: 100%; height: 100%"></td>`;
+				str += `<td>No(ID)</td>`;
+				str += `<td colspan="3">${stf.memNo}</td>`;
+				str += `<tr>`;
+				str += `<td>교수/교직원명</td>	`;
+				str += `<td colspan="3">${stf.memName}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>생년월일</td>`;
+				str += `<td>${stf.memBirthday}</td>`
+				str += `<td style="text-align: center;">성별</td>`;
+				str += `<td>${stf.memGender}</td>`
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>신규가입일</td>`;
+				str += `<td colspan="3">${stf.regDate}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>이메일</td>`;
+				str += `<td colspan="3">${stf.memEmail}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>전화번호</td>`;
+				str += `<td colspan="3">${stf.memTell}</td>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				str += `<td>주소</td>`;
+				str += `<td colspan="3">${stf.memAddr  + ' ' +  stf.memAddrDetail}</td>`;
+				str += `</tr>`;
+				str += `</tr>`;
+				str += `<tr>`;
+				
+			}
+			
+			content_div.insertAdjacentHTML('afterbegin', str);
+			
+			const modal = new bootstrap.Modal('#memberModal');
+			modal.show();
+			
+		
+		},
+		error: function() {
+			alert('실패');
+		}
+	});
+	//ajax end
+		
+	
+}
 
 
 

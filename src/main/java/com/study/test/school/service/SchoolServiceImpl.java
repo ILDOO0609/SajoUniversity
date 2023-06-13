@@ -162,7 +162,11 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<LectureVO> checkProModal(String empNo) {
 		return sqlSession.selectList("schoolMapper.checkProModal", empNo);
 	}
-	
+	//교직원 조회 -> 클릭시 모달창
+	@Override
+	public List<MemberVO> checkStfModal(String memNo) {
+		return sqlSession.selectList("schoolMapper.checkStfModal", memNo);
+	}
 	
 	
 	
@@ -433,6 +437,8 @@ public class SchoolServiceImpl implements SchoolService{
 	public int getStatusCntForDeptManage(SearchVO searchVO) {
 		return sqlSession.selectOne("schoolMapper.getStatusCntForDeptManage", searchVO);
 	}
+
+	
 
 
 

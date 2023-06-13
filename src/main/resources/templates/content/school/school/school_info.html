@@ -95,29 +95,31 @@
 		 		</table>
 		 	</div>
 		 </div>
-		
-	 	<div class="row justify-content-center">
-			<div class="col-3">
-				<nav aria-label="Page navigation example">
-				  <ul class="pagination" >
-				    <li class="page-item">
-				      <a class="page-link" href="javascript:void(0);" th:href="@{/school/info(nowPage=${schoolInfoVO.beginPage-1})}" aria-label="Previous">
-				        <span aria-hidden="true">&laquo;</span>
-				      </a>
-				    </li>
-				<th:block th:each="pageNum : ${#numbers.sequence(schoolInfoVO.beginPage, schoolInfoVO.endPage)}">
-				    <li class="page-item"><a class="page-link" th:href="@{/school/info(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
-				</th:block>
-				  
-				    <li class="page-item">
-				      <a class="page-link" href="javascript:void(0);" th:href="@{/school/info(nowPage=${schoolInfoVO.endPage+1})}" aria-label="Next">
-				        <span aria-hidden="true">&raquo;</span>
-				      </a>
-				    </li>
-				  </ul>
-				</nav>
-			</div>
-		</div> 
+		 
+ 		<div id="paging">
+			<div class="row justify-content-center">
+				<div class="col-3">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination" >
+							<li class="page-item" th:classappend="${schoolInfoVO.prev ? '' : 'disabled'}">
+								<a class="page-link" href="javascript:void(0);" th:href="@{/school/info(nowPage=${schoolInfoVO.beginPage-1})}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<th:block th:each="pageNum : ${#numbers.sequence(schoolInfoVO.beginPage, schoolInfoVO.endPage)}">
+								<li class="page-item"><a th:classappend="${schoolInfoVO.nowPage == pageNum ? 'active' : ''}" class="page-link" th:href="@{/school/info(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
+							</th:block>
+							<li class="page-item" th:classappend="${schoolInfoVO.next ? '' : 'disabled'}">
+								<a class="page-link" href="javascript:void(0);" th:href="@{/school/info(nowPage=${schoolInfoVO.endPage+1})}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div> 
+		</div>	
+		 
 		 
 		<div sec:authorize="isAuthenticated()">
 			<div th:if="${#authorization.expression('hasRole(''ROLE_stf'')')}">

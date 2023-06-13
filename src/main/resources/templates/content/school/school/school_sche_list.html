@@ -20,7 +20,7 @@
 				<div id='calendar-container'>
 	    			<div id='calendar'></div>
 	 			</div>
-	 			<button  class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#insertCalendar" style="cursor: pointer;">일정추가</button>
+	 			<button  class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#insertCalendar" style="cursor: pointer;">일정추가</button>
 				<div id="calendarBox">
 			        <div id="calendar"></div>
 			    </div>
@@ -78,7 +78,7 @@
 													<tr>
 														<td><h5>일정내용</h5></td>
 														<td style="text-align: right;">
-															<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateCalendarForUp" style="cursor: pointer;"
+															<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateCalendarForUp" style="cursor: pointer;"
 																th:value="${calendar.calNo}" onclick="openUpdateModal(this, value)">일정수정 
 															</button>
 															<button class="btn btn-danger" type="button" style="cursor: pointer;"

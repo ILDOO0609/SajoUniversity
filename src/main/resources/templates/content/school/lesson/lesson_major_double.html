@@ -66,7 +66,7 @@
 				</form>	
 			
 		
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<table class="table table-hover text-center">
 							<colgroup>
@@ -103,20 +103,29 @@
 				 					</tr>
 				 				</th:block>
 								<th:block th:unless="${#lists.size(majorList) == 0}">
-									<tr th:each="major : ${majorList}" style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">
+									<tr th:each="major : ${majorList}">
 										<td><input type="checkbox" class="form-check-input chk" th:value="${major.applyNo}"></td>
-										<td>[[${major.applyNo}]]</td>
-										<td>[[${major.stuVO.memberVO.memNo}]]</td>
-										<td>[[${major.stuVO.stuYear}]]</td>
-										<td>[[${major.stuVO.memberVO.memName}]]</td>
-										<td>[[${major.colleageVO.collName}]]</td>
-										<td>[[${major.deptVO.deptName}]]</td>
-										<td>[[${major.applyDate}]]</td>
-										<td>[[${major.processStatus}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">[[${major.applyNo}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">[[${major.stuVO.memberVO.memNo}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">[[${major.stuVO.stuYear}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">[[${major.stuVO.memberVO.memName}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">[[${major.colleageVO.collName}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">[[${major.deptVO.deptName}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">[[${major.applyDate}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkDoubleModal([[${major.applyNo}]]);">[[${major.processStatus}]]</td>
 									</tr>
 								</th:block>	
 							</tbody>
 						</table>
+						<div class="row" style="padding-right: 12px;">
+							<div class="col-1 offset-10 d-grid">
+								<input type="button" class="btn btn-primary" th:onclick="updateDoubleApp();" value="승인완료">
+							</div>
+							<div class="col-1 d-grid">
+								<input type="button" class="btn btn-danger" th:onclick="updateDoubleDenied();" value="승인취소">
+							</div>
+						</div>
+						
 						<div class="row justify-content-center">
 							<div class="col-2">
 								<nav aria-label="Page navigation example">
@@ -140,20 +149,12 @@
 								</nav>
 							</div>
 						</div>
-						<div class="row" style="padding-right: 12px;">
-							<div class="col-1 offset-10 d-grid">
-								<input type="button" class="btn btn-primary" th:onclick="updateDoubleApp();" value="승인완료">
-							</div>
-							<div class="col-1 d-grid">
-								<input type="button" class="btn btn-danger" th:onclick="updateDoubleDenied();" value="승인취소">
-							</div>
-						</div>
 					</div>
 				</div>
 			
 			
 			
-				<div class="row">
+				<div class="row mb-5">
 					<div class="col-12 my-scroll" style="padding-right: 0px;">
 						<table class="table table-hover text-center">
 							<colgroup>
@@ -203,7 +204,8 @@
 						</table>
 					</div>
 				</div>
-				<div class="row">
+				
+				<div class="row mb-5">
 					<div class="col-12 my-scroll" style="padding-right: 0px;">
 						<table class="table table-hover text-center">
 							<colgroup>

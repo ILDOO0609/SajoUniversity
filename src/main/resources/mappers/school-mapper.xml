@@ -250,7 +250,7 @@
 		</if>
 	</select>
 	
-	<!-- 학사조회 -> 교수/교직원 -> 상세모달창 -->
+	<!-- 학사조회 -> 교수 -> 상세모달창 -->
 	<select id="checkProModal" resultMap="empMapper.lecture">
 		SELECT EMP_NO
 		    , EMP.MEM_NO
@@ -276,7 +276,23 @@
 		AND EMP_NO = #{empNo}
 	</select>
 	
-	
+	<!-- 학사조회 -> 교직원 -> 상세모달창 -->
+	<select id="checkStfModal" resultMap="memberMapper.member">
+		SELECT MEM_NO
+		    , MEM_NAME
+		    , DECODE(MEM_GENDER, 'M', '남', 'F', '여') MEM_GENDER
+		    , MEM_TELL
+		    , MEM_ADDR
+		    , MEM_ADDR_DETAIL
+		    , TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
+		    , MEM_EMAIL
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+		    , MEM_IMAGE
+		    , DECODE(MEM_ROLE, 'stf', '교직원', 'pro', '교수') 
+		FROM MEMBER MEM
+		WHERE MEM_NO = #{memNo}
+		AND MEM_ROLE != 'stu'
+	</select>
 	
 	
 	<!-- 휴학관리 전체 조회-->
@@ -846,11 +862,14 @@
 		    , NVL(PROB.PROB_NO, '미등록') AS PROB_NO
 		    , NVL(TO_CHAR(PROB_DATE, 'YYYY-MM-DD'), '9999-12-31') AS PROB_DATE
 		    , NVL(PROB.SEM_NO, '미등록') AS SEM_NO
+		    , NVL(SEM_YEAR, '0학년') AS SEM_YEAR
+   			, NVL(SEMESTER, 0) AS SEMESTER
 		    , NVL(PROB.PROB_STATUS_CODE, '미등록') AS PROB_STATUS_CODE
-		    , NVL(PS.PROB_STATUS_NAME, '미등록') AS PROB_STATUS_NAME
+		    , NVL(PS.PROB_STATUS_NAME, '정보없음') AS PROB_STATUS_NAME
 		FROM STU ST
 		LEFT OUTER JOIN PROBATION PROB ON ST.STU_NO = PROB.STU_NO
 		LEFT OUTER JOIN PROBATION_STATUS PS ON PROB.PROB_STATUS_CODE = PS.PROB_STATUS_CODE
+		LEFT OUTER JOIN SEMESTER SEM ON PROB.SEM_NO = SEM.SEM_NO
 		, COLLEAGE COLL
 		, DEPT DP
 		, MEMBER MEM

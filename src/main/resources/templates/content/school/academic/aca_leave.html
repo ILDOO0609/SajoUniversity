@@ -62,7 +62,7 @@
 					</table>
 				</form>	
 			
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col">
 						<table class="table table-hover text-center">
 							<colgroup>
@@ -117,6 +117,8 @@
 							<div class="col-2">
 								<nav aria-label="Page navigation example">
 								 <ul class="pagination">
+								    <li></li>
+								    
 								    <li class="page-item" th:classappend="${searchVO.prev ? '':'disabled'}">
 								      <a class="page-link" href="javascript:void(0)" th:onclick="leavePaging([[${searchVO.beginPage-1}]])">
 								        &laquo;
@@ -148,7 +150,7 @@
 				</div>
 			
 			
-				<div class="row">
+				<div class="row mb-5">
 					<div class="col-12 my-scroll" style="padding-right: 0px;">
 						<table class="table table-hover text-center">
 							<colgroup>
@@ -200,7 +202,7 @@
 				</div>
 			
 
-				<div class="row">
+				<div class="row mb-5">
 					<div class="col-12 my-scroll" style="padding-right: 0px;">
 						<table class="table table-hover text-center">
 							<colgroup>

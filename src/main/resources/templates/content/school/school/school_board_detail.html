@@ -39,7 +39,7 @@
 				<tbody >
 					<tr>
 						<td colspan="2">
-							<textarea rows="30" cols="100" class="schInfocontent" name="schInfoContent" th:text="${detail.schInfoContent}" readonly="readonly"></textarea>
+							<textarea rows="30" cols="100" class="schInfocontent" name="schInfoContent" th:text="${detail.schInfoContent}" readonly="readonly" ></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -67,17 +67,18 @@
 				</tbody>
 				<tfoot>
 					<tr>
+						<td>
+							<input type="button" class="btn btn-primary" value="목록으로 가기" th:onclick="|location.href='@{/school/info}';|">
+						</td>
 						<td >
-							<div sec:authorize="isAuthenticated()">
+							<div sec:authorize="isAuthenticated()" class="text-end">
 								<div th:if="${detail.schInfoWriter == #authentication.name or #authorization.expression('hasRole(''ROLE_stf'')')}">
 									<input type="button" class="btn btn-primary" value="수정" th:onclick="|location.href='@{/school/schoolBoardUpdateForm(schInfoCode=${detail.schInfoCode})}'|">
 									<input type="button" class="btn btn-danger" value="삭제" th:onclick="deleteInfo([[${detail.schInfoCode}]]);">
 								</div>
 							</div>	
 						</td>
-						<td style="text-align: right;">
-							<input type="button" class="btn btn-primary" value="목록으로 가기" th:onclick="|location.href='@{/school/info}';|">
-						</td>
+						
 					</tr>
 				</tfoot>
 			</th:block>

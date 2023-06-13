@@ -178,7 +178,7 @@ function openStuModal(stuNo){
 				str += `<td>${stu.colleageVO.collName}</td>`;
 				str += `<td style="text-align: right;">취득학점</td>`;
 				str += `<td></td>`;
-				str += `<td>--점</td>`;
+				str += `<td>${stu.sumScore}점</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td style="text-align: center;">전공학과</td>`;

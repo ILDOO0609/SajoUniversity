@@ -271,6 +271,7 @@ public class SchoolController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("probCnt", schoolService.getStuProbCnt(stuNo));
 		map.put("stuList", schoolService.checkStuModal(stuNo));
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + map);
 		return map;
 	}
 	

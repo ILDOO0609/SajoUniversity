@@ -1,5 +1,7 @@
 package com.study.test.school.vo;
 
+import java.util.List;
+
 import com.study.test.util.PageVO;
 
 import lombok.Getter;
@@ -22,5 +24,7 @@ public class SchoolInfoVO extends PageVO{
 	
 	private String schInfoSearch;
 	private int schInfoMonth;
+	
+	private List<SchInfoFileVO> fileList;
 	
 }

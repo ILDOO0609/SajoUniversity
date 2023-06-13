@@ -11,7 +11,7 @@
 				<h1 class="title1">학사안내 글등록</h1>
 			</div>
 		</div>
-		<form id="regSchInfoForm" th:action="@{/school/insertSchoolInfo}" method="post">
+		<form id="regSchInfoForm" th:action="@{/school/insertSchoolInfo}" method="post" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col">
 			 		<table class="table align-middle">
@@ -48,7 +48,13 @@
 			 				<tr>
 			 					<td>첨부파일</td>
 			 					<td>
-			 						<input type="file" class="form-control">
+			 						<input type="file" class="form-control" name="mainFile">
+			 					</td>
+			 				</tr>
+			 				<tr>
+			 					<td>다중첨부</td>
+			 					<td>
+			 						<input type="file" class="form-control" name="subFile" multiple="multiple">
 			 					</td>
 			 				</tr>
 			 			</tbody>

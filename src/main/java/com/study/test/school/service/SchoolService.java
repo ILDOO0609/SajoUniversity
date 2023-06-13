@@ -21,7 +21,8 @@ public interface SchoolService {
 
 	//학사안내 게시글 등록
 	void insertSchoolInfo(SchoolInfoVO schoolInfoVO);
-
+	//학사안내 다음 등록될 글 조회
+	String getNextInfoCode();
 	//학사안내 게시글 목록조회
 	List<SchoolInfoVO> getSchoolInfoList(SchoolInfoVO schoolInfoVO);
 	//학사안내 목록조회 -> 검색

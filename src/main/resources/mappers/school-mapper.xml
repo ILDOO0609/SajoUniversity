@@ -17,6 +17,15 @@
 		<result column="SCH_INFO_Month" 	property="schInfoMonth"/>
 	</resultMap>
 	
+	<resultMap type="com.study.test.school.vo.SchInfoFileVO" id="schInfoFile">
+		<result column="SCH_FILE_CODE" property="schFileCode"/>
+		<result column="SCH_ORIGIN_FILE_NAME" property="schOriginFileName"/>
+		<result column="SCH_ATTACHED_FILE_NAME" property="schAttachedFileName"/>
+		<result column="SCH_IS_MAIN" property="schIsMain"/>
+		<result column="SCH_INFO_CODE" property="schInfoCode"/>
+		<collection property="fileList" resultMap="file"></collection>
+	</resultMap>
+	
 	<resultMap type="com.study.test.school.vo.ProbationVO" id="probation">
 		<id 	column="PROB_NO" property="probNo"/>
 		<result column="PROB_DATE" property="probDate"/>
@@ -46,8 +55,7 @@
 			, SCH_INFO_WRITER
 			, SCH_INFO_NUM
 		) VALUES (
-			(SELECT 'SCH_CODE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(SCH_INFO_CODE, 10))), 0) + 1, 3, '0') 
-         	FROM SCHOOL_INFORMATION)
+			#{schInfoCode}
 			, #{schInfoTitle}
 			, #{schInfoContent}
 			, #{schInfoStartDate}
@@ -57,6 +65,30 @@
          	FROM SCHOOL_INFORMATION)
 		)
 	</insert>
+	<!-- 학사안내 글등록 -> 등록될 코드조회 -->
+	<select id="getNextInfoCode" resultType="String">
+		SELECT 'SCH_CODE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(SCH_INFO_CODE, 10))), 0) + 1, 3, '0') 
+        	FROM SCHOOL_INFORMATION
+	</select>
+	<!-- 학사안내 글등록 -> 파일첨부(등록) -->
+	<insert id="insertInfoFile">
+		INSERT INTO SCHINFO_FILE (
+			SCH_FILE_CODE
+			, SCH_ORIGIN_FILE_NAME
+			, SCH_ATTACHED_FILE_NAME
+			, SCH_IS_MAIN
+			, SCH_INFO_CODE
+		)
+		<foreach collection="fileList" item="file" separator="UNION ALL" index="i">
+			SELECT (SELECT 'SCH_FILE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(SCH_FILE_CODE, 10))), 0) + 1 + #{i}, 3, '0') 
+        			FROM SCHINFO_FILE) 
+				, #{file.schOriginFileName}
+				, #{file.schAttachedFileName}
+				, #{file.schIsMain} 
+				, #{schInfoCode}
+			FROM DUAL
+		</foreach>
+	</insert>	
 	<!-- 학사안내 글 조회 -->
 	<select id="getSchoolInfo" resultMap="school">
 		SELECT SCH_INFO_CODE

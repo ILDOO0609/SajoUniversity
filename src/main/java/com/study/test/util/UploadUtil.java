@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.study.test.board.vo.BoardImgVO;
 import com.study.test.emp.vo.LecturePDFVO;
+import com.study.test.school.vo.SchInfoFileVO;
 
 
 public class UploadUtil {
@@ -65,4 +66,52 @@ public class UploadUtil {
 		}
 		return pdfvo;
 	}
+	
+	
+	//학사안내 글작성 단일 파일 업로드
+	public static SchInfoFileVO uploadSchFile(MultipartFile schFile) {
+		SchInfoFileVO schInfoFileVO = null;
+		System.out.println("@@@@@@@@@@@@@@" + schFile);
+		if(!schFile.isEmpty()) {
+			schInfoFileVO = new SchInfoFileVO();
+			
+			String originFileName = schFile.getOriginalFilename();
+			String uuid = UUID.randomUUID().toString();
+			String extention = originFileName.substring(originFileName.lastIndexOf("."));
+			String attachedFileName = uuid + extention;
+			
+			try {
+				File file = new File(ConstVariable.UPLOAD_PATH + attachedFileName);
+				schFile.transferTo(file);
+				
+				schInfoFileVO.setSchOriginFileName(originFileName);
+				schInfoFileVO.setSchAttachedFileName(attachedFileName);
+				schInfoFileVO.setSchIsMain("Y");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+		}
+		return schInfoFileVO;
+		
+	}
+	
+	//학사안내 글작성 다중파일 업로드
+	public static List<SchInfoFileVO> multiUploadSchFile(MultipartFile[] schFiles) {
+		System.out.println("@#@#@#@#@#" + schFiles.length);
+		
+		List<SchInfoFileVO> result = new ArrayList<>();
+		
+		for(MultipartFile file : schFiles) {
+			SchInfoFileVO vo = uploadSchFile(file);
+			if(vo != null) {
+				vo.setSchIsMain("N");
+				result.add(vo);
+			}
+		}
+		return result;
+	}
+
+	
+	
 }

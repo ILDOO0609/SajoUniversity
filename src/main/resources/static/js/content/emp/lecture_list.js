@@ -214,7 +214,7 @@ function getLectureListForUpdateAjax(updateBtn){
 	        str += `		<form id="updateForm" action="/emp/lecUpdate" method="post">`;
 			str += `		<input type="hidden" value="${result[0].lecNo}" name="lecNo">`;
 			str += `			강의 수정`;
-			str += `			<table border="1" class="table text-center modalTable dayContainer">`;
+			str += `			<table border="1" class="table text-center align-middle modalTable dayContainer">`;
 			str += `			<colgroup>`;
 			str += `				<col width="25%">`;
 			str += `				<col width="25%">`;
@@ -224,7 +224,7 @@ function getLectureListForUpdateAjax(updateBtn){
 			str += `				<tr>`;
 			str += `					<td>교과목명</td>`;
 			str += `					<td colspan="3">`;
-			str += `						<input type="text" name="lecName" id="modalLecName" value="${result[0].lecName}">`;
+			str += `						<input type="text" class="form-control-sm" name="lecName" id="modalLecName" value="${result[0].lecName}">`;
 			str += `					</td>`;
 			str += `				</tr>`;
 			str += `				<tr>`;
@@ -240,7 +240,7 @@ function getLectureListForUpdateAjax(updateBtn){
 			str += `				<tr>`;
 			str += `					<td>강의 학점</td>`;
 			str += `					<td>`;
-			str += `						<select name="lecScore">`;
+			str += `						<select class="form-select-sm" name="lecScore">`;
 			for(let i = 1; i < 6; i++){
 			    if(i == result[0].lecScore){
 	        		str += `<option value=${i} selected>${i}</option>`;
@@ -264,7 +264,7 @@ function getLectureListForUpdateAjax(updateBtn){
 												<input type="hidden" value="${lectureTime.timeNo}" name="timeNo">
 											</td>`;
 				str += `					<td colspan="3">`;
-				str += `						<select name="firstTime" onchange="setLastTime(this);">`;
+				str += `						<select class="form-select-sm" name="firstTime" onchange="setLastTime(this);">`;
 				for(let i= 1; i<9; i++){
 					if(i == lectureTime.firstTime){
 		        		 str += `					<option value=${i} selected>${i}</option>`;
@@ -275,7 +275,7 @@ function getLectureListForUpdateAjax(updateBtn){
 				}
 				str += `						</select>`;
 				str += `						교시~`;
-				str += `						<select name="lastTime">`;
+				str += `						<select class="form-select-sm" name="lastTime">`;
 				for(let i= 1; i<9; i++){
 					if(i == lectureTime.lastTime){
 		        		 str += `					<option value=${i} selected>${i}</option>`;
@@ -286,7 +286,7 @@ function getLectureListForUpdateAjax(updateBtn){
 				}
 				str += `						</select>`;
 				str += `						교시`;
-				str += `						<select name="lecDay">`;
+				str += `						<select class="form-select-sm" name="lecDay">`;
 				for(let i = 1; i < 6; i++){
 					if(days[i] == lectureTime.lecDay){
 				str += `							<option value="${days[i]}" selected>${days[i]}</option>`;

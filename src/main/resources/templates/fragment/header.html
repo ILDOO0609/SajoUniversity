@@ -36,7 +36,7 @@
     <a class="navbar-brand" href="/member/main">Sajo University</a>
     			<span sec:authorize="isAuthenticated()">
     			<span style="color: white; text-align: right">
-					[[${#authentication.name}]]님 반갑습니다.
+					(학생) [[${#authentication.name}]]님 반갑습니다.
 					 <a th:href="@{/member/logout}" class="list-group-item list-group-item-action">LOGOUT</a>
 				</span>
 				</span> 
@@ -97,7 +97,6 @@
               게시판
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="/board/boardCateManage">게시판 카테고리 관리</a></li>
               <li><a class="dropdown-item" href="/board/boardList">게시판 목록</a></li>
               <li><a class="dropdown-item" href="/board/boardWriteForm">게시글 쓰기</a></li>
             </ul>
@@ -141,7 +140,7 @@
     <a class="navbar-brand" href="/member/main">Sajo University</a>
    				<span sec:authorize="isAuthenticated()">
     			<span style="color: white; text-align: right">
-					[[${#authentication.name}]]님 반갑습니다.
+					(교수) [[${#authentication.name}]]님 반갑습니다.
 					 <a th:href="@{/member/logout}" class="list-group-item list-group-item-action">LOGOUT</a>
 				</span>
 				</span>
@@ -175,7 +174,6 @@
               게시판
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="/board/boardCateManage">게시판 카테고리 관리</a></li>
               <li><a class="dropdown-item" href="/board/boardList">게시판 목록</a></li>
               <li><a class="dropdown-item" href="/board/boardWriteForm">게시글 쓰기</a></li>
             </ul>
@@ -222,7 +220,7 @@
     <a class="navbar-brand" href="/member/main">Sajo University</a>
     			<span sec:authorize="isAuthenticated()">
     			<span style="color: white; text-align: right">
-					[[${#authentication.name}]]님 반갑습니다.
+					(교직원) [[${#authentication.name}]]님 반갑습니다.
 					 <a th:href="@{/member/logout}" class="list-group-item list-group-item-action">LOGOUT</a>
 				</span>
 				</span>

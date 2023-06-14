@@ -132,12 +132,12 @@ public class SchoolController {
 	//학사메뉴 -> 학사안내 글 상세페이지
 	@GetMapping("/schoolBoardDetail")
 	public String schoolBoardDetail(String schInfoCode, Model model, SchoolInfoVO schoolInfoVO) {
-		System.out.println("@#@#@#@#@#@#@#@#@#@#@#@#" + schoolInfoVO);
-		
 		//상세조회
 		model.addAttribute("detailList", schoolService.schoolBoardDetail(schInfoCode));
+		model.addAttribute("fileList", schoolService.getFileList(schInfoCode));
 		//조회수
 		schoolService.updateSchoolBoardReadCnt(schInfoCode);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+schoolInfoVO);
 		//이전글다음글
 		String numberStr = schInfoCode.substring(9);
 		int prevNumber = Integer.parseInt(schInfoCode.substring(9)) - 1;

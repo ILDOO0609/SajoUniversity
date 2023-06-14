@@ -16,6 +16,7 @@ import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.ProbationStatusVO;
 import com.study.test.school.vo.ProbationVO;
+import com.study.test.school.vo.SchInfoFileVO;
 import com.study.test.school.vo.SchoolInfoVO;
 import com.study.test.school.vo.SearchVO;
 import com.study.test.stu.vo.DeptManageVO;
@@ -62,12 +63,16 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectList("schoolMapper.schInfoMonthAjax", schInfoMonth);
 	}
 	
-	//학사안내 게시글 -> 상세조회 페이지이동 
+	//학사안내 게시글 -> 상세조회 
 	@Override
 	public SchoolInfoVO schoolBoardDetail(String schInfoCode) {
 		return sqlSession.selectOne("schoolMapper.schoolBoardDetail", schInfoCode);
 	}
-	
+	//학사안내 게시글 -> 파일조회 
+	@Override
+	public List<SchInfoFileVO> getFileList(String schInfoCode) {
+		return sqlSession.selectList("schoolMapper.getFileList", schInfoCode);
+	}
 	//학사안내 게시글 조회수
 	@Override
 	public void updateSchoolBoardReadCnt(String schInfoCode) {
@@ -447,6 +452,7 @@ public class SchoolServiceImpl implements SchoolService{
 	public int getStatusCntForDeptManage(SearchVO searchVO) {
 		return sqlSession.selectOne("schoolMapper.getStatusCntForDeptManage", searchVO);
 	}
+
 
 	
 	

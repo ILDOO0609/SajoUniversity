@@ -23,7 +23,6 @@
 		<result column="SCH_ATTACHED_FILE_NAME" property="schAttachedFileName"/>
 		<result column="SCH_IS_MAIN" property="schIsMain"/>
 		<result column="SCH_INFO_CODE" property="schInfoCode"/>
-		<collection property="fileList" resultMap="file"></collection>
 	</resultMap>
 	
 	<resultMap type="com.study.test.school.vo.ProbationVO" id="probation">
@@ -124,19 +123,24 @@
 	
 	<!-- 학사안내 -> 상세조회 -->
 	<select id="schoolBoardDetail" resultMap="school">
-		SELECT SCH_INFO_CODE
-			, SCH_INFO_TITLE
-			, SCH_INFO_WRITER
-			, TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') SCH_INFO_DATE
-			, TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') SCH_INFO_STARTDATE
-			, TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') SCH_INFO_ENDDATE
-			, SCH_INFO_READ_CNT
-			, SCH_INFO_CONTENT
-			, SCH_INFO_NUM
-		FROM SCHOOL_INFORMATION
-		WHERE SCH_INFO_CODE = #{schInfoCode}
+		SELECT SI.SCH_INFO_CODE
+		    , SCH_INFO_TITLE
+		    , SCH_INFO_WRITER
+		    , TO_CHAR(SCH_INFO_DATE, 'YYYY-MM-DD') SCH_INFO_DATE
+		    , TO_CHAR(SCH_INFO_STARTDATE, 'YYYY-MM-DD') SCH_INFO_STARTDATE
+		    , TO_CHAR(SCH_INFO_ENDDATE, 'YYYY-MM-DD') SCH_INFO_ENDDATE
+		    , SCH_INFO_READ_CNT
+		    , SCH_INFO_CONTENT
+		    , SCH_INFO_NUM
+		    , NVL(SCH_FILE_CODE, '미등록') AS SCH_FILE_CODE
+		    , NVL(SCH_ORIGIN_FILE_NAME, '미등록') AS SCH_ORIGIN_FILE_NAME
+		    , NVL(SCH_ATTACHED_FILE_NAME, '미등록') AS SCH_ATTACHED_FILE_NAME
+		    , NVL(SCH_IS_MAIN, '') AS SCH_IS_MAIN
+		FROM SCHOOL_INFORMATION SI
+		LEFT OUTER JOIN SCHINFO_FILE SF ON SI.SCH_INFO_CODE = SF.SCH_INFO_CODE
+		WHERE SI.SCH_INFO_CODE = #{schInfoCode}
 	</select>
-	
+		
 	<!-- 조회수 증가쿼리 -->
 	<update id="updateSchoolBoardReadCnt">
 		UPDATE SCHOOL_INFORMATION
@@ -144,6 +148,17 @@
 			SCH_INFO_READ_CNT = SCH_INFO_READ_CNT + 1
 		WHERE SCH_INFO_CODE = #{schInfoCode}
 	</update>
+	
+	<!-- 학사안내 -> 파일조회 -->
+	<select id="getFileList" resultMap="schInfoFile">
+		SELECT SCH_FILE_CODE
+		    , SCH_ORIGIN_FILE_NAME
+		    , SCH_ATTACHED_FILE_NAME
+		    , SCH_IS_MAIN
+		    , SCH_INFO_CODE
+		FROM SCHINFO_FILE
+		WHERE SCH_INFO_CODE = #{schInfoCode}
+	</select>
 	
 	<!-- 학사안내 게시글 -> 상세 -> 수정 -->	
 	<update id="updateSchoolInfo">

@@ -11,6 +11,7 @@ import com.study.test.member.vo.MemberVO;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.ProbationStatusVO;
 import com.study.test.school.vo.ProbationVO;
+import com.study.test.school.vo.SchInfoFileVO;
 import com.study.test.school.vo.SchoolInfoVO;
 import com.study.test.school.vo.SearchVO;
 import com.study.test.stu.vo.DeptManageVO;
@@ -32,6 +33,8 @@ public interface SchoolService {
 	
 	//학사안내 게시글 -> 상세조회 
 	SchoolInfoVO schoolBoardDetail(String schInfoCode);
+	//학사안내 게시글 -> 파일조회 
+	List<SchInfoFileVO> getFileList(String schInfoCode);
 	
 	//학사안내 게시글 조회수
 	void updateSchoolBoardReadCnt(String schInfoCode);

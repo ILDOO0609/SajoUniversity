@@ -44,6 +44,15 @@
 					</tr>
 					<tr>
 						<td colspan="2">
+							<th:block th:each="file : ${fileList}">
+								<span>첨부파일 :</span>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a href="download?num=${file.schFileCode}">[[${file.schOriginFileName}]]</a>
+							</th:block>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
 							이전글 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<th:block th:if="${prevList.schInfoCode} == null">
 								<span>[[${prevList.schInfoTitle}]]</span>

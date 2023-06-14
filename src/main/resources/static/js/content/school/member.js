@@ -96,6 +96,12 @@ function drawDeptSelectbox(deptList){
 	let str = '';
 	
 	str += `<select class="form-select" name="deptNo">`;
+	
+//	deptList.forEach(function(dept, index){
+//		str += ``;
+//		
+//	});
+	
 	for(const dept of deptList){
 		str += `<option value="${dept.deptNo}">${dept.deptName}</option>`;
 	}

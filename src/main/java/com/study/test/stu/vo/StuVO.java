@@ -29,4 +29,6 @@ public class StuVO extends PageVO{
 	
 	private String searchValue;
 	private ProbationVO probationVO;
+	
+	private int sumScore;
 }

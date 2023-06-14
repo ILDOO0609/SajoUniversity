@@ -11,7 +11,7 @@
 				<h1 class="title1">학사안내 글등록</h1>
 			</div>
 		</div>
-		<form id="regSchInfoForm" th:action="@{/school/insertSchoolInfo}" method="post">
+		<form id="regSchInfoForm" th:action="@{/school/insertSchoolInfo}" method="post" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col">
 			 		<table class="table align-middle">
@@ -48,18 +48,24 @@
 			 				<tr>
 			 					<td>첨부파일</td>
 			 					<td>
-			 						<input type="file" class="form-control">
+			 						<input type="file" class="form-control" name="mainFile">
+			 					</td>
+			 				</tr>
+			 				<tr>
+			 					<td>다중첨부</td>
+			 					<td>
+			 						<input type="file" class="form-control" name="subFile" multiple="multiple">
 			 					</td>
 			 				</tr>
 			 			</tbody>
 						<tfoot>
 							<tr>
 			 					<td>
-			 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			 						<input type="button" class="btn btn-primary" value="글 등록" onclick="regSchInfo();">
+			 						&nbsp;&nbsp;&nbsp;
+			 						<input type="button" class="btn btn-primary" value="목록으로 가기"  th:onclick="|location.href='@{/school/info}';|">
 			 					</td>
 			 					<td style="text-align: right;">
-			 						<input type="button" class="btn btn-primary" value="목록으로 가기"  th:onclick="|location.href='@{/school/info}';|">
+			 						<input type="button" class="btn btn-primary" value="글 등록" onclick="regSchInfo();">
 			 					</td>
 			 				</tr>
 						</tfoot> 			

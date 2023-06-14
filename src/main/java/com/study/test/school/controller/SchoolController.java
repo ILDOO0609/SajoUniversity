@@ -1,7 +1,5 @@
 package com.study.test.school.controller;
 
-import java.time.Year;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.study.test.colleage.service.ColleageService;
 import com.study.test.colleage.vo.DeptVO;
@@ -25,16 +24,16 @@ import com.study.test.school.service.CalendarService;
 import com.study.test.school.service.SchoolService;
 import com.study.test.school.vo.CalendarVO;
 import com.study.test.school.vo.ProbationVO;
+import com.study.test.school.vo.SchInfoFileVO;
 import com.study.test.school.vo.SchoolInfoVO;
 import com.study.test.school.vo.SearchVO;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
 import com.study.test.util.DateUtill;
-import com.study.test.util.PageVO;
+import com.study.test.util.UploadUtil;
 
 import jakarta.annotation.Resource;
-import oracle.net.aso.m;
 
 
 @Controller
@@ -103,10 +102,28 @@ public class SchoolController {
 	
 	//학사메뉴 -> 학사안내 글등록
 	@PostMapping("/insertSchoolInfo")
-	public String insertSchoolInfo(SchoolInfoVO schoolInfoVO, Authentication authentication) {
+	public String insertSchoolInfo(SchoolInfoVO schoolInfoVO, Authentication authentication, MultipartFile mainFile, MultipartFile[] subFile) {
 		User user = (User)authentication.getPrincipal();
 		schoolInfoVO.setSchInfoWriter(user.getUsername());
 		
+		String schInfoCode = schoolService.getNextInfoCode();
+		SchInfoFileVO attachedFileVO = UploadUtil.uploadSchFile(mainFile);
+		List<SchInfoFileVO> attachedFileList = UploadUtil.multiUploadSchFile(subFile);
+		schoolInfoVO.setSchInfoCode(schInfoCode);
+		
+		List<SchInfoFileVO> fileList = attachedFileList;
+		System.out.println("@@@@@@@#"+ fileList.size());
+		if(attachedFileVO != null) {
+			fileList.add(attachedFileVO);
+		}
+		
+		System.out.println(fileList.size());
+		for(SchInfoFileVO file : fileList) {
+			file.setSchFileCode(schInfoCode);
+		}
+		schoolInfoVO.setFileList(fileList);
+		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@" + schoolInfoVO);
 		schoolService.insertSchoolInfo(schoolInfoVO);
 		return "redirect:/school/info";
 	}
@@ -271,6 +288,7 @@ public class SchoolController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("probCnt", schoolService.getStuProbCnt(stuNo));
 		map.put("stuList", schoolService.checkStuModal(stuNo));
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + map);
 		return map;
 	}
 	

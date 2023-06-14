@@ -32,8 +32,18 @@ public class SchoolServiceImpl implements SchoolService{
 	
 	//학사안내 게시글 등록
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void insertSchoolInfo(SchoolInfoVO schoolInfoVO) {
 		sqlSession.insert("schoolMapper.insertSchoolInfo", schoolInfoVO);
+		//파일등록
+		if(schoolInfoVO.getFileList().size() != 0) {
+			sqlSession.insert("schoolMapper.insertInfoFile", schoolInfoVO);
+		}
+	}
+	//학사안내 다음 등록될 글 조회
+	@Override
+	public String getNextInfoCode() {
+		return sqlSession.selectOne("schoolMapper.getNextInfoCode");
 	}
 	
 	//학사안내 게시글 목록조회
@@ -438,6 +448,7 @@ public class SchoolServiceImpl implements SchoolService{
 		return sqlSession.selectOne("schoolMapper.getStatusCntForDeptManage", searchVO);
 	}
 
+	
 	
 
 

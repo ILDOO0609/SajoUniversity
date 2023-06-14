@@ -121,7 +121,7 @@
 		</div>	
 		 
 		 
-		<div sec:authorize="isAuthenticated()">
+		<div sec:authorize="isAuthenticated()" class="text-end">
 			<div th:if="${#authorization.expression('hasRole(''ROLE_stf'')')}">
 				<input type="button" class="btn btn-primary" value="글 등록" th:onclick="|location.href='@{/school/regSchoolBoard}';|">
 			</div>

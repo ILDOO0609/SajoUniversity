@@ -44,10 +44,12 @@
 					</tr>
 					<tr>
 						<td colspan="2">
+							<span>첨부파일 :</span>
+							
 							<th:block th:each="file : ${fileList}">
-								<span>첨부파일 :</span>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<a href="download?num=${file.schFileCode}">[[${file.schOriginFileName}]]</a>
+								<input type="hidden" id="schOriginFileName" th:value="${file.schOriginFileName}">
+								<input type="hidden" id="schAttachedFileName" th:value="${file.schAttachedFileName}">
+								<div style="cursor: pointer;" th:onclick="download([[${file.schFileCode}]])">[[${file.schOriginFileName}]]</div>
 							</th:block>
 						</td>
 					</tr>

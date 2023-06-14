@@ -77,8 +77,7 @@ function changeColl(coll){
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: {'collNo':coll_no}, //필요한 데이터
 		success: function(result) {
-			console.log(result);
-			drawDeptSelectbox(result);
+			drawDeptSelectbox(result, coll);
 		},
 		error: function() {
 			alert('실패');
@@ -88,20 +87,15 @@ function changeColl(coll){
 }
 
 //전공학과 셀렉트박스 그리기
-function drawDeptSelectbox(deptList){
-	const dept_div = document.querySelector('#deptDiv');
-	
+function drawDeptSelectbox(deptList, coll){
+	const dept_div = coll.closest('tr').querySelector('.tdTag');
+	console.log(dept_div);
 	dept_div.replaceChildren();
-		
+	
 	let str = '';
 	
 	str += `<select class="form-select" name="deptNo">`;
-	
-//	deptList.forEach(function(dept, index){
-//		str += ``;
-//		
-//	});
-	
+		
 	for(const dept of deptList){
 		str += `<option value="${dept.deptNo}">${dept.deptName}</option>`;
 	}
@@ -362,7 +356,6 @@ function openModal(memNo){
 	
 	
 }
-
 
 
 

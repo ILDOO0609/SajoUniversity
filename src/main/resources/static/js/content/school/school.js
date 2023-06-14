@@ -147,6 +147,39 @@ function schInfoUpdate(){
 	
 }
 
+//파일 다운로드
+function download(schFileCode){
+	const schOriginFileName = document.querySelector('#schOriginFileName').value;
+	const schAttachedFileName = document.querySelector('#schAttachedFileName').value;
+	
+	console.log(schFileCode)
+	console.log(schOriginFileName)
+	console.log(schAttachedFileName)
+	
+	//ajax start
+	$.ajax({
+		url: '/school/getFileDownload', //요청경로
+		type: 'post',
+		async: true,
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'schFileCode':schFileCode, 'schOriginFileName':schOriginFileName, 'schAttachedFileName':schAttachedFileName}, //필요한 데이터
+		success: function(result) {
+			
+			
+		},
+		
+		error: function() {
+			alert('실패');
+		}
+		
+		
+	});
+	//ajax end
+	
+
+	
+	
+}
 
 //글 상세보기, 이전글
 function prev(schInfoCode){
@@ -291,14 +324,7 @@ $("#month").val(current_month);
 changeYearMonth(current_year, current_month);	
 
 
-//$("#input_date").click(function(){
-//	$("#div_calendar").toggle();
-//})	
-
 	
-	
-
-
 
 
 

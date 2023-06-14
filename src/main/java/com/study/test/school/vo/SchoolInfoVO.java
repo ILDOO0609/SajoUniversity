@@ -25,6 +25,7 @@ public class SchoolInfoVO extends PageVO{
 	private String schInfoSearch;
 	private int schInfoMonth;
 	
+	private SchInfoFileVO schInfoFileVO;
 	private List<SchInfoFileVO> fileList;
 	
 }

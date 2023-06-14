@@ -1,6 +1,10 @@
 package com.study.test.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.study.test.board.vo.BoardImgVO;
 import com.study.test.emp.vo.LecturePDFVO;
 import com.study.test.school.vo.SchInfoFileVO;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 
 public class UploadUtil {
@@ -112,6 +118,47 @@ public class UploadUtil {
 		return result;
 	}
 
+	
+	//학사안내 업로드파일 다운로드
+	public static void downloadFile(SchInfoFileVO schInfoFileVO, HttpServletResponse response) {
+		//원본 파일명
+		String originFileName = schInfoFileVO.getSchOriginFileName();
+		//첨부된 파일명(생성된 파일명)
+		String attachedFileName = schInfoFileVO.getSchAttachedFileName();
+		System.out.println("@@@@@@@@@@@@########" + schInfoFileVO);
+		System.out.println("@@@@@@@@@@@@" + attachedFileName);
+		
+		File file = new File(ConstVariable.UPLOAD_PATH + attachedFileName);
+		System.out.println("@@@@@@@@@@데이터확인 " + file);
+		
+		if(file.exists()) {
+			try (FileInputStream fis = new FileInputStream(file);
+				OutputStream out = response.getOutputStream()) {
+				
+				
+				String encodeFileName = URLEncoder.encode(originFileName, "UTF-8");
+				
+				// 응답이 파일 타입이라는 것을 명시
+				response.addHeader("Content-Disposition", "attachment;filename=\"" + encodeFileName + "\";");
+				response.setHeader("Content-Transfer-Encoding", "binary");
+				response.setContentType("application/octet-stream");
+				response.setHeader("Pragma", "no-cache;");
+				response.setHeader("Expires", "-1;");
+				
+				int readCount = 0;
+				byte[] buffer = new byte[1024];
+				
+				while((readCount = fis.read(buffer)) != -1 ) {
+					out.write(buffer, 0, readCount);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}	
+	
 	
 	
 }

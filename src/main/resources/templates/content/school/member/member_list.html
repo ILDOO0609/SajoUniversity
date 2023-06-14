@@ -47,7 +47,7 @@
 											<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
 									</select>
 								</td>
-								<td id="deptDiv">
+								<td class="tdTag">
 									<select class="form-select" name="deptNo" >
 										<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
 											[[${dept.deptName}]]

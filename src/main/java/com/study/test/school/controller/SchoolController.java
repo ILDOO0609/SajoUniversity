@@ -34,6 +34,7 @@ import com.study.test.util.DateUtill;
 import com.study.test.util.UploadUtil;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -168,6 +169,13 @@ public class SchoolController {
 		System.out.println("@@@@@@@@@@@@다음글" + schoolService.schoolBoardDetail(nextStr));
 		
 		return "content/school/school/school_board_detail";
+	}
+	
+	////학사메뉴 -> 글 상세 -> 파일 다운로드
+	@ResponseBody
+	@PostMapping("/getFileDownload")
+	public void getFileDownload(HttpServletResponse response, SchInfoFileVO schInfoFileVO) {
+		UploadUtil.downloadFile(schInfoFileVO, response);
 	}
 
 	//학사메뉴 -> 글 상세 -> 수정페이지이동

@@ -1037,7 +1037,7 @@
 		SELECT MEM_NO
 			, MEM_NAME
 			, DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
-			, REG_DATE
+			, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
 			, TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
 			, MEM_TELL
 			, DECODE(IS_CONFIRMED, 'Y','승인완료', 'N', '승인취소', 'I', '승인대기') AS IS_CONFIRMED
@@ -1051,7 +1051,7 @@
 		SELECT MEM_NO
 			, MEM_NAME
 			, DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
-			, REG_DATE
+			, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
 			, TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
 			, MEM_TELL
 			, DECODE(IS_CONFIRMED, 'Y','승인완료', 'N', '승인취소') AS IS_CONFIRMED
@@ -1069,7 +1069,7 @@
 		SELECT MEM_NO
 			, MEM_NAME
 			, DECODE(MEM_ROLE, 'stu', '학생', 'pro', '교수', 'stf', '교직원') AS MEM_ROLE
-			, REG_DATE
+			, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
 			, TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') AS MEM_BIRTHDAY
 			, MEM_TELL
 			, DECODE(IS_CONFIRMED, 'Y','승인완료', 'N', '승인취소') AS IS_CONFIRMED

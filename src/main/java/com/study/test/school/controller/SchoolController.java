@@ -622,7 +622,7 @@ public class SchoolController {
 	@GetMapping("/memberSelectList")
 	public String memberSelectList(Model model, MemberVO memberVO) {
 		//전체 데이터 수 조회
-		memberVO.setDisplayCnt(15);
+		memberVO.setDisplayCnt(10);
 		memberVO.setTotalDataCnt(schoolService.getMemberListCnt());
 		memberVO.setPageInfo();
 		model.addAttribute("memberList", schoolService.selectMemberTotalList(memberVO));
@@ -634,7 +634,7 @@ public class SchoolController {
 	public Map<String, Object> approveO(String isConfirmed, MemberVO memberVO) {
 		
 		memberVO.setIsConfirmed(isConfirmed);
-		memberVO.setDisplayCnt(15);
+		memberVO.setDisplayCnt(10);
 		int totalDateCnt = schoolService.getMemberAddListCnt();
 		memberVO.setTotalDataCnt(totalDateCnt);
 		memberVO.setPageInfo();
@@ -652,7 +652,7 @@ public class SchoolController {
 	@PostMapping("/approveXAjax")
 	public Map<String, Object> approveX(String isConfirmed, MemberVO memberVO) {
 		memberVO.setIsConfirmed(isConfirmed);
-		memberVO.setDisplayCnt(15);
+		memberVO.setDisplayCnt(10);
 		int totalDateCnt = schoolService.getMemberDeniedListCnt();
 		memberVO.setTotalDataCnt(totalDateCnt);
 		memberVO.setPageInfo();

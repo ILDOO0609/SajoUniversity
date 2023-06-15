@@ -49,7 +49,7 @@ function updateXPosition(memNo) {
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   	data: {'memNo':memNo,'deptNo':deptNo, 'collNo':collNo, 'memRole':memRole}, //필요한 데이터
 	   	success: function(result) {
-			Swal.fire('승인 취소', '승인완료 되었습니다.', 'success').then(() => {
+			Swal.fire('승인 취소', '승인 취소 되었습니다.', 'error').then(() => {
 		        location.href = `/school/memberList`;
 		    });
 			
@@ -150,33 +150,35 @@ function approveO(isConfirmed){
 			
 			const pagingTag = document.querySelector('#paging');
 			pagingTag.replaceChildren();
+			pagingTag.innerHTML = '';
 			
+			let str1 = '';
 			
-			str += `<div class='row justify-content-center'>`;
-			str += `<div class="col-3">`;
-			str += `<nav aria-label="Page navigation example">`;
-			str += `<ul class="pagination" >`;
-			str += `<li class="page-item" classappend="${memberVO.prev ? '' : 'disabled'}">`;
-			str += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.beginPage-1}" aria-label="Previous">`;
-			str += `<span aria-hidden="true">&laquo;</span>`;
-			str += `</a>`;
-			str += `</li>`;
+			str1 += `<div class="row">`;
+			str1 += `<div class="col-3 mx-auto">`; // mx-auto 클래스를 추가하여 가운데 정렬
+			str1 += `<nav aria-label="Page navigation example">`;
+			str1 += `<ul class="pagination justify-content-center">`; // justify-content-center 클래스를 추가하여 가운데 정렬
+			str1 += `<li class="page-item ${memberVO.prev ? '' : 'disabled'}">`;
+			str1 += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.beginPage-1}" aria-label="Previous">`;
+			str1 += `<span aria-hidden="true">&laquo;</span>`;
+			str1 += `</a>`;
+			str1 += `</li>`;
 			
 			for(let i = memberVO.beginPage ; i <= memberVO.endPage ; i++){
-				str += `<li class="page-item"><a class="page-link" href="/school/approveOAjax?nowPage=${i}"><span>${i}</span></a></li>`;
+			    str1 += `<li class="page-item ${memberVO.nowPage === i ? 'active' : ''}"><a class="page-link" href="/school/approveOAjax?nowPage=${i}"><span>${i}</span></a></li>`;
 			}
-			str += `<li class="page-item" classappend="${memberVO.next ? '' : 'disabled'}">`;
-			str += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.endPage+1}" aria-label="Next">`;
-			str += `<span aria-hidden="true">&raquo;</span>`;
-			str += `</a>`;
-			str += `</li>`;
-			str += `</ul>`;
-			str += `</nav>`;
-			str += `</div>`;
-			str += `</div>`;
 			
+			str1 += `<li class="page-item ${memberVO.next ? '' : 'disabled'}">`;
+			str1 += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.endPage+1}" aria-label="Next">`;
+			str1 += `<span aria-hidden="true">&raquo;</span>`;
+			str1 += `</a>`;
+			str1 += `</li>`;
+			str1 += `</ul>`;
+			str1 += `</nav>`;
+			str1 += `</div>`;
+			str1 += `</div>`;
 			
-			
+			pagingTag.innerHTML = str1;
 			
 			
 			}
@@ -232,31 +234,37 @@ function approveX(isConfirmed){
 				
 			const pagingTag = document.querySelector('#paging');
 			pagingTag.replaceChildren();
+			pagingTag.innerHTML = '';
 			
+			let str1 = '';
 			
-			str += `<div class="row justify-content-center">`;
-			str += `<div class="col-3">`;
-			str += `<nav aria-label="Page navigation example">`;
-			str += `<ul class="pagination" >`;
-			str += `<li class="page-item" classappend="${memberVO.prev ? '' : 'disabled'}">`;
-			str += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.beginPage-1}" aria-label="Previous">`;
-			str += `<span aria-hidden="true">&laquo;</span>`;
-			str += `</a>`;
-			str += `</li>`;
+			str1 += `<div class="row">`;
+			str1 += `<div class="col-3 mx-auto">`; // mx-auto 클래스를 추가하여 가운데 정렬
+			str1 += `<nav aria-label="Page navigation example">`;
+			str1 += `<ul class="pagination justify-content-center">`; // justify-content-center 클래스를 추가하여 가운데 정렬
+			str1 += `<li class="page-item ${memberVO.prev ? '' : 'disabled'}">`;
+			str1 += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.beginPage-1}" aria-label="Previous">`;
+			str1 += `<span aria-hidden="true">&laquo;</span>`;
+			str1 += `</a>`;
+			str1 += `</li>`;
 			
 			for(let i = memberVO.beginPage ; i <= memberVO.endPage ; i++){
-				str += `<li class="page-item"><a class="page-link" href="/school/approveOAjax?nowPage=${i}"><span>${i}</span></a></li>`;
+			    str1 += `<li class="page-item ${memberVO.nowPage === i ? 'active' : ''}"><a class="page-link" href="/school/approveOAjax?nowPage=${i}"><span>${i}</span></a></li>`;
 			}
-			str += `<li class="page-item" classappend="${memberVO.next ? '' : 'disabled'}">`;
-			str += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.endPage+1}" aria-label="Next">`;
-			str += `<span aria-hidden="true">&raquo;</span>`;
-			str += `</a>`;
-			str += `</li>`;
-			str += `</ul>`;
-			str += `</nav>`;
-			str += `</div>`;
-			str += `</div>`;
-				
+			
+			str1 += `<li class="page-item ${memberVO.next ? '' : 'disabled'}">`;
+			str1 += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.endPage+1}" aria-label="Next">`;
+			str1 += `<span aria-hidden="true">&raquo;</span>`;
+			str1 += `</a>`;
+			str1 += `</li>`;
+			str1 += `</ul>`;
+			str1 += `</nav>`;
+			str1 += `</div>`;
+			str1 += `</div>`;
+			
+			pagingTag.innerHTML = str1;
+			
+			
 			}
 			
 			tbodyTag.insertAdjacentHTML('afterbegin', str);

@@ -212,14 +212,14 @@ function searchProbList(){
 			}
 			else{
 				for(const stu of result){
-					str += `<tr style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">`;
+					str += `<tr>`;
 					str += `<td><input type="checkbox" class="form-check-input chk" id="stuNo" value="${stu.stuNo}"></td>`;
-					str += `<td id="memNo" value="${stu.memNo}">${stu.memNo}</td>`;
-					str += `<td>${stu.memberVO.memName}</td>`;
-					str += `<td>${stu.stuYear}</td>`;
-					str += `<td>${stu.stuSem}학기</td>`;
-					str += `<td>${stu.colleageVO.collName}</td>`;
-					str += `<td colspan="2" style="text-align: center;">${stu.deptVO.deptName}</td>`;
+					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');" id="memNo" value="${stu.memNo}">${stu.memNo}</td>`;
+					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.memberVO.memName}</td>`;
+					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.stuYear}</td>`;
+					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.stuSem}학기</td>`;
+					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.colleageVO.collName}</td>`;
+					str += `<td colspan="2" style="text-align: center; cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.deptVO.deptName}</td>`;
 					str += `</tr>`;
 				}
 			}

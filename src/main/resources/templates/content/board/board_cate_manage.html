@@ -71,7 +71,7 @@
 											</div>
 										</div>
 									</td>
-									<td><input type="button" value="삭제" class="btn btn-danger" th:onclick="|location.href='@{/board/deleteCate(cateNo=${category.cateNo})}';|"></td>								
+									<td><input type="button" value="삭제" class="btn btn-danger" th:onclick="deleteCategory([[${category.cateNo}]]);"></td>								
 								</tr>
 							</th:block>
 						</tbody>

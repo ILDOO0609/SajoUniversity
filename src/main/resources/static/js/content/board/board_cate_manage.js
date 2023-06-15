@@ -4,13 +4,13 @@ function regCategory() {
 	const cateNameTag = document.querySelector('#cateName');
 	
 	if(cateNameTag.value == ''){
-		alert('카테고리명은 필수입니다.');
+		Swal.fire('카테고리명은 필수입니다.', '', 'info');
 		return ; //return을 만나는 순간 메소드 종료 
 	}
 	
 	//카테고리명 중복 확인
 	if(checkCateName(cateNameTag.value)){
-		alert('카테고리명이 중복입니돠.\n다시 입력하세요.');
+		Swal.fire('카테고리명이 중복입니다.\n다시입력하세요.', '', 'error');
 		cateNameTag.value = '';
 		return ;
 	}
@@ -22,7 +22,7 @@ function regCategory() {
 		data: {'cateName':cateNameTag.value}, //필요한 데이터
 		
 		success: function(result) {
-			alert('카테고리가 등록 완료')
+			Swal.fire('등록완료.', '', 'success');
 			
 			//카테고리 목록 데이터 다시 조회
 			getCateListAjax();
@@ -133,7 +133,7 @@ function changeIsUse(cateNo) {
 		data: {'cateNo':cateNo}, //필요한 데이터
 		success: function(result) {
 			if(result==1){
-				alert('사용여부가 변경되었습니다.');
+				Swal.fire('사용여부가 변경되었습니다.', '', 'success');
 			}
 			else{
 				alert('일시적 오류가 발생했습니다.');
@@ -144,4 +144,27 @@ function changeIsUse(cateNo) {
 		}
 	});
 	//ajax end
+}
+
+function deleteCategory(cateNo) {
+    Swal.fire({
+        title: '삭제 하시겠습니까?',
+        text: '',
+        icon: 'question',
+        
+        showCancelButton: true, 
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: '확인',
+		cancelButtonText: '취소',
+		
+		reverseButtons: false,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire('삭제완료', '', 'success')
+            .then(() => {
+                location.href = `/board/deleteCate?cateNo=${cateNo}`;
+            });
+        }
+    });
 }

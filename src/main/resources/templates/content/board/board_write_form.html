@@ -31,7 +31,7 @@
 						<select name="boardCategoryVO.cateNo" class="form-select">
 						    <option th:each="cate : ${cateList}" th:value="${cate.cateNo}"
 						        th:unless="${(#authorization.expression('hasRole(''ROLE_pro'')') or #authorization.expression('hasRole(''ROLE_stu'')'))
-						        			  and (cate.cateName == '구내식당메뉴' or cate.cateName == '행사 안내')}">
+						        			  and (cate.cateName == '구내식당메뉴' or cate.cateName == '행사 안내' or cate.cateName == '공지사항')}">
 						        [[${cate.cateName}]]
 						    </option>
 						</select>
@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<div class="row mb-3">
-					<div class="col-6">
+					<div class="offset-2 col-3">
 						파일추가
 					</div>
 					<div class="col-2 d-flex align-items-center justify-content-center">
@@ -61,12 +61,12 @@
 							<input type="checkbox"  class="form-check-input" id="secretChk" name="isSecret" onclick="secret();">비밀글
 						</div>
 					</div>
-					<div class="col-2" style="margin-top: 2px;">
-						<input type="number" oninput="maxLengthCheck(this)" class="form-control" id="secretNum" name="secretPw" disabled>
+					<div class="col-1" style="margin-top: 2px;">
+						<input type="password" oninput="maxLengthCheck(this)" class="form-control" id="secretNum" name="secretPw" disabled>
 					</div>
 				</div>
 				<div class="row mb-3">
-					<div class="col">
+					<div class="offset-2 col-8">
 						<input type="file" class="form-control" name="mainImg">
 					</div>
 				</div>

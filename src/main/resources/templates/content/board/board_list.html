@@ -38,10 +38,10 @@
 							<option th:each="cate : ${cateList}" th:value="${cate.cateNo}" th:unless="${boardListSearchVO.cateNo == cate.cateNo}">[[${cate.cateName}]]</option>
 						</select>
 					    <select id="searchSelect" class="form-select-sm" name="selectValue">
-							<option value="title">제목</option>
-							<option value="writer">작성자</option>
+					    	<option value="title"  th:selected="${boardListSearchVO.selectValue == 'title'}">제목</option>
+							<option value="writer" th:selected="${boardListSearchVO.selectValue == 'writer'}">작성자</option>
 					    </select>
-					    <input type="text" class="form-control-sm" id="searchInput" placeholder="Search" name="inputValue">
+					    <input type="text" class="form-control-sm" id="searchInput" placeholder="Search" name="inputValue" th:value="${boardListSearchVO.inputValue}">
 					    <button class="btn btn-outline-dark" id="searchBtn" onclick="searchBoard();">
 						     <i class="fas fa-search"></i>
 				        </button>

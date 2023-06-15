@@ -80,7 +80,7 @@ img{
 				<div class="col-6">
 					[[${reply.replyContent}]]
 				</div>
-				<div class="col-6">
+				<div class="col-6 text-end">
 					[[${reply.memberVO.memName}]]/[[${reply.replyCreateDate}]]
 					<th:block th:if="${#authorization.expression('hasRole(''ROLE_stf'')') or reply.replyWriter == #authentication.name}">
 						<input type="button" value="수정" class="btn btn-primary" th:onclick="setInput(this, [[${reply.replyNo}]], [[${reply.boardNo}]]);"> 

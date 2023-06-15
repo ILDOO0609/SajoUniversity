@@ -200,13 +200,10 @@ function searchProbList(){
 	   data: {'searchValue':searchValue, 'collNo' : collNo, 'deptNo' : deptNo}, //필요한 데이터
 	   success: function(result) {
 			console.log(result)
-<<<<<<< HEAD
 			const stuProbListTag = document.querySelector('.stuProbListTag');
 			stuProbListTag.replaceChildren();
-=======
 			const tbodyTag = document.querySelector('#warningTable > tbody');
 			tbodyTag.replaceChildren();
->>>>>>> 09771f826aae6772dea2fddb2f77daa5cbad69e0
 			
 			let str = '';
 			
@@ -218,26 +215,20 @@ function searchProbList(){
 			else{
 				for(const stu of result){
 					str += `<tr>`;
-<<<<<<< HEAD
 					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.memNo}</td>`;
-=======
 					str += `<td><input type="checkbox" class="form-check-input chk" id="stuNo" value="${stu.stuNo}"></td>`;
-<<<<<<< HEAD
 					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');" id="memNo" value="${stu.memNo}">${stu.memNo}</td>`;
 					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.memberVO.memName}</td>`;
 					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.stuYear}</td>`;
 					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.stuSem}학기</td>`;
 					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.colleageVO.collName}</td>`;
 					str += `<td colspan="2" style="text-align: center; cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.deptVO.deptName}</td>`;
-=======
 					str += `<td style="cursor: pointer;" id="memNo" value="${stu.memNo}" onclick="openWarningModal('${stu.stuNo}');">${stu.memNo}</td>`;
->>>>>>> 09771f826aae6772dea2fddb2f77daa5cbad69e0
 					str += `<td>${stu.memberVO.memName}</td>`;
 					str += `<td>${stu.stuYear}</td>`;
 					str += `<td>${stu.stuSem}학기</td>`;
 					str += `<td colspan="2">${stu.deptVO.deptName}</td>`;
 					str += `<td>${stu.colleageVO.collName}</td>`;
->>>>>>> b8580948bba92d6a2462047f83d7b11f71367a10
 					str += `</tr>`;
 				}
 			}
@@ -293,13 +284,10 @@ function stuProb(){
 	});
 	//ajax end
 
-<<<<<<< HEAD
-=======
 	
 }
 
 
->>>>>>> 09771f826aae6772dea2fddb2f77daa5cbad69e0
 //학사징계 관리 회원 모달창
 function openWarningModal(stuNo){
 	

@@ -71,7 +71,7 @@ const ctx = document.getElementById('myChart');
 			],
 			datasets: [
 				{
-					label: '월별 재학생수',
+					label: '월별 복학생수',
 					data: monthly['attendList'],
 					borderWidth: 1,
 					yAxisID: 'y'

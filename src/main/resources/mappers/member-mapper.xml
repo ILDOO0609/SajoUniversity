@@ -196,7 +196,7 @@
 			FROM MEMBER
 			WHERE TO_CHAR(REG_DATE, 'YYYY') = #{year}
 			AND MEM_ROLE = 'stu'
-			<!-- 재학생 조회 -->
+			<!-- 복학생 조회 -->
 			UNION ALL
 			SELECT NVL(SUM(DECODE(TO_CHAR(APPROVAL_DATE, 'MM'), '01', 1, 0)), 0) AS MONTH_01
 			, NVL(SUM(DECODE(TO_CHAR(APPROVAL_DATE, 'MM'), '02', 1, 0)), 0) AS MONTH_02

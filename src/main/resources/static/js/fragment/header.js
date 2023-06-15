@@ -540,7 +540,7 @@ function authenMail() {
 	  startTimer();
 	  alert('이메일이 성공적으로 발송되었습니다.');
 	  btnAuth.disabled = true;
-	  alert(authoMail)
+	  // alert(authoMail)
 	    var timeRemaining = 180;
 		
 		
@@ -574,12 +574,12 @@ function authenMail() {
 
 
 function checkVerificationCode() {
-	alert(authoMail);
+	// alert(authoMail);
   var authMail = document.querySelector('#auth_mail').value;
   var confirmBtn = document.querySelector('#confirmation');
   var timeRemainingInput = document.querySelector('#time-remaining');
   
-  alert(authMail)
+  // alert(authMail)
   if (authMail === authoMail) {
     alert('인증번호가 일치합니다. \n 회원가입을 마저 진행 해주세요.');
     clearInterval(countdownTimer);

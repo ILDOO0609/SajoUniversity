@@ -19,84 +19,6 @@
 		<div class="col mb-3" >
 			<div class="row">
 				<div class="col" style="padding-right: 0px;">
-<<<<<<< HEAD
-						<table class="table" id="warningTable">
-							<colgroup>
-								<col width="15%">					
-								<col width="15%">					
-								<col width="15%">					
-								<col width="15%">					
-								<col width="10%">					
-								<col width="15%">					
-								<col width="15%">					
-							</colgroup>
-							<thead>
-								<tr style="text-align: left; font-weight: bold;">
-									<td colspan="7">
-										학생 정보
-									</td>
-								</tr> 
-		
-								<tr style="text-align: center;">
-									<td>단과대학</td>
-									<td>
-										<select class="form-select" name="collNo" onchange="changeColl(this);">
-											<option th:each="coll : ${colleageList}" th:value="${coll.collNo}">[[${coll.collName}]]</option>
-										</select>
-									</td>
-									<td>전공학과</td>							
-									<td id="deptDiv">
-										<select class="form-select" name="deptNo">
-											<option th:each="dept : ${deptList}" th:value="${dept.deptNo}" th:if="${colleageList[0].collNo==dept.collNo}">
-												[[${dept.deptName}]]
-											</option>
-										</select>
-									</td>
-									<td>학생명</td>							
-									<td><input type="text" class="form-control" id="searchStuInput" name="searchValue" placeholder="학생명 입력"></td>		
-									<td>
-										<div class="d-grid">
-											<input type="button" class="btn btn-primary" value="Search" onclick="searchProbList();">
-										</div>
-									</td>					
-								</tr>
-								
-								<tr style="text-align: left; font-weight: bold;">
-									<td colspan="7">
-										학생 검색 결과
-										<span style="font-size: 0.6em; color: red;">
-											해당 학생 클릭시 학생정보 상세창이 열립니다.
-										</span>
-									</td>
-								</tr>
-								<tr style="text-align: center;">
-									<td>학번</td>
-									<td>학생명</td>
-									<td>학년</td>
-									<td>학기</td>
-									<td colspan="2">단과대학</td>
-									<td>전공학과</td>
-								</tr>	
-							</thead>
-							<tbody>
-								<tr class="stuProbListTag" style="text-align: center;">
-									<td colspan="7">학생을 검색하세요.</td>
-								</tr>
-								<tr style="text-align: center;">
-									<td style="vertical-align: middle;">징계사유 : </td>
-									<td colspan="4" style="text-align: center;">
-										<select class="form-select text-center">
-											 <option th:each="prob : ${ProbList}" th:value="${prob.probStatusCode}">[[${prob.probStatusName}]]</option>
-										</select>
-									</td>
-									<td colspan="2">
-										<button class="btn btn-primary" type="button" style="cursor: pointer;">학사경고</button>
-										<button class="btn btn-danger" type="button" style="cursor: pointer;">제적</button>
-									</td>
-								</tr>	
-							</tbody>	
-						</table>
-=======
 					<table class="table" id="warningTable">
 						<colgroup>
 							<col width="5%">					
@@ -184,7 +106,6 @@
 							</tr>	
 						</tfoot>	
 					</table>
->>>>>>> 09771f826aae6772dea2fddb2f77daa5cbad69e0
 				</div>
 			</div>
 		</div>

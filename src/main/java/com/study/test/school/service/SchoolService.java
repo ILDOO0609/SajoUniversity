@@ -198,5 +198,6 @@ public interface SchoolService {
 	int getStatusCntForLeave(SearchVO searchVO);
 	int getStatusCntForReturn(SearchVO searchVO);
 	int getStatusCntForDeptManage(SearchVO searchVO);
+	SchInfoFileVO getAttachedFileInfo(String schFileCode);
 	
 }

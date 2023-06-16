@@ -172,10 +172,13 @@ public class SchoolController {
 	}
 	
 	////학사메뉴 -> 글 상세 -> 파일 다운로드
-	@ResponseBody
 	@PostMapping("/getFileDownload")
 	public void getFileDownload(HttpServletResponse response, SchInfoFileVO schInfoFileVO) {
-		UploadUtil.downloadFile(schInfoFileVO, response);
+		
+		//이미지 코드를 통해 처부된 원본파일명 및 첨부된 파일명을 조회
+		SchInfoFileVO imgVO = schoolService.getAttachedFileInfo(schInfoFileVO.getSchFileCode());
+		
+		UploadUtil.downloadFile(imgVO, response);
 	}
 
 	//학사메뉴 -> 글 상세 -> 수정페이지이동
@@ -272,7 +275,7 @@ public class SchoolController {
 		model.addAttribute("deptList", colleageService.getDeptList());
 		//학생 수 조회
 		stuVO.setTotalDataCnt(schoolService.getStuListCnt());
-		stuVO.setDisplayCnt(15);
+		stuVO.setDisplayCnt(10);
 		stuVO.setPageInfo();
 		//학생조회
 		model.addAttribute("stuList", schoolService.checkStuList(stuVO));

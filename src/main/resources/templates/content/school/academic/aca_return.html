@@ -98,16 +98,16 @@
 				 					</tr>
 				 				</th:block>
 								<th:block th:unless="${#lists.size(returnList) == 0}">
-									<tr th:each="status, state : ${returnList}" style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">
+									<tr th:each="status, state : ${returnList}">
 										<td><input type="checkbox" class="form-check-input chk" th:value="${status.statusNo}"></td>
-										<td>[[${status.statusNo}]]</td>
-										<td>[[${status.stuVO.memberVO.memName}]]</td>
-										<td>[[${status.stuVO.memberVO.memNo}]]</td>
-										<td>[[${status.stuVO.stuYear}]]</td>
-										<td>[[${status.stuVO.colleageVO.collName}]]</td>
-										<td>[[${status.stuVO.deptVO.deptName}]]</td>
-										<td>[[${status.applyDate}]]</td>
-										<td>[[${status.ingStatus}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">[[${status.statusNo}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">[[${status.stuVO.memberVO.memName}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">[[${status.stuVO.memberVO.memNo}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">[[${status.stuVO.stuYear}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">[[${status.stuVO.colleageVO.collName}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">[[${status.stuVO.deptVO.deptName}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">[[${status.applyDate}]]</td>
+										<td style="cursor: pointer;" th:onclick="checkReturnModal([[${status.statusNo}]]);">[[${status.ingStatus}]]</td>
 									</tr>
 								</th:block>	
 							</tbody>

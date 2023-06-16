@@ -108,9 +108,6 @@ function infoSearchList(){
 	//ajax end
 	
 	
-	
-	
-	
 }
 
 //학사안내 글등록
@@ -141,7 +138,7 @@ function deleteInfo(schInfoCode){
 //학사안내 글수정
 function schInfoUpdate(){
 	
-	Swal.fire('수정 완료', '글 수정이 완료되었습니다.', 'success').then(() => {
+	Swal.fire('수정 완료', '글 수정이 완료되었습니다.', 'info').then(() => {
     	document.querySelector('#schInfoUpdateForm').submit();
     });
 	
@@ -152,32 +149,18 @@ function download(schFileCode){
 	const schOriginFileName = document.querySelector('#schOriginFileName').value;
 	const schAttachedFileName = document.querySelector('#schAttachedFileName').value;
 	
-	console.log(schFileCode)
-	console.log(schOriginFileName)
-	console.log(schAttachedFileName)
+	console.log(schFileCode);
+	console.log(schOriginFileName);
+	console.log(schAttachedFileName);
 	
-	//ajax start
-	$.ajax({
-		url: '/school/getFileDownload', //요청경로
-		type: 'post',
-		async: true,
-		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		data: {'schFileCode':schFileCode, 'schOriginFileName':schOriginFileName, 'schAttachedFileName':schAttachedFileName}, //필요한 데이터
-		success: function(result) {
-			
-			
-		},
-		
-		error: function() {
-			alert('실패');
-		}
-		
-		
-	});
-	//ajax end
+	str = '';
+	str += `<form action="/school/getFileDownload" method="post" id="download_form">`;
+	str += `<input type="hidden" name="schFileCode" value="${schFileCode}">`;
+	str += `</form>`;
 	
-
-	
+	document.querySelector('#download_div').replaceChildren();
+	document.querySelector('#download_div').insertAdjacentHTML('afterbegin', str);
+	document.querySelector('#download_form').submit();
 	
 }
 

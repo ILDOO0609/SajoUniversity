@@ -220,7 +220,7 @@ function openStuModal(stuNo){
 //교수 교직원 라디오 버튼 클릭시 실행
 $("input[name='checkPosition']").change(function(){
 	var name = $("input[name='checkPosition']:checked").val();
-	Swal.fire(name, '선택이(가) 완료되었습니다.', 'success').then(() => {
+	Swal.fire(name, '선택이(가) 완료되었습니다.', 'info').then(() => {
 	});
 	
 	
@@ -459,15 +459,17 @@ function openProModal(empNo){
 			
 			for(const emp of result){
 				str += `<tr>`;
-				str += `<td colspan="5">교수/교직원 기본정보</td>`;
+				str += `<td colspan="5">교수 기본정보</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td rowspan="7"><img src="'/upload/${emp.memberVO.memImage}" style="width: 100%; height: 100%"></td>`;
 				str += `<td>No(ID)</td>`;
 				str += `<td colspan="3">${emp.memberVO.memNo}</td>`;
 				str += `<tr>`;
-				str += `<td>교수/교직원명</td>	`;
-				str += `<td colspan="3">${emp.memberVO.memName}</td>`;
+				str += `<td>교수명</td>	`;
+				str += `<td>${emp.memberVO.memName}</td>`;
+				str += `<td style="text-align: center;">직책</td>`;
+				str += `<td>${emp.memberVO.memRole}</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td>생년월일</td>`;
@@ -493,7 +495,7 @@ function openProModal(empNo){
 				str += `</tr>`;
 				str += `</tr>`;
 				str += `<tr>`;
-				str += `<td colspan="6">교수/교직원 학사정보</td>`;
+				str += `<td colspan="6">교수 학사정보</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td style="text-align: center;">단과대학</td>`;
@@ -520,7 +522,7 @@ function openProModal(empNo){
 	
 	
 }
-
+//교직원 상세조회 모달
 function openStfModal(memNo){
 
 //ajax start
@@ -550,15 +552,17 @@ function openStfModal(memNo){
 			
 			for(const stf of result){
 				str += `<tr>`;
-				str += `<td colspan="5">교수/교직원 기본정보</td>`;
+				str += `<td colspan="5">교직원 기본정보</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td rowspan="7"><img src="'/upload/${stf.memImage}" style="width: 100%; height: 100%"></td>`;
 				str += `<td>No(ID)</td>`;
 				str += `<td colspan="3">${stf.memNo}</td>`;
 				str += `<tr>`;
-				str += `<td>교수/교직원명</td>	`;
-				str += `<td colspan="3">${stf.memName}</td>`;
+				str += `<td>교직원명</td>	`;
+				str += `<td>${stf.memName}</td>`;
+				str += `<td style="text-align: center;">직책</td>`;
+				str += `<td>${stf.memRole}</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
 				str += `<td>생년월일</td>`;

@@ -100,8 +100,11 @@ function addSchedule(){
 		alert('종료일이 시작일보다 앞섭니다.')
 		return;
 	}
+	Swal.fire('일정 추가', '일정 등록이 완료되었습니다.', 'success').then(() => {
+    	document.querySelector('#calendarForm').submit();
+    });
 	
-	document.querySelector('#calendarForm').submit();
+	
 }
 
 
@@ -170,7 +173,7 @@ function updateCal(){
 		}).then(result => {
    		// 만약 Promise리턴을 받으면,
 			if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
-				Swal.fire('일정 수정이 완료되었습니다.', '', 'success').then(() => {
+				Swal.fire('일정 수정이 완료되었습니다.', '', 'info').then(() => {
 		        document.querySelector('#updateCalForm').submit();
 		      	});
    			}
@@ -199,7 +202,7 @@ function deleteCal(calNo){
 		}).then(result => {
    		// 만약 Promise리턴을 받으면,
 			if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
-				Swal.fire('일정이 삭제되었습니다.', '', 'success').then(() => {
+				Swal.fire('일정 삭제', '일정이 삭제되었습니다.', 'error').then(() => {
 		        document.querySelector('#deleteCal').submit();
 		      	});
    			}

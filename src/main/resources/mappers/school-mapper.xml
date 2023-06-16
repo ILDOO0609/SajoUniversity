@@ -322,7 +322,7 @@
 		    , MEM_EMAIL
 		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 		    , MEM_IMAGE
-		    , DECODE(MEM_ROLE, 'stf', '교직원', 'pro', '교수') 
+		    , DECODE(MEM_ROLE, 'stf', '교직원', 'pro', '교수') AS MEM_ROLE 
 		FROM EMP EMP, COLLEAGE COLL, DEPT DP, MEMBER MEM
 		WHERE EMP.COLL_NO = COLL.COLL_NO
 		AND EMP.DEPT_NO = DP.DEPT_NO
@@ -343,7 +343,7 @@
 		    , MEM_EMAIL
 		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 		    , MEM_IMAGE
-		    , DECODE(MEM_ROLE, 'stf', '교직원', 'pro', '교수') 
+		    , DECODE(MEM_ROLE, 'stf', '교직원', 'pro', '교수') AS MEM_ROLE
 		FROM MEMBER MEM
 		WHERE MEM_NO = #{memNo}
 		AND MEM_ROLE != 'stu'
@@ -1168,6 +1168,13 @@
 	</select>
 	
 	
+	<select id="getAttachedFileInfo" resultMap="schInfoFile">
+		SELECT SCH_FILE_CODE
+			, SCH_ORIGIN_FILE_NAME
+			, SCH_ATTACHED_FILE_NAME
+		FROM SCHINFO_FILE
+		WHERE SCH_FILE_CODE = #{schFileCode}
+	</select>
 	
 	
 	

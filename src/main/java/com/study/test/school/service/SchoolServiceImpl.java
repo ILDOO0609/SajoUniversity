@@ -452,6 +452,11 @@ public class SchoolServiceImpl implements SchoolService{
 	public int getStatusCntForDeptManage(SearchVO searchVO) {
 		return sqlSession.selectOne("schoolMapper.getStatusCntForDeptManage", searchVO);
 	}
+	
+	@Override
+	public SchInfoFileVO getAttachedFileInfo(String schFileCode) {
+		return sqlSession.selectOne("schoolMapper.getAttachedFileInfo", schFileCode);
+	}
 
 
 	

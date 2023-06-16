@@ -89,7 +89,7 @@ function add() {
         document.querySelector('#deleteBtn').style.display = "inline";
     } 
     else {
-        alert("최대 4개까지만 추가할 수 있습니다.");
+        alert("최대 5개까지만 추가할 수 있습니다.");
     }
 }
 
@@ -286,7 +286,7 @@ function regValidate(){
 	let str_name = '';
 	
 	if(lec_name.value == ''){
-		str_name = '<div style="color:red; font-size:14px;" class="my-invalid">교과목명은 필수입니다.</div>';
+		str_name = '<span style="color:red; font-size:14px;">강의명은 필수입니다.</span>';
 		result_name = false;
 	}
 	

@@ -168,6 +168,7 @@
 		FROM LECTURE LEC, DEPT, LECTURE_TIME TIME
 		WHERE LEC.DEPT_NO = DEPT.DEPT_NO
 		AND LEC.LEC_NO = TIME.LEC_NO
+		AND LEC_STATUS = 'Y'
 		AND #{empNo} = LEC.EMP_NO
 	</select>
 	
@@ -290,6 +291,7 @@
 		    AND ((FIRST_TIME &lt;= #{lecTime.firstTime} AND LAST_TIME &gt;= #{lecTime.firstTime}) 
 		    OR (FIRST_TIME &lt;= #{lecTime.lastTime} AND LAST_TIME &gt;= #{lecTime.lastTime})) 
 		    AND TIME.LEC_NO = LEC.LEC_NO
+		    AND LEC_STATUS = 'Y'
 		    AND LEC.EMP_NO = #{empNo}
 		    <if test="lecTime.lecNo!=null">
 		    	AND LEC.LEC_NO != #{lecTime.lecNo}

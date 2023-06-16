@@ -41,47 +41,25 @@ function lecScheduleAjax() {
         }
     });
 }
-function pdf(){
-	//시간표 pdf로 새창 띄우기
-   const body_tag = document.querySelector('.schedule-table');
-   // 현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환
-   html2canvas(document.querySelector('.schedule-table'), {
-      scale:3,
-      onrendered: function(body_tag) {
-      
-      
-         // 캔버스를 이미지로 변환
-         var imgData = body_tag.toDataURL('image/png');
 
-         var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
-         var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
-         var imgHeight = body_tag.height * imgWidth / body_tag.width;
-         var heightLeft = imgHeight;
-
-         var doc = new jsPDF('p', 'mm');
-         var position = 0;
-
-         // 첫 페이지 출력
-         doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-         heightLeft -= pageHeight;
-
-         // 한 페이지 이상일 경우 루프 돌면서 출력
-         while (heightLeft >= 20) {
-            position = heightLeft - imgHeight;
-            doc.addPage();
-            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-         }
-
-         // 파일 저장
-         doc.save('강의시간표.pdf');
-
-
-         //이미지로 표현
-         //document.write('<img src="'+imgData+'" />');
-      }
-
+function pdf() {
+   // 캡쳐 라이브러리를 통해서 canvas 오브젝트를 받고 이미지 파일로 리턴한다.
+   html2canvas(document.querySelector(".schedule-table")).then(canvas => {
+      saveAs(canvas.toDataURL('image/png'), `시간표.png`);
    });
-
 }
 
+
+function saveAs(uri, filename) {
+   // 캡쳐된 파일을 이미지 파일로 내보낸다.
+   var link = document.createElement('a');
+   if (typeof link.download === 'string') {
+      link.href = uri;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+   } else {
+      window.open(uri);
+   }
+}

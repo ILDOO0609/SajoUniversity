@@ -51,49 +51,27 @@ function drawDeptSelectbox(deptList){
 //학생조회 검색
 function searchStuList(){
 	const searchValue = document.querySelector('#searchStuInput').value;
-	const collNo = document.querySelector('select[name="collNo"]').value;
-	const deptNo = document.querySelector('select[name="deptNo"]').value;
-
-	//ajax start
-	$.ajax({
-	   url: '/school/searchStuListAjax', //요청경로
-	   type: 'post',
-	   data: {'searchValue':searchValue, 'collNo' : collNo, 'deptNo' : deptNo}, //필요한 데이터
-	   success: function(result) {
-			console.log(result)
-			const tbodyTag = document.querySelector('#stuTable > tbody');
-			tbodyTag.replaceChildren();
-			
-			let str = '';
-			
-			if(result.length == 0){
-					str += `<tr>`;
-					str += `<td colspan="7">조회된 회원이 없습니다.</td>`;
-					str += `</tr>`;
-			}
-			else{
-				for(const stu of result){
-					str += `<tr style="cursor: pointer;" onclick="openStuModal('${stu.stuNo}');">`;
-					str += `<td>${stu.memNo}</td>`;
-					str += `<td>${stu.colleageVO.collName}</td>`;
-					str += `<td>${stu.memberVO.memName}</td>`;
-					str += `<td colspan="2">${stu.deptVO.deptName}</td>`;
-					str += `<td>${stu.stuYear}</td>`;
-					str += `<td>${stu.stuStatus}</td>`;
-					str += `</tr>`;
-				}
-			}
-			tbodyTag.insertAdjacentHTML('afterbegin', str);
-
-	   },
-	   error: function() {
-	      alert('실패');
-	   }
-	});
-	//ajax end
+//	const collNo = document.querySelector('select[name="collNo"]').value;
+//	const deptNo = document.querySelector('select[name="deptNo"]').value;
 	
+	if(searchValue == ''){
+		Swal.fire('검색 실패', '검색할 학생명을 입력하세요.', 'error')
+		.then(() => {
+		        
+		})
+		return;
+	}
+	
+	document.querySelector('#checkStuSearchForm').submit();
 	
 }
+
+//전체 페이지(1, 2, 3, ...) 클릭 시
+function stuListPaging(pageNum){
+	document.querySelector('#nowPageForStu').value = pageNum;
+	document.querySelector('#checkStuSearchForm').submit();
+}
+
 
 //학생조회 -> 학생 클릭시 상세창 모달 실행
 function openStuModal(stuNo){

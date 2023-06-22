@@ -202,20 +202,17 @@ function searchProbList(){
 			console.log(result)
 			const stuProbListTag = document.querySelector('.stuProbListTag');
 			stuProbListTag.replaceChildren();
-			const tbodyTag = document.querySelector('#warningTable > tbody');
-			tbodyTag.replaceChildren();
 			
 			let str = '';
 			
 			if(result.length == 0){
-					str += `<tr>`;
+					str += `<tr style="text-align: center;">`;
 					str += `<td colspan="8">조회된 회원이 없습니다.</td>`;
 					str += `</tr>`;
 			}
 			else{
 				for(const stu of result){
 					str += `<tr>`;
-					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.memNo}</td>`;
 					str += `<td><input type="checkbox" class="form-check-input chk" id="stuNo" value="${stu.stuNo}"></td>`;
 					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');" id="memNo" value="${stu.memNo}">${stu.memNo}</td>`;
 					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.memberVO.memName}</td>`;
@@ -223,12 +220,6 @@ function searchProbList(){
 					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.stuSem}학기</td>`;
 					str += `<td style="cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.colleageVO.collName}</td>`;
 					str += `<td colspan="2" style="text-align: center; cursor: pointer;" onclick="openWarningModal('${stu.stuNo}');">${stu.deptVO.deptName}</td>`;
-					str += `<td style="cursor: pointer;" id="memNo" value="${stu.memNo}" onclick="openWarningModal('${stu.stuNo}');">${stu.memNo}</td>`;
-					str += `<td>${stu.memberVO.memName}</td>`;
-					str += `<td>${stu.stuYear}</td>`;
-					str += `<td>${stu.stuSem}학기</td>`;
-					str += `<td colspan="2">${stu.deptVO.deptName}</td>`;
-					str += `<td>${stu.colleageVO.collName}</td>`;
 					str += `</tr>`;
 				}
 			}

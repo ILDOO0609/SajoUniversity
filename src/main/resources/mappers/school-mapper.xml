@@ -109,9 +109,8 @@
 			, SCH_INFO_NUM
 			, SCH_INFO_READ_CNT
 		FROM SCHOOL_INFORMATION
-		WHERE 1=1
-		<if test='schInfoSearch != null and !schInfoSearch.equals("")'>
-		AND UPPER(SCH_INFO_TITLE) LIKE '%'||UPPER(#{schInfoSearch})||'%'
+		<if test='searchValue!=null and !searchValue.equals("")'>
+		WHERE UPPER(SCH_INFO_TITLE) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
 		ORDER BY SCH_INFO_NUM DESC
 		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
@@ -152,7 +151,7 @@
 	</select>
 		
 	<!-- 조회수 증가쿼리 -->
-	<update id="updateSchoolBoardReadCnt">
+	<update id="updateSchInfoReadCnt">
 		UPDATE SCHOOL_INFORMATION
 		SET
 			SCH_INFO_READ_CNT = SCH_INFO_READ_CNT + 1
@@ -188,12 +187,11 @@
 	<select id="schInfoListCnt" resultType="int">
 		SELECT COUNT(SCH_INFO_CODE)
 		FROM SCHOOL_INFORMATION
+		<if test='searchValue!=null and !searchValue.equals("")'>
+		WHERE UPPER(SCH_INFO_TITLE) LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
 	</select>
 
-	
-	
-	
-	
 	
 	<!-- 학사조회 -> 학생조회 -->
 	<select id="checkStuList" resultMap="stuMapper.stu">
@@ -214,12 +212,6 @@
 		<if test='searchValue != null and !searchValue.equals("")'>
 		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
 		</if>
-		<if test="collNo != null and collNo != ''">
-		AND COLL.COLL_NO = #{collNo}
-		</if>
-		<if test="deptNo != null and deptNo != ''">
-		AND DP.DEPT_NO = #{deptNo}
-		</if>
 		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	<!-- 학생수 데이터 조회 -->
@@ -231,12 +223,6 @@
 		AND ST.MEM_NO = MEM.MEM_NO
 		<if test='searchValue != null and !searchValue.equals("")'>
 		AND UPPER(MEM_NAME) LIKE '%'||UPPER(#{searchValue})||'%'
-		</if>
-		<if test="collNo != null and collNo != ''">
-		AND COLL.COLL_NO = #{collNo}
-		</if>
-		<if test="deptNo != null and deptNo != ''">
-		AND DP.DEPT_NO = #{deptNo}
 		</if>
 	</select>
 	

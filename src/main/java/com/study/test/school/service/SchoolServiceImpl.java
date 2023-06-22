@@ -49,8 +49,8 @@ public class SchoolServiceImpl implements SchoolService{
 	
 	//학사안내 게시글 목록조회
 	@Override
-	public List<SchoolInfoVO> getSchoolInfoList(SchoolInfoVO schoolInfoVO) {
-		return sqlSession.selectList("schoolMapper.getSchoolInfo", schoolInfoVO);
+	public List<SchoolInfoVO> getSchoolInfoList(SearchVO searchVO) {
+		return sqlSession.selectList("schoolMapper.getSchoolInfo", searchVO);
 	}
 	//학사안내 게시글 목록조회 -> 검색
 	@Override
@@ -80,8 +80,8 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	//학사안내 게시글 조회수
 	@Override
-	public void updateSchoolBoardReadCnt(String schInfoCode) {
-		sqlSession.update("schoolMapper.updateSchoolBoardReadCnt", schInfoCode);
+	public void updateSchInfoReadCnt(String schInfoCode) {
+		sqlSession.update("schoolMapper.updateSchInfoReadCnt", schInfoCode);
 	}
 	
 	//학사안내 게시글 이전글 다음글
@@ -110,8 +110,8 @@ public class SchoolServiceImpl implements SchoolService{
 	
 	//학사안내 게시글 전체 데이터 수 조회
 	@Override
-	public int schInfoListCnt() { 
-		return sqlSession.selectOne("schoolMapper.schInfoListCnt");
+	public int schInfoListCnt(SearchVO searchVO) { 
+		return sqlSession.selectOne("schoolMapper.schInfoListCnt", searchVO);
 	}
 	
 	//학사일정 일정 목록
@@ -131,8 +131,8 @@ public class SchoolServiceImpl implements SchoolService{
 	
 	//학생 조회
 	@Override
-	public List<StuVO> checkStuList(StuVO stuVO) {
-		return sqlSession.selectList("schoolMapper.checkStuList",stuVO);
+	public List<StuVO> checkStuList(SearchVO searchVO) {
+		return sqlSession.selectList("schoolMapper.checkStuList", searchVO);
 	}
 	//학생 조회 -> 검색
 	@Override
@@ -146,8 +146,8 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	//학생 수 조회
 	@Override
-	public int getStuListCnt() {
-		return sqlSession.selectOne("schoolMapper.getStuListCnt");
+	public int getStuListCnt(SearchVO searchVO) {
+		return sqlSession.selectOne("schoolMapper.getStuListCnt", searchVO);
 	}
 
 	
@@ -199,7 +199,6 @@ public class SchoolServiceImpl implements SchoolService{
 	//학적변동 -> 휴학승인 승인완료조회
 	@Override
 	public List<StatusInfoVO> getStatusInfoAppList() {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("schoolMapper.getStatusInfoAppList");
 	}
 	//학적변동 -> 휴학승인 승인취소조회

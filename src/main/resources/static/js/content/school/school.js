@@ -55,60 +55,25 @@ function infoSelectMonth(){
 
 //검색버튼 클릭시 실행
 function infoSearchList(){
-	const schInfoSearch = document.querySelector('#schInfoSearchInput').value;
+	const searchValue = document.querySelector('#searchInfoInput').value;
 	
-	if(schInfoSearch == ''){
+	if(searchValue == ''){
 		Swal.fire('검색 실패', '검색할 제목을 입력하세요.', 'error')
 		.then(() => {
 		        
 		})
-		
-		
 		return;
 	}
 	
-	//ajax start
-	$.ajax({
-		url: '/school/searchInfoListAjax', //요청경로
-		type: 'post',
-		async: true,
-		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		data: {'schInfoSearch':schInfoSearch}, //필요한 데이터
-		success: function(result) {
-			console.log(result);
-			const infoTbodyTag = document.querySelector('#schInfoTable tbody');
-			infoTbodyTag.replaceChildren();	
-			
-			let str = '';
-			
-			result.forEach(function(info){
-				
-				str += `<tr>`;
-				str += `<td>${info.schInfoNum}</td>`;
-				str += `<td>`;
-				str += `<a href="/school/schoolBoardDetail?schInfoCode=${info.schInfoCode}">${info.schInfoTitle}</a>`;
-				str += `</td>`;
-				str += `<td>${info.schInfoDate}</td>`;
-				str += `<td>${info.schInfoStartDate} ~ ${info.schInfoEndDate}</td>`;
-				str += `</tr>`;
-			});
-			
-			infoTbodyTag.insertAdjacentHTML('afterbegin', str);
-			
-			
-			
-		},
-		
-		error: function() {
-			alert('실패');
-		}
-		
-		
-	});
-	//ajax end
-	
+	document.querySelector('#schInfoSearchForm').submit();
 	
 }
+//페이징
+function schInfoPaging(pageNum){
+	document.querySelector('#nowPageForInfo').value=pageNum;
+	document.querySelector('#schInfoSearchForm').submit();
+}
+
 
 //학사안내 글등록
 function regSchInfo(){

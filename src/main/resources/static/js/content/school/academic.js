@@ -13,14 +13,6 @@ function returnPaging(pageNum){
 }
 
 
-//검색버튼 클릭시 실행
-function searchOrderList(){
-	const search_form = document.querySelector('#searchForm');
-	
-	search_form.submit();	
-	
-}
-
 //휴학신청 승인완료 클릭시 실행
 function updateLeaveApp(){
 	const check_box = document.querySelector('#leaveTable');

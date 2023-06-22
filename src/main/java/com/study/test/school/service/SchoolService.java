@@ -25,7 +25,7 @@ public interface SchoolService {
 	//학사안내 다음 등록될 글 조회
 	String getNextInfoCode();
 	//학사안내 게시글 목록조회
-	List<SchoolInfoVO> getSchoolInfoList(SchoolInfoVO schoolInfoVO);
+	List<SchoolInfoVO> getSchoolInfoList(SearchVO searchVO);
 	//학사안내 목록조회 -> 검색
 	List<SchoolInfoVO> searchInfoListAjax(SchoolInfoVO schoolInfoVO);
 	//학사안내 목록조회 -> 월 셀렉박스 변경시 
@@ -39,7 +39,7 @@ public interface SchoolService {
 	SchInfoFileVO getAttachedFileInfo(String schFileCode);
 	
 	//학사안내 게시글 조회수
-	void updateSchoolBoardReadCnt(String schInfoCode);
+	void updateSchInfoReadCnt(String schInfoCode);
 	
 	//학사안내 게시글 이전글 다음글
 	SchoolInfoVO movePage(String schInfoCode);
@@ -54,7 +54,7 @@ public interface SchoolService {
 	void deleteSchoolInfo(String schInfoCode); 
 	
 	//학사안내 게시글 전체 데이터 수 조회
-	int schInfoListCnt();
+	int schInfoListCnt(SearchVO searchVO);
 	
 
 	//학사일정 일정 목록
@@ -68,13 +68,13 @@ public interface SchoolService {
 	List<DeptVO> getDeptNameAjax(String collNo);
 	
 	//학생 조회
-	List<StuVO> checkStuList(StuVO stuVO);
+	List<StuVO> checkStuList(SearchVO searchVO);
 	//학생 조회 -> 검색
 	List<StuVO> searchStuListAjax(StuVO stuVO);
 	//학생 조회 -> 회원클릭시 모달창
 	List<StuVO> checkStuModal(String stuNo);
 	//학생 수 조회
-	int getStuListCnt();
+	int getStuListCnt(SearchVO searchVO);
 	
 	//교수 조회
 	List<EmpVO> checkProList(LectureVO lectureVO);

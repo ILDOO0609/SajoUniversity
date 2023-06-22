@@ -60,22 +60,20 @@ public class SchoolController {
 	
 	//학사메뉴 -> 학사안내 페이지
 	@RequestMapping("/info")
-	public String schoolInfo(Model model, SchoolInfoVO schoolInfoVO, @RequestParam(required = false, defaultValue = "0") int year) {
+	public String schoolInfo(Model model, @RequestParam(required = false, defaultValue = "0") int year, SearchVO searchVO) {
 		//검색 년도
 		if(year == 0) {
 			year = DateUtill.getYear();
 		}
-		
 		model.addAttribute("year", year);
 		model.addAttribute("thisYear", DateUtill.getYear());
 		
 		//전체 데이터 수 조회
-		schoolInfoVO.setTotalDataCnt(schoolService.schInfoListCnt());
-		schoolInfoVO.setPageInfo();
-		schoolInfoVO.setDisplayCnt(10);
-		
+		searchVO.setDisplayCnt(10);
+		searchVO.setTotalDataCnt(schoolService.schInfoListCnt(searchVO));
+		searchVO.setPageInfo();
 		//게시글 조회
-		model.addAttribute("infoList", schoolService.getSchoolInfoList(schoolInfoVO));
+		model.addAttribute("infoList", schoolService.getSchoolInfoList(searchVO));
 		
 		return "content/school/school/school_info";
 	}
@@ -137,7 +135,7 @@ public class SchoolController {
 		model.addAttribute("detailList", schoolService.schoolBoardDetail(schInfoCode));
 		model.addAttribute("fileList", schoolService.getFileList(schInfoCode));
 		//조회수
-		schoolService.updateSchoolBoardReadCnt(schInfoCode);
+		schoolService.updateSchInfoReadCnt(schInfoCode);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+schoolInfoVO);
 		//이전글다음글
 		String numberStr = schInfoCode.substring(9);
@@ -247,9 +245,6 @@ public class SchoolController {
 	
 //-------------------------------학사조회--------------------------------------------
 	
-	
-	
-	
 	//학사조회 -> 메인페이지
 	@GetMapping("/checkMain")
 	public String checkMain() {
@@ -267,31 +262,31 @@ public class SchoolController {
 	
 	//학사조회 -> 학생조회 페이지
 	@RequestMapping("/checkStu")
-	public String checkStu(Model model, StuVO stuVO) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@");
+	public String checkStu(Model model, SearchVO searchVO) {
 		//단과대학 정보 조회
 		model.addAttribute("colleageList", colleageService.getColleageList());
 		//전공학과 정보 조회
 		model.addAttribute("deptList", colleageService.getDeptList());
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+searchVO);
 		//학생 수 조회
-		stuVO.setTotalDataCnt(schoolService.getStuListCnt());
-		stuVO.setDisplayCnt(10);
-		stuVO.setPageInfo();
+		searchVO.setDisplayCnt(10);
+		searchVO.setTotalDataCnt(schoolService.getStuListCnt(searchVO));
+		searchVO.setPageInfo();
 		//학생조회
-		model.addAttribute("stuList", schoolService.checkStuList(stuVO));
+		model.addAttribute("stuList", schoolService.checkStuList(searchVO));
 		return "content/school/check/check_stu";
 	}
-	//학사조회 -> 학생조회 -> 학생검색
-	@ResponseBody
-	@PostMapping("/searchStuListAjax")
-	public List<StuVO> searchStuListAjax(StuVO stuVO, MemberVO memberVO){
-		stuVO.setMemberVO(memberVO);
-		stuVO.setTotalDataCnt(schoolService.getStuListCnt());
-		stuVO.setDisplayCnt(15);
-		stuVO.setPageInfo();
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2" + stuVO);
-		return schoolService.searchStuListAjax(stuVO);
-	}
+//	//학사조회 -> 학생조회 -> 학생검색
+//	@ResponseBody
+//	@PostMapping("/searchStuListAjax")
+//	public List<StuVO> searchStuListAjax(StuVO stuVO, MemberVO memberVO){
+//		stuVO.setMemberVO(memberVO);
+//		stuVO.setTotalDataCnt(schoolService.getStuListCnt());
+//		stuVO.setDisplayCnt(15);
+//		stuVO.setPageInfo();
+//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2" + stuVO);
+//		return schoolService.searchStuListAjax(stuVO);
+//	}
 	//학사조회 -> 학생조회 -> 상세모달창
 	@ResponseBody
 	@PostMapping("/getStuModalAjax")

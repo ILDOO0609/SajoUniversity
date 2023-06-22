@@ -15,6 +15,8 @@
 		<div class="col mb-3" >
 			<div class="row">
 				<div class="col" style="padding-right: 0px;">
+					<form id="checkStuSearchForm" th:action="@{/school/checkStu}" method="post">
+					<input type="hidden" name="nowPage" th:value="${searchVO.nowPage}" id="nowPageForStu">
 					<table class="table table-hover" id="stuTable">
 						<colgroup>
 							<col width="15%">					
@@ -84,6 +86,7 @@
 							</tr>	
 						</tbody>	
 					</table>
+					</form>
 				</div>
 			</div>
 		</div>	
@@ -93,16 +96,18 @@
 				<div class="col-3">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination" >
-							<li class="page-item" th:classappend="${stuVO.prev ? '' : 'disabled'}">
-								<a class="page-link" href="javascript:void(0);" th:href="@{/school/checkStu(nowPage=${stuVO.beginPage-1})}" aria-label="Previous">
+							<li class="page-item" th:classappend="${searchVO.prev ? '' : 'disabled'}">
+								<a class="page-link" href="javascript:void(0);" th:onclick="stuListPaging([[${searchVO.beginPage - 1}]]);" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
-							<th:block th:each="pageNum : ${#numbers.sequence(stuVO.beginPage, stuVO.endPage)}">
-								<li class="page-item"><a th:classappend="${stuVO.nowPage == pageNum ? 'active' : ''}" class="page-link" th:href="@{/school/mcheckStu(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
-							</th:block>
-							<li class="page-item" th:classappend="${stuVO.next ? '' : 'disabled'}">
-								<a class="page-link" href="javascript:void(0);" th:href="@{/school/checkStu(nowPage=${stuVO.endPage+1})}" aria-label="Next">
+							<li class="page-item" th:each="pageNum : ${#numbers.sequence(searchVO.beginPage, searchVO.endPage)}">
+						    	<a class="page-link" href="javascript:void(0)" th:onclick="stuListPaging([[${pageNum}]])" th:classappend="${searchVO.nowPage == pageNum ? 'active' : ''}">
+						    		[[${pageNum}]]
+						    	</a>
+						    </li>
+							<li class="page-item" th:classappend="${searchVO.next ? '' : 'disabled'}">
+								<a class="page-link" href="javascript:void(0);" th:onclick="stuListPaging([[${searchVO.endPage + 1}]]);" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>

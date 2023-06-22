@@ -12,6 +12,7 @@
 		</div>
 	</div>
 		<form id="schInfoSearchForm" th:action="@{/school/info}" method="post">
+		<input type="hidden" name="nowPage" th:value="${searchVO.nowPage}" id="nowPageForInfo">
 			<div class="row" style="padding-bottom: 15px;">
 			 	<div class="col-3">
 					<select class="form-select" id="schInfoYear" name="schInfoYear" onchange="schInfoYear">
@@ -22,7 +23,7 @@
 			 	</div>
 			 	<div class="col-3">
 			 		<select class="form-select" id="schInfoMonth" name="schInfoMonth" onchange="infoSelectMonth();">
-						<option value="allMonth">전체(월)</option>
+						<option value="0">전체(월)</option>
 						<option value="1">1월</option>
 						<option value="2">2월</option>
 						<option value="3">3월</option>
@@ -38,7 +39,7 @@
 					</select>
 			 	</div>
 			 	<div class="col-4">
-			 		<input type="text" class="form-control" id="schInfoSearchInput" placeholder="제목을 입력해 주세요.">
+			 		<input type="text" class="form-control" id="searchInfoInput" name="searchValue" placeholder="제목을 입력해 주세요.">
 			 	</div>
 			 	<div class="col-2 d-grid">
 			 		<input type="button" class="btn btn-primary" value="검색" onclick="infoSearchList();">
@@ -101,16 +102,18 @@
 				<div class="col-3">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination" >
-							<li class="page-item" th:classappend="${schoolInfoVO.prev ? '' : 'disabled'}">
-								<a class="page-link" href="javascript:void(0);" th:href="@{/school/info(nowPage=${schoolInfoVO.beginPage-1})}" aria-label="Previous">
+							<li class="page-item" th:classappend="${searchVO.prev ? '' : 'disabled'}">
+								<a class="page-link" href="javascript:void(0);" th:onclick="schInfoPaging([[${searchVO.beginPage - 1}]])" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
-							<th:block th:each="pageNum : ${#numbers.sequence(schoolInfoVO.beginPage, schoolInfoVO.endPage)}">
-								<li class="page-item"><a th:classappend="${schoolInfoVO.nowPage == pageNum ? 'active' : ''}" class="page-link" th:href="@{/school/info(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
-							</th:block>
-							<li class="page-item" th:classappend="${schoolInfoVO.next ? '' : 'disabled'}">
-								<a class="page-link" href="javascript:void(0);" th:href="@{/school/info(nowPage=${schoolInfoVO.endPage+1})}" aria-label="Next">
+							<li class="page-item" th:each="pageNum : ${#numbers.sequence(searchVO.beginPage, searchVO.endPage)}">
+						    	<a class="page-link" href="javascript:void(0)" th:onclick="schInfoPaging([[${pageNum}]])" th:classappend="${searchVO.nowPage == pageNum ? 'active' : ''}">
+						    		[[${pageNum}]]
+						    	</a>
+						    </li>
+							<li class="page-item" th:classappend="${searchVO.next ? '' : 'disabled'}">
+								<a class="page-link" href="javascript:void(0);" th:onclick="schInfoPaging([[${searchVO.endPage + 1}]])" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>

@@ -73,6 +73,11 @@ public class SchoolServiceImpl implements SchoolService{
 	public List<SchInfoFileVO> getFileList(String schInfoCode) {
 		return sqlSession.selectList("schoolMapper.getFileList", schInfoCode);
 	}
+	//학사안내 게시글 -> 다운로드 할 파일명 조회
+	@Override
+	public SchInfoFileVO getAttachedFileInfo(String schFileCode) {
+		return sqlSession.selectOne("schoolMapper.getAttachedFileInfo", schFileCode);
+	}
 	//학사안내 게시글 조회수
 	@Override
 	public void updateSchoolBoardReadCnt(String schInfoCode) {
@@ -440,23 +445,22 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	
 	// -------페이지 처리위한 데이터개수 조회------------------------------------------------------//
+	//휴학관리
 	@Override
 	public int getStatusCntForLeave(SearchVO searchVO) {
 		return sqlSession.selectOne("schoolMapper.getStatusCntForLeave", searchVO);
 	}
+	//복학관리
 	@Override
 	public int getStatusCntForReturn(SearchVO searchVO) {
 		return sqlSession.selectOne("schoolMapper.getStatusCntForReturn", searchVO);
 	}
+	//복수전공관리
 	@Override
 	public int getStatusCntForDeptManage(SearchVO searchVO) {
 		return sqlSession.selectOne("schoolMapper.getStatusCntForDeptManage", searchVO);
 	}
 	
-	@Override
-	public SchInfoFileVO getAttachedFileInfo(String schFileCode) {
-		return sqlSession.selectOne("schoolMapper.getAttachedFileInfo", schFileCode);
-	}
 
 
 	

@@ -89,6 +89,15 @@
 			FROM DUAL
 		</foreach>
 	</insert>	
+	<!--  학사안내 글등록 -> 첨부된 파일조회 -->
+	<select id="getAttachedFileInfo" resultMap="schInfoFile">
+		SELECT SCH_FILE_CODE
+			, SCH_ORIGIN_FILE_NAME
+			, SCH_ATTACHED_FILE_NAME
+		FROM SCHINFO_FILE
+		WHERE SCH_FILE_CODE = #{schFileCode}
+	</select>
+	
 	<!-- 학사안내 글 조회 -->
 	<select id="getSchoolInfo" resultMap="school">
 		SELECT SCH_INFO_CODE
@@ -387,6 +396,26 @@
 		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	
+	<!-- 휴학 신청 승인대기중인 학생수 조회 -->
+	<select id="getStatusCntForLeave" resultType="int">
+		SELECT COUNT(STATUS_NO) 
+		FROM STATUS_INFO SI, MEMBER MB, STU, COLLEAGE COLL 
+		WHERE MB.MEM_NO = STU.MEM_NO
+		AND STU.STU_NO = SI.STU_NO
+		AND STU.COLL_NO = COLL.COLL_NO
+		AND ING_STATUS = 'I' 
+		AND NOW_STATUS = 'E'
+		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
+		</if>
+		<if test='searchFromDate!=null and !searchToDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+	</select>
+	
 	<!-- 휴학관리 승인 조회-->
 	<select id="getStatusInfoAppList" resultMap="stuMapper.status">
 		SELECT
@@ -545,7 +574,25 @@
 		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
 	
-	
+	<!-- 복학 신청 승인대기중인 학생수 조회 -->
+	<select id="getStatusCntForReturn" resultType="int">
+		SELECT COUNT(STATUS_NO) 
+		FROM STATUS_INFO SI, MEMBER MB, STU, DEPT 
+		WHERE MB.MEM_NO = STU.MEM_NO
+		AND STU.STU_NO = SI.STU_NO
+		AND STU.DEPT_NO = DEPT.DEPT_NO
+		AND ING_STATUS = 'I' 
+		AND NOW_STATUS = 'A'
+		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
+		</if>
+		<if test='searchFromDate!=null and !searchToDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+	</select>
 	<!-- 복학관리 승인 조회-->
 	<select id="getStatusReturnAppList" resultMap="stuMapper.status">
 		SELECT
@@ -696,9 +743,9 @@
 			, MEM_NAME
 			, STU.MEM_NO
 			, APPLY_REASON
-		FROM DEPT_MANAGE, STU, COLLEAGE COLL, DEPT, MEMBER MEM
+		FROM DEPT_MANAGE, STU, COLLEAGE COLL, DEPT, MEMBER MB
 		WHERE PROCESS_STATUS = 'I'
-		AND MEM.MEM_NO = STU.MEM_NO
+		AND MB.MEM_NO = STU.MEM_NO
 		AND STU.STU_NO = DEPT_MANAGE.STU_NO
 		AND COLL.COLL_NO = DEPT_MANAGE.MULTI_MAJOR_COLL
 		AND DEPT.DEPT_NO = DEPT_MANAGE.MULTI_MAJOR_DEPT
@@ -761,6 +808,25 @@
 		AND STU.STU_NO = DEPT_MANAGE.STU_NO
 		AND COLL.COLL_NO = DEPT_MANAGE.MULTI_MAJOR_COLL
 		AND DEPT.DEPT_NO = DEPT_MANAGE.MULTI_MAJOR_DEPT
+	</select>
+	
+	<!-- 복수전공 신청 승인대기중인 학생수 조회 -->
+	<select id="getStatusCntForDeptManage" resultType="int">
+		SELECT COUNT(APPLY_NO) 
+		FROM DEPT_MANAGE DM, MEMBER MEM, STU, COLLEAGE COLL 
+		WHERE MEM.MEM_NO = STU.MEM_NO
+		AND STU.STU_NO = DM.STU_NO
+		AND STU.COLL_NO = COLL.COLL_NO
+		AND PROCESS_STATUS = 'I'
+		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
+		</if>
+		<if test='searchFromDate!=null and !searchToDate.equals("")'>
+			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
 	</select>
 	
 	<!-- 복수전공관리 신청회원 조회 -->
@@ -1098,6 +1164,7 @@
 		WHERE MEM_NO = #{memNo}
 	</select>
 	
+	
 	<!-- 회원메뉴 승인/취소 전체 데이터 수 조회 -->
 	<select id="getMemberListCnt" resultType="int">
 		SELECT COUNT(MEM_NO)
@@ -1116,65 +1183,9 @@
 		WHERE IS_CONFIRMED = 'N'
 	</select> 
 	
-	<!-- 휴학 신청 승인대기중인 학생수 조회 -->
-	<select id="getStatusCntForLeave" resultType="int">
-		SELECT COUNT(STATUS_NO) FROM STATUS_INFO SI, MEMBER MB, STU, COLLEAGE COLL WHERE MB.MEM_NO = STU.MEM_NO
-		AND STU.STU_NO = SI.STU_NO
-		AND STU.COLL_NO = COLL.COLL_NO
-		AND ING_STATUS = 'I' AND NOW_STATUS = 'E'
-		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
-			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
-		</if>
-		<if test='searchFromDate!=null and !searchToDate.equals("")'>
-			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
-		</if>
-		<if test='searchValue!=null and !searchValue.equals("")'>
-			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
-		</if>
-	</select>
-	
-	<!-- 복학 신청 승인대기중인 학생수 조회 -->
-	<select id="getStatusCntForReturn" resultType="int">
-		SELECT COUNT(STATUS_NO) FROM STATUS_INFO SI, MEMBER MB, STU, DEPT WHERE MB.MEM_NO = STU.MEM_NO
-		AND STU.STU_NO = SI.STU_NO
-		AND STU.DEPT_NO = DEPT.DEPT_NO
-		AND ING_STATUS = 'I' AND NOW_STATUS = 'A'
-		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
-			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
-		</if>
-		<if test='searchFromDate!=null and !searchToDate.equals("")'>
-			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
-		</if>
-		<if test='searchValue!=null and !searchValue.equals("")'>
-			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
-		</if>
-	</select>
-	
-	<!-- 복수전공 신청 승인대기중인 학생수 조회 -->
-	<select id="getStatusCntForDeptManage" resultType="int">
-		SELECT COUNT(APPLY_NO) FROM DEPT_MANAGE DM, MEMBER MB, STU, COLLEAGE COLL WHERE MB.MEM_NO = STU.MEM_NO
-		AND STU.STU_NO = DM.STU_NO
-		AND STU.COLL_NO = COLL.COLL_NO
-		AND PROCESS_STATUS = 'I'
-		<if test='searchFromDate!=null and !searchFromDate.equals("")'>
-			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &gt; #{searchFromDate}
-		</if>
-		<if test='searchFromDate!=null and !searchToDate.equals("")'>
-			AND TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') &lt; #{searchToDate}
-		</if>
-		<if test='searchValue!=null and !searchValue.equals("")'>
-			AND ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
-		</if>
-	</select>
 	
 	
-	<select id="getAttachedFileInfo" resultMap="schInfoFile">
-		SELECT SCH_FILE_CODE
-			, SCH_ORIGIN_FILE_NAME
-			, SCH_ATTACHED_FILE_NAME
-		FROM SCHINFO_FILE
-		WHERE SCH_FILE_CODE = #{schFileCode}
-	</select>
+	
 	
 	
 	

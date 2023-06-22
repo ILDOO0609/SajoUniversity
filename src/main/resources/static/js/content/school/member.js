@@ -105,6 +105,11 @@ function drawDeptSelectbox(deptList, coll){
 }
 
 
+//전체 페이지(1, 2, 3, ...) 클릭 시
+function getMemberListPaging(pageNum){
+	document.querySelector('#nowPage').value = pageNum;
+	
+}
 
 //회원메뉴 -> 승인/취소조회 -> 승인완료 조회
 function approveO(isConfirmed){
@@ -130,6 +135,7 @@ function approveO(isConfirmed){
 			
 			let str = '';
 			
+			//str += `<div class="col-12 mb-2 my-scroll">`;
 			if(result.length == 0){
 					str += `<tr>`;
 					str += `<td colspan="7">조회된 회원이 없습니다.</td>`;
@@ -159,7 +165,7 @@ function approveO(isConfirmed){
 			str1 += `<nav aria-label="Page navigation example">`;
 			str1 += `<ul class="pagination justify-content-center">`; // justify-content-center 클래스를 추가하여 가운데 정렬
 			str1 += `<li class="page-item ${memberVO.prev ? '' : 'disabled'}">`;
-			str1 += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.beginPage-1}" aria-label="Previous">`;
+			str1 += `<a class="page-link" href="javascript:void(0);" onclick="getMemberListPaging(${memberVO.beginPage - 1})" aria-label="Previous">`;
 			str1 += `<span aria-hidden="true">&laquo;</span>`;
 			str1 += `</a>`;
 			str1 += `</li>`;
@@ -169,7 +175,7 @@ function approveO(isConfirmed){
 			}
 			
 			str1 += `<li class="page-item ${memberVO.next ? '' : 'disabled'}">`;
-			str1 += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.endPage+1}" aria-label="Next">`;
+			str1 += `<a class="page-link" href="javascript:void(0);" onclick="getMemberListPaging(${memberVO.endPage + 1})" aria-label="Next">`;
 			str1 += `<span aria-hidden="true">&raquo;</span>`;
 			str1 += `</a>`;
 			str1 += `</li>`;

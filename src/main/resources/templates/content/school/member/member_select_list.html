@@ -64,7 +64,7 @@
 					<nav aria-label="Page navigation example">
 						<ul class="pagination" >
 							<li class="page-item" th:classappend="${memberVO.prev ? '' : 'disabled'}">
-								<a class="page-link" href="javascript:void(0);" th:href="@{/school/memberSelectList(nowPage=${memberVO.beginPage-1})}" aria-label="Previous">
+								<a class="page-link" href="javascript:void(0);" th:onclick="getMemberListPaging([[${memberVO.beginPage - 1}]]);" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
@@ -72,7 +72,7 @@
 								<li class="page-item"><a th:classappend="${memberVO.nowPage == pageNum ? 'active' : ''}" class="page-link" th:href="@{/school/memberSelectList(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
 							</th:block>
 							<li class="page-item" th:classappend="${memberVO.next ? '' : 'disabled'}">
-								<a class="page-link" href="javascript:void(0);" th:href="@{/school/memberSelectList(nowPage=${memberVO.endPage+1})}" aria-label="Next">
+								<a class="page-link" href="javascript:void(0);" th:onclick="getMemberListPaging([[${memberVO.endPage + 1}]]);" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>

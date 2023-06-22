@@ -35,6 +35,8 @@ public interface SchoolService {
 	SchoolInfoVO schoolBoardDetail(String schInfoCode);
 	//학사안내 게시글 -> 파일조회 
 	List<SchInfoFileVO> getFileList(String schInfoCode);
+	//학사안내 게시글 -> 다운로드 할 파일명 조회
+	SchInfoFileVO getAttachedFileInfo(String schFileCode);
 	
 	//학사안내 게시글 조회수
 	void updateSchoolBoardReadCnt(String schInfoCode);
@@ -198,6 +200,6 @@ public interface SchoolService {
 	int getStatusCntForLeave(SearchVO searchVO);
 	int getStatusCntForReturn(SearchVO searchVO);
 	int getStatusCntForDeptManage(SearchVO searchVO);
-	SchInfoFileVO getAttachedFileInfo(String schFileCode);
+	
 	
 }

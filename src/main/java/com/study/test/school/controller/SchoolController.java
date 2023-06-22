@@ -171,7 +171,7 @@ public class SchoolController {
 		return "content/school/school/school_board_detail";
 	}
 	
-	////학사메뉴 -> 글 상세 -> 파일 다운로드
+	//학사메뉴 -> 글 상세 -> 파일 다운로드
 	@PostMapping("/getFileDownload")
 	public void getFileDownload(HttpServletResponse response, SchInfoFileVO schInfoFileVO) {
 		
@@ -635,7 +635,6 @@ public class SchoolController {
 	@ResponseBody
 	@RequestMapping("/approveOAjax")
 	public Map<String, Object> approveO(String isConfirmed, MemberVO memberVO) {
-		
 		memberVO.setIsConfirmed(isConfirmed);
 		memberVO.setDisplayCnt(10);
 		int totalDateCnt = schoolService.getMemberAddListCnt();
@@ -648,7 +647,6 @@ public class SchoolController {
 		map.put("addList", schoolService.selectMemberAddList(memberVO));
 		
 		return map;
-		
 	}
 	//회원메뉴 -> 승인/취소 취소조회
 	@ResponseBody

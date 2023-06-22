@@ -99,7 +99,7 @@ const ctx = document.getElementById('myChart');
 					display: true,
 					position: 'left',
 					min: 0,
-					max: 10 
+					max: 70 
 				},
 				y1: {
 					beginAtZero: true,
@@ -107,7 +107,7 @@ const ctx = document.getElementById('myChart');
 					display: true,
 					position: 'right',
 					min: 0,
-					max: 10 // 휴학생수의 최대 범위를 가정하고 설정한 값
+					max: 70 // 휴학생수의 최대 범위를 가정하고 설정한 값
 				},
 				y2: {
 					beginAtZero: true,
@@ -115,7 +115,7 @@ const ctx = document.getElementById('myChart');
 					display: true,
 					position: 'right',
 					min: 0,
-					max: 10 // 등록생수의 최대 범위를 가정하고 설정한 값
+					max: 70 // 등록생수의 최대 범위를 가정하고 설정한 값
 				}
 			}
 		}

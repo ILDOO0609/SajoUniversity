@@ -145,21 +145,34 @@ a {
 }
 
 .title1 {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  position: relative;
+	font-size: 36px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	color: #333;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative;
 }
 
 .title1::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 2px;
-  background-color: #333;
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -6px;
+	height: 2px;
+	background-color: #333;
 }
+
+.title2 {
+	margin-left:20px;
+	margin-top:20px;
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	color: #333;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative;
+}
+

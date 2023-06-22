@@ -133,7 +133,7 @@ function openStuModal(stuNo){
 				str += `<td colspan="5">학생 기본정보</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
-				str += `<td rowspan="7"><img src="'/upload/${stu.memberVO.memImage}" style="width: 100%; height: 100%"></td>`;
+				str += `<td rowspan="7"><img src="/upload/${stu.memberVO.memImage}" style="width: 100%; height: 100%"></td>`;
 				str += `<td>학생No(ID)</td>`;
 				str += `<td colspan="3">${stu.memNo}</td>`;
 				str += `<tr>`;
@@ -462,7 +462,7 @@ function openProModal(empNo){
 				str += `<td colspan="5">교수 기본정보</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
-				str += `<td rowspan="7"><img src="'/upload/${emp.memberVO.memImage}" style="width: 100%; height: 100%"></td>`;
+				str += `<td rowspan="7"><img src="/upload/${emp.memberVO.memImage}" style="width: 100%; height: 100%"></td>`;
 				str += `<td>No(ID)</td>`;
 				str += `<td colspan="3">${emp.memberVO.memNo}</td>`;
 				str += `<tr>`;
@@ -555,7 +555,7 @@ function openStfModal(memNo){
 				str += `<td colspan="5">교직원 기본정보</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
-				str += `<td rowspan="7"><img src="'/upload/${stf.memImage}" style="width: 100%; height: 100%"></td>`;
+				str += `<td rowspan="7"><img src="/upload/${stf.memImage}" style="width: 100%; height: 100%"></td>`;
 				str += `<td>No(ID)</td>`;
 				str += `<td colspan="3">${stf.memNo}</td>`;
 				str += `<tr>`;

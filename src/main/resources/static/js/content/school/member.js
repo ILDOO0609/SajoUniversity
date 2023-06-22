@@ -315,13 +315,13 @@ function openModal(memNo){
 			str += `</colgroup>`;
 			
 			
-			result.forEach(function(member, index){
+			result.forEach(function(member){
 				str += `<tr>`;
-				str += `<td rowspan="8" ><img src="'/upload/${member.memImage}" style="width: 100%; height: 100%"></td>`;
+				str += `<td rowspan="8"><img src="/upload/${member.memImage}" style="width: 100%; height: 100%"></td>`;
 				str += `<td>회원명</td>`;
 				str += `<td colspan="3">${member.memName}</td>`;
 				str += `<tr>`;
-				str += `<td>회원No(ID)</td>	`;
+				str += `<td>회원No(ID)</td>`;
 				str += `<td colspan="3">${member.memNo}</td>`;
 				str += `</tr>`;
 				str += `<tr>`;

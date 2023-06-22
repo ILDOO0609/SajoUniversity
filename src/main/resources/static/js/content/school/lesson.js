@@ -113,7 +113,7 @@ function checkDoubleModal(applyNo){
 				str += `<td colspan="5">학생 기본정보</td>`;
 				str += `</tr>`;
 				str += `<tr>`;
-				str += `<td rowspan="7"><img src="'/upload/${status.stuVO.memberVO.memImage}" style="width: 100%; height: 100%"></td>`;
+				str += `<td rowspan="7"><img src="/upload/${status.stuVO.memberVO.memImage}" style="width: 100%; height: 100%"></td>`;
 				str += `<td>학생No(ID)</td>`;
 				str += `<td colspan="3">${status.stuVO.memNo}</td>`;
 				str += `<tr>`;
@@ -326,7 +326,7 @@ function openWarningModal(stuNo){
 			str += `<td colspan="5">학생 기본정보</td>`;
 			str += `</tr>`;
 			str += `<tr>`;
-			str += `<td rowspan="7"><img src="'/upload/${stuList[0]['MEM_IMAGE']}" style="width: 100%; height: 100%"></td>`;
+			str += `<td rowspan="7"><img src="/upload/${stuList[0]['MEM_IMAGE']}" style="width: 100%; height: 100%"></td>`;
 			str += `<td>학생No(ID)</td>`;
 			str += `<td colspan="3">${stuList[0]['MEM_NO']}</td>`;
 			str += `<tr>`;

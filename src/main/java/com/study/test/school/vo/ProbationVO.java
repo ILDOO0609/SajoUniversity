@@ -2,7 +2,6 @@ package com.study.test.school.vo;
 
 import com.study.test.colleage.vo.SemesterVO;
 import com.study.test.member.vo.MemberVO;
-import com.study.test.stu.vo.StuVO;
 
 import lombok.Getter;
 import lombok.Setter;

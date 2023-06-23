@@ -22,9 +22,7 @@ import com.study.test.school.vo.SearchVO;
 import com.study.test.stu.vo.DeptManageVO;
 import com.study.test.stu.vo.StatusInfoVO;
 import com.study.test.stu.vo.StuVO;
-import com.study.test.util.PageVO;
 
-import groovyjarjarpicocli.CommandLine.Help.Ansi.Style;
 
 @Service("schoolService")
 public class SchoolServiceImpl implements SchoolService{

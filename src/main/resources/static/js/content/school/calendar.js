@@ -32,29 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	      console.log(obj);
 	    },
 		    
-//    	select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-//        	var title = prompt('일정추가');
-//        	if (title) {
-//          		calendar.addEvent({
-//            		title: title,
-//		            start: arg.start,
-//		            end: arg.end,
-//		            allDay: arg.allDay
-//         		 })
-//        	}
-//        	calendar.unselect()
-//      	},
-   		// 이벤트 
-//   		eventClick : function(arg){
-//   			//있는 일정 클릭시
-//   			console.log("#등록된 일정 클릭#");
-//   			console.log(arg.event);
-//   			
-//   			if(confirm('해당일정을 삭제 하시겠습니까?')){
-//   				arg.event.remove()
-//   			}
-//   		},
-   		
 
 		events: (() => {
       const events = [];
@@ -84,20 +61,25 @@ function addSchedule(){
 	const endDate = document.querySelector('#endDate').value;
 	
 	if(title == ''){
-		alert('제목은 필수 입력입니다.')
+		Swal.fire('일정 제목', '일정 제목은 필수 입력입니다.', 'info').then(() => {
+    });
 		return;
 	}else if(calContent == ''){
-		alert('일정내용은 필수 입력입니다.')
+		Swal.fire('일정 내용', '일정 내용은 필수 입력입니다.', 'info').then(() => {
+    });
 		return;
 	}else if(startDate == ''){
-		alert('시작일정은 필수 입력입니다.')
+		Swal.fire('시작 일정', '시작 일정은 필수 입력입니다.', 'info').then(() => {
+    });
 		return;
 			
 	}else if(endDate == ''){
-		alert('종료일정은 필수 입력입니다.')
+		Swal.fire('종료 일정', '종료 일정은 필수 입력입니다.', 'info').then(() => {
+    });
 		return;
 	}else if(new Date(endDate) - new Date(startDate) < 0){
-		alert('종료일이 시작일보다 앞섭니다.')
+		Swal.fire('일정 오류', '종료일정이 시작일정보다 앞섭니다.', 'info').then(() => {
+    });
 		return;
 	}
 	Swal.fire('일정 추가', '일정 등록이 완료되었습니다.', 'success').then(() => {
@@ -106,18 +88,6 @@ function addSchedule(){
 	
 	
 }
-
-
-
-//	for (int i = 0 ; list.size; i++){
-//				CalendarVO calendarVO = (CalendarVO)list.get(i);
-//				{
-//					title : '<%= calendarVO.getSubject() %>',
-//					startDate : '<%= calendarVO.getstartDate() %>',
-//					endDate : '<%= calendarVO.getendDate() %>',
-//				},
-//			}
-
 
 
 // 일정 수정을 위한 조회

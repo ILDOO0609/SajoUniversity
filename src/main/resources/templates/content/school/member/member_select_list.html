@@ -17,13 +17,13 @@
 					<input type="hidden" name="nowPage" th:value="${searchVO.nowPage}" id="nowPageForSelectMember">
 					<div class="row">
 						<div class="col-6">
-							<h2><a href="/school/memberSelectList">신규회원 승인/취소 전체조회</a></h2>
+							<h2><a href="/school/memberSelectList">신규회원 전체조회</a></h2>
 						</div>
 						<div class="col-3 d-grid">
-							<button type="button" class="btn btn-primary" id="approveO_btn" onclick="approveO('Y');">승인완료 조회</button>
+							<button type="button" class="btn btn-primary" id="approveO_btn" onclick="approveO('Y');">승인완료 전체조회</button>
 						</div>
 						<div class="col-3 d-grid">
-							<button type="button" class="btn btn-danger" id="approveX_btn" onclick="approveX('N');">승인취소 조회</button>
+							<button type="button" class="btn btn-danger" id="approveX_btn" onclick="approveX('N');">승인취소 전체조회</button>
 						</div>
 					</div>
 					<div class="row">
@@ -63,16 +63,16 @@
 								</tbody>
 							</table>
 							<div class="row mb-3" id="searchDiv">
-								<div class="col-4">
+								<div class="col-2 offset-4">
 									<select class="form-select" name="searchKeyword">
-										<option value="MEM_NAME" th:selected="${searchVO.searchKeyword == 'MEM_NAME'}">이름</option>
-										<option value="MEM_NO" th:selected="${searchVO.searchKeyword == 'MEM_NO'}">ID(학번)</option>
+										<option value="MEM_NAME" th:selected="${searchVO.searchKeyword == 'MEM_NAME'}">회원이름</option>
+										<option value="MEM_NO" th:selected="${searchVO.searchKeyword == 'MEM_NO'}">회원번호(ID)</option>
 									</select>	
 								</div>
-								<div class="col-4">
+								<div class="col-3">
 									<input type="text" class="form-control" id="searchSelectMemberInput" name="searchValue" th:value="${searchVO.searchValue}" placeholder="검색어 입력">
 								</div>
-								<div class="col-4 d-grid">
+								<div class="col-3 d-grid">
 									<input type="button" class="btn btn-primary" value="Search" onclick="selectMemberListSearch();">
 								</div>
 							</div>	

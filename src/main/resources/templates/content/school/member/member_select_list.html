@@ -6,55 +6,79 @@
 
 <!-- 연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href="/"> -->
+	<link rel="stylesheet" href="/css/school.css">
 </th:block>
    
 <th:block layout:fragment="content">
 	<div class="container">
 		<div class="row top">
 			<div class="col">
-				<div class="row">
-					<div class="col-6">
-						<h2><a href="/school/memberSelectList">신규회원 승인/취소 전체조회</a></h2>
+				<form th:action="@{/school/memberSelectList}" method="post" id="memberSelectListForm">
+					<input type="hidden" name="nowPage" th:value="${searchVO.nowPage}" id="nowPageForSelectMember">
+					<div class="row">
+						<div class="col-6">
+							<h2><a href="/school/memberSelectList">신규회원 승인/취소 전체조회</a></h2>
+						</div>
+						<div class="col-3 d-grid">
+							<button type="button" class="btn btn-primary" id="approveO_btn" onclick="approveO('Y');">승인완료 조회</button>
+						</div>
+						<div class="col-3 d-grid">
+							<button type="button" class="btn btn-danger" id="approveX_btn" onclick="approveX('N');">승인취소 조회</button>
+						</div>
 					</div>
-					<div class="col-3 d-grid">
-						<button type="button" class="btn btn-primary" id="approveO_btn" onclick="approveO('Y');">승인완료 조회</button>
+					<div class="row">
+						<div class="col" style="font-size: 0.8em; color: red;">해당 회원 클릭시 회원상세창이 열립니다.</div>
 					</div>
-					<div class="col-3 d-grid">
-						<button type="button" class="btn btn-danger" id="approveX_btn" onclick="approveX('N');">승인취소 조회</button>
+					<div class="row">
+						<div class="col" id="tableDiv">
+							<table class="table table-hover" id="approveTable">
+								<thead>
+									<tr>
+										<td>No(ID)</td>
+										<td>이름</td>
+										<td>신청직책</td>
+										<td>생년월일</td>
+										<td>연락처</td>
+										<td>신청일</td>
+										<td>승인여부</td>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:if="${#lists.size(memberList) == 0}">
+					 					<tr>
+					 						<td colspan="7">조회된 회원이 없습니다.</td>
+					 					</tr>
+				 					</th:block>
+									<th:block th:unlesee="${#lists.size(memberList) == 0}">
+										<tr th:each="member : ${memberList}" style="cursor: pointer;" th:onclick="openModal([[${member.memNo}]]);">
+											<td id="memNo">[[${member.memNo}]]</td>								
+											<td class="memName">[[${member.memName}]]</td>
+											<td class="memRole">[[${member.memRole}]]</td>
+											<td class="memBirthday">[[${member.memBirthday}]]</td>
+											<td class="memTell">[[${member.memTell}]]</td>
+											<td class="regDate">[[${member.regDate}]]</td>
+											<td class="isConfirmed">[[${member.isConfirmed}]]</td>
+										</tr>
+									</th:block>	
+								</tbody>
+							</table>
+							<div class="row mb-3" id="searchDiv">
+								<div class="col-4">
+									<select class="form-select" name="searchKeyword">
+										<option value="MEM_NAME" th:selected="${searchVO.searchKeyword == 'MEM_NAME'}">이름</option>
+										<option value="MEM_NO" th:selected="${searchVO.searchKeyword == 'MEM_NO'}">ID(학번)</option>
+									</select>	
+								</div>
+								<div class="col-4">
+									<input type="text" class="form-control" id="searchSelectMemberInput" name="searchValue" th:value="${searchVO.searchValue}" placeholder="검색어 입력">
+								</div>
+								<div class="col-4 d-grid">
+									<input type="button" class="btn btn-primary" value="Search" onclick="selectMemberListSearch();">
+								</div>
+							</div>	
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col" style="font-size: 0.8em; color: red;">해당 회원 클릭시 회원상세창이 열립니다.</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<table class="table table-hover" id="approveTable">
-							<thead>
-								<tr>
-									<td>No(ID)</td>
-									<td>이름</td>
-									<td>신청직책</td>
-									<td>생년월일</td>
-									<td>연락처</td>
-									<td>신청일</td>
-									<td>승인여부</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="member : ${memberList}" style="cursor: pointer;" th:onclick="openModal([[${member.memNo}]]);">
-									<td id="memNo">[[${member.memNo}]]</td>								
-									<td class="memName">[[${member.memName}]]</td>
-									<td class="memRole">[[${member.memRole}]]</td>
-									<td class="memBirthday">[[${member.memBirthday}]]</td>
-									<td class="memTell">[[${member.memTell}]]</td>
-									<td class="regDate">[[${member.regDate}]]</td>
-									<td class="isConfirmed">[[${member.isConfirmed}]]</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>			
+				</form>			
 			</div>
 		</div>
 		
@@ -63,16 +87,18 @@
 				<div class="col-3">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination" >
-							<li class="page-item" th:classappend="${memberVO.prev ? '' : 'disabled'}">
-								<a class="page-link" href="javascript:void(0);" th:onclick="getMemberListPaging([[${memberVO.beginPage - 1}]]);" aria-label="Previous">
+							<li class="page-item" th:classappend="${searchVO.prev ? '' : 'disabled'}">
+								<a class="page-link" href="javascript:void(0);" th:onclick="memberListPaging([[${searchVO.beginPage - 1}]]);" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
-							<th:block th:each="pageNum : ${#numbers.sequence(memberVO.beginPage, memberVO.endPage)}">
-								<li class="page-item"><a th:classappend="${memberVO.nowPage == pageNum ? 'active' : ''}" class="page-link" th:href="@{/school/memberSelectList(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a></li>
-							</th:block>
-							<li class="page-item" th:classappend="${memberVO.next ? '' : 'disabled'}">
-								<a class="page-link" href="javascript:void(0);" th:onclick="getMemberListPaging([[${memberVO.endPage + 1}]]);" aria-label="Next">
+							<li class="page-item" th:each="pageNum : ${#numbers.sequence(searchVO.beginPage, searchVO.endPage)}">
+						    	<a class="page-link" href="javascript:void(0)" th:onclick="memberListPaging([[${pageNum}]])" th:classappend="${searchVO.nowPage == pageNum ? 'active' : ''}">
+						    		[[${pageNum}]]
+						    	</a>
+						    </li>
+							<li class="page-item" th:classappend="${searchVO.next ? '' : 'disabled'}">
+								<a class="page-link" href="javascript:void(0);" th:onclick="memberListPaging([[${searchVO.endPage + 1}]]);" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>

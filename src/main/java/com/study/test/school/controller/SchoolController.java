@@ -617,22 +617,22 @@ public class SchoolController {
 	 }
 	 
 	//회원메뉴 -> 승인/취소 전체조회 페이지
-	@GetMapping("/memberSelectList")
-	public String memberSelectList(Model model, MemberVO memberVO) {
+	@RequestMapping("/memberSelectList")
+	public String memberSelectList(Model model, SearchVO searchVO) {
 		//전체 데이터 수 조회
-		memberVO.setDisplayCnt(10);
-		memberVO.setTotalDataCnt(schoolService.getMemberListCnt());
-		memberVO.setPageInfo();
-		model.addAttribute("memberList", schoolService.selectMemberTotalList(memberVO));
+		searchVO.setDisplayCnt(10);
+		searchVO.setTotalDataCnt(schoolService.getMemberListCnt(searchVO));
+		searchVO.setPageInfo();
+		model.addAttribute("memberList", schoolService.selectMemberTotalList(searchVO));
 		return "content/school/member/member_select_list";
 	}
 	//회원메뉴 -> 승인/취소 승인조회
 	@ResponseBody
 	@RequestMapping("/approveOAjax")
-	public Map<String, Object> approveO(String isConfirmed, MemberVO memberVO) {
+	public Map<String, Object> approveO(String isConfirmed, MemberVO memberVO, SearchVO searchVO) {
 		memberVO.setIsConfirmed(isConfirmed);
-		memberVO.setDisplayCnt(10);
-		int totalDateCnt = schoolService.getMemberAddListCnt();
+		memberVO.setDisplayCnt(999);
+		int totalDateCnt = schoolService.getMemberAddListCnt(searchVO);
 		memberVO.setTotalDataCnt(totalDateCnt);
 		memberVO.setPageInfo();
 		System.out.println("@#@#@#@#@#@#@#@#@#@#@#"+memberVO);
@@ -646,10 +646,10 @@ public class SchoolController {
 	//회원메뉴 -> 승인/취소 취소조회
 	@ResponseBody
 	@PostMapping("/approveXAjax")
-	public Map<String, Object> approveX(String isConfirmed, MemberVO memberVO) {
+	public Map<String, Object> approveX(String isConfirmed, MemberVO memberVO, SearchVO searchVO) {
 		memberVO.setIsConfirmed(isConfirmed);
-		memberVO.setDisplayCnt(10);
-		int totalDateCnt = schoolService.getMemberDeniedListCnt();
+		memberVO.setDisplayCnt(999);
+		int totalDateCnt = schoolService.getMemberDeniedListCnt(searchVO);
 		memberVO.setTotalDataCnt(totalDateCnt);
 		memberVO.setPageInfo();
 		

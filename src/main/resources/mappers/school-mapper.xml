@@ -1094,10 +1094,23 @@
 			, MEM_TELL
 			, DECODE(IS_CONFIRMED, 'Y','승인완료', 'N', '승인취소', 'I', '승인대기') AS IS_CONFIRMED
 			, MEM_IMAGE
-		FROM MEMBER	
-		ORDER BY REG_DATE DESC
+		FROM MEMBER
+		<if test='searchValue!=null and !searchValue.equals("")'>
+		WHERE ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+		ORDER BY REG_DATE DESC, MEM_NO
 		OFFSET #{offsetCnt} ROWS FETCH NEXT #{displayCnt} ROWS ONLY
 	</select>
+	<!-- 회원메뉴 승인/취소 전체 데이터 수 조회 -->
+	<select id="getMemberListCnt" resultType="int">
+		SELECT COUNT(MEM_NO)
+		FROM MEMBER
+		<if test='searchValue!=null and !searchValue.equals("")'>
+		WHERE ${searchKeyword} LIKE '%'||UPPER(#{searchValue})||'%'
+		</if>
+	</select>
+	
+	
 	<!-- 회원메뉴 -> 신규회원 승인/취소 승인완료 조회 -->
 	<select id="selectMemberAddList" resultMap="memberMapper.member">
 		SELECT MEM_NO
@@ -1150,12 +1163,6 @@
 		WHERE MEM_NO = #{memNo}
 	</select>
 	
-	
-	<!-- 회원메뉴 승인/취소 전체 데이터 수 조회 -->
-	<select id="getMemberListCnt" resultType="int">
-		SELECT COUNT(MEM_NO)
-		FROM MEMBER
-	</select>
 	<!-- 회원메뉴 승인/취소 승인완료 데이터 수 조회 -->
  	<select id="getMemberAddListCnt" resultType="int">
 		SELECT COUNT(IS_CONFIRMED)
@@ -1168,7 +1175,6 @@
 		FROM MEMBER
 		WHERE IS_CONFIRMED = 'N'
 	</select> 
-	
 	
 	
 	

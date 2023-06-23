@@ -106,10 +106,24 @@ function drawDeptSelectbox(deptList, coll){
 
 
 //전체 페이지(1, 2, 3, ...) 클릭 시
-function getMemberListPaging(pageNum){
-	document.querySelector('#nowPage').value = pageNum;
+function memberListPaging(pageNum){
+	document.querySelector('#nowPageForSelectMember').value = pageNum;
+	document.querySelector('#memberSelectListForm').submit();
 	
 }
+//검색버튼 클릭시 실행
+function selectMemberListSearch(){
+	const searchValue = document.querySelector('#searchSelectMemberInput').value;
+	if(searchValue == ''){
+		Swal.fire('검색 실패', '검색할 제목을 입력하세요.', 'error')
+		.then(() => {
+		        
+		})
+		return;
+	}
+	document.querySelector('#memberSelectListForm').submit();
+}
+
 
 //회원메뉴 -> 승인/취소조회 -> 승인완료 조회
 function approveO(isConfirmed){
@@ -127,15 +141,13 @@ function approveO(isConfirmed){
 			
 			const memberVO = result['memberVO'];
 			result = result['addList'];
-		
-			
-			
+			const tableDiv = document.querySelector('#tableDiv');
+			tableDiv.classList.add('ds-scroll');
 			const tbodyTag = document.querySelector('#approveTable > tbody');
 			tbodyTag.replaceChildren();
 			
 			let str = '';
 			
-			//str += `<div class="col-12 mb-2 my-scroll">`;
 			if(result.length == 0){
 					str += `<tr>`;
 					str += `<td colspan="7">조회된 회원이 없습니다.</td>`;
@@ -156,38 +168,11 @@ function approveO(isConfirmed){
 			
 			const pagingTag = document.querySelector('#paging');
 			pagingTag.replaceChildren();
-			pagingTag.innerHTML = '';
-			
-			let str1 = '';
-			
-			str1 += `<div class="row">`;
-			str1 += `<div class="col-3 mx-auto">`; // mx-auto 클래스를 추가하여 가운데 정렬
-			str1 += `<nav aria-label="Page navigation example">`;
-			str1 += `<ul class="pagination justify-content-center">`; // justify-content-center 클래스를 추가하여 가운데 정렬
-			str1 += `<li class="page-item ${memberVO.prev ? '' : 'disabled'}">`;
-			str1 += `<a class="page-link" href="javascript:void(0);" onclick="getMemberListPaging(${memberVO.beginPage - 1})" aria-label="Previous">`;
-			str1 += `<span aria-hidden="true">&laquo;</span>`;
-			str1 += `</a>`;
-			str1 += `</li>`;
-			
-			for(let i = memberVO.beginPage ; i <= memberVO.endPage ; i++){
-			    str1 += `<li class="page-item ${memberVO.nowPage === i ? 'active' : ''}"><a class="page-link" href="/school/approveOAjax?nowPage=${i}"><span>${i}</span></a></li>`;
-			}
-			
-			str1 += `<li class="page-item ${memberVO.next ? '' : 'disabled'}">`;
-			str1 += `<a class="page-link" href="javascript:void(0);" onclick="getMemberListPaging(${memberVO.endPage + 1})" aria-label="Next">`;
-			str1 += `<span aria-hidden="true">&raquo;</span>`;
-			str1 += `</a>`;
-			str1 += `</li>`;
-			str1 += `</ul>`;
-			str1 += `</nav>`;
-			str1 += `</div>`;
-			str1 += `</div>`;
-			
-			pagingTag.innerHTML = str1;
-			
+			const searchTag = document.querySelector('#searchDiv');
+			searchTag.replaceChildren();
 			
 			}
+			
 			tbodyTag.insertAdjacentHTML('afterbegin', str);
 			
 		},
@@ -211,12 +196,14 @@ function approveX(isConfirmed){
 		data: {'isConfirmed': isConfirmed}, //필요한 데이터
 		success: function(result) {
 			console.log(result);
-			const tbodyTag = document.querySelector('#approveTable > tbody');
-			tbodyTag.replaceChildren();
 			
 			const memberVO = result['memberVO'];
 			result = result['deniedList'];
 			
+			const tableDiv = document.querySelector('#tableDiv');
+			tableDiv.classList.add('ds-scroll');
+			const tbodyTag = document.querySelector('#approveTable > tbody');
+			tbodyTag.replaceChildren();
 			
 			let str = '';
 			
@@ -237,39 +224,11 @@ function approveX(isConfirmed){
 					str += `<td>${app.isConfirmed}</td>`;
 					str += `</tr>`;
 				}
-				
+			
 			const pagingTag = document.querySelector('#paging');
 			pagingTag.replaceChildren();
-			pagingTag.innerHTML = '';
-			
-			let str1 = '';
-			
-			str1 += `<div class="row">`;
-			str1 += `<div class="col-3 mx-auto">`; // mx-auto 클래스를 추가하여 가운데 정렬
-			str1 += `<nav aria-label="Page navigation example">`;
-			str1 += `<ul class="pagination justify-content-center">`; // justify-content-center 클래스를 추가하여 가운데 정렬
-			str1 += `<li class="page-item ${memberVO.prev ? '' : 'disabled'}">`;
-			str1 += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.beginPage-1}" aria-label="Previous">`;
-			str1 += `<span aria-hidden="true">&laquo;</span>`;
-			str1 += `</a>`;
-			str1 += `</li>`;
-			
-			for(let i = memberVO.beginPage ; i <= memberVO.endPage ; i++){
-			    str1 += `<li class="page-item ${memberVO.nowPage === i ? 'active' : ''}"><a class="page-link" href="/school/approveOAjax?nowPage=${i}"><span>${i}</span></a></li>`;
-			}
-			
-			str1 += `<li class="page-item ${memberVO.next ? '' : 'disabled'}">`;
-			str1 += `<a class="page-link" href="javascript:void(0);" href="/school/approveOAjax?nowPage=${memberVO.endPage+1}" aria-label="Next">`;
-			str1 += `<span aria-hidden="true">&raquo;</span>`;
-			str1 += `</a>`;
-			str1 += `</li>`;
-			str1 += `</ul>`;
-			str1 += `</nav>`;
-			str1 += `</div>`;
-			str1 += `</div>`;
-			
-			pagingTag.innerHTML = str1;
-			
+			const searchTag = document.querySelector('#searchDiv');
+			searchTag.replaceChildren();
 			
 			}
 			

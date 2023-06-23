@@ -75,7 +75,7 @@ function draw_chart1(uni, per) {
 		type: 'bar',
 		data: data,
 		options: {
-			indexAxis: 'y',
+			indexAxis: 'x',
 			scales: {
 				x: {
 					title: {

@@ -26,7 +26,7 @@ function applyAbsenceRe(){
 					success: function(result) {
 						console.log(result);
 						if (result) {
-							Swal.fire('신청 취소가 완료되었습니다.', '', 'success').then(() => {
+							Swal.fire('신청이 완료되었습니다.', '', 'success').then(() => {
 								document.querySelector('#stuAbsence').submit();
 							});
 						}

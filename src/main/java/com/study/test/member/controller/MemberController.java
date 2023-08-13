@@ -220,10 +220,10 @@ public class MemberController {
 
 	        String tell = trans_tell.replaceAll("-", "").replaceAll("\\s+", ""); // - 잡고 공백 잡기
 	        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + tell);
-	        DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("NCSF8PLR980ZASBW", "0BVY7LQHJOZJ6FTVHIVC58KPGZODBW46", "https://api.coolsms.co.kr");
+	        DefaultMessageService messageService = NurigoApp.INSTANCE.initialize("", "", "https://api.coolsms.co.kr");
 
 	        Message message = new Message();
-	        message.setFrom("01095433918"); // 발송번호 -- COOLSMS 연동 번호
+	        message.setFrom(""); // 발송번호 -- COOLSMS 연동 번호
 	        message.setTo(tell); // 수신자 번호 --> 회원 연락처
 	        message.setText("[사조대학팀]" + "\n" + "귀하의 아이디(교번)은 " + found_no + " 입니다.");
 
